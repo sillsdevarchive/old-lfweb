@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+.ext_checkboxOuttaHere {
+	position: absolute;
+	left: -9999px;
+}
+
+.ext_checkboxArea,.ext_checkboxAreaChecked {
+	float: left;
+	width: 20px !important;
+	height: 20px;
+	margin: 2px 10px 0 0;
+	background: url(./images/checkbox_unchecked.png) no-repeat 0 0;
+	overflow: hidden;
+}
+
+.ext_checkboxAreaChecked {
+	background: url(./images/checkbox_checked.png) no-repeat 0 0;
+}
+
+.ext_checkboxAreaCheckedLabel {
+	font-weight: bold;
+}

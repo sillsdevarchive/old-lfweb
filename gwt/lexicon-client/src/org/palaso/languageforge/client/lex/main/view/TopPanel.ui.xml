@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder 
+  SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"
+>
+<ui:UiBinder
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'
+  xmlns:g='urn:import:com.google.gwt.user.client.ui'
+  xmlns:app='urn:import:org.palaso.languageforge.client.lex.main'>
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+  <ui:style>
+  </ui:style>
+
+		<g:DockLayoutPanel unit="PX">
+			<g:west size="42.0">
+				<g:Anchor href='javascript:;' ui:field='homeLink'>
+					<ui:text from="{string.TopPanel_Home}"/>
+				</g:Anchor>
+			</g:west>
+			<g:west size="65.0">
+				<g:Anchor href='javascript:;' ui:field='aboutLink' horizontalAlignment="ALIGN_LEFT">
+					<ui:text from="{string.TopPanel_About_Us}"/>
+				</g:Anchor>
+			</g:west>
+			<g:east size="58.0">
+				<g:Anchor href='javascript:;' ui:field='signOutLink' horizontalAlignment="ALIGN_RIGHT" height="24">
+					<ui:text from="{string.TopPanel_Sign_Out}"/>
+				</g:Anchor>
+			</g:east>
+			<g:center>
+				<g:SimplePanel />
+			</g:center>
+		</g:DockLayoutPanel>
+</ui:UiBinder>

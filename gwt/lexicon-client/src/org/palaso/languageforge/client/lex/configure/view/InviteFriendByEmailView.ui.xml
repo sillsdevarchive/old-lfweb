@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
+	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel width="550px" height="290px">
+		<div class="lex-dc-row" style="height:30px">
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column " id="c1" style="width:200px;">
+					<g:Label text="{string.InviteFriendByEmailView_Personal_message}"></g:Label>
+				</div>
+				<div class="lex-dc-column " id="c2">
+				</div>
+				<div class="lex-dc-column">
+					<g:Anchor styleName="popup-invite-closer" ui:field='btnPopupClose'>
+						<ui:text from="{string.InviteFriendByEmailView_Close}"/>
+					</g:Anchor>
+				</div>
+			</div>
+		</div>
+		<div class="lex-dc-row">
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column" id="c2">
+					<div class="field ">
+						<g:TextArea width="100%" height="150px" textAlignment="ALIGN_LEFT"
+							visibleLines="2" alignment="LEFT" styleName="wordfromtexttextarea"
+							ui:field="txtEmailMsg">
+						</g:TextArea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="lex-dc-row" style="height:30px">
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column" id="c2">
+					<g:Label
+						text="{string.InviteFriendByEmailView_Optional_Enter_a_message_which_will_become_part_of_the_invitation_email}"></g:Label>
+				</div>
+			</div>
+		</div>
+		<div class="lex-dc-row" style="height:40px">
+			<div id="firefox-bug-fix">
+
+				<div class="lex-dc-column cpadding5" id="c2">
+
+				</div>
+				<div class="lex-dc-column" id="c3" style="width:180px;">
+					<g:Button text="{string.InviteFriendByEmailView_Send_invitation}" ui:field="btnSendInvite"></g:Button>
+				</div>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='lifteditor'>
+
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
+
+
+	<!-- Other module inherits -->
+	<inherits name='com.mvp4g.Mvp4gModule' />
+	<inherits name="com.google.gwt.json.JSON" />
+	<inherits name="gwtupload.GWTUpload" />
+	<inherits name='com.googlecode.gwt.crypto.Crypto' />
+	<inherits name='com.googlecode.gchart.GChart' />
+	<!-- Specify the app entry point class. -->
+	<entry-point class="org.palaso.languageforge.client.lex.main.MainEntryPoint">
+	</entry-point>
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+
+	<stylesheet src="Upload.css" />
+	<stylesheet src="lexicon.css" />
+	<stylesheet src="gwt-lf.css" />
+	<stylesheet src="all.css" />
+	<stylesheet src="onlinetool.css" />
+	<stylesheet src="ExtendedComboBox.css" />
+	<stylesheet src="ExtendedCheckBox.css" />
+	<stylesheet src="ConversationControl.css" />
+	<stylesheet src="FastTree.css" />
+	<stylesheet src="gwt-ProgressBar.css" />
+	<replace-with
+		class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GWTCanvasImplDefault">
+		<when-type-is
+			class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GWTCanvasImpl" />
+	</replace-with>
+
+
+	<replace-with
+		class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GWTCanvasImplIE6">
+		<when-type-is
+			class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GWTCanvasImpl" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+		</any>
+	</replace-with>
+
+	<replace-with
+		class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GradientFactoryImplDefault">
+		<when-type-is
+			class="org.palaso.languageforge.client.lex.controls.gwtcanvas.GradientFactory" />
+	</replace-with>
+
+
+	<replace-with
+		class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GradientFactoryImplIE6">
+		<when-type-is
+			class="org.palaso.languageforge.client.lex.controls.gwtcanvas.GradientFactory" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+		</any>
+	</replace-with>
+	
+	<!-- Add German language support -->
+	<!-- <extend-property name="locale" values="de"/>  -->
+	<!-- Add Thai language support -->
+	<!-- <extend-property name="locale" values="th"/>   -->
+	 
+	
+</module>

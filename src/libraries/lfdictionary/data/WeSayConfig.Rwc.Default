@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration version="8">
+  <components>
+    <viewTemplate>
+      <fields>
+        <field>
+          <className>RwcDomain</className>
+          <dataType>MultiText</dataType>
+          <displayName>Domain</displayName>
+          <enabled>True</enabled>
+          <fieldName>domain</fieldName>
+          <multiParagraph>False</multiParagraph>
+          <spellCheckingEnabled>False</spellCheckingEnabled>
+          <multiplicity>ZeroOr1</multiplicity>
+          <visibility>Visible</visibility>
+          <writingSystems>
+            <id readOnly="">en</id>
+            <id>th</id>
+          </writingSystems>
+        </field>
+        <field>
+          <className>RwcDescription</className>
+          <dataType>MultiText</dataType>
+          <displayName>Description</displayName>
+          <enabled>True</enabled>
+          <fieldName>description</fieldName>
+          <multiParagraph>True</multiParagraph>
+          <spellCheckingEnabled>True</spellCheckingEnabled>
+          <multiplicity>ZeroOr1</multiplicity>
+          <visibility>Visible</visibility>
+          <writingSystems>
+            <id readOnly="">en</id>
+            <id>th</id>
+          </writingSystems>
+        </field>
+        <field>
+          <className>RwcSearchKeys</className>
+          <dataType>MultiText</dataType>
+          <displayName>Key Terms</displayName>
+          <enabled>True</enabled>
+          <fieldName>searchKeys</fieldName>
+          <multiParagraph>False</multiParagraph>
+          <spellCheckingEnabled>False</spellCheckingEnabled>
+          <multiplicity>ZeroOr1</multiplicity>
+          <visibility>Visible</visibility>
+          <writingSystems>
+            <id>en</id>
+            <id>th</id>
+          </writingSystems>
+        </field>
+        <field>
+          <className>RwcQuestions</className>
+          <dataType>MultiText</dataType>
+          <displayName>Questions</displayName>
+          <enabled>True</enabled>
+          <fieldName>questions</fieldName>
+          <multiParagraph>True</multiParagraph>
+          <spellCheckingEnabled>True</spellCheckingEnabled>
+          <multiplicity>ZeroOrMore</multiplicity>
+          <visibility>Visible</visibility>
+          <writingSystems>
+            <id readOnly="">en</id>
+            <id>th</id>
+          </writingSystems>
+        </field>
+      </fields>
+      <id>Default View Template</id>
+    </viewTemplate>
+  </components>
+  <tasks>
+    <task taskName="Dashboard" visible="true"/>
+    <task taskName="Dictionary" visible="true"/>
+    <task taskName="AddMissingInfo" visible="false">
+      <label>Meanings</label>
+      <longLabel>Add Meanings</longLabel>
+      <description>Add meanings (senses) to entries where they are missing.</description>
+      <field>definition</field>
+      <showFields>definition</showFields>
+      <readOnly>semantic-domain-ddp4</readOnly>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AddMissingInfo" visible="false">
+      <label>Parts of Speech</label>
+      <longLabel>Add Parts of Speech</longLabel>
+      <description>Add parts of speech to senses where they are missing.</description>
+      <field>POS</field>
+      <showFields>POS</showFields>
+      <readOnly>definition, ExampleSentence</readOnly>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AddMissingInfo" visible="false">
+      <label>Example Sentences</label>
+      <longLabel>Add Example Sentences</longLabel>
+      <description>Add example sentences to senses where they are missing.</description>
+      <field>ExampleSentence</field>
+      <showFields>ExampleSentence</showFields>
+      <readOnly>definition</readOnly>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AddMissingInfo" visible="false">
+      <label>Base Forms</label>
+      <longLabel>Add Base Forms</longLabel>
+      <description>Identify the "base form" word that this word is built from. In the printed dictionary, the derived or variant words can optionally be shown as subentries of their base forms.</description>
+      <field>BaseForm</field>
+      <showFields>BaseForm</showFields>
+      <readOnly/>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AddMissingInfo" visible="true">
+      <label>Names</label>
+      <longLabel>Add names</longLabel>
+      <description>Add names</description>
+      <field>name</field>
+      <showFields>name</showFields>
+      <readOnly/>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AddMissingInfo" visible="true">
+      <label>Description</label>
+      <longLabel>Add descriptions</longLabel>
+      <description>Add descriptions</description>
+      <field>description</field>
+      <showFields>description</showFields>
+      <readOnly/>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AddMissingInfo" visible="true">
+      <label>Questions</label>
+      <longLabel>Add questions</longLabel>
+      <description>Add questions</description>
+      <field>question</field>
+      <showFields>question</showFields>
+      <readOnly/>
+      <writingSystemsToMatch/>
+      <writingSystemsWhichAreRequired/>
+    </task>
+    <task taskName="AdvancedHistory" visible="false"/>
+    <task taskName="NotesBrowser" visible="false"/>
+    <task taskName="GatherWordList" visible="false">
+      <wordListFileName>SILCAWL</wordListFileName>
+      <wordListWritingSystemId>en</wordListWritingSystemId>
+    </task>
+    <task taskName="GatherWordList" visible="false">
+      <wordListFileName>SILCAWL-MozambiqueAddendum</wordListFileName>
+      <wordListWritingSystemId>en</wordListWritingSystemId>
+    </task>
+    <task taskName="GatherWordsBySemanticDomains" visible="true">
+      <semanticDomainsQuestionFileName>Ddp4Questions-en.xml</semanticDomainsQuestionFileName>
+      <showMeaningField>False</showMeaningField>
+    </task>
+    <task taskName="ConfigureSettings" visible="false">
+      <longLabel>Settings</longLabel>
+    </task>
+  </tasks>
+  <addins>
+    <addin id="SendReceiveAction" showInWeSay="True"/>
+  </addins>
+</configuration>

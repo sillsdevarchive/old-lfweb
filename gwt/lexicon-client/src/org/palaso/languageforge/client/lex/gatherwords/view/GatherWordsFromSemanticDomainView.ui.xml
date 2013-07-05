@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
+	xmlns:lexmain='urn:import:org.palaso.languageforge.client.lex.view'
+	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel width="100%" height="100%" ui:field="lblPanelCol">
+		<div class="lex-dc-row">
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column cnopadding" id="c2">
+
+					<section class="content" style="height:630px;margin-right:5px">
+						<div class="row">
+							<g:Label height="100%" ui:field="lblTitle"
+								text="{string.GatherWordsFromSemanticDomainView_Try_to_think_of_ways_to_say_these_words_in_your_own_language}"></g:Label>
+						</div>
+
+						<div class="lex-dc-row">
+							<div id="firefox-bug-fix">
+								<div class="lex-dc-column" id="c2" width="100%">
+									<cc:ExtendedComboBox multipleSelect="false"
+										styleName="entryViewSelection" width="100%" ui:field="domainTreeListBox">
+									</cc:ExtendedComboBox>
+								</div>
+								<div class="lex-dc-column" id="c3-100PIX">
+									<g:Button width="40px" text=" " ui:field="btnPre"
+										styleName="gwt-Button arrowleftbutton"></g:Button>
+
+									<g:Button width="40px" text=" " ui:field="btnNext"
+										styleName="gwt-Button arrowrightbutton"></g:Button>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="lex-dc-row">
+							<div id="firefox-bug-fix">
+								<div class="lex-dc-column cnopadding" id="c2">
+									<g:Label styleName="lex-gw-semdom-q-label"
+										text="{string.GatherWordsFromSemanticDomainView_This_is_a_question_label_and_you_should_not_see_me_at_first_place}"
+										ui:field="lblQuestion"></g:Label>
+								</div>
+							</div>
+						</div>
+						<g:ScrollPanel width="100%"
+							styleName="lexbrowse-Edit-View-Scrool-Panel" height="450px">
+							<g:HTMLPanel width="100%" height="100%">
+								<div class="lex-dc-row">
+									<div id="firefox-bug-fix">
+										<div class="lex-dc-column cnopadding" id="c2">
+											<lexmain:EntryView width="100%" height="100%"
+												ui:field="dictEditView"></lexmain:EntryView>
+										</div>
+										<div class="lex-dc-column" id="c3-100PIX">
+											<g:Button width="100px" text="{string.GatherWordsFromSemanticDomainView_Add_word}" ui:field="btnAddWord"></g:Button>
+										</div>
+									</div>
+								</div>
+							</g:HTMLPanel>
+						</g:ScrollPanel>
+					</section>
+				</div>
+				<div class="lex-dc-column cnopadding" id="c3">
+					<section class="content" style="height:630px;margin-left:5px">
+						<g:FlowPanel width="250px" height="30px">
+							<g:Label height="100%" text="{string.GatherWordsFromSemanticDomainView_Recently_added}"
+								horizontalAlignment="ALIGN_CENTER"></g:Label>
+							<g:ScrollPanel width="100%" height="625px"  styleName="no-horizontal-scrollbar">
+								<p1:CellTable ui:field="cellTable" width="100%" />
+							</g:ScrollPanel>
+						</g:FlowPanel>
+					</section>
+				</div>
+
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

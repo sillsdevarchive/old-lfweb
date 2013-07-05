@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+
+	</ui:style>
+	
+
+<g:HTMLPanel width="100%" height="100%">	
+	<g:FlowPanel width="100%" height="100%">
+		<g:SimplePanel ui:field="feedback"/> 
+			 <g:SimplePanel ui:field='buttonControl' visible="true" />
+			<g:ScrollPanel width="100%" styleName="lexbrowse-Edit-View-Scrool-Panel" height="550px">
+				<g:SimplePanel ui:field='panel' styleName="lexwordeditPanel" />
+			</g:ScrollPanel>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

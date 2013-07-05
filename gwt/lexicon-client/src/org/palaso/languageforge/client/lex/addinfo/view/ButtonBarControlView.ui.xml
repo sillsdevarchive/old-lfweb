@@ -1,0 +1,19 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<g:HTMLPanel>		
+		<div class="lex-dc-row" >
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column cpadding5" id="c1">
+					<g:Button ui:field='saveButton' text="{string.ButtonBarControlView_Save}" />
+				</div>
+				<div class="lex-dc-column cpadding5" id="c2">
+				</div>
+				<div class="lex-dc-column cpadding5" id="c3">
+					<g:Button ui:field='prevButton' text="" title="{string.ButtonBarControlView_Previous}" width="40px"  styleName="gwt-Button arrowleftbutton"/>
+					<g:Button ui:field='nextButton' text="" title="{string.ButtonBarControlView_Next}" width="40px"  styleName="gwt-Button arrowrightbutton"/>
+				</div>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,33 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<g:HTMLPanel>
+		<div style="width:100%;">
+		<div ui:field='countLabel' style="width:100%; background-color:#DEDEDE;text-align:center; heigh:30px;" />
+		</div>
+		<nav class="navigation">
+			<ul>
+				<li>
+					<g:Anchor ui:field='firstButton'>
+						<ui:text from="{string.NavigationBarView_First}"/>
+					</g:Anchor>
+				</li>
+				<li class="prev">
+					<g:Anchor ui:field='previousButton'>
+						<ui:text from="{string.NavigationBarView_Previous}"/>
+					</g:Anchor>
+				</li>
+				<li class="next">
+					<g:Anchor ui:field='nextButton'>
+						<ui:text from="{string.NavigationBarView_Next}"/>
+					</g:Anchor>
+				</li>
+				<li>
+					<g:Anchor ui:field='lastButton'>
+						<ui:text from="{string.NavigationBarView_Last}"/>
+					</g:Anchor>
+				</li>
+			</ul>
+		</nav>
+	</g:HTMLPanel>
+</ui:UiBinder>

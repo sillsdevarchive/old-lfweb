@@ -1,0 +1,8 @@
+body{-webkit-text-size-adjust:none;}
+input[type=text], input[type=password], input[type=file], textarea{-webkit-appearance:none;}
+.form-box .submit {
+	float:left;
+	margin:0;
+	line-height:27px;
+}
+.form-word .btn-save {line-height:25px;}

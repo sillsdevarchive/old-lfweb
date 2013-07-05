@@ -1,0 +1,25 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<g:HTMLPanel>		
+		<div class="form-word"> 
+		<div class="lex-dc-row" >
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column cpadding5" id="c1">
+					<g:Button ui:field='newButton' text="{string.ButtonBarControlView_New_Word}"  width="120px"/>
+				</div>
+				<div class="lex-dc-column cpadding5" id="c2">
+					<g:Button ui:field='saveButton' text="{string.ButtonBarControlView_Save}"  width="120px"/>
+				</div>
+				<div class="lex-dc-column cpadding5" id="c3">
+				
+					<g:Anchor styleName="del" ui:field='deleteButton'>
+						<ui:text from="{string.ButtonBarControlView_Delete_Word}"/>
+					</g:Anchor>
+				</div>
+			</div>
+		</div>
+		</div>
+	</g:HTMLPanel>
+
+</ui:UiBinder>

@@ -1,0 +1,142 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:con="urn:import:org.palaso.languageforge.client.lex.controls"
+	xmlns:lexcon="urn:import:org.palaso.languageforge.client.lex.controls">
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface'
+		field='string' />
+
+	<g:HTMLPanel width="100%">
+		<div
+			style="width: 100%; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;"
+			id="divreset">
+			<div style="width: 100%; height:400px">
+				<g:HTMLPanel width="100%" height="20px" ui:field="updatingPanel">
+					<div class="lex-dc-row">
+						<div id="firefox-bug-fix">
+							<div class="lex-dc-column" style="padding-left:50px;">
+								<div class="lex-dc-column" style="width: 30px;">
+									<g:Image width="20px" height="20px" ui:field="updatingImage"></g:Image>
+								</div>
+								<div class="lex-dc-column">
+									<g:Label text="Updating..."  ui:field="updatingLabel"></g:Label>
+								</div>
+							</div>
+							<div class="lex-dc-column" id="c2">
+							</div>
+							<div class="lex-dc-column" id="c3">
+							</div>
+						</div>
+					</div>
+				</g:HTMLPanel>
+				<lexcon:LineChart ui:field="lineChart">
+				</lexcon:LineChart>
+
+				<div class="lex-dc-row">
+					<div id="firefox-bug-fix">
+						<div class="lex-dc-column" id="c1">
+
+						</div>
+						<div class="lex-dc-column" id="c2">
+						</div>
+						<div style="width: 155px;  padding: 0 50px 0 0;" class="lex-dc-column"
+							id="c3">
+							<con:ExtendedComboBox multipleSelect="false"
+								styleName="entryViewSelection" ui:field="activityTimeRangeListBox">
+							</con:ExtendedComboBox>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div style="width: 50%;">
+				<div class="lex-dc-row">
+					<div id="firefox-bug-fix">
+						<div class="lex-dc-column" id="c1">
+							<g:Label height="100%" width="160px"
+								text="{string.DashboardMainView_Words}" horizontalAlignment="ALIGN_RIGHT"
+								styleName="gwt-Label wordfromtexttextlabel" ui:field="lblWordCount"></g:Label>
+						</div>
+						<div class="lex-dc-column" id="c1nosize">
+							<div class="dashboard-on-text-color-line-word-count"></div>
+						</div>
+						<div class="lex-dc-column" id="c2">
+							<con:ProgressLabel width="280px" height="35px"
+								ui:field="progressWordCount"></con:ProgressLabel>
+						</div>
+						<div class="lex-dc-column" id="c3">
+							<g:Button width="120px"
+								text="{string.DashboardMainView_Add_more_words}" styleName="gwt-Button"
+								ui:field="btnAddMoreWords"></g:Button>
+
+						</div>
+					</div>
+				</div>
+				<div class="lex-dc-row">
+					<div id="firefox-bug-fix">
+						<div class="lex-dc-column" id="c1">
+							<g:Label height="100%" width="160px"
+								text="{string.DashboardMainView_Part_of_speech}"
+								horizontalAlignment="ALIGN_RIGHT" styleName="gwt-Label wordfromtexttextlabel"
+								ui:field="lblPOS"></g:Label>
+						</div>
+						<div class="lex-dc-column" id="c1nosize">
+							<div class="dashboard-on-text-color-line-part-of-speech"></div>
+						</div>
+						<div class="lex-dc-column" id="c2">
+							<con:ProgressLabel width="280px" height="35px"
+								ui:field="progressPOS"></con:ProgressLabel>
+						</div>
+						<div class="lex-dc-column" id="c3">
+							<g:Button width="120px" text="{string.DashboardMainView_Add_more}"
+								styleName="gwt-Button" ui:field="btnAddMorePos"></g:Button>
+
+						</div>
+					</div>
+				</div>
+				<div class="lex-dc-row">
+					<div id="firefox-bug-fix">
+						<div class="lex-dc-column" id="c1">
+							<g:Label height="100%" width="160px"
+								text="{string.DashboardMainView_Meanings}" horizontalAlignment="ALIGN_RIGHT"
+								styleName="gwt-Label wordfromtexttextlabel" ui:field="lblMeanings"></g:Label>
+						</div>
+						<div class="lex-dc-column" id="c1nosize">
+							<div class="dashboard-on-text-color-line-meaning"></div>
+						</div>
+						<div class="lex-dc-column" id="c2">
+							<con:ProgressLabel width="280px" height="35px"
+								ui:field="progressMeanings"></con:ProgressLabel>
+						</div>
+						<div class="lex-dc-column" id="c3">
+							<g:Button width="120px"
+								text="{string.DashboardMainView_Add_more_meanings}" styleName="gwt-Button"
+								ui:field="btnAddMoreMeanings"></g:Button>
+
+						</div>
+					</div>
+				</div>
+				<div class="lex-dc-row">
+					<div id="firefox-bug-fix">
+						<div class="lex-dc-column" id="c1">
+							<g:Label height="100%" width="160px"
+								text="{string.DashboardMainView_Examples}" horizontalAlignment="ALIGN_RIGHT"
+								styleName="gwt-Label wordfromtexttextlabel" ui:field="lblExamples"></g:Label>
+						</div>
+						<div class="lex-dc-column" id="c1nosize">
+							<div class="dashboard-on-text-color-line-example"></div>
+						</div>
+						<div class="lex-dc-column" id="c2">
+							<con:ProgressLabel width="280px" height="35px"
+								ui:field="progressExamples"></con:ProgressLabel>
+						</div>
+						<div class="lex-dc-column" id="c3">
+							<g:Button width="120px"
+								text="{string.DashboardMainView_Add_more_examples}" ui:field="btnAddMoreExamples"
+								styleName="gwt-Button"></g:Button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

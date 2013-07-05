@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
+	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel width="100%" height="100%">
+		<div class="lex-dc-row">
+			<div id="firefox-bug-fix">
+				<div class="lex-dc-column" id="c1" style="max-width:310px; padding-right:0px">
+					<g:SimplePanel width="100%" ui:field="memberSuggestBoxPanel">
+						
+					</g:SimplePanel>
+				</div>
+				<div class="lex-dc-column" id="c3nosize"
+					style="overflow: hidden; width:50px; max-width:50px;padding-top:15px">
+					<g:Button text="X" width="30px" ui:field="btnSuggestClean"></g:Button>
+				</div>
+				<div class="lex-dc-column" id="c3nosize"
+					style="overflow: hidden; width:150px; max-width:180px;padding-top:15px">
+					<g:Button text="{string.ConfigureSettingMembersView_Add_to_project}" ui:field="btnAdd" width="180px"></g:Button>
+				</div>
+				<div class="lex-dc-column" id="c2">
+
+				</div>
+			</div>
+		</div>
+		<div width="auto" height="auto"  id="memberTable">
+			<p1:CellTable ui:field="memberTable" width="100%" height="auto"/>
+			<div width="auto" height="auto" id="memberTablePager">
+				<p1:SimplePager width="100%" ui:field="memberTablePager"></p1:SimplePager>		
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>
