@@ -1,7 +1,7 @@
 <?php
-namespace lfbase\dto;
+namespace libraries\lfdictionary\dto;
 
-use lfbase\environment\ProjectRole;
+use libraries\lfdictionary\environment\ProjectRole;
 
 use \lfbase\environment\ProjectPermission;
 

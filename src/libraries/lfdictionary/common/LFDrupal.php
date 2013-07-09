@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 
 /**
  * Loads the Drupal API

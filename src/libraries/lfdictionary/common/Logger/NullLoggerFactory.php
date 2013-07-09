@@ -1,6 +1,6 @@
 <?php
 
-namespace lfbase\common\Logger;
+namespace libraries\lfdictionary\common\Logger;
 
 /**
  * Factory for NullLogger
@@ -11,7 +11,7 @@ namespace lfbase\common\Logger;
  * @author     Matěj Humpál <finwe@finwe.info>
  * @copyright  Copyright (c) 2011 Matěj Humpál
  */
-class NullLoggerFactory implements \lfbase\common\Logger\ILoggerFactory
+class NullLoggerFactory implements \libraries\lfdictionary\common\Logger\ILoggerFactory
 {
 	/**
 	 * @param array $options

@@ -4,17 +4,17 @@
  * LanguageForge Dictionary API
  * @author Arivusudar
  */
-namespace environment;
-use mapper\TaskSettingXmlJsonMapper;
+namespace libraries\lfdictionary\environment;
+use libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
 error_reporting(E_ALL | E_STRICT);
 require_once(dirname(__FILE__) . '/../Config.php');
 
 // This class is lexicon specific
 
-use \lfbase\environment\UserModel;
-use \environment\TaskSettingsModel;
-use lfbase\common\LoggerFactory;
+use \libraries\lfdictionary\environment\UserModel;
+use \libraries\lfdictionary\environment\TaskSettingsModel;
+use \libraries\lfdictionary\common\LoggerFactory;
 class LexProjectUserSettings
 {
 	
@@ -27,9 +27,9 @@ class LexProjectUserSettings
 	const FOR_GATHER_WORD_FROM_SEMANTIC_DOMAIN = 5;
 
 	/**
-	 * @var ProjectModel
+	 * @var LFProjectModel
 	 */
-	private $_projectModel;
+	private $_LFProjectModel;
 
 	/**
 	 * @var UserModel
@@ -63,14 +63,14 @@ class LexProjectUserSettings
 	 */
 	var $_componentsDocFields;
 
-	function __construct($projectModel, $userModel) {
+	function __construct($LFProjectModel, $userModel) {
 		
-		if (!is_a($projectModel, '\lfbase\environment\ProjectModel')) {
-			throw new \Exception('Type error: ProjectModel');
+		if (!is_a($LFProjectModel, '\lfbase\environment\LFProjectModel')) {
+			throw new \Exception('Type error: LFProjectModel');
 		}
-		$this->_projectModel = $projectModel;
+		$this->_LFProjectModel = $LFProjectModel;
 		$this->_userModel = $userModel;
-		$this->_projectPath = \environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
+		$this->_projectPath = \environment\LexiconProjectEnvironment::projectPath($this->_LFProjectModel);
 		$this->load();
 	}
 

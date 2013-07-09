@@ -3,11 +3,11 @@
 namespace commands;
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use lfbase\common\AsyncRunner;
+use libraries\lfdictionary\common\AsyncRunner;
 use dashboardtool\DashboardToolFactory;
 use dashboardtool\DashboardDbType;
 use dashboardtool\HistoricalHgDataFetcher;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 class UpdateDashboardCommand
 {
 	
@@ -28,18 +28,18 @@ class UpdateDashboardCommand
 	private $_projectNodeId;
 
 	/**
-	 * @var ProjectModel
+	 * @var LFProjectModel
 	 */
-	private $_projectModel;
+	private $_LFProjectModel;
 
 	/**
 	 * @var LexProject
 	 */
 	private $_lexProject;
 
-	function __construct($projectID, $projectModel,$lexProject) {
+	function __construct($projectID, $LFProjectModel,$lexProject) {
 		
-		$this->_projectModel=$projectModel;
+		$this->_LFProjectModel=$LFProjectModel;
 		$this->_projectNodeId=$projectID;
 		$this->_lexProject=$lexProject;
 	}
@@ -59,7 +59,7 @@ class UpdateDashboardCommand
 				return UpdateDashboardCommand::RUNNING;
 			}
 		}
-		$projectRepoPath = PROJECTS_HG_ROOT_FOLDER. $this->_projectModel->getName();
+		$projectRepoPath = PROJECTS_HG_ROOT_FOLDER. $this->_LFProjectModel->getName();
 		$dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MYSQL);
 		$historicalHgDataFetcher = new HistoricalHgDataFetcher($projectRepoPath);
 		$asyncRunner =  $this->createAsyncRunner();

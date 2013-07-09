@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\dto;
+namespace libraries\lfdictionary\dto;
 
 /**
  * This class contains User DTO

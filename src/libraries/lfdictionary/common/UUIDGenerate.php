@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 class UUIDGenerate{
 	/**
 	 * Generates a UUID v4 using PHP code.

@@ -4,12 +4,12 @@
  * LanguageForge Dictionary API
  * @author Arivusudar
  */
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
 class PartOfSpeechSettingsModel
 {
 
-	function __construct($projectModel) {
+	function __construct($LFProjectModel) {
 	}
 
 	function __destruct() {

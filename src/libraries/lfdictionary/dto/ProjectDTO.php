@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\dto;
+namespace libraries\lfdictionary\dto;
 
 /**
  * This class contains Project DTO
@@ -7,15 +7,15 @@ namespace lfbase\dto;
 class ProjectDTO {
 	
 	/**
-	 * @var ProjectModel
+	 * @var LFProjectModel
 	 */
-	private $_projectModel;
+	private $_LFProjectModel;
 	
 	/**
-	 * @param ProjectModel $projectModel
+	 * @param LFProjectModel $LFProjectModel
 	 */
-	public function __construct($projectModel) {
-		$this->_projectModel = $projectModel;
+	public function __construct($LFProjectModel) {
+		$this->_LFProjectModel = $LFProjectModel;
 	}
 	
 	/**
@@ -24,11 +24,11 @@ class ProjectDTO {
 	 */
 	function encode() {
 		return array(
-			'id' => (int)$this->_projectModel->getId(),
-			'name' => $this->_projectModel->getName(),
-			'title' => $this->_projectModel->getTitle(),
-			'type' => $this->_projectModel->getType(),
-			'lang' => $this->_projectModel->getLanguageCode()
+			'id' => (int)$this->_LFProjectModel->getId(),
+			'name' => $this->_LFProjectModel->getName(),
+			'title' => $this->_LFProjectModel->getTitle(),
+			'type' => $this->_LFProjectModel->getType(),
+			'lang' => $this->_LFProjectModel->getLanguageCode()
 		);
 		
 	}

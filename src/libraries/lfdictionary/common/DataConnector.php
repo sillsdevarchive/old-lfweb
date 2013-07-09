@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 
 /**
  * A shared pool of named database connections

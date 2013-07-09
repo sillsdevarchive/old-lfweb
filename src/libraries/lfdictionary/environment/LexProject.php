@@ -1,9 +1,9 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
-use \lfbase\environment\ProjectRole;
-use \lfbase\environment\ProjectPermission;
-use lfbase\common\LoggerFactory;
+use \libraries\lfdictionary\environment\ProjectRole;
+use \libraries\lfdictionary\environment\ProjectPermission;
+use \libraries\lfdictionary\common\LoggerFactory;
 class LexProject
 {
 	
@@ -35,7 +35,7 @@ class LexProject
 		$this->projectName = $projectName;
 		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		$this->projectPath = rtrim($projectBasePath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectState = new \environment\ProjectState($this->projectName);
+		$this->projectState = new \libraries\lfdictionary\environment\ProjectState($this->projectName);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
 			if (file_exists($this->projectPath)) {
@@ -116,7 +116,7 @@ class LexProject
 		$this->makeLanguageForgeSettingsFolderReady();
 		
 		// Init the hg repository
-		$hg = new \lfbase\common\HgWrapper($this->projectPath);
+		$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
 		$hg->init();
 	
 		$this->projectState->setState(\environment\ProjectStates::Ready);
@@ -233,7 +233,7 @@ class LexProject
 	}
 	
 	public function getCurrentHash() {
-		$hg = new \lfbase\common\HgWrapper($this->projectPath);
+		$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
 		try {
 			$currentHash = $hg->getCurrentHash();
 		} catch (\Exception $exception) {
@@ -290,7 +290,7 @@ class LexProject
 	 */
 	public function isReady() {
 		$state =  $this->projectState->getState();
-		if ($state != \environment\ProjectStates::Ready) {
+		if ($state != \libraries\lfdictionary\environment\ProjectStates::Ready) {
 			return false;
 		}
 		return true;

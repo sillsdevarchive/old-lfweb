@@ -1,15 +1,15 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
-use \environment\LexProjectUserSettings;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\environment\LexProjectUserSettings;
+use libraries\lfdictionary\common\LoggerFactory;
 class LexClientEnvironment
 {
 	
 	/**
-	 * @var ProjectModel
+	 * @var LFProjectModel
 	 */
-	public $projectModel;
+	public $LFProjectModel;
 	
 	/**
 	 * @var UserModel
@@ -39,13 +39,13 @@ class LexClientEnvironment
 	public function __construct($projectNodeId, $userId) {
 		
 		$this->_userId = $userId;
-		$this->projectModel = new \lfbase\environment\ProjectModel($projectNodeId);
-		$this->userModel = new \lfbase\environment\UserModel($userId);
-		$this->projectAccess = new \lfbase\environment\ProjectAccess($projectNodeId, $userId);
-		$this->_lexProject = new \environment\LexProject($this->projectModel->getName());
+		$this->LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+		$this->userModel = new \libraries\lfdictionary\environment\UserModel($userId);
+		$this->projectAccess = new \libraries\lfdictionary\environment\ProjectAccess($projectNodeId, $userId);
+		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->LFProjectModel->getName());
 		
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%d) U=%s (%d)',
-			$this->projectModel->getName(),
+			$this->LFProjectModel->getName(),
 			$projectNodeId,
 			$this->userModel->getUserName(),
 			$userId
@@ -60,11 +60,11 @@ class LexClientEnvironment
 	public function getSettings() {
 		$this->isReady();
 		
-		$projectModel = $this->projectModel;
-		$userModel =  new \lfbase\environment\UserModel($this->_userId);
-		$clientEnvironmentDto = new \lfbase\dto\ClientEnvironmentDto($projectModel, $userModel, $this->projectAccess);
-		$lexProjectUserSettings = new LexProjectUserSettings($projectModel, $userModel);
-		$partOfSpeechSettingsModel = new \environment\PartOfSpeechSettingsModel($projectModel);
+		$LFProjectModel = $this->LFProjectModel;
+		$userModel =  new \libraries\lfdictionary\environment\UserModel($this->_userId);
+		$clientEnvironmentDto = new \libraries\lfdictionary\dto\ClientEnvironmentDto($LFProjectModel, $userModel, $this->projectAccess);
+		$lexProjectUserSettings = new LexProjectUserSettings($LFProjectModel, $userModel);
+		$partOfSpeechSettingsModel = new \libraries\lfdictionary\environment\PartOfSpeechSettingsModel($LFProjectModel);
 		
 		$settingsString = '<script type="text/javascript" language="javascript">' . "\n" .
 			'var settingsPartOfSpeech = ' . json_encode($partOfSpeechSettingsModel->encode()) . ";\n" .
@@ -83,8 +83,8 @@ class LexClientEnvironment
 
 	private function isReady() {
 		if (!$this->_lexProject->isReady()) {
-			LoggerFactory::getLogger()->logInfoMessage(sprintf("Project %s not ready, creating new project...", $this->projectModel->getName()));
-			$this->_lexProject->createNewProject($this->projectModel->getLanguageCode());
+			LoggerFactory::getLogger()->logInfoMessage(sprintf("Project %s not ready, creating new project...", $this->LFProjectModel->getName()));
+			$this->_lexProject->createNewProject($this->LFProjectModel->getLanguageCode());
 		}
 	}
 	

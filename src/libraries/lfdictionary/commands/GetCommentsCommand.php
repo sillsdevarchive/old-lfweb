@@ -52,7 +52,7 @@ class GetCommentsCommand {
 		$doc->preserveWhiteSpace = false;
 		$doc->Load($this->_fileName);
 
-		$this->_dto = new \lfbase\dto\ConversationListDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\ConversationListDTO();
 
 
 
@@ -103,7 +103,7 @@ class GetCommentsCommand {
 			}else {
 				//undefined
 			}
-			$convDto = new \lfbase\dto\ConversationDTO();
+			$convDto = new \libraries\lfdictionary\dto\ConversationDTO();
 			$convDto->setClass($entry->getAttributeNode ("class")->value);
 			$convDto->setGuid($entry->getAttributeNode ("guid")->value);
 			$convDto->setReference($entry->getAttributeNode ("ref")->value);
@@ -113,7 +113,7 @@ class GetCommentsCommand {
 			$convDto->setStatus("");
 			foreach($entry->childNodes as $childNode)
 			{
-				$childDto = new \lfbase\dto\ConversationDTO();
+				$childDto = new \libraries\lfdictionary\dto\ConversationDTO();
 				$childDto->setClass("");
 				$childDto->setReference("");
 				$childDto->setGuid($childNode->getAttributeNode ("guid")->value);

@@ -1,8 +1,8 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
 require_once(dirname(__FILE__) . '/../Config.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+//require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
 /**
  * An enum for the available project states

@@ -14,7 +14,7 @@
  *
  */
 namespace Transliteration;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 /**
  * Implements transliteration without using the PECL extensions.
  *

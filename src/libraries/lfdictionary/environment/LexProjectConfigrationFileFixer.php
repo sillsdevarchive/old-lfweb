@@ -1,5 +1,5 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
 class LexProjectConfigrationFileFixer
 {

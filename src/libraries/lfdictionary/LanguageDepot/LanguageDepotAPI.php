@@ -1,11 +1,11 @@
 <?php
 namespace LanguageDepot;
 
-use lfbase\environment\EnvironmentMapper;
-use lfbase\common\DataConnector;
-use lfbase\environment\ProjectModel;
-use lfbase\environment\UserModel;
-use lfbase\dto\LDAddProjectWithPasswordDTO;
+use libraries\lfdictionary\environment\EnvironmentMapper;
+use libraries\lfdictionary\common\DataConnector;
+use libraries\lfdictionary\environment\LFProjectModel;
+use libraries\lfdictionary\environment\UserModel;
+use libraries\lfdictionary\dto\LDAddProjectWithPasswordDTO;
 
 error_reporting(E_ALL | E_STRICT);
 ob_start("ob_gzhandler");
@@ -134,7 +134,7 @@ class LanguageDepotAPI {
 	function addProject($projectName, $id, $type, $language) {
 		// TODO: validation checks
 		try {
-			$project = ProjectModel::addProject($projectName, $id, $type, $language);
+			$project = LFProjectModel::addProject($projectName, $id, $type, $language);
 			if (!$project) {
 				return "401"; // project already exists!
 			}
@@ -178,14 +178,14 @@ class LanguageDepotAPI {
 	 */
 	function addUserToProject($projectId, $userName, $roleId) {
 		try {
-			if (!\lfbase\environment\ProjectModel::roleExists($roleId)) {
+			if (!\lfbase\environment\LFProjectModel::roleExists($roleId)) {
 				return "402"; // invalid role ID
 			}
-			$projectModel = \lfbase\environment\ProjectModel::getProjectByName($projectId);
-			if (!$projectModel) {
+			$LFProjectModel = \lfbase\environment\LFProjectModel::getProjectByName($projectId);
+			if (!$LFProjectModel) {
 				return "402"; // project doesn't exist
 			}
-			$result = $projectModel->addMember($userName, $roleId);
+			$result = $LFProjectModel->addMember($userName, $roleId);
 			if (!$result) {
 				return "402"; // invalid username
 			}

@@ -1,9 +1,9 @@
 <?php
-namespace lfbase\environment;
+namespace libraries\lfdictionary\environment;
 
-use lfbase\common\DataConnector;
-use lfbase\common\DataConnection;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\DataConnector;
+use libraries\lfdictionary\common\DataConnection;
+use libraries\lfdictionary\common\LoggerFactory;
 
 class Drupal7EnvironmentFixer {
 	

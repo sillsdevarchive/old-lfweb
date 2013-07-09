@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 
 /**
  * Implements a data connection to a MySQL database.

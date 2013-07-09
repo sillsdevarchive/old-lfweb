@@ -1,4 +1,4 @@
 <?php
-namespace lfbase\environment;
+namespace libraries\lfdictionary\environment;
 
 ?>

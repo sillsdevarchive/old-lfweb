@@ -1,4 +1,4 @@
 <?php
-namespace lfbase\dto;
+namespace libraries\lfdictionary\dto;
 
 ?>

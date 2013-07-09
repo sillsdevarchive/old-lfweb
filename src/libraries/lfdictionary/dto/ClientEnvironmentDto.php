@@ -1,12 +1,12 @@
 <?php
-namespace lfbase\dto;
+namespace libraries\lfdictionary\dto;
 
-use lfbase\environment\UserModel;
+use libraries\lfdictionary\environment\UserModel;
 class ClientEnvironmentDto {
 	/**
-	 * @var ProjectModel
+	 * @var LFProjectModel
 	 */
-	private $_projectModel;
+	private $_LFProjectModel;
 
 	/**
 	 * @var UserModel
@@ -19,19 +19,19 @@ class ClientEnvironmentDto {
 	private $_projectAccess;
 	
 	/**
-	 * @param ProjectModel $projectModel
+	 * @param LFProjectModel $LFProjectModel
 	 * @param UserModel $userModel
 	 * @param ProjectAccess $projectAccess
 	 */
-	function __construct($projectModel, $userModel, $projectAccess) {
-		$this->_projectModel = $projectModel;
+	function __construct($LFProjectModel, $userModel, $projectAccess) {
+		$this->_LFProjectModel = $LFProjectModel;
 		$this->_userModel = $userModel;
 		$this->_projectAccess = $projectAccess;
 	}
 
 	function encode() {
 		// TODO Don't think we really need projectDTO and userDTO, we can just use projectAccessDTO maybe CP 2012-11
-		$projectDTO = new ProjectDTO($this->_projectModel);
+		$projectDTO = new ProjectDTO($this->_LFProjectModel);
 		$project = base64_encode(json_encode($projectDTO->encode()));
 		
 		$userDTO = new UserDTO($this->_userModel);

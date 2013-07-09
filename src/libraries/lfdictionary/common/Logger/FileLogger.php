@@ -1,6 +1,6 @@
 <?php
 
-namespace lfbase\common\Logger;
+namespace libraries\lfdictionary\common\Logger;
 
 /**
  * Filesystem-based implementation of ILogger.
@@ -15,7 +15,7 @@ namespace lfbase\common\Logger;
  * @copyright  Copyright (c) 2009-2010 Martin Pecka
  * @copyright  Copyright (c) 2011-2012 Matěj Humpál
  */
-class FileLogger extends \lfbase\common\Logger\AbstractLogger
+class FileLogger extends \libraries\lfdictionary\common\Logger\AbstractLogger
 {
 	/**
 	 * Mask of the log filename, it can contain strftime specifiers

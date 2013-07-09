@@ -48,7 +48,7 @@ class SaveCommentsCommand {
 
 	function processFile() {
 
-		$this->_dto = new \lfbase\dto\ConversationDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\ConversationDTO();
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = false;
 		$doc->Load($this->_fileName);

@@ -18,8 +18,8 @@ class Example {
 	var $_translation;
 	
 	function __construct() {	
-		$this->_example = new \lfbase\dto\MultiText();
-		$this->_translation = new \lfbase\dto\MultiText();
+		$this->_example = new \libraries\lfdictionary\dto\MultiText();
+		$this->_translation = new \libraries\lfdictionary\dto\MultiText();
 	}
 
 	/**

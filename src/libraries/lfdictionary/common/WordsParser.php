@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 class WordsParser {
 
 	//http://en.wikipedia.org/wiki/Punctuation

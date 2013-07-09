@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\environment;
+namespace libraries\lfdictionary\environment;
 
 interface IEnvironmentMapper {
 	
@@ -17,13 +17,13 @@ interface IEnvironmentMapper {
 	
 	/**
 	 * 
-	 * @param ProjectModel $project
+	 * @param LFProjectModel $project
 	 */
 	public function readProject($project);
 	
 	/**
 	 * 
-	 * @param ProjectModel $project
+	 * @param LFProjectModel $project
 	 */
 	public function writeProject($project);
 	
@@ -72,7 +72,7 @@ interface IEnvironmentMapper {
 	/**
 	 * 
 	 * @param string $name
-	 * @return ProjectModel|NULL
+	 * @return LFProjectModel|NULL
 	 */
 	public function getProjectByName($name);
 	
@@ -92,7 +92,7 @@ interface IEnvironmentMapper {
 	
 	/**
 	 * @param string $name A unique name for the project (project SLUG)
-	 * @return ProjectModel
+	 * @return LFProjectModel
 	 */
 	public function createNewProject($name);
 	

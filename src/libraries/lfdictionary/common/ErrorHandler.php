@@ -1,8 +1,8 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 error_reporting(E_ALL | E_STRICT);
-require_once(dirname(__FILE__) . '/../../Config.php');
-use lfbase\common\LoggerFactory;
+require_once(dirname(__FILE__) . '/../Config.php');
+use libraries\lfdictionary\common\LoggerFactory;
 class ErrorHandler
 {
 

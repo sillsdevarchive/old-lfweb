@@ -1,7 +1,7 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 require_once(dirname(__FILE__) . '/../Config.php');
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 
 /**
  * @see LexProject
@@ -9,7 +9,7 @@ use lfbase\common\LoggerFactory;
 class LexiconProjectEnvironment {
 
 	/**
-	 * @var ProjectModel
+	 * @var LFProjectModel
 	 */
 	private $_projectName;
 
@@ -44,17 +44,17 @@ class LexiconProjectEnvironment {
 	// 	private function checkAndUpdateUserDefSettings() {
 	// 		$this->makeLanguageForgeSettingsFolderReady();
 
-	// 		if ($this->_projectModel->getType() == "Dictionary") {
+	// 		if ($this->_LFProjectModel->getType() == "Dictionary") {
 	// 			$masterFile=LF_BASE_PATH . "lfbase/data/" . LANGUAGE_FORGE_DEFAULT_SETTINGS_LEX;
-	// 		} elseif ($this->_projectModel->getType()=="Rapid Word Collection"){
+	// 		} elseif ($this->_LFProjectModel->getType()=="Rapid Word Collection"){
 	// 			$masterFile=LF_BASE_PATH . "lfbase/data/" . LANGUAGE_FORGE_DEFAULT_SETTINGS_RWC;
 	// 		} else {
-	// 			throw new \lfbase\common\UserActionDeniedException("Unknown project type: ". $this->_projectModel->getType());
+	// 			throw new \libraries\lfdictionary\common\UserActionDeniedException("Unknown project type: ". $this->_LFProjectModel->getType());
 	// 		}
 	// 		$projectFile=$this->_projectPath. LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
 
 	// 		if (!file_exists($masterFile)) {
-	// 			throw new \lfbase\common\UserActionDeniedException("Master default user setting file '" . $masterFile . "' missing");
+	// 			throw new \libraries\lfdictionary\common\UserActionDeniedException("Master default user setting file '" . $masterFile . "' missing");
 	// 		}
 
 	// 		if (!file_exists($projectFile)) {
@@ -75,7 +75,7 @@ class LexiconProjectEnvironment {
 	// 	}
 
 	private function cloneMasterAndWait($sourcePath) {
-		$hgWrapper = new \lfbase\common\HgWrapper($this->_projectPath);
+		$hgWrapper = new \libraries\lfdictionary\common\HgWrapper($this->_projectPath);
 		$hgWrapper->cloneRepository($sourcePath);
 
 		// Wait for the clone to complete by checking for a known file to be present. In this case the *.lift file.
@@ -101,11 +101,11 @@ class LexiconProjectEnvironment {
 	/**
 	 * Returns the path to the project working folder.
 	 * 		e.g. /var/lib/languageforge/work/someProjectName
-	 * @param ProjectModel $projectModel
+	 * @param LFProjectModel $LFProjectModel
 	 * @return string
 	 */
-	static public function projectPath($projectModel) {
-		return LANGUAGEFORGE_VAR_PATH . 'work/' . $projectModel->getName();
+	static public function projectPath($LFProjectModel) {
+		return LANGUAGEFORGE_VAR_PATH . 'work/' . $LFProjectModel->getName();
 	}
 
 	/**

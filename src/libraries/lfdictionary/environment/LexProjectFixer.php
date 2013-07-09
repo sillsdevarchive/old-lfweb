@@ -1,7 +1,7 @@
 <?php
 namespace environment;
 
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 class LexProjectFixer
 {
 	/**

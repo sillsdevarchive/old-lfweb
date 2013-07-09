@@ -95,7 +95,7 @@ class LiftScanner
 	 * @return \dto\Sense
 	 */
 	public function readSense($node) {
-		$sense = new \dto\Sense();
+		$sense = new \libraries\lfdictionary\dto\Sense();
 	
 		// Definition
 		$definition = $node->{'definition'};
@@ -131,7 +131,7 @@ class LiftScanner
 	 * @return \dto\Example
 	 */
 	public function readExample($node) {
-		$example = new \dto\Example();
+		$example = new \libraries\lfdictionary\dto\Example();
 	
 		// Example multitext
 		$exampleXml = $node;
@@ -155,7 +155,7 @@ class LiftScanner
 	 */
 	
 	public function readMultiText($node) {
-		$multiText = new \lfbase\dto\MultiText();
+		$multiText = new \libraries\lfdictionary\dto\MultiText();
 		foreach ($node->{'form'} as $form) {
 			$multiText->addForm((string)$form['lang'], (string)$form->{'text'});
 		}

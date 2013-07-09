@@ -1,8 +1,8 @@
 <?php
-namespace lfbase\commands;
-use lfbase\mapper\InputSystemXmlJsonMapper;
+namespace libraries\lfdictionary\commands;
+use libraries\lfdictionary\mapper\InputSystemXmlJsonMapper;
 
-require_once(dirname(__FILE__) . '/../../Config.php');
+require_once(dirname(__FILE__) . '/../Config.php');
 
 class GetSettingInputSystemsCommand
 {

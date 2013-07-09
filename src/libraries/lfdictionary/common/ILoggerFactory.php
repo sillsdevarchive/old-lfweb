@@ -1,6 +1,6 @@
 <?php
 
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 
 /**
  * Factory for FileLogger

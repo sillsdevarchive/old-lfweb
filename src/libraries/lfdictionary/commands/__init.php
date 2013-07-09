@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\commands;
+namespace libraries\lfdictionary\commands;
 
 
 ?>

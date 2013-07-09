@@ -1,7 +1,7 @@
 <?php
 
-namespace lfbase\common;
-use lfbase\common\Logger;
+namespace libraries\lfdictionary\common;
+use libraries\lfdictionary\common\Logger;
 
 /**
  * Logger stack. Logs message for each inserted logger

@@ -3,7 +3,7 @@
 /* Directives */
 
 
-angular.module('sfAdmin.directives', ["jsonRpc"]).
+angular.module('sfAdmin.directives', ["jsonRpc", "sfAdmin.filters"]).
   directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);
@@ -29,7 +29,7 @@ angular.module('sfAdmin.directives', ["jsonRpc"]).
 				  console.log("Fetching id: " + userid);
 				  jsonRpc.connect("/api/sf");
 				  jsonRpc.call("user_read", {"id": userid}, function(result) {
-					  scope.record = result.data.result;
+					  scope.record = result.data;
 				  });
 			  }
 		  },
@@ -60,7 +60,7 @@ angular.module('sfAdmin.directives', ["jsonRpc"]).
 				  console.log("Fetching id: " + recordid);
 				  jsonRpc.connect("/api/sf");
 				  jsonRpc.call("project_read", {"id": recordid}, function(result) {
-					  scope.record = result.data.result;
+					  scope.record = result.data;
 				  });
 			  }
 		  },
@@ -71,6 +71,30 @@ angular.module('sfAdmin.directives', ["jsonRpc"]).
 		  restrict: "E",
 		  templateUrl: "/angular-app/sfadmin/partials/projectlist.html",
   }})
+.directive("requireEqual", function() {
+	return {
+		restrict: "A",
+		require: "ngModel",
+		scope: {
+			requireEqual: "=",
+		},
+		// Basic idea is it's a directive to do validation, used like this:
+		// <input type="password" ng-model="record.password"/>
+		// <input type="password" ng-model="record.confirmPassword" require-equal="record.password"/>
+		link: function(scope, elem, attrs, ngModelCtrl) {
+			// If for some reason we're getting called early, when ngModelCtrl
+			// is not yet available, then do nothing.
+			if (!ngModelCtrl) return;			
+			ngModelCtrl.$parsers.unshift(function(newValue) {
+				if (newValue == scope.requireEqual) {
+					ngModelCtrl.$setValidity("match", true);
+				} else {
+					ngModelCtrl.$setValidity("match", false);
+				}
+			});
+		},
+	};
+})
 // This directive's code is from http://stackoverflow.com/q/16016570/
 .directive('ngFocus', function($parse, $timeout) {
 	return function(scope, elem, attrs) {

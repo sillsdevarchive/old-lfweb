@@ -1,5 +1,5 @@
 <?php
-namespace lfbase\common;
+namespace libraries\lfdictionary\common;
 class TextFormatHelper {
 	/**
 	 * @return UTF8 string
@@ -18,7 +18,7 @@ class TextFormatHelper {
 			$result = iconv($encoding, "UTF-8//TRANSLIT", $string);
 			return $result;
 		} catch (Exception $e) {
-			throw new \lfbase\common\UserActionDeniedException('unknown encoding of text file or it is not a plain text file.');
+			throw new \libraries\lfdictionary\common\UserActionDeniedException('unknown encoding of text file or it is not a plain text file.');
 		}
 	}
 

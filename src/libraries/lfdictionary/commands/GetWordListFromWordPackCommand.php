@@ -4,7 +4,7 @@ namespace commands;
 require_once(dirname(__FILE__) . '/../Config.php');
 
 use dto\ListDTO;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 class GetWordListFromWordPackCommand
 {
 	/**
@@ -107,7 +107,7 @@ class GetWordListFromWordPackCommand
 	}
 
 	function readMultiText($node) {
-		$multiText = new \lfbase\dto\MultiText();
+		$multiText = new \libraries\lfdictionary\dto\MultiText();
 		foreach ($node->{'form'} as $form) {
 			$multiText->addForm((string)$form['lang'], (string)$form->{'text'});
 		}

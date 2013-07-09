@@ -4,7 +4,7 @@
  * @author Arivusudar
  */
 
-namespace lfbase\dto;
+namespace libraries\lfdictionary\dto;
 
 class ProjectListDTO {
 	

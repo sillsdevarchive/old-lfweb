@@ -1,6 +1,6 @@
 <?php
 
-namespace lfbase\common\Logger;
+namespace libraries\lfdictionary\common\Logger;
 
 /**
  * Logger ignoring all messages
@@ -11,7 +11,7 @@ namespace lfbase\common\Logger;
  * @author     Matěj Humpál <finwe@finwe.info>
  * @copyright  Copyright (c) 2011 Matěj Humpál
  */
-class NullLogger implements \lfbase\common\Logger\ILogger
+class NullLogger implements \libraries\lfdictionary\common\Logger\ILogger
 {
 	/**
 	 * Dummy implementation

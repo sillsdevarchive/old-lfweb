@@ -1,10 +1,10 @@
 <?php
 
-namespace lfbase\common\Logger;
+namespace libraries\lfdictionary\common\Logger;
 
 use InvalidArgumentException;
 use ReflectionClass;
-use lfbase\common\ILogger;
+use \libraries\lfdictionary\common\ILogger;
 /**
  * Abstract Logger class offering base logging functionality
  *

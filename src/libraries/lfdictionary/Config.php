@@ -51,4 +51,21 @@ define('PHP_UPLOAD_PATH', '/tmp/php_upload/');
 // max file size per post (byte) for jsupload, it you also need to change APC and PHP settings!
 define('PHP_UPLOAD_MAX_FILE_SIZE', 20 * 1024 * 1024);
 
+
+define('LEXICON_WORD_PACK_FILE_NAME', 'SILCawl.lift');
+
+// use for gather words from list.
+define('LEXICON_WORD_LIST_SOURCE', '/var/lib/languageforge/lexicon/wordpacks/');
+
+//point to root folder of dictionaries.
+define('PROJECTS_HG_ROOT_FOLDER', '/var/lib/languageforge/work/');
+
+define('DASHBOARD_TOOL', '/var/www/langforgedictionary/lexicon-dashboard-tool/index.php');
+
+
+define('LANGUAGE_FORGE_DEFAULT_SETTINGS_LEX', 'WeSayConfig.Lex.Default');
+
+// the folder too keep per user settings in a project
+define('LANGUAGE_FORGE_SETTINGS', '/LanguageForgeSettings/');
+
 ?>

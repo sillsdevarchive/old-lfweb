@@ -145,19 +145,19 @@ class MongoLexStore implements ILexStore
 	 * @return \dto\AutoListDTO
 	 */
 	public function readSuggestions($language, $search, $startFrom, $limit) {
-		$dto = new \dto\AutoListDTO();
+		$dto = new \libraries\lfdictionary\dto\AutoListDTO();
 
 		$collection = $this->_mongoDB->Entries;
 		$cursor = $collection->find(array(), array('guid' => 1, 'entry' => 1));
 		foreach ($cursor as $record) {
-			$word = \lfbase\dto\MultiText::createFromArray($record['entry']);
+			$word = \libraries\lfdictionary\dto\MultiText::createFromArray($record['entry']);
 			if ($word->hasForm($language)) {
 				$wordForm = $word->getForm($language);
 				//find the closest
 				$simtext = similar_text($search, $wordForm);
 				if ($simtext == strlen($search)) {
 					// All the words in our search term are in this word.
-					$autoListEntry = new \dto\AutoListEntry($record['guid'], $wordForm);
+					$autoListEntry = new \libraries\lfdictionary\dto\AutoListEntry($record['guid'], $wordForm);
 					$dto->addListEntry($autoListEntry);
 					if (--$limit == 0) {
 						break;
@@ -242,7 +242,7 @@ class MongoLexStore implements ILexStore
 		$transliterationFilter = new WordTransliterationFilter();
 		//TODO ZX 2013-4 how to filter data by query not code
 		$query = array();
-		$dto = new \dto\EntryListDTO();
+		$dto = new \libraries\lfdictionary\dto\EntryListDTO();
 		$dto->entryCount = $this->entryCount();
 		$collection = $this->_mongoDB->Entries;
 		$cursor = $collection->find($query);

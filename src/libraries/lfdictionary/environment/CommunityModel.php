@@ -3,8 +3,8 @@
  * LanguageForge Dictionary API
  * @author Arivusudar
  */
-namespace lfbase\environment;
-require_once(dirname(__FILE__) . '/../../Config.php');
+namespace libraries\lfdictionary\environment;
+require_once(dirname(__FILE__) . '/../Config.php');
 
 
 class CommunityModel
@@ -29,9 +29,9 @@ class CommunityModel
 	
 		$this->_projectId = $projectId;		
 		//Database connection
-		$this->_connection = new \lfbase\common\DataConnection(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+		$this->_connection = new \libraries\lfdictionary\common\DataConnection(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 		$this->_connection->open();
-		$this->_communityListdto = new \lfbase\dto\CommunityListDTO();
+		$this->_communityListdto = new \libraries\lfdictionary\dto\CommunityListDTO();
 	}
 	
 	function __destruct() {
@@ -76,7 +76,7 @@ class CommunityModel
 		$result = db_query_range("SELECT n.nid, n.title FROM node n WHERE n.status = 1 AND n.type = 'community'", $from, $to);
 
 		while ($community = db_fetch_object($result)) {
-			$CommunityDTO = new \lfbase\dto\CommunityDTO();
+			$CommunityDTO = new \libraries\lfdictionary\dto\CommunityDTO();
 			$CommunityDTO->addCommunityId($community->nid);
 			$CommunityDTO->addCommunityName($community->title);
 			$this->_communityListdto->addListCommunity($CommunityDTO);
@@ -94,7 +94,7 @@ class CommunityModel
 		$result = db_query_range("SELECT n.nid, n.title FROM node n WHERE n.status = 1 AND n.type = 'community' AND LOWER(n.title) LIKE LOWER('%s%%')", $string, 0, $maxResultCount);
 		
 		while ($community = db_fetch_object($result)) {
-			$communityDTO = new \lfbase\dto\CommunityDTO();
+			$communityDTO = new \libraries\lfdictionary\dto\CommunityDTO();
 			$communityDTO->addCommunityId($community->nid);
 			$communityDTO->addCommunityName($community->title);
 			$this->_communityListdto->addListCommunity($communityDTO);

@@ -28,7 +28,7 @@ class EntryDTO {
 	
 	private function __construct($guid=null) {
 		$this->_guid = $guid;
-		$this->_entry = new \lfbase\dto\MultiText();
+		$this->_entry = new \libraries\lfdictionary\dto\MultiText();
 		$this->_senses = array();
 	}
 	

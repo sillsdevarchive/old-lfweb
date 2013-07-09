@@ -1,7 +1,7 @@
 <?php
-namespace lfbase\environment;
+namespace libraries\lfdictionary\environment;
 
-use lfbase\common\DataConnector;
+use libraries\lfdictionary\common\DataConnector;
 
 class LanguageDepotEnvironmentMapper implements IEnvironmentMapper {
 
@@ -24,7 +24,7 @@ class LanguageDepotEnvironmentMapper implements IEnvironmentMapper {
 	
 	/**
 	 * 
-	 * @param ProjectModel $project
+	 * @param LFProjectModel $project
 	 */
 	public function readProject($project) {
 		$id = $project->getId();
@@ -38,7 +38,7 @@ class LanguageDepotEnvironmentMapper implements IEnvironmentMapper {
 	
 	/**
 	 * 
-	 * @param ProjectModel $project
+	 * @param LFProjectModel $project
 	 */
 	public function writeProject($project) {
 		$this->_connection->execute(
@@ -78,13 +78,13 @@ class LanguageDepotEnvironmentMapper implements IEnvironmentMapper {
 	/**
 	 * Get a project by it's unique name
 	 * @param string $name
-	 * @return ProjectModel|NULL if project doesn't exist
+	 * @return LFProjectModel|NULL if project doesn't exist
 	 */
 	public function getProjectByName($name) {
 		$result = $this->_connection->execute(sprintf("SELECT id FROM projects WHERE identifier = '%s'", $name));
 		$row =  $this->_connection->fetch_assoc($result);
 		if (count($row) > 0) {
-			return new ProjectModel($row['id']);
+			return new LFProjectModel($row['id']);
 		}
 		return null;
 	}

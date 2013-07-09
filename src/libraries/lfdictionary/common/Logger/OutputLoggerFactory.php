@@ -1,6 +1,6 @@
 <?php
 
-namespace lfbase\common\Logger;
+namespace libraries\lfdictionary\common\Logger;
 
 /**
  * Factory for OutputLogger
@@ -11,7 +11,7 @@ namespace lfbase\common\Logger;
  * @author     Matěj Humpál <finwe@finwe.info>
  * @copyright  Copyright (c) 2011 Matěj Humpál
  */
-class OutputLoggerFactory implements \lfbase\common\Logger\ILoggerFactory
+class OutputLoggerFactory implements \libraries\lfdictionary\common\Logger\ILoggerFactory
 {
 	private $options;
 

@@ -2,7 +2,7 @@
 namespace commands;
 
 require_once(dirname(__FILE__) . '/../Config.php');
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 class GetDomainTreeListCommand {
 	
 	/**

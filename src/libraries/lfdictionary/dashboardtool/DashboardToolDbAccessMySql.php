@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . '/../Config.php');
 
 use \lfbase\common\DataConnector;
 use \lfbase\common\DataConnection;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 class DashboardToolDbAccessMySql implements IDashboardToolDbAccess
 {
 	

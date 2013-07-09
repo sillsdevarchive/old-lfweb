@@ -5,7 +5,7 @@ use dashboardtool\DashboardDbType;
 require_once(dirname(__FILE__) . '/../Config.php');
 
 use dashboardtool\DashboardToolFactory;
-use lfbase\common\LoggerFactory;
+use libraries\lfdictionary\common\LoggerFactory;
 class GetDashboardDataCommand {
 	var $_filePath;
 	var $_projectId=0;

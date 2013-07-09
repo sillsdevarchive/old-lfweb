@@ -1,11 +1,11 @@
 <?php
-namespace lfbase\environment;
+namespace libraries\lfdictionary\environment;
 
-use lfbase\dto\UserDTO;
-use lfbase\dto\UserListDTO;
-use lfbase\common\DataConnection;
-use lfbase\common\DataConnector;
-use lfbase\environment\ProjectRole;
+use libraries\lfdictionary\dto\UserDTO;
+use libraries\lfdictionary\dto\UserListDTO;
+use libraries\lfdictionary\common\DataConnection;
+use libraries\lfdictionary\common\DataConnector;
+use libraries\lfdictionary\environment\ProjectRole;
 
 class DrupalEnvironmentMapper implements IEnvironmentMapper {
 
@@ -20,7 +20,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 
 	/**
 	 * @param ProjectAccess $projectAccess
-	 * @see lfbase\environment.IEnvironment::readProjectAccess()
+	 * @see libraries\lfdictionary\environment.IEnvironment::readProjectAccess()
 	 */
 	public function readProjectAccess($projectAccess) {
 		$sql = sprintf(
@@ -37,7 +37,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 
 	/**
 	 * @param ProjectAccess $projectAccess
-	 * @see lfbase\environment.IEnvironment::writeProjectAccess()
+	 * @see libraries\lfdictionary\environment.IEnvironment::writeProjectAccess()
 	 */
 	public function writeProjectAccess($projectAccess) {
 		$hostRole = ProjectRole::mapRoleToHost($projectAccess->getRole());
@@ -50,7 +50,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 
 	/**
 	 *
-	 * @param ProjectModel $project
+	 * @param LFProjectModel $project
 	 */
 	public function readProject($project) {
 		$sql = sprintf("SELECT n.title, og.og_description, ctp.field_procode_value " .
@@ -72,7 +72,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 
 	/**
 	 *
-	 * @param ProjectModel $project
+	 * @param LFProjectModel $project
 	 */
 	public function writeProject($project) {
 		$sql = sprintf("UPDATE node SET title='%s' WHERE nid=%d AND type='project'", $project->getTitle(), $project->getId());
@@ -103,7 +103,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 			$result = db_query_range($sql, $indexBegin, $indexEnd);
 			while ($user = db_fetch_object($result)) {
 				$userModel= new UserModel($user->uid);
-				$userdto = new \lfbase\dto\UserDTO($userModel);;
+				$userdto = new \libraries\lfdictionary\dto\UserDTO($userModel);;
 				$userlistdto->addListUser($userdto);
 			}
 		}
@@ -125,8 +125,8 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 		}
 		$this->userJoinProject($projectId, $userId);
 		$this->defaultUserProjectPermission($projectId, $userId);
-		$projectModel = new \lfbase\environment\ProjectModel($projectId);
-		if ($projectModel->isUserInProject($userId)) {
+		$LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		if ($LFProjectModel->isUserInProject($userId)) {
 			return true;
 		} else {
 			return false;
@@ -194,7 +194,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 	/**
 	*
 	* @param string $name
-	* @return ProjectModel|NULL
+	* @return LFProjectModel|NULL
 	*/
 	public function getProjectByName($name) {
 	
@@ -213,7 +213,7 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 		$type = $typeTokens[count($typeTokens) - 1];
 		if (array_key_exists('nid', $row))
 		{
-			$project = new ProjectModel($row['nid']);
+			$project = new LFProjectModel($row['nid']);
 			// set(title, language, name (slug), type);
 			$project->set($row['title'], $row['og_description'], $row['field_procode_value'], $type);
 			return $project;
@@ -476,12 +476,12 @@ class DrupalEnvironmentMapper implements IEnvironmentMapper {
 	* @param int $hostRole
 	*/
 	public function getUsersInProjectByRole($projectId, $hostRole) {
-		$userlistdto = new \lfbase\dto\UserListDTO();
+		$userlistdto = new \libraries\lfdictionary\dto\UserListDTO();
 		$sql = sprintf("SELECT u.uid, u.name, u.mail FROM users u INNER JOIN lf_access op ON u.uid = op.uid WHERE op.is_active=1 AND op.lf_role=%d AND op.nid=%d", $hostRole, $projectId);
 		$result = db_query($sql);
 		while ($user = db_fetch_object($result)) {
 			$userModel= new UserModel($user->uid);
-			$userdto = new \lfbase\dto\UserDTO($userModel);;
+			$userdto = new \libraries\lfdictionary\dto\UserDTO($userModel);;
 			$userlistdto->addListUser($userdto);
 		}
 		return $userlistdto;

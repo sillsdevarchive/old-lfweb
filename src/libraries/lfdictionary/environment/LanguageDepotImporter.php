@@ -1,5 +1,5 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 require_once(LF_BASE_PATH . "/lfbase/Loader.php");
@@ -52,7 +52,7 @@ class LanguageDepotProjectDatabase {
 		}
 		}
 	
-		$ProjectModel = new ProjectModel($nid);
+		$LFProjectModel = new LFProjectModel($nid);
 	
 		$hgWrapper = new HgWrapper($destination);
 		$hgWrapper->cloneRepository($source);
@@ -86,8 +86,8 @@ class LanguageDepotImporter {
 		$result = new LanguageDepotImportEnvironment();
 		$result->WorkRootPath = LexiconProjectEnvironment::languageforgeWorkRootPath();
 		$result->StateRootPath = LexiconProjectEnvironment::languageforgeStateRootPath();
-		$projectModel = new \lfbase\environment\ProjectModel($projectNodeId);
-		$result->ProjectPathName = $projectModel->getName();
+		$LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+		$result->ProjectPathName = $LFProjectModel->getName();
 		return $result;
 	}
 	
@@ -118,7 +118,7 @@ class LanguageDepotImporter {
 			}
 		}
 		$url = "http://$user:$password@hg-public.languagedepot.org/$projectId";
-		$hg = new \lfbase\common\HgWrapper($this->destinationPath());
+		$hg = new \libraries\lfdictionary\common\HgWrapper($this->destinationPath());
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;
 	}
@@ -171,7 +171,7 @@ class LanguageDepotImporter {
 	}
 	
 	private function createAsyncRunner() {
-		return new \lfbase\common\AsyncRunner($this->stateFilePath());
+		return new \libraries\lfdictionary\common\AsyncRunner($this->stateFilePath());
 	}
 	
 	/**
