@@ -1,23 +1,22 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
-ob_start("ob_gzhandler");
-require_once(dirname(__FILE__) . '/Config.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+define('APPPATH', '/var/www/languageforge.org_dev/htdocs/');
+require_once(APPPATH  . 'helpers/loader_helper.php');
 
-use store\LexStoreMissingInfo;
-use environment\ProjectState;
-use dto\ProjectStateDTO;
-use dto\ListDTO;
-use store\LexStore;
-use libraries\lfdictionary\common\AsyncRunner;
-use libraries\lfdictionary\environment\ProjectAccess;
-use libraries\lfdictionary\environment\ProjectPermission;
-use libraries\lfdictionary\dto\ResultDTO;
-use dashboardtool\HistoricalHgDataFetcher;
-use libraries\lfdictionary\common\LoggerFactory;
+use \libraries\lfdictionary\store\LexStoreMissingInfo;
+use \libraries\lfdictionary\environment\ProjectState;
+use \libraries\lfdictionary\dto\ProjectStateDTO;
+use \libraries\lfdictionary\dto\ListDTO;
+use \libraries\lfdictionary\store\LexStore;
+use \libraries\lfdictionary\common\AsyncRunner;
+use \libraries\lfdictionary\environment\ProjectAccess;
+use \libraries\lfdictionary\environment\ProjectPermission;
+use \libraries\lfdictionary\dto\ResultDTO;
+use \libraries\lfdictionary\dashboardtool\HistoricalHgDataFetcher;
+use \libraries\lfdictionary\common\LoggerFactory;
 
-use libraries\lfdictionary\dto\UserDTO;
-use libraries\lfdictionary\environment\EnvironmentMapper;
+use \libraries\lfdictionary\dto\UserDTO;
+use \libraries\lfdictionary\environment\EnvironmentMapper;
 
 /**
  * The main json-rpc Lexical API
@@ -58,11 +57,11 @@ class lfapi
 	
 	function __construct($projectNodeId, $userId) {
 		$this->_logger = LoggerFactory::getLogger();
-		$this->_logger->logInfoMessage("LFBaseAPI p:$projectNodeId u:$userId");
+		$this->_logger->logInfoMessage("LFAPI p:$projectNodeId u:$userId");
 		$this->_userId = $userId;
 		$this->_projectNodeId = $projectNodeId;
 	
-		$this->_projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectNodeId);
+		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		$this->initialize($projectNodeId, $userId);
 	}
 	
@@ -71,7 +70,7 @@ class lfapi
 		LoggerFactory::getLogger()->logInfoMessage("Lexicon Project initialize...");
 		$this->_userId = $userId;
 		$this->_projectNodeId = $projectNodeId;
-		$this->_projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectNodeId);
+		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		$this->_userModel = new \libraries\lfdictionary\environment\UserModel($userId);
 
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%d) U=%s (%d)',
@@ -80,9 +79,9 @@ class lfapi
 		$this->_userModel->getUserName(),
 		$userId
 		));
-		$this->_lexProject = new \environment\LexProject($this->_projectModel->getName());
+		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
 		$this->_projectAccess = new \libraries\lfdictionary\environment\ProjectAccess($this->_projectNodeId,$this->_userId);
-		$this->_projectPath = \environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
+		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
 	}
 
 	/**
@@ -548,7 +547,7 @@ class lfapi
 	private $_lexStore;
 	private function getLexStore() {
 		if (!isset($this->_lexStore)) {
-			$this->_lexStore = new \store\LexStoreController(\store\LexStoreType::STORE_MONGO, $this->_lexProject->projectName, $this->_lexProject);
+			$this->_lexStore = new \libraries\lfdictionary\store\LexStoreController(\store\LexStoreType::STORE_MONGO, $this->_lexProject->projectName, $this->_lexProject);
 		}
 		return $this->_lexStore;
 	}
@@ -828,9 +827,9 @@ class lfapi
 //Main Function
 function main() {
 
-	\lfbase\common\LFDrupal::loadDrupal();
+	//\lfbase\common\LFDrupal::loadDrupal();
 	//error handler must register after drupal loaded!, otherwise will be replace by drupal's handler
-	\lfbase\common\ErrorHandler::register();
+	\libraries\lfdictionary\common\ErrorHandler::register();
 	global $user;
 	$userId = isset($user) ? $user->uid : null;
 	$projectId = isset($_SESSION['projectid']) ? $_SESSION['projectid'] : null;
@@ -842,8 +841,8 @@ function main() {
 		$projectId = $_GET['p'];
 	}
 
-	$api = new LexAPI($projectId, $userId);
-	\lfbase\common\jsonRPCServer::handle($api);
+	$api = new lfapi($projectId, $userId);
+	\libraries\lfdictionary\common\jsonRPCServer::handle($api);
 }
 
 if (!defined('TestMode')) {

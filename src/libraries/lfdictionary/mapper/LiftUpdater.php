@@ -1,6 +1,6 @@
 <?php
 
-namespace mapper;
+namespace libraries\lfdictionary\mapper;
 require_once(dirname(__FILE__) . '/../Config.php');
 
 class LiftUpdater {

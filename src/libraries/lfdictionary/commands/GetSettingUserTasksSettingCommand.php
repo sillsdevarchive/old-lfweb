@@ -1,5 +1,5 @@
 <?php
-namespace commands;
+namespace \libraries\lfdictionary\commands;
 use mapper\TaskSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');

@@ -1,5 +1,5 @@
 
-<?php if ($logged_in): ?>
+<?php if (!$logged_in): ?>
 <!--  user not loged in, show only view-->
 		<div id="ViewerContent" class="readonly-view-view-only">
 			  <?php include ("listview.html.php"); ?>
@@ -62,8 +62,7 @@
 		require_once('/var/www/languageforge.org_dev7/api/lex/Config.php');
 		require_once(APPPATH . '/helpers/loader_helper.php');
 		//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
-		 $project_id=1;
-		 $user_id = 1;
+
 		if ($project_id!=null && $project_id!=0 && $user_id!=null && $user_id!=0) {
 			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id);
 			echo $lexClientEnvironment->getSettings();

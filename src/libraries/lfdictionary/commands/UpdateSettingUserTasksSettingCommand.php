@@ -1,5 +1,5 @@
 <?php
-namespace commands;
+namespace \libraries\lfdictionary\commands;
 use environment\LexiconProjectEnvironment;
 
 use mapper\TaskSettingXmlJsonMapper;

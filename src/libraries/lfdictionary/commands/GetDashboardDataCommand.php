@@ -1,5 +1,5 @@
 <?php
-namespace commands;
+namespace \libraries\lfdictionary\commands;
 use dashboardtool\DashboardDbType;
 
 require_once(dirname(__FILE__) . '/../Config.php');

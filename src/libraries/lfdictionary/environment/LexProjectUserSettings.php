@@ -5,7 +5,7 @@
  * @author Arivusudar
  */
 namespace libraries\lfdictionary\environment;
-use libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
+use \libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
 error_reporting(E_ALL | E_STRICT);
 require_once(dirname(__FILE__) . '/../Config.php');
@@ -65,12 +65,12 @@ class LexProjectUserSettings
 
 	function __construct($LFProjectModel, $userModel) {
 		
-		if (!is_a($LFProjectModel, '\lfbase\environment\LFProjectModel')) {
+		if (!is_a($LFProjectModel, '\libraries\lfdictionary\environment\LFProjectModel')) {
 			throw new \Exception('Type error: LFProjectModel');
 		}
 		$this->_LFProjectModel = $LFProjectModel;
 		$this->_userModel = $userModel;
-		$this->_projectPath = \environment\LexiconProjectEnvironment::projectPath($this->_LFProjectModel);
+		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_LFProjectModel);
 		$this->load();
 	}
 
@@ -80,7 +80,7 @@ class LexProjectUserSettings
 		$userName = $this->_userModel->getUserName();
 		$userName = mb_strtolower($userName, mb_detect_encoding($userName));
 
-		$filePath = \environment\LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $userName);
+		$filePath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $userName);
 
 		LoggerFactory::getLogger()->logInfoMessage(sprintf("LexProjectUserSettings: %s (%d) using settings '%s'",
 		$this->_userModel->getUserName(),

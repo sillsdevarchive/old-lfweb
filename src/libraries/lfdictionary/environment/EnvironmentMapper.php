@@ -13,8 +13,8 @@ class EnvironmentMapper {
 	 * @return IEnvironmentMapper
 	 * @throws \Exception
 	 */
-	static public function connect($environment = 'drupal7') {
-		if (is_a($environment, '\lfbase\environment\IEnvironmentMapper')) {
+	static public function connect($environment = 'languageforge') {
+		if (is_a($environment, '\libraries\lfdictionary\environment\IEnvironmentMapper')) {
 			self::$_environment = $environment;	
 			return self::$_environment;
 		}
@@ -31,6 +31,9 @@ class EnvironmentMapper {
 				break;
 			case 'languagedepot':
 				self::$_environment = new LanguageDepotEnvironmentMapper();
+				break;
+			case 'languageforge':
+				self::$_environment = new LanguageForgeEnvironmentMapper();
 				break;
 			default:
 				throw new \Exception("Unsupported environment '$environment'");

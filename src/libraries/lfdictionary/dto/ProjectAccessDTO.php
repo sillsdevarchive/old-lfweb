@@ -3,7 +3,7 @@ namespace libraries\lfdictionary\dto;
 
 use libraries\lfdictionary\environment\ProjectRole;
 
-use \lfbase\environment\ProjectPermission;
+use \libraries\lfdictionary\environment\ProjectPermission;
 
 class ProjectAccessDTO {
 	

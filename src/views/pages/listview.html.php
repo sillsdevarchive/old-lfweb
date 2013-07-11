@@ -11,8 +11,9 @@
 		    }    
 			});
 			// RPC server address
+			var endPointUrl = 'service/lfapi.php?u=<?php echo isset($user_id) ? $user_id : '' ?>&p=<?php echo $project_id ?>' ;
 			$.jsonRPC.setup({
-				endPoint: '/api/lex/LexAPI.php',
+				endPoint: endPointUrl,
 				namespace: ''
 			});
 			$.jsonRPC.request('getTitleLetterList', {

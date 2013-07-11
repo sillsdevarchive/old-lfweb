@@ -1,5 +1,5 @@
 <?php
-namespace commands;
+namespace \libraries\lfdictionary\commands;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 use libraries\lfdictionary\common\LoggerFactory;
