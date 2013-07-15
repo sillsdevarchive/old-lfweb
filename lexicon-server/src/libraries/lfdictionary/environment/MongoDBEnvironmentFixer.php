@@ -5,7 +5,7 @@ use libraries\lfdictionary\common\DataConnector;
 use libraries\lfdictionary\common\DataConnection;
 use libraries\lfdictionary\common\LoggerFactory;
 
-class LanguageForgEnvironmentFixer {
+class MongoDBEnvironmentFixer {
 	
 	/**
 	 * @param DrupamEnvironmentMapper $mapper

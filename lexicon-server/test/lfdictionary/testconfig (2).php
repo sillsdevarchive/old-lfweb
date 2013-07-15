@@ -14,15 +14,15 @@ define('DB_NAME', 'lfweb7_test');
 
 if (file_exists('/home/bob')) {
 	// Build server
-	define('LF_BASE_PATH', '/home/bob/agent/work/lfdrupal7/lfbase/lfbase-server/src/');
+	define('LF_LIBRARY_PATH', '/home/bob/agent/work/lfdrupal7/lfbase/lfbase-server/src/');
 } else if (file_exists($rootPath . '../../../LFBase/lfbase-server/src')) {
 	// Eclipse debugging in the dev environment
-	define('LF_BASE_PATH', realpath($rootPath . '../../../LFBase/lfbase-server/src') . '/');
+	define('LF_LIBRARY_PATH', realpath($rootPath . '../../../LFBase/lfbase-server/src') . '/');
 } else {
-	throw new \Exception('Could not find a suitable LF_BASE_PATH');
+	throw new \Exception('Could not find a suitable LF_LIBRARY_PATH');
 }
 
-error_log(sprintf("TestConfig: Using LF_BASE_PATH '%s'", LF_BASE_PATH));
+error_log(sprintf("TestConfig: Using LF_LIBRARY_PATH '%s'", LF_LIBRARY_PATH));
 
 require_once(TestPath . '../src/Config.php');
 

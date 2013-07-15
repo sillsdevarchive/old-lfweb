@@ -67,7 +67,7 @@
 ############################################################################################
 
 require_once(dirname(__FILE__) . '/Config.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
 
 $drupalLoaded = \lfbase\common\LFDrupal::loadDrupal();
 \lfbase\common\ErrorHandler::register();

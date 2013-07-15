@@ -12,7 +12,7 @@ class LexClientEnvironment
 	public $LFProjectModel;
 	
 	/**
-	 * @var UserModel
+	 * @var LFUserModel
 	 */
 	public $userModel;
 	
@@ -27,7 +27,7 @@ class LexClientEnvironment
 	private $_lexProject;
 	
 	/**
-	 * @var int
+	 * @var String
 	 */
 	private $_userId;
 	
@@ -40,11 +40,11 @@ class LexClientEnvironment
 		
 		$this->_userId = $userId;
 		$this->LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
-		$this->userModel = new \libraries\lfdictionary\environment\UserModel($userId);
+		$this->userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 		$this->projectAccess = new \libraries\lfdictionary\environment\ProjectAccess($projectNodeId, $userId);
 		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->LFProjectModel->getName());
 		
-		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%d) U=%s (%d)',
+		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%s) U=%s (%s)',
 			$this->LFProjectModel->getName(),
 			$projectNodeId,
 			$this->userModel->getUserName(),
@@ -61,7 +61,7 @@ class LexClientEnvironment
 		$this->isReady();
 		
 		$LFProjectModel = $this->LFProjectModel;
-		$userModel =  new \libraries\lfdictionary\environment\UserModel($this->_userId);
+		$userModel =  new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 		$clientEnvironmentDto = new \libraries\lfdictionary\dto\ClientEnvironmentDto($LFProjectModel, $userModel, $this->projectAccess);
 		$lexProjectUserSettings = new LexProjectUserSettings($LFProjectModel, $userModel);
 		$partOfSpeechSettingsModel = new \libraries\lfdictionary\environment\PartOfSpeechSettingsModel($LFProjectModel);

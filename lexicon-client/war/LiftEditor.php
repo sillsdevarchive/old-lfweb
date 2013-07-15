@@ -45,7 +45,7 @@
 <?php
 		error_reporting(E_ALL | E_STRICT);
 		require_once('/var/www/languageforge.local/api/lex/Config.php');
-		require_once(LF_BASE_PATH . "lfbase/Loader.php");
+		require_once(LF_LIBRARY_PATH . "lfbase/Loader.php");
 
 		//Load Drupal		
 		$errorHandler = new \lfbase\common\ErrorHandler();

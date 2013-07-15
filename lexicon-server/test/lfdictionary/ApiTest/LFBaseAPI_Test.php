@@ -11,7 +11,7 @@ use lfbase\common\DataConnector;
 use lfbase\common\DataConnection;
 
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
 \lfbase\common\LFDrupal::loadDrupal();
 
 require_once(SimpleTestPath . 'autorun.php');

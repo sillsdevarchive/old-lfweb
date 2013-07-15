@@ -71,7 +71,7 @@ class lfapi
 		$this->_userId = $userId;
 		$this->_projectNodeId = $projectNodeId;
 		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
-		$this->_userModel = new \libraries\lfdictionary\environment\UserModel($userId);
+		$this->_userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%d) U=%s (%d)',
 		$this->_projectModel->getName(),
@@ -334,7 +334,7 @@ class lfapi
 
 
 	function getUserFieldsSetting($userId) {
-		$userModel = new \libraries\lfdictionary\environment\UserModel($userId);
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
 		$strName = $userModel->getUserName();
@@ -345,7 +345,7 @@ class lfapi
 	}
 
 	function getUserTasksSetting($userId) {
-		$userModel = new \libraries\lfdictionary\environment\UserModel($userId);
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
 		$strName = $userModel->getUserName();
@@ -433,7 +433,7 @@ class lfapi
 		$fileName = preg_replace('/-+/', '_', $languageCode);
 		while(true)
 		{
-			$fileFullPath = LF_BASE_PATH . "lfbase/data/ldml-core-common-main/" . $fileName.".xml";
+			$fileFullPath = LF_LIBRARY_PATH . "lfbase/data/ldml-core-common-main/" . $fileName.".xml";
 			if (file_exists($fileFullPath))
 			{
 				$xml_str = file_get_contents($fileFullPath);
@@ -556,7 +556,7 @@ class lfapi
 	
 	// Reviewed This can stay here
 	function getIANAData() {
-	$JSONFile=LF_BASE_PATH . "lfbase/data/IANA.js";
+	$JSONFile=LF_LIBRARY_PATH . "lfbase/data/IANA.js";
 	$result= file_get_contents($JSONFile);
 	return json_decode($result);
 	}
@@ -591,7 +591,7 @@ class lfapi
 	}
 	
 	protected function getUserNameById($userId) {
-	$userModel = new \libraries\lfdictionary\environment\UserModel($userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
 		$strName = $userModel->getUserName();
@@ -605,7 +605,7 @@ class lfapi
 	* @return Boolean value
 	*/
 	function isUser($userName) {
-	 $userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	 $userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$result = $userModel->isUser($userName);
 	return $result;
 	}
@@ -614,7 +614,7 @@ class lfapi
 	* Add New User
 	*/
 	function addUser($newuser) {
-	$userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$result = $userModel->addUser($newuser);
 	return $result->encode();
 	}
@@ -623,7 +623,7 @@ class lfapi
 	* Search User
 	*/
 	function searchUser($search) {
-	$userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$result = $userModel->searchUser($search);
 	return $result->encode();
 	}
@@ -632,7 +632,7 @@ class lfapi
 	* Add User to Project
 	*/
 	function addUserToProject($projectId, $userName) {
-	$userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$result = $userModel->addUserToProject($projectId, $userName);
 	return $result;
 	}
@@ -708,7 +708,7 @@ class lfapi
 	* member search for Auto Suggest in Setting->Member tab
 	*/
 	function getMembersForAutoSuggest($search,$begin,$end) {
-	$userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$result = EnvironmentMapper::connect()->searchUser($search,$begin,$end);
 	return $result->encode();
 	}
@@ -717,7 +717,7 @@ class lfapi
 	* Add User to Project (this will return a new user list in JSON)
 	*/
 	function addUserToProjectForLex($projectId, $userId) {
-	$userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectId);
 	if ($projectModel->isUserInProject($userId))
 	{
@@ -744,7 +744,7 @@ class lfapi
 	{
 	throw new libraries\lfdictionary\common\UserActionDeniedException("User not a member of project, it may removed by other user. please refresh to see changes");
 	}
-	$userModel = new \libraries\lfdictionary\environment\UserModel($this->_userId);
+	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
 	$result = EnvironmentMapper::connect()->removeUserFromProject($projectId, $userId);
 	// always reload new list
 			$result = $projectModel->listUsersInProjectWithRole();
@@ -760,7 +760,7 @@ class lfapi
 	$userJson = json_decode(urldecode($userDtoString));
 	$userId=$userJson->id;
 	if ($projectModel->isUserInProject($userId)) {
-	$userDTO = new UserDTO(new \libraries\lfdictionary\environment\UserModel($userId));
+	$userDTO = new UserDTO(new \libraries\lfdictionary\environment\LFUserModel($userId));
 	$projectAccess = new ProjectAccess($projectId, $userId);
 	$userDTO->setUserRole($projectAccess->getRole());
 	return $userDTO->encode();
@@ -781,7 +781,7 @@ class lfapi
 	}
 	$users = $userListDto->getUsers();
 	$userDto = $users[0]; // use first one if there have mutil-admins
-	$userModel= new \libraries\lfdictionary\environment\UserModel($userDto->getUserId());
+	$userModel= new \libraries\lfdictionary\environment\LFUserModel($userDto->getUserId());
 	if ($projectModel->isUserInProjectByName($userName)) {
 	throw new libraries\lfdictionary\common\UserActionDeniedException("User name already exist!");
 			}

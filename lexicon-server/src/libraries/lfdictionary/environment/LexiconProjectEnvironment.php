@@ -45,9 +45,9 @@ class LexiconProjectEnvironment {
 	// 		$this->makeLanguageForgeSettingsFolderReady();
 
 	// 		if ($this->_LFProjectModel->getType() == "Dictionary") {
-	// 			$masterFile=LF_BASE_PATH . "lfbase/data/" . LANGUAGE_FORGE_DEFAULT_SETTINGS_LEX;
+	// 			$masterFile=LF_LIBRARY_PATH . "lfbase/data/" . LANGUAGE_FORGE_DEFAULT_SETTINGS_LEX;
 	// 		} elseif ($this->_LFProjectModel->getType()=="Rapid Word Collection"){
-	// 			$masterFile=LF_BASE_PATH . "lfbase/data/" . LANGUAGE_FORGE_DEFAULT_SETTINGS_RWC;
+	// 			$masterFile=LF_LIBRARY_PATH . "lfbase/data/" . LANGUAGE_FORGE_DEFAULT_SETTINGS_RWC;
 	// 		} else {
 	// 			throw new \libraries\lfdictionary\common\UserActionDeniedException("Unknown project type: ". $this->_LFProjectModel->getType());
 	// 		}

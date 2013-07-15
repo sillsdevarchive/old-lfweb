@@ -1,0 +1,26 @@
+User
+{	"username" : "admin",
+		"name" : "Admin",
+		"password" : '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', 
+		"email" : "admin@admin.com",
+		"active" : 1,
+		"first_name" : "Admin",
+		"last_name" : "istrator",
+		"created_on" : null,
+		"activation_code" : null,
+		"forgotten_password_code" : null,
+		"forgotten_password_time" : null,
+		"remember_code" : null,
+		"salt" : null,
+		"last_login" : null,
+		"company" : "Achme",
+		"phone" : "111-111-1111"
+}
+
+Project
+
+{
+		"projectname" : "test project",
+		"language" : "en",
+		"title" : "test project",
+}

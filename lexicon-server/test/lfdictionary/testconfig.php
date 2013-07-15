@@ -19,7 +19,7 @@ define('LD_DB_USER', 'ldweb');
 define('LD_DB_PASS', 'depotsky5');
 define('LD_DB_NAME', 'redmine_default');
 
-define('LF_BASE_PATH', $rootPath . '../src/');
+define('LF_LIBRARY_PATH', $rootPath . '../src/');
 
 require_once(SOURCE_PATH . 'Config.php');
 

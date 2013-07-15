@@ -10,7 +10,7 @@ use libraries\lfdictionary\dto\LDAddProjectWithPasswordDTO;
 error_reporting(E_ALL | E_STRICT);
 ob_start("ob_gzhandler");
 require_once(dirname(__FILE__) . '/Config.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
 
 \lfbase\common\DataConnector::connect('languagedepot', 'redmine_default', 'redmine', 'redmine');
 \lfbase\environment\EnvironmentMapper::connect('languagedepot');

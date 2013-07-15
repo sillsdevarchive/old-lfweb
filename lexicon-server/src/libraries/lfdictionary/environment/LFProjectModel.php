@@ -50,7 +50,7 @@ class LFProjectModel {
 	 * @param int $projectNodeId The application host numeric project id
 	 */
 	function __construct($projectNodeId) {
-		if ($projectNodeId === null || $projectNodeId <= 0) {
+		if ($projectNodeId === null || $projectNodeId == "") {
 			throw new \Exception("Invalid project node ID $projectNodeId");
 		}
 		$this->_projectId = $projectNodeId;

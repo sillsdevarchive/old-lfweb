@@ -3,7 +3,7 @@ namespace libraries\lfdictionary\environment;
 
 /**
  */
-class UserModel {
+class LFUserModel {
 
 	/**
 	 * @var bool

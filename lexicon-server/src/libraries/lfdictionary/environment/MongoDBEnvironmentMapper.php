@@ -1,5 +1,8 @@
 <?php
 namespace libraries\lfdictionary\environment;
+use models\ProjectModel;
+
+use models\UserModel;
 
 use libraries\lfdictionary\dto\UserDTO;
 
@@ -7,18 +10,13 @@ use libraries\lfdictionary\dto\UserListDTO;
 use libraries\lfdictionary\common\DataConnection;
 use libraries\lfdictionary\common\DataConnector;
 use libraries\lfdictionary\environment\ProjectRole;
+use libraries\lfdictionary\common\LoggerFactory;
+class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEnvironmentMapper {
 
-class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
-	
-	/**
-	 * @var DataConnection
-	 */
-	private $_connection;
-	
 	public function __construct() {
-		$this->_connection = DataConnector::connect();
+		LoggerFactory::getLogger()->logInfoMessage("Uses MongoDBEnvironmentMapper");
 	}
-	
+
 	/**
 	 * @param ProjectAccess $projectAccess
 	 * @see libraries\lfdictionary\environment.IEnvironment::readProjectAccess()
@@ -63,14 +61,14 @@ class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
 			$project->getId()
 		);
 		
-		$result = $this->_connection->execute($sql);
-		$row = $this->_connection->fetchrow($result);
+// 		$result = $this->_connection->execute($sql);
+// 		$row = $this->_connection->fetchrow($result);
 		
-		$typeTokens = explode("-", $row['field_lf_project_code_value']);
-		$type = $typeTokens[count($typeTokens) - 1];
+// 		$typeTokens = explode("-", $row['field_lf_project_code_value']);
+// 		$type = $typeTokens[count($typeTokens) - 1];
 
-		// set(title, language, name (slug), type);
-		$project->set($row['title'], $row['field_lf_language_tag_value'], $row['field_lf_project_code_value'], $type);
+// 		// set(title, language, name (slug), type);
+// 		$project->set($row['title'], $row['field_lf_language_tag_value'], $row['field_lf_project_code_value'], $type);
 	}
 	
 	/**
@@ -86,12 +84,10 @@ class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
 	 * @param UserModel $user
 	 */
 	public function readUser($user) {
-		$sql = sprintf("SELECT name, mail FROM users WHERE uid=%d", $user->id());
-		$result = $this->_connection->execute($sql);
-		$row = $this->_connection->fetchrow($result);
-
-		$user->set($row['name']);
-		$user->setUserEmail($row['mail']);
+		$userModel = new UserModel($user->id());
+		$userModel->read();
+		$user->set($userModel->name);
+		$user->setUserEmail($userModel->email);
 	}
 	
 	/**
@@ -104,7 +100,7 @@ class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
 			$sql = "SELECT u.uid, ur.rid, u.name, u.mail FROM {lf_access} opu INNER JOIN {users} u ON opu.uid = u.uid INNER JOIN {users_roles} ur ON u.uid = ur.uid WHERE u.status = 1 AND opu.nid = $projectId";
 			$result = db_query($sql);
 			foreach ($result as $user) {
-				$userModel= new UserModel($user->uid);
+				$userModel= new LFUserModel($user->uid);
 				$userdto = new UserDTO($userModel);
 				$userlistdto->addListUser($userdto);
 			}
@@ -125,7 +121,7 @@ class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
 			$sql = sprintf("SELECT u.uid, u.name FROM {users} u INNER JOIN {users_roles} ur ON u.uid = ur.uid WHERE LOWER(u.name) LIKE LOWER('%s') OR LOWER(u.name) LIKE LOWER('%s') OR LOWER(u.name) LIKE LOWER('%s')","%".$name."%", $name."%", "%".$name);
 			$result = db_query_range($sql, $indexBegin, $indexEnd);
 			foreach ($result as $user)  {
-				$userModel= new UserModel($user->uid);
+				$userModel= new LFUserModel($user->uid);
 				$userdto = new \libraries\lfdictionary\dto\UserDTO($userModel);;
 				$userlistdto->addListUser($userdto);
 			}
@@ -205,7 +201,7 @@ class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
 		$result = $this->_connection->execute($sql);
 		$row = $this->_connection->fetchrow($result);
 		if (count($row)>0){
-			$user = new UserModel($row['uid']);
+			$user = new LFUserModel($row['uid']);
 			$user->set($row['name']);
 			$user->setUserEmail($row['mail']);
 			return $user;
@@ -497,7 +493,7 @@ class LanguageForgeEnvironmentMapper implements IEnvironmentMapper {
 		$sql = sprintf("SELECT u.uid, u.name, u.mail FROM users u INNER JOIN lf_access op ON u.uid = op.uid WHERE op.is_active=1 AND op.lf_role=%d AND op.nid=%d", $hostRole, $projectId);
 		$result = db_query($sql);
 		foreach ($result as $user) {
-			$userModel= new UserModel($user->uid);
+			$userModel= new LFUserModel($user->uid);
 			$userdto = new \libraries\lfdictionary\dto\UserDTO($userModel);;
 			$userlistdto->addListUser($userdto);
 		}

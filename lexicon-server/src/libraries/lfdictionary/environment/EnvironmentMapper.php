@@ -33,7 +33,7 @@ class EnvironmentMapper {
 				self::$_environment = new LanguageDepotEnvironmentMapper();
 				break;
 			case 'languageforge':
-				self::$_environment = new LanguageForgeEnvironmentMapper();
+				self::$_environment = new MongoDBEnvironmentMapper();
 				break;
 			default:
 				throw new \Exception("Unsupported environment '$environment'");

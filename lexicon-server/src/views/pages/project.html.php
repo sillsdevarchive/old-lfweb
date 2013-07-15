@@ -62,23 +62,23 @@
 		</script>
 	</div>
 		<div id="ViewerContent" class="readonly-view-view-with-edit">
-			  <?php include ($directory."listview.php"); ?>
+			  <?php include ("listview.html.php"); ?>
 		</div>
 	<div id="GWTContent"
 		style="height: 710px; width: 100%; padding-top: 10px;">
 
 		<?php
 		//	error_reporting(E_ALL | E_STRICT);
-		require_once('/var/www/languageforge.org_dev7/api/lex/Config.php');
+		require_once(APPPATH . '/libraries/lfdictionary/Config.php');
 		require_once(APPPATH . '/helpers/loader_helper.php');
 		//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
-
-		if ($project_id!=null && $project_id!=0 && $user_id!=null && $user_id!=0) {
+		$project_id= "51e3b48b9cde7fef33e7aef7";
+		if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!='') {
 			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id);
 			echo $lexClientEnvironment->getSettings();
 			?>
 			<script type="text/javascript" language="javascript"
-			src="<?php echo APPPATH ?>js/gwt/lifteditor/lifteditor.nocache.js"></script>
+			src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
 			<?php
 		}
 		?>

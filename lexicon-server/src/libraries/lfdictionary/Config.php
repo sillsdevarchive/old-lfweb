@@ -16,11 +16,8 @@ if(!defined('TestMode')) {
 	define('SHOW_ERROR_DETAIL_CLIENT', 1);
 }
 
-//Working directory for Drupal root
-define('DrupalPath', '/var/www/languageforge.org_dev7/web/');
-
-if (!defined('LF_BASE_PATH')) {
-	define('LF_BASE_PATH', DrupalPath . 'lf/');
+if (!defined('LF_LIBRARY_PATH')) {
+	define('LF_LIBRARY_PATH', APPPATH . 'libraries/lfdictionary/');
 }
 
 define('LANGUAGEFORGE_VAR_PATH', '/var/lib/languageforge/');
