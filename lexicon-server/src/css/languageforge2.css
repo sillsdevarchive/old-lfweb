@@ -2651,13 +2651,11 @@ body.loading .view-loading-progress {
 }
 
 .readonly-view-view-only {
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 130px;
-    width: 958px;
+	height: 710px;
+	width: auto;
+	padding-top: 120px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .readonly-view-view-with-edit {
