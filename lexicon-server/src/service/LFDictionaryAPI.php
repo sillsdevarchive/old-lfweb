@@ -24,7 +24,7 @@ use \libraries\lfdictionary\environment\EnvironmentMapper;
  * Provides functions for enhancing and building a Lexicon; RapidWords, and WordPacks for gathering words; MissingInfo for adding
  * additional info to Lexical Entries.
  */
-class lfapi
+class LFDictionaryAPI
 {
 	
 	/**
@@ -57,7 +57,7 @@ class lfapi
 	
 	function __construct($projectNodeId, $userId) {
 		$this->_logger = LoggerFactory::getLogger();
-		$this->_logger->logInfoMessage("LFAPI p:$projectNodeId u:$userId");
+		$this->_logger->logInfoMessage("LFDictionaryAPI p:$projectNodeId u:$userId");
 		$this->_userId = $userId;
 		$this->_projectNodeId = $projectNodeId;
 	
@@ -841,7 +841,7 @@ function main() {
 		$projectId = $_GET['p'];
 	}
 
-	$api = new lfapi($projectId, $userId);
+	$api = new LFDictionaryAPI($projectId, $userId);
 	\libraries\lfdictionary\common\jsonRPCServer::handle($api);
 }
 
