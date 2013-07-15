@@ -74,15 +74,15 @@ ul.sf-menu li li li.sfHover ul {
 }
 
 .sf-menu li a {
-	border-left:	1px solid #727272;
+	border-left:	1px solid #469bc2;
 }
 
 .sf-menu li:last-child {
-	border-right:	1px solid #727272;
+	border-right:	1px solid #434242;
 }
 
 .sf-menu li li:first-child a {
-	border-top:	1px solid #727272;
+	border-top:	1px solid #469bc2;
 }
 
 .sf-menu li li:last-child {
@@ -90,7 +90,7 @@ ul.sf-menu li li li.sfHover ul {
 }
 
 .sf-menu li li {
-	background:		#515050;
+	background:		#306F90;
 	border-left:	1px solid #434242;
 	border-right:	1px solid #434242;
 	line-height: 	1.0em;
@@ -105,12 +105,12 @@ ul.sf-menu li li li.sfHover ul {
 }
 
 .sf-menu li li li {
-	background:		#606060;
+	background:		#306F90;
 }
 
 .sf-menu li:hover, .sf-menu li.sfHover,
 .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
-	background:		#3b3b3b;
+	background:		#F08030;
 	outline:		0;
 }
 

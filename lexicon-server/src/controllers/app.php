@@ -13,7 +13,7 @@ class App extends Secure_base {
 			$data['jsSessionVars'] = '{"userid": "' . $this->session->userdata('user_id') . '"}';
 			$data['jsCommonFiles'] = $this->getCommonJSFiles();
 			$data['jsProjectFiles'] = $this->getProjectJSFiles($app);
-			$data['title'] = "Scripture Forge";
+			$data['title'] = "Language Forge";
 			$this->_render_page("angular-app", $data);
 		}
 	}
