@@ -2,5 +2,4 @@
 .settings
 .externalToolBuilders
 /output
-/gwt/lexicon-client/war/WEB-INF/classes
-src/.settings/
+/lexicon-client/war/WEB-INF/classes
