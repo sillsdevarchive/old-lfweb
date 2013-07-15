@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE project>
-<project name="SFWeb" default="build" basedir="..">
+<project name="LFWeb" default="build" basedir="..">
 
-	<property name="application.name" value="scriptureforge" />
+	<property name="application.name" value="languageforge" />
 
 	<property name="build.number" value="0.0.0.0" />
 	<property name="build.output" value="output" />
 	<property name="build.packageFile" value="${build.output}/${application.name}.tgz" />
-	<property name="build.installPath" value="/var/www/scriptureforge.org_dev" />
-	<property name="build.uploadPath" value="/var/www/scriptureforge.org" />
+	<property name="build.installPath" value="/var/www/languageforge.org_dev" />
+	<property name="build.uploadPath" value="/var/www/languageforge.org" />
 
 	<!--
 	<property name="mysql.db" value="lfweb" />
@@ -50,10 +50,10 @@
 
 	<target name="copyWeb">
 		<copy todir="${build.output}/package/htdocs">
-			<fileset dir="src"/>
+			<fileset dir="lexicon-server/src"/>
 		</copy>
 		<copy todir="${build.output}/package/lib">
-			<fileset dir="lib"/>
+			<fileset dir="lexicon-server/lib"/>
 		</copy>
 	</target>
 	
