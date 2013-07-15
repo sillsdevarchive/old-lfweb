@@ -4,7 +4,7 @@
 // ScriptureForge common services
 angular.module('sf.services', ['jsonRpc'])
 	.service('userService', ['jsonRpc', function(jsonRpc) {
-		jsonRpc.connect('/api/sf'); // Note this doesn't actually 'connect', it simply sets the connection url.
+		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
 
 		this.read = function(id, callback) {
 			jsonRpc.call('user_read', [id], callback);
@@ -12,8 +12,8 @@ angular.module('sf.services', ['jsonRpc'])
 		this.update = function(model, callback) {
 			jsonRpc.call('user_update', [model], callback);
 		};
-		this.remove = function(id, callback) {
-			jsonRpc.call('user_delete', [id], callback);
+		this.remove = function(userIds, callback) {
+			jsonRpc.call('user_delete', [userIds], callback);
 		};
 		this.list = function(callback) {
 			// TODO Paging CP 2013-07
@@ -22,9 +22,12 @@ angular.module('sf.services', ['jsonRpc'])
 		this.typeahead = function(term, callback) {
 			jsonRpc.call('user_typeahead', [term], callback);
 		};
+		this.changePassword = function(userId, newPassword, callback) {
+			jsonRpc.call('change_password', [userId, newPassword], callback);
+		}
 	}])
 	.service('projectService', ['jsonRpc', function(jsonRpc) {
-		jsonRpc.connect('/api/sf'); // Note this doesn't actually 'connect', it simply sets the connection url.
+		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
 		
 		this.read = function(projectId, callback) {
 			jsonRpc.call('project_read', [projectId], callback);
@@ -32,8 +35,8 @@ angular.module('sf.services', ['jsonRpc'])
 		this.update = function(model, callback) {
 			jsonRpc.call('project_update', [model], callback);
 		};
-		this.remove = function(projectId, callback) {
-			jsonRpc.call('project_delete', [projectId], callback);
+		this.remove = function(projectIds, callback) {
+			jsonRpc.call('project_delete', [projectIds], callback);
 		};
 		this.list = function(callback) {
 			jsonRpc.call('project_list', [], callback);

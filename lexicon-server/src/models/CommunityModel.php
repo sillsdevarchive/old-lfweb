@@ -11,7 +11,7 @@ class CommunityModelMongoMapper extends \libraries\sf\MongoMapper
 		static $instance = null;
 		if (null === $instance)
 		{
-			$instance = new CommunityModelMongoMapper(SF_DATABASE, 'communities');
+			$instance = new CommunityModelMongoMapper(LF_DATABASE, 'communities');
 		}
 		return $instance;
 	}

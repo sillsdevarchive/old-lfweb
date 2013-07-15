@@ -71,6 +71,7 @@
 		//	error_reporting(E_ALL | E_STRICT);
 		require_once(APPPATH . '/libraries/lfdictionary/Config.php');
 		require_once(APPPATH . '/helpers/loader_helper.php');
+
 		//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
 		$project_id= "51e3b48b9cde7fef33e7aef7";
 		if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!='') {

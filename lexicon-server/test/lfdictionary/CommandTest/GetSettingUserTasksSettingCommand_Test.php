@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath . 'autorun.php');
-require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
+require_once(SIMPLETEST_PATH . 'autorun.php');
+require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
 class GetSettingUserTasksSettingCommand_Test extends UnitTestCase {
 
@@ -9,12 +9,12 @@ class GetSettingUserTasksSettingCommand_Test extends UnitTestCase {
 	
 	function testGetSettingUserFieldsSettingCommand_MutilEntries() {
 		// a exists user profile
-		$command = new \commands\GetSettingUserTasksSettingCommand(TestPath. "data/template/","user1");
+		$command = new \commands\GetSettingUserTasksSettingCommand(TEST_PATH. "data/template/","user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result),$this->FINAL_RESULT);
 		// not exists user profile, use system default
-		$command = new \commands\GetSettingUserTasksSettingCommand(TestPath. "data/template/","blahblah");
+		$command = new \commands\GetSettingUserTasksSettingCommand(TEST_PATH. "data/template/","blahblah");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result),$this->FINAL_RESULT);

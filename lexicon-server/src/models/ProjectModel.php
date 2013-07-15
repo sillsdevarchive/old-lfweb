@@ -14,7 +14,7 @@ class ProjectModelMongoMapper extends \libraries\sf\MongoMapper
 		static $instance = null;
 		if (null === $instance)
 		{
-			$instance = new ProjectModelMongoMapper(SF_DATABASE, 'projects');
+			$instance = new ProjectModelMongoMapper(LF_DATABASE, 'projects');
 		}
 		return $instance;
 	}
@@ -38,7 +38,9 @@ class ProjectModel extends \libraries\sf\MapperModel
 	public function databaseName() {
 		$name = strtolower($this->projectname);
 		$name = str_replace(' ', '_', $name);
-		return 'sf_' . $name;
+
+		return 'lf_' . $name;
+
 	}
 
 	/**

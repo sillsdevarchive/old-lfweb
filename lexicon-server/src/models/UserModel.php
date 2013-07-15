@@ -13,7 +13,7 @@ class UserModelMongoMapper extends \libraries\sf\MongoMapper
 		static $instance = null;
 		if (null === $instance)
 		{
-			$instance = new UserModelMongoMapper(SF_DATABASE, 'users');
+			$instance = new UserModelMongoMapper(LF_DATABASE, 'users');
 		}
 		return $instance;
 	}

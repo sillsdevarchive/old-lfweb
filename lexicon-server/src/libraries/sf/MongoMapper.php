@@ -2,9 +2,9 @@
 
 namespace libraries\sf;
 
-if (!defined('SF_DATABASE'))
+if (!defined('LF_DATABASE'))
 {
-	define('SF_DATABASE', 'scriptureforge');
+	define('LF_DATABASE', 'languageforge');
 }
 
 class MongoStore

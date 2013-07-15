@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath . 'autorun.php');
-require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
+require_once(SIMPLETEST_PATH . 'autorun.php');
+require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
 use lfbase\mapper\InputSystemXmlJsonMapper;
 
@@ -12,7 +12,7 @@ class TestInputSystemXmlJsonMapper extends UnitTestCase {
 	private $FINAL_SOURCE_JSON = '{"ldml":{"identity":{"version":{"number":""},"generation":{"date":"0001-01-01T00:00:00"},"language":{"type":"en"}},"collations":[],"special":{"palaso:abbreviation":{"@xmlns":{"palaso":"urn:\\/\\/palaso.org\\/ldmlExtensions\\/v1"},"value":"eng"},"palaso:defaultFontFamily":{"@xmlns":{"palaso":"urn:\\/\\/palaso.org\\/ldmlExtensions\\/v1"},"value":"Arial"},"palaso:defaultFontSize":{"@xmlns":{"palaso":"urn:\\/\\/palaso.org\\/ldmlExtensions\\/v1"},"value":"12"},"palaso:version":{"@xmlns":{"palaso":"urn:\\/\\/palaso.org\\/ldmlExtensions\\/v1"},"value":"2"}}}}';
 
 	function testInputSystemXmlJsonMapper_XmlToJson() {
-		$configFilePath = TestPath . "data/template/WritingSystems/en.ldml";
+		$configFilePath = TEST_PATH . "data/template/WritingSystems/en.ldml";
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
@@ -30,7 +30,7 @@ class TestInputSystemXmlJsonMapper extends UnitTestCase {
 		$newXmlDoc->preserveWhiteSpace = FALSE;
 		$newXmlDoc->loadXML(InputSystemXmlJsonMapper::createInputSystemXmlFromJson(json_decode($this->FINAL_SOURCE_JSON)));
 		$newXmlText = $newXmlDoc->saveXML();
-		$configFilePath = TestPath . "data/template/WritingSystems/en.ldml";
+		$configFilePath = TEST_PATH . "data/template/WritingSystems/en.ldml";
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;

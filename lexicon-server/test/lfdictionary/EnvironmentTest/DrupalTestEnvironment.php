@@ -12,7 +12,7 @@ class DrupalTestEnvironment {
 
 	function __construct() {
 	
-		$this->_sqlFilePath = TestPath .'/data/dbbck/lfweb.sql';
+		$this->_sqlFilePath = TEST_PATH .'/data/dbbck/lfweb.sql';
 	}
 
 	/**
