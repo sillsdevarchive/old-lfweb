@@ -56,7 +56,7 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = '/var/www/languageforge.local/lfweb/lexicon-server/lib/CodeIgniter_2.1.3/system';
+	$system_path = '/var/www/languageforge.org_dev/lib/CodeIgniter_2.1.3/system';
 
 /*
  *---------------------------------------------------------------
