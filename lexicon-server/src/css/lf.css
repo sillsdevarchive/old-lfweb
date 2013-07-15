@@ -20,7 +20,7 @@ body {
 	line-height: 1;  
 	font-size: 87.5%;
 	font-family: "Open Sans", Arial, Helvetica, Verdana, sans-serif;
-	color: #404040 !important;
+	color: #404040;
 }  
 */
 /* Bootstrap
@@ -35,7 +35,7 @@ ul, ol {
 */
   
 a {  
-	color: #04abe1;  
+	color: #e67345;  
 	text-decoration: none;  
 	font-weight: bold;
 }
@@ -121,9 +121,10 @@ p.small {
 /* Layout */
 div#header {
 	position: relative;
+	margin-top: 32px;
 	width: 100%;
 	height: 42px;
-	background: #fff url(../images/sf_header-bar-bkg.png) repeat-x 0 0;
+	background: #fff url(../images/lf_header-bar-bkg.png) repeat-x 0 0;
 	color: #fff;
 	z-index: 10; /* IE6-7 hack for logo */
 }
@@ -137,7 +138,7 @@ div#header-nav {
 	width: auto;
 	height: 39px;
 	padding-left: 130px;
-	border-right: 1px solid #434242;
+	border-right: 1px solid #469bc2;
 }
 
 div#account{
@@ -154,11 +155,11 @@ div.sfcontainer {
 /* Bootstrap
 */
 
-div.sf-logo-large {
+div.lf-logo {
 	position: absolute;
 	width: 96px;
-	height: 165px;
-	top: 7px;
+	height: 11px;
+	top: -25px;
 	left: 6px;
 	z-index: 10;
 }
@@ -182,13 +183,13 @@ div#promotion {
 	position: relative;
 	width: 958px;
 	height: 400px;
-	margin-top: 37px;
+	margin-top: 12px;
 	margin-bottom: 48px;
-	border: 1px solid #eaeaea;
+	border: 1px solid #e5f0fc;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
-	background: #f4f4f6 url(../images/promotion-hl.png) no-repeat 0 0;
+	background: #f4f8fc url(../images/promotion-hl.png) no-repeat 0 0;
 	*background-image: none;
 }
 
@@ -220,7 +221,7 @@ div.sub-promotion {
 	margin-top: 40px;
 	margin-bottom: 40px;
 	padding: 10px;
-	background-color: #f4f4f6;
+	background-color: #F4F8FC;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
@@ -236,12 +237,12 @@ div#footer {
 	height: auto;
 	margin-top: 40px;
 	padding: 40px 0 40px 0;
-	background-color: #3a3a3a;
-	background: #3a3a3a url(../images/sf_sprite.png) no-repeat center -139px;
+	background-color: #104060;
+	/* background: #104060 url(../images/sf_sprite.png) no-repeat center -139px; */
 	color: #fff;
 }
 
-div#footer, div#footer a, div#footer h4{
+div#footer, div#footer a {
 	color: #f4f4f6;
 }
 
@@ -249,8 +250,8 @@ div#footerBaseline {
 	position: relative;
 	width: 100%;
 	height: 26px;
-	padding-top: 6px;
-	background-color: #202020;
+	padding-top: 14px;
+	background-color: #104060;
 }
 
 div.footer-nav {
@@ -353,7 +354,7 @@ input.error, textarea.error {
 */
 /* Bootstrap
 .standard-btn-big {
-	color: #04abe1;
+	color: #e67345;
 	font-size: 1.3em;
 	margin: 15px 0;
 }
@@ -425,21 +426,21 @@ input.error, textarea.error {
 	font-size: 1.0em;
 	font-weight: bold;
 	cursor: pointer;
-	border: 1px solid #191919;
+	border: 1px solid #102030;
 	-webkit-border-radius: 4px 4px 4px 4px;
 	-moz-border-radius: 4px 4px 4px 4px;
 	border-radius: 4px 4px 4px 4px;
 	-webkit-box-shadow: 0 0 3px #494949, inset 0 0 1px #aaa;
 	-moz-box-shadow: 0 0 3px #494949, inset 0 0 1px #aaa;
 	box-shadow: 0 0 3px #494949, inset 0 0 1px #aaa;
-	background: #555454; /* Old browsers */
-	background: -moz-linear-gradient(top, #555454 0%, #070707 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#555454), color-stop(100%,#070707));
-	background: -webkit-linear-gradient(top, #555454 0%,#070707 100%);
-	background: -o-linear-gradient(top, #555454 0%,#070707 100%);
-	background: -ms-linear-gradient(top, #555454 0%,#070707 100%);
-	background: linear-gradient(to bottom, #555454 0%,#070707 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#555454', endColorstr='#070707',GradientType=0 );
+	background: #285f78; /* Old browsers */
+	background: -moz-linear-gradient(top, #285f78 0%, #102630 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#285f78), color-stop(100%,#102630));
+	background: -webkit-linear-gradient(top, #285f78 0%,#102630 100%);
+	background: -o-linear-gradient(top, #285f78 0%,#102630 100%);
+	background: -ms-linear-gradient(top, #285f78 0%,#102630 100%);
+	background: linear-gradient(to bottom, #285f78 0%,#102630 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#285f78', endColorstr='#102630',GradientType=0 );
 }
 
 .login-btn:hover {
@@ -463,7 +464,7 @@ table th, table td {
 	padding: 0.7em 1.2em;
 }
 
-table th, table tr th {
+table th {
 	background-color: #404040;
 	color: #f4f4f6;
 	font-size: 0.9em;

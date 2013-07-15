@@ -1,7 +1,7 @@
 'use strict';
 
 // Services
-// ScriptureForge common services
+// LanguageForge common services
 angular.module('sf.services', ['jsonRpc'])
 	.service('userService', ['jsonRpc', function(jsonRpc) {
 		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.

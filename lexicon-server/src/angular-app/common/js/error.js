@@ -1,6 +1,6 @@
 'use strict';
 
-// ScriptureForge Error Service
+// LanguageForge Error Service
 angular.module('sf.error', [])
 	.service('error', ['$log', function($log) {
 

@@ -3,14 +3,14 @@
 			<div class="sfcontainer">
 				
 				<?php if (isset($is_static_page)):?>
-				<div class="sf-logo-large">
-					<img src="/images/sf_logo_large.png" alt="Scripture Forge" width="96" height="165" class="png_bg" />
+				<div class="lf-logo">
+					<img src="/images/lf_logo.png" alt="Language Forge" width="96" height="117" class="png_bg" />
 				</div>
 				<?php endif;?>
 				
 				<div id="header-nav" class="left">
 				<?php if (!isset($is_static_page)):?>
-					<img align="left" style="margin: 2px 10px 0 0" src="/images/sf_logo_small.png" alt="Scripture Forge" width="27" height="36" />
+					<img align="left" style="margin: 2px 10px 0 0" src="/images/sf_logo_small.png" alt="Language Forge" width="27" height="36" />
 				<?php endif;?>
 					<ul class="sf-menu">
 						<li><a href="/">Home</a></li>
@@ -33,7 +33,7 @@
 						</li>
 						<li><a href="/learn_scripture_forge">Learn</a>
 							<ul>
-								<li><a href="/learn_scripture_forge">About Scripture Forge</a></li>
+								<li><a href="/learn_scripture_forge">About Language Forge</a></li>
 								<li><a href="/learn_expand_your_team">Expand Your Team</a></li>
 								<li><a href="/learn_contribute">Contribute</a></li>
 							</ul>

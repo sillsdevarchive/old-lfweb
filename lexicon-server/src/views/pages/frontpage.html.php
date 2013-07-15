@@ -4,7 +4,7 @@
 			$data['slides'] = array(
 				array(
 					"title" => "Community Checking",
-					"summary" => "Scripture Forge enables communities to participate in the Scripture checking process like never before",
+					"summary" => "Language Forge enables communities to participate in the Language checking process like never before",
 					"social_media" => "{Social Media}",
 					"image_url" => "community.jpg",
 					"target_url" => "/learn_scripture_forge"
@@ -28,18 +28,18 @@
 			
 			$data['columns'] = array(
 				array(
-					"title" => "Scripture Forge",
+					"title" => "Language Forge",
 					"summary" => "Take your scripture-checking project to the next level by involving tens or hundreds more in the scripture review process.  Engage your language's diaspora speakers on the web or their phone, wherever they are.",
 					"target_url" => "/learn_scripture_forge"
 					),
 				array(
 					"title" => "Expand Your Team",
-					"summary" => "Give your Scripture project a boost during the checking phase.  Sign-up is easy and free.  As the project manager, you can control who joins your \"extended team\" of scripture checkers.",
+					"summary" => "Give your Language project a boost during the checking phase.  Sign-up is easy and free.  As the project manager, you can control who joins your \"extended team\" of scripture checkers.",
 					"target_url" => "/learn_expand_your_team"
 					),
 				array(
 					"title" => "Contribute",
-					"summary" => "Your ability to think and speak in your mother tongue is a powerful gift.  You could make an eternal difference by bringing God's Word into your own language through participating as a Scripture reviewer.  You can comment on text, answer questions, and follow up on other comments.  What are you waiting for?  Sign up today!",
+					"summary" => "Your ability to think and speak in your mother tongue is a powerful gift.  You could make an eternal difference by bringing God's Word into your own language through participating as a Language reviewer.  You can comment on text, answer questions, and follow up on other comments.  What are you waiting for?  Sign up today!",
 					"target_url" => "/learn_contribute"
 					)
 			);
@@ -49,7 +49,7 @@
 		<div class="sub-promotion sfcontainer cf">
 			<img src="/images/girlsmiling.jpg" alt="girl smiling" width="299" height="182" class="left">
 			<h2>The Power of Collaboration</h2>
-			<p>When everyone plays their part in getting Scripture translated and into the right hands, everyone benefits.  It's the power of collaboration that gets Scripture checking done faster and better.  Our technology brings Scripture checking to the masses, in a positive environment that focuses participants on the task and works wherever they are.  On the tablet, phone or web, Scripture Forge is there.</p>
+			<p>When everyone plays their part in getting Language translated and into the right hands, everyone benefits.  It's the power of collaboration that gets Language checking done faster and better.  Our technology brings Language checking to the masses, in a positive environment that focuses participants on the task and works wherever they are.  On the tablet, phone or web, Language Forge is there.</p>
 			<p><a href="/create_account" class="arrowed">Get Involved Today</a></p>
 		</div>
 		
