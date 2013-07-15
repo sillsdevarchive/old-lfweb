@@ -1,5 +1,9 @@
 <?php
 
+use libraries\api\ProjectCommands;
+
+use libraries\api\UserCommands;
+
 require_once(APPPATH . 'libraries/Bcrypt.php');
 
 require_once(APPPATH . 'models/UserModel.php');
@@ -7,7 +11,7 @@ require_once(APPPATH . 'models/ProjectModel.php');
 
 use libraries\sf\JsonRpcServer;
 
-class Sf
+class Lf
 {
 	
 	public function __construct()
@@ -40,13 +44,13 @@ class Sf
 	}
 	
 	/**
-	 * Delete a user record
-	 * @param string $id
-	 * @return string Id of deleted record
+	 * Delete multiple users
+	 * @param array<string> $userIds
+	 * @return int Total number of users deleted.
 	 */
- 	public function user_delete($id) {
- 		\models\UserModel::remove($id);
-		return true;
+ 	public function user_delete($userIds) {
+ 		$result = UserCommands::deleteUsers($userIds);
+ 		return $result;
  	}
 
 	// TODO Pretty sure this is going to want some paging params
@@ -84,13 +88,13 @@ class Sf
 	}
 	
 	/**
-	 * Delete a project record
-	 * @param string $id
-	 * @return string Id of deleted record
+	 * Delete multiple projects.
+	 * @param array<string> $projectIds
+	 * @return int Total number of projects deleted.
 	 */
- 	public function project_delete($id) {
- 		\models\ProjectModel::remove($id);
-		return true;
+ 	public function project_delete($projectIds) {
+ 		$result = ProjectCommands::deleteProjects($projectIds);
+ 		return $result;
  	}
 
 	// TODO Pretty sure this is going to want some paging params

@@ -1,23 +1,23 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath .  'autorun.php');
+require_once(SIMPLETEST_PATH .  'autorun.php');
 
 class AllModelTests extends TestSuite {
     function __construct() {
         parent::__construct();
-        $this->addFile(TestPath . 'DtoTest/Example_Test.php');
-        $this->addFile(TestPath . 'DtoTest/Sense_Test.php');
-        $this->addFile(TestPath . 'DtoTest/EntryDTO_Test.php');
-        $this->addFile(TestPath . 'DtoTest/ListDTO_Test.php');	
-		$this->addFile(TestPath . 'DtoTest/EntryListDTO_Test.php');
+        $this->addFile(TEST_PATH . 'DtoTest/Example_Test.php');
+        $this->addFile(TEST_PATH . 'DtoTest/Sense_Test.php');
+        $this->addFile(TEST_PATH . 'DtoTest/EntryDTO_Test.php');
+        $this->addFile(TEST_PATH . 'DtoTest/ListDTO_Test.php');	
+		$this->addFile(TEST_PATH . 'DtoTest/EntryListDTO_Test.php');
 		
- 		$this->addFile(TestPath . 'DtoTest/AutoListEntry_Test.php');
- 		$this->addFile(TestPath . 'DtoTest/AutoListDTO_Test.php');
- 		$this->addFile(TestPath . 'DtoTest/DashboardActivitiesDTO_Test.php');
- 		$this->addFile(TestPath . 'DtoTest/DomainQuestionDTO_Test.php');
- 		$this->addFile(TestPath . 'DtoTest/DomainTreeDTO_Test.php');
- 		$this->addFile(TestPath . 'DtoTest/ListEntry_Test.php');
- 		$this->addFile(TestPath . 'DtoTest/ProjectStateDTO_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/AutoListEntry_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/AutoListDTO_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/DashboardActivitiesDTO_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/DomainQuestionDTO_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/DomainTreeDTO_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/ListEntry_Test.php');
+ 		$this->addFile(TEST_PATH . 'DtoTest/ProjectStateDTO_Test.php');
 		
     }
 }

@@ -24,7 +24,7 @@ use \libraries\lfdictionary\environment\EnvironmentMapper;
  * Provides functions for enhancing and building a Lexicon; RapidWords, and WordPacks for gathering words; MissingInfo for adding
  * additional info to Lexical Entries.
  */
-class LFDictionaryAPI
+class LfDictionary
 {
 	
 	/**

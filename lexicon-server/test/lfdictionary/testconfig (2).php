@@ -3,8 +3,8 @@
 $rootPath = dirname(__FILE__) . '/';
 define('TestMode', true);
 
-define('TestPath', $rootPath);
-define('SimpleTestPath', $rootPath . 'simpletest/');
+define('TEST_PATH', $rootPath);
+define('SIMPLETEST_PATH', $rootPath . 'simpletest/');
 
 //defining database connection variables as constants
 define('DB_SERVER', 'localhost');
@@ -24,6 +24,6 @@ if (file_exists('/home/bob')) {
 
 error_log(sprintf("TestConfig: Using LF_BASE_PATH '%s'", LF_BASE_PATH));
 
-require_once(TestPath . '../src/Config.php');
+require_once(TEST_PATH . '../src/Config.php');
 
 ?>

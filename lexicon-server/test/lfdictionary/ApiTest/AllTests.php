@@ -1,12 +1,12 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath .  'autorun.php');
+require_once(SIMPLETEST_PATH .  'autorun.php');
 
 class AllApiTests extends TestSuite {
     function __construct() {
         parent::__construct();
-        $this->addFile(TestPath . 'ApiTest/LFBaseAPI_Test.php');
-        $this->addFile(TestPath . 'ApiTest/LanguageDepotAPI_Test.php');
+        $this->addFile(TEST_PATH . 'ApiTest/LFBaseAPI_Test.php');
+        $this->addFile(TEST_PATH . 'ApiTest/LanguageDepotAPI_Test.php');
 	  }
 }
 

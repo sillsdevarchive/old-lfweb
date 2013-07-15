@@ -1,9 +1,9 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath . 'autorun.php');
+require_once(SIMPLETEST_PATH . 'autorun.php');
 require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
-require_once(TestPath . 'CommandTest/LiftTestEnvironment.php');
+require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
 
 class TestOfSaveCommentsCommand extends UnitTestCase {
 
@@ -41,7 +41,7 @@ class TestOfSaveCommentsCommand extends UnitTestCase {
 			mkdir($this->_path);
 		}
 
-		$sourceChorusNotesFilePath=  TestPath. "data/Test.lift.ChorusNotes";
+		$sourceChorusNotesFilePath=  TEST_PATH. "data/Test.lift.ChorusNotes";
 		$desChorusNotesFilePath= $this->_path  . "/Test.lift.ChorusNotes";
 		//copy new file to test folder
 		copy($sourceChorusNotesFilePath,$desChorusNotesFilePath);

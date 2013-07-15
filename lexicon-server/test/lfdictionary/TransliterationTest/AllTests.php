@@ -1,11 +1,11 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath .  'autorun.php');
+require_once(SIMPLETEST_PATH .  'autorun.php');
 
 class AllTransliterationTests extends TestSuite {
     function __construct() {
         parent::__construct();
-        $this->addFile(TestPath . 'TransliterationTest/TransliterationBasicFunctions_Test.php');
+        $this->addFile(TEST_PATH . 'TransliterationTest/TransliterationBasicFunctions_Test.php');
     }
 }
 

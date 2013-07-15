@@ -4,8 +4,8 @@ $rootPath = dirname(__FILE__) . '/';
 
 define('TestMode', true);
 
-define('TestPath', $rootPath);
-define('SimpleTestPath', $rootPath . 'simpletest/');
+define('TEST_PATH', $rootPath);
+define('SIMPLETEST_PATH', $rootPath . 'simpletest/');
 define('SOURCE_PATH', $rootPath . '../src/');
 
 //defining database connection variables as constants

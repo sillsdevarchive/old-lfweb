@@ -1,5 +1,5 @@
 <?php
-require_once(SimpleTestPath . 'autorun.php');
+require_once(SIMPLETEST_PATH . 'autorun.php');
 
 use Transliteration\WordTransliterationFilter;
 

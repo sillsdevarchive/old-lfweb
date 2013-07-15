@@ -1,12 +1,12 @@
 <?php
 require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SimpleTestPath . 'autorun.php');
+require_once(SIMPLETEST_PATH . 'autorun.php');
 require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
 class AllMapperTests extends TestSuite {
     function __construct() {
         parent::__construct();
-        $this->addFile(TestPath . 'MapperTest/InputSystemXmlJsonMapper_Test.php');
+        $this->addFile(TEST_PATH . 'MapperTest/InputSystemXmlJsonMapper_Test.php');
     }
 }
 
