@@ -4,21 +4,21 @@
 			$data['slides'] = array(
 				array(
 					"title" => "Community Checking",
-					"summary" => "Language Forge enables communities to participate in the Language checking process like never before",
+					"summary" => "Language Forge enables communities to participate in the dictionary development like never before",
 					"social_media" => "{Social Media}",
 					"image_url" => "community.jpg",
 					"target_url" => "/learn_scripture_forge"
 					),
 				array(
 					"title" => "Your Team, Expanded",
-					"summary" => "Improve your scripture checking project by adding more native speakers to your workflow",
+					"summary" => "Improve your dictionary project by adding more native speakers to your workflow",
 					"social_media" => "{Social Media}",
 					"image_url" => "team.jpg",
 					"target_url" => "/learn_expand_your_team"
 					),
 				array(
 					"title" => "Make a Difference Today",
-					"summary" => "Speak a minority language?  See if your language has a scripture checking project in progress today",
+					"summary" => "Speak a minority language?  See if your language has a dictionary under development today",
 					"social_media" => "{Social Media}",
 					"image_url" => "contribute.jpg",
 					"target_url" => "/learn_contribute"
@@ -29,17 +29,17 @@
 			$data['columns'] = array(
 				array(
 					"title" => "Language Forge",
-					"summary" => "Take your scripture-checking project to the next level by involving tens or hundreds more in the scripture review process.  Engage your language's diaspora speakers on the web or their phone, wherever they are.",
+					"summary" => "Take your dictionary project to the next level by involving tens or hundreds more in expanding your lexicon.  Engage your language's diaspora speakers on the web or their phone, wherever they are.",
 					"target_url" => "/learn_scripture_forge"
 					),
 				array(
 					"title" => "Expand Your Team",
-					"summary" => "Give your Language project a boost during the checking phase.  Sign-up is easy and free.  As the project manager, you can control who joins your \"extended team\" of scripture checkers.",
+					"summary" => "Give your Language project a boost as you collect words, definitions and example scentences.  Sign-up is easy and free.  As the project manager, you can control who joins your \"extended team\" of contributors.",
 					"target_url" => "/learn_expand_your_team"
 					),
 				array(
 					"title" => "Contribute",
-					"summary" => "Your ability to think and speak in your mother tongue is a powerful gift.  You could make an eternal difference by bringing God's Word into your own language through participating as a Language reviewer.  You can comment on text, answer questions, and follow up on other comments.  What are you waiting for?  Sign up today!",
+					"summary" => "Your ability to think and speak in your mother tongue is a powerful gift.  You could make a wonderful contribution to your own language through participating in the development of dictionaries for your language community.  You can comment on lexical items, answer questions, and follow up on other comments.  What are you waiting for?  Sign up today!",
 					"target_url" => "/learn_contribute"
 					)
 			);
@@ -49,7 +49,7 @@
 		<div class="sub-promotion sfcontainer cf">
 			<img src="/images/girlsmiling.jpg" alt="girl smiling" width="299" height="182" class="left">
 			<h2>The Power of Collaboration</h2>
-			<p>When everyone plays their part in getting Language translated and into the right hands, everyone benefits.  It's the power of collaboration that gets Language checking done faster and better.  Our technology brings Language checking to the masses, in a positive environment that focuses participants on the task and works wherever they are.  On the tablet, phone or web, Language Forge is there.</p>
+			<p>When everyone plays their part in producing a dictionary in your language, everyone benefits.  It's the power of collaboration that provides richer and more accurate dictionaries.  Our technology brings dictionary development to the masses, in a positive environment that focuses participants on the task and works wherever they are.  On the tablet, phone or web, Language Forge is there.</p>
 			<p><a href="/create_account" class="arrowed">Get Involved Today</a></p>
 		</div>
 		
@@ -59,9 +59,9 @@
 			
 			<div class="three-col">
 				<div class="three-col-1">
-					<p>1st September 2012</p>
-					<h3>Nullam Quis Risus Eget Urna</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum. Nullam id dolor id nibh ultricies vehicula ut id elit...</p>
+					<p>16 July 2013</p>
+					<h3>Early experiments with language forge under way</h3>
+					<p>We are currently in the process of building the system to the point that we can start sharing dictionaries between language forge, <a href="http://wesay.palaso.org/" class="arrowed">WeSay</a>, and <a href="http://fieldworks.sil.org/flex/" class="arrowed">FieldWorks Language Explorer</a>. We are not ready for real testing yet but will let you know when you can start experimenting.</p>
 					<p><a href="#" class="arrowed">Read Article</a></p>
 				</div>
 			</div>
