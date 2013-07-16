@@ -24,7 +24,7 @@ class Base extends CI_Controller {
 		$this->viewdata['logged_in'] = $isLoggedIn;
 		
 		//TODO how to get selected project ID??
-		$this->viewdata['project_id'] = 1;
+		$this->viewdata['project_id'] = "51e3b48b9cde7fef33e7aef7";
 		
 		if ($isLoggedIn) {
 			$userId = (string)$this->session->userdata('user_id');

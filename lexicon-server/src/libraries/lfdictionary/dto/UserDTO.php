@@ -29,7 +29,7 @@ class UserDTO {
 	
 	public function getUserId()
 	{
-		return (int)$this->_userModel->id();
+		return $this->_userModel->id();
 	}
 	
 	/**
@@ -38,7 +38,7 @@ class UserDTO {
 	 */
 	function encode() {
 		return array(
- 			'id' => (int)$this->_userModel->id(),
+ 			'id' => $this->_userModel->id(),
  			'name' => $this->_userModel->getUserName(),
 			'role' => $this->_userRole
 		);
