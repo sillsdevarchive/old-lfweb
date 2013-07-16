@@ -6,10 +6,10 @@ import org.palaso.languageforge.client.lex.model.ProjectDto;
 
 public class UpdateProjectNameAction extends JsonRpcAction<ProjectDto> {
 
-	int projectId;
+	String projectId;
 	String projecName;
 
-	public UpdateProjectNameAction(int projectId, String projecName) {
+	public UpdateProjectNameAction(String projectId, String projecName) {
 		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "updateProjectName", 2);
 		this.projectId = projectId;
 		this.projecName = projecName;
@@ -20,7 +20,7 @@ public class UpdateProjectNameAction extends JsonRpcAction<ProjectDto> {
 	public String encodeParam(int i) {
 		switch (i) {
 		case 0:
-			return String.valueOf(projectId);
+			return projectId;
 		case 1:
 			return projecName;
 		}

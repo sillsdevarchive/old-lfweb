@@ -7,9 +7,9 @@ import org.palaso.languageforge.client.lex.model.UserDto;
 public class UpdateUserAccessRoleAction extends JsonRpcAction<UserDto> {
 
 	private UserDto userDto;
-	private int projectId;
+	private String projectId;
 
-	public UpdateUserAccessRoleAction(UserDto userDto, int projectId) {
+	public UpdateUserAccessRoleAction(UserDto userDto, String projectId) {
 		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "updateUserRoleGrant", 2);
 		this.userDto = userDto;
 		this.projectId = projectId;
@@ -18,7 +18,7 @@ public class UpdateUserAccessRoleAction extends JsonRpcAction<UserDto> {
 	public String encodeParam(int i) {
 		switch (i) {
 		case 0:
-			return String.valueOf(projectId);
+			return projectId;
 		case 1:
 			return UserDto.encode(userDto);
 		}

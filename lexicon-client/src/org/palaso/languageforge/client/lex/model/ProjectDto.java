@@ -18,7 +18,7 @@ public class ProjectDto extends JavaScriptObject {
 		this.name = name;
 	}-*/;
 
-	public final native int getProjectId() /*-{
+	public final native String getProjectId() /*-{
 		return this.id;
 	}-*/;
 

@@ -7,9 +7,9 @@ import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDt
 public class GetSettingUserFieldsSettingAction extends
 		JsonRpcAction<SettingFieldsDto> {
 
-	int value;
+	String value;
 
-	public GetSettingUserFieldsSettingAction(int userId) {
+	public GetSettingUserFieldsSettingAction(String userId) {
 		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "getUserFieldsSetting", 1);
 		value = userId;
 	}
@@ -18,7 +18,7 @@ public class GetSettingUserFieldsSettingAction extends
 	public String encodeParam(int i) {
 		switch (i) {
 		case 0:
-			return String.valueOf(value);
+			return value;
 		}
 		return null;
 	}

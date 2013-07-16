@@ -16,6 +16,8 @@
 
 package org.palaso.languageforge.client.lex.jsonrpc;
 
+import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
+
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.user.client.Window;
@@ -40,7 +42,7 @@ public abstract class JsonRpcAction<R> implements Action<R> {
 	protected JsonRpcAction(String servicePath, String service, String method,
 			int parameterCount) {
 		_servicePath = servicePath;
-		_service = service;
+		_service = service + "?p=" + CurrentEnvironmentDto.getCurrentProject().getProjectId() +"&u=" + CurrentEnvironmentDto.getCurrentUser().getId();
 		_method = method;
 		_parameterCount = parameterCount;
 	}
