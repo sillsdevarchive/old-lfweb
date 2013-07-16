@@ -61,25 +61,25 @@
 					<p>16 July 2013</p>
 					<h3>Early experiments with language forge under way</h3>
 					<p>We are currently in the process of building the system to the point that we can start sharing dictionaries between language forge, <a href="http://wesay.palaso.org/" class="arrowed">WeSay</a>, and <a href="http://fieldworks.sil.org/flex/" class="arrowed">FieldWorks Language Explorer</a>. We are not ready for real testing yet but will let you know when you can start experimenting.</p>
-					<p><a href="#" class="arrowed">Read Article</a></p>
+					// <p><a href="#" class="arrowed">Read Article</a></p>
 				</div>
 			</div>
 			
 			<div class="three-col">
 				<div class="three-col-2">
-					<p>27th August 2012</p>
-					<h3>Praesent Commodo Cursus</h3>
-					<p>Nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et...</p>
-					<p><a href="#" class="arrowed">Read Article</a></p>
+					<p>2012</p>
+					<h3>Experimentation with environments</h3>
+					<p>In 2012 we implemented an equivalent to part of the interface using GWT and embedded this into a Drupal site. We were not able to get the Drupal part of the site working well however</p>
+					// <p><a href="#" class="arrowed">Read Article</a></p>
 				</div>
 			</div>
 			
 			<div class="three-col">
 				<div class="three-col-3">
-					<p>26th August 2012</p>
-					<h3>Posuere Consectetur</h3>
-					<p>Etiam porta sem malesuada magna mollis euismod. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis...</p>
-					<p><a href="#" class="arrowed">Read Article</a></p>
+					<p>2011</p>
+					<h3>Initiation of the Lexical Web app</h3>
+					<p>In 2011 we started experimenting with develpoment of a Web app that would integrate with the mature tools that SIL has created for lexical development. A plan was then created for further development.</p>
+					// <p><a href="#" class="arrowed">Read Article</a></p>
 				</div>
 			</div>
 			
