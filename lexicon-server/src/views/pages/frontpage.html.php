@@ -3,7 +3,7 @@
 			
 			$data['slides'] = array(
 				array(
-					"title" => "Community Checking",
+					"title" => "Develop a dictionary",
 					"summary" => "Language Forge enables communities to participate in the dictionary development like never before",
 					"social_media" => "{Social Media}",
 					"image_url" => "community.jpg",

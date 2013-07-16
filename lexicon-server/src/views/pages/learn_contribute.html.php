@@ -3,6 +3,6 @@
 </div>
 <div class="sfcontainer">
 			<h2>Contribute</h2>
-			<p>Your ability to think and speak in your mother tongue is a powerful gift.  You could make an eternal difference by bringing God's Word into your own language through participating as a Language reviewer.  The translation team will assign you specific verses to review along with a list of questions to determine how clear and accurate the translation.  You can comment on text, answer questions, and follow up on other comments.  What are you waiting for?  Sign up today!</p>
+			<p>Your ability to think and speak in your mother tongue is a powerful gift.  You could make an difference by contributing to the development of dictionares that your community can use in education and in everyday life.  The language project will give you permission to add content and review conent others have added to the lexicon from which dictionaries will be created.  You can create new words, new meanings for those words or example scentences to show how those words are used in everyday language. You can also comment on others contributions or provide feedback on others comments. This then allows the language project to refine the lexical content the community is collaboratively developing.  What are you waiting for?  Sign up today!</p>
 			
 		</div>
