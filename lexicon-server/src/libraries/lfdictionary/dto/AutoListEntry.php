@@ -1,5 +1,5 @@
 <?php
-namespace dto;
+namespace libraries\lfdictionary\dto;
 
 class AutoListEntry {
 

@@ -1,5 +1,5 @@
 <?php
-namespace store\mongo;
+namespace libraries\lfdictionary\store\mongo;
 
 use dto\EntryDTO;
 use store\ILexStore;

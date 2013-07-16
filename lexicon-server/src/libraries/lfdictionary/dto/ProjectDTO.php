@@ -24,7 +24,7 @@ class ProjectDTO {
 	 */
 	function encode() {
 		return array(
-			'id' => (int)$this->_LFProjectModel->getId(),
+			'id' => $this->_LFProjectModel->getId(),
 			'name' => $this->_LFProjectModel->getName(),
 			'title' => $this->_LFProjectModel->getTitle(),
 			'type' => $this->_LFProjectModel->getType(),

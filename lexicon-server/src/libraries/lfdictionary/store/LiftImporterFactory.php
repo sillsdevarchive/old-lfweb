@@ -1,6 +1,6 @@
 <?php
-namespace store;
-use store\mongo\LiftMongoImporter;
+namespace libraries\lfdictionary\store;
+use libraries\lfdictionary\store\mongo\LiftMongoImporter;
 class LiftImporterFactory
 {
 	public static function  getImportFactory($storeType, $liftFilePath, $database)

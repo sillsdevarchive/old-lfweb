@@ -186,10 +186,10 @@ class LanguageDepotImporter {
 			if ($this->isComplete()) {
 				$error = $this->error();
 				if ($error) {
-					$projectState->setState(\environment\ProjectStates::Error, $error);
+					$projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Error, $error);
 					break;
 				} else {
-					$projectState->setState(\environment\ProjectStates::Ready);
+					$projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 					break;
 				}
 			}

@@ -73,7 +73,7 @@ class LFDictionaryAPI
 		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		$this->_userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 
-		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%d) U=%s (%d)',
+		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
 		$this->_projectModel->getName(),
 		$projectNodeId,
 		$this->_userModel->getUserName(),
@@ -218,7 +218,7 @@ class LFDictionaryAPI
 
 		// get all from lift file.
 		$existWordsList=$this->getList(1,PHP_INT_MAX);
-		if ( \lfbase\common\TextFormatHelper::startsWith($filename,"GWTU-")) {
+		if ( \libraries\lfdictionary\common\TextFormatHelper::startsWith($filename,"GWTU-")) {
 			// it is from uploaded file.
 			$uploadedFolder = PHP_UPLOAD_PATH . session_id();
 			$uploadedBinFile=$uploadedFolder . "/" . $filename . ".bin";
@@ -239,7 +239,7 @@ class LFDictionaryAPI
 			unlink($uploadedInfoFile);
 			rmdir($uploadedFolder);
 			// format conversion
-			$words=\lfbase\common\TextFormatHelper::convertToUTF8String($fileData);
+			$words=\libraries\lfdictionary\common\TextFormatHelper::convertToUTF8String($fileData);
 		}
 		$existWords= array();
 		$wordEntries=$existWordsList['entries'];
@@ -253,7 +253,7 @@ class LFDictionaryAPI
 			}
 		}
 
-		$command = new \commands\GatherWordCommand($this->_lexProject->getLiftFilePath(),$languageCode,$existWords,$words);
+		$command = new \libraries\lfdictionary\commands\GatherWordCommand($this->_lexProject->getLiftFilePath(),$languageCode,$existWords,$words);
 		return $command->execute();
 	}
 
@@ -266,7 +266,7 @@ class LFDictionaryAPI
 		// read all exist words from DB
 		$existWordListDto = $store->readEntriesAsListDTO(0, PHP_INT_MAX);
 
-		$command = new \commands\GetWordListFromWordPackCommand($existWordListDto, $wordPackFile);
+		$command = new \libraries\lfdictionary\commands\GetWordListFromWordPackCommand($existWordListDto, $wordPackFile);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -275,7 +275,7 @@ class LFDictionaryAPI
 		$this->isReadyOrThrow();
 
 		$wordPackFile= LEXICON_WORD_LIST_SOURCE . LEXICON_WORD_PACK_FILE_NAME;
-		$command = new \commands\GetWordCommand($wordPackFile, $guid);
+		$command = new \libraries\lfdictionary\commands\GetWordCommand($wordPackFile, $guid);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -283,7 +283,7 @@ class LFDictionaryAPI
 	function getDomainTreeList() {
 		$this->isReadyOrThrow();
 
-		$command = new \commands\GetDomainTreeListCommand(\environment\LexProject::locateSemanticDomainFilePath('en'), 'en');
+		$command = new \libraries\lfdictionary\commands\GetDomainTreeListCommand(\environment\LexProject::locateSemanticDomainFilePath('en'), 'en');
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -291,7 +291,7 @@ class LFDictionaryAPI
 	function getDomainQuestion($guid) {
 		$this->isReadyOrThrow();
 
-		$command = new \commands\GetDomainQuestionCommand(\environment\LexProject::locateSemanticDomainFilePath('en'), 'en', $guid);
+		$command = new \libraries\lfdictionary\commands\GetDomainQuestionCommand(\environment\LexProject::locateSemanticDomainFilePath('en'), 'en', $guid);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -300,7 +300,7 @@ class LFDictionaryAPI
 		$this->isReadyOrThrow();
 
 		$chorusNotesFilePath= $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
-		$command = new \commands\GetCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $startIndex,$limits,$isRecentChanges);
+		$command = new \libraries\lfdictionary\commands\GetCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $startIndex,$limits,$isRecentChanges);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -313,7 +313,7 @@ class LFDictionaryAPI
 		$w3cDateString = $now->format(DateTime::W3C);
 		$userModel = $this->_userModel;
 		$messageType=0;
-		$command = new \commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
+		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -321,14 +321,13 @@ class LFDictionaryAPI
 	function getDashboardData($actRange) {
 		$this->isReadyOrThrow();
 
-		$command = new \commands\GetDashboardDataCommand($this->_projectNodeId, $this->_lexProject->getLiftFilePath(),$actRange);
+		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->_projectNodeId, $this->_lexProject->getLiftFilePath(),$actRange);
 		$result = $command->execute();
-
 		return $result->encode();
 	}
 
 	function getDashboardUpdateRunning() {
-		$command = new \commands\UpdateDashboardCommand($this->_projectNodeId, $this->_projectModel, $this->_lexProject);
+		$command = new \libraries\lfdictionary\commands\UpdateDashboardCommand($this->_projectNodeId, $this->_projectModel, $this->_lexProject);
 		return $command->execute();
 	}
 
@@ -339,7 +338,7 @@ class LFDictionaryAPI
 		// so all user name will save in lowercase
 		$strName = $userModel->getUserName();
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_projectPath,$strName);
+		$command = new \libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand($this->_projectPath,$strName);
 		$result = $command->execute();
 		return $result;
 	}
@@ -350,7 +349,7 @@ class LFDictionaryAPI
 		// so all user name will save in lowercase
 		$strName = $userModel->getUserName();
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
-		$command = new \commands\GetSettingUserTasksSettingCommand ($this->_projectPath,$strName);
+		$command = new \libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand ($this->_projectPath,$strName);
 		$result = $command->execute();
 		return $result;
 	}
@@ -386,7 +385,7 @@ class LFDictionaryAPI
 			//apply to special user
 			$userNames[]  = $this->getUserNameById($userIds);
 		}
-		$command = new \commands\UpdateSettingUserTasksSettingCommand($this->_projectPath,$userNames,$tasks);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingUserTasksSettingCommand($this->_projectPath,$userNames,$tasks);
 		$result = $command->execute();
 		return $result;
 	}
@@ -410,7 +409,7 @@ class LFDictionaryAPI
 			// apply to special user
 			$userNames[]  = $this->getUserNameById($userIds);
 		}
-		$command = new \commands\UpdateSettingUserFieldsSettingCommand($this->_projectPath,$userNames,$fields);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand($this->_projectPath,$userNames,$fields);
 		$result = $command->execute();
 		return $result;
 	}
@@ -504,7 +503,7 @@ class LFDictionaryAPI
 
 		$currentState = $this->_lexProject->projectState->getState();
 		switch ($currentState) {
-			case \environment\ProjectStates::Error:
+			case \libraries\lfdictionary\environment\ProjectStates::Error:
 			case '':
 				// Have another go at importing
 				break;
@@ -512,9 +511,9 @@ class LFDictionaryAPI
 				return $this->state();
 		}
 
-		$this->_lexProject->projectState->setState(\environment\ProjectStates::Importing, "Importing from LanguageDepot");
+		$this->_lexProject->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Importing, "Importing from LanguageDepot");
 
-		$importer = new \environment\LanguageDepotImporter($this->_projectNodeId);
+		$importer = new \libraries\lfdictionary\environment\LanguageDepotImporter($this->_projectNodeId);
 		$importer->cloneRepository($user, $password, $soruceURI);
 		$importer->importContinue($this->_lexProject->projectState);
 		return $this->state();
@@ -528,7 +527,7 @@ class LFDictionaryAPI
 		$currentState = $this->_lexProject->projectState->getState();
 		$progress = 0;
 		switch ($currentState) {
-			case \environment\ProjectStates::Importing:
+			case \libraries\lfdictionary\environment\ProjectStates::Importing:
 				$importer = new \environment\LanguageDepotImporter($this->_projectNodeId);
 				$importer->importContinue($this->_lexProject->projectState);
 				$progress = $importer->progress();
@@ -536,7 +535,7 @@ class LFDictionaryAPI
 		}
 		$state = $this->_lexProject->projectState->getState();
 		$message = $this->_lexProject->projectState->getMessage();
-		$dto = new \dto\ProjectStateDTO($state, $message);
+		$dto = new \libraries\lfdictionary\dto\ProjectStateDTO($state, $message);
 		$dto->Progress = $progress;
 		return $dto->encode();
 	}

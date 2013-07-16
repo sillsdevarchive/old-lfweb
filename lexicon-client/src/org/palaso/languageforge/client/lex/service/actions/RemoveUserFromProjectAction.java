@@ -6,10 +6,10 @@ import org.palaso.languageforge.client.lex.model.UserListDto;
 
 public class RemoveUserFromProjectAction extends JsonRpcAction<UserListDto> {
 
-	private int userId;
-	private int projectId;
+	private String userId;
+	private String projectId;
 
-	public RemoveUserFromProjectAction(int userId, int projectId) {
+	public RemoveUserFromProjectAction(String userId, String projectId) {
 		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "removeUserFromProjectForLex", 2);
 		this.userId = userId;
 		this.projectId = projectId;
@@ -19,9 +19,9 @@ public class RemoveUserFromProjectAction extends JsonRpcAction<UserListDto> {
 	public String encodeParam(int i) {
 		switch (i) {
 		case 0:
-			return String.valueOf(projectId);
+			return projectId;
 		case 1:
-			return String.valueOf(userId);
+			return userId;
 		}
 		return null;
 	}

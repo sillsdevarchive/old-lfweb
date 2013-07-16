@@ -1,13 +1,13 @@
 <?php
 
-namespace dashboardtool;
+namespace libraries\lfdictionary\dashboardtool;
 require_once(dirname(__FILE__) . '/../Config.php');
 require_once(LF_LIBRARY_PATH . '/lfbase/Loader.php');
 require_once(dirname(__FILE__) . '/ActivityFieldType.php');
 
 
-use dashboardtool\DashboardToolFactory;
-use dashboardtool\DashboardDbType;
+use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
+use libraries\lfdictionary\dashboardtool\DashboardDbType;
 
 class DashboardCounterExtracter
 {

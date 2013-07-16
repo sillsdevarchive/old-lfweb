@@ -77,7 +77,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void getSettingUserFieldsSetting(int userId,
+	public void getSettingUserFieldsSetting(String userId,
 			AsyncCallback<SettingFieldsDto> asyncCallback) {
 		GetSettingUserFieldsSettingAction action = new GetSettingUserFieldsSettingAction(
 				userId);
@@ -85,7 +85,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void getSettingUserTasksSetting(int userId,
+	public void getSettingUserTasksSetting(String userId,
 			AsyncCallback<SettingTasksDto> asyncCallback) {
 		GetSettingUserTasksSettingAction action = new GetSettingUserTasksSettingAction(
 				userId);
@@ -93,7 +93,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void getSettingUserSettings(int userId,
+	public void getSettingUserSettings(String userId,
 			AsyncCallback<UserSettingsDto> asyncCallback) {
 		GetSettingUserSettingsAction action = new GetSettingUserSettingsAction(
 				userId);
@@ -124,7 +124,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void updateProjectName(String projectName, int projectId,
+	public void updateProjectName(String projectName, String projectId,
 			AsyncCallback<ProjectDto> asyncCallback) {
 		UpdateProjectNameAction action = new UpdateProjectNameAction(projectId,
 				projectName);
@@ -141,7 +141,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void addUserToProject(int userId, int projectId,
+	public void addUserToProject(String userId, String projectId,
 			AsyncCallback<UserListDto> asyncCallback) {
 		AddUserToProjectAction action = new AddUserToProjectAction(userId,
 				projectId);
@@ -149,7 +149,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void removeUserFromProjectAction(int userId, int projectId,
+	public void removeUserFromProjectAction(String userId, String projectId,
 			AsyncCallback<UserListDto> asyncCallback) {
 		RemoveUserFromProjectAction action = new RemoveUserFromProjectAction(
 				userId, projectId);
@@ -157,7 +157,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void updateUserAccessGrant(UserDto userDto, int projectId,
+	public void updateUserAccessGrant(UserDto userDto, String projectId,
 			AsyncCallback<UserDto> asyncCallback) {
 		UpdateUserAccessRoleAction action = new UpdateUserAccessRoleAction(
 				userDto, projectId);
@@ -165,7 +165,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void inviteFriendByEmail(int projectId, String emailAddress,
+	public void inviteFriendByEmail(String projectId, String emailAddress,
 			String msg, AsyncCallback<String> asyncCallback) {
 		InviteFriendByEmailAction action = new InviteFriendByEmailAction(
 				projectId, emailAddress, msg);
@@ -173,7 +173,7 @@ public class BaseService implements IBaseService {
 	}
 
 	@Override
-	public void rapidUserCreationAction(int projectId, String newName,
+	public void rapidUserCreationAction(String projectId, String newName,
 			AsyncCallback<UserListDto> asyncCallback) {
 		RapidUserCreationAction action = new RapidUserCreationAction(newName,
 				projectId);

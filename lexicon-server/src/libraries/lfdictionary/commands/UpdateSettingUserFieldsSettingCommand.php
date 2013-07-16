@@ -1,5 +1,5 @@
 <?php
-namespace \libraries\lfdictionary\commands;
+namespace libraries\lfdictionary\commands;
 use environment\LexiconProjectEnvironment;
 
 use mapper\FieldSettingXmlJsonMapper;

@@ -50,21 +50,21 @@ public class BaseServiceTest implements IBaseService {
 	}
 
 	@Override
-	public void getSettingUserFieldsSetting(int userId,
+	public void getSettingUserFieldsSetting(String userId,
 			AsyncCallback<SettingFieldsDto> asyncCallback) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void getSettingUserTasksSetting(int userId,
+	public void getSettingUserTasksSetting(String userId,
 			AsyncCallback<SettingTasksDto> asyncCallback) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void getSettingUserSettings(int userId,
+	public void getSettingUserSettings(String userId,
 			AsyncCallback<UserSettingsDto> asyncCallback) {
 		// TODO Auto-generated method stub
 
@@ -87,7 +87,7 @@ public class BaseServiceTest implements IBaseService {
 	}
 
 	@Override
-	public void updateProjectName(String projectName, int projectId,
+	public void updateProjectName(String projectName, String projectId,
 			AsyncCallback<ProjectDto> asyncCallback) {
 		// TODO Auto-generated method stub
 
@@ -101,35 +101,35 @@ public class BaseServiceTest implements IBaseService {
 	}
 
 	@Override
-	public void addUserToProject(int userId, int projectId,
+	public void addUserToProject(String userId, String projectId,
 			AsyncCallback<UserListDto> asyncCallback) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void removeUserFromProjectAction(int userId, int projectId,
+	public void removeUserFromProjectAction(String userId, String projectId,
 			AsyncCallback<UserListDto> asyncCallback) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateUserAccessGrant(UserDto userDto, int projectId,
+	public void updateUserAccessGrant(UserDto userDto, String projectId,
 			AsyncCallback<UserDto> asyncCallback) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void inviteFriendByEmail(int projectId, String emailAddress,
+	public void inviteFriendByEmail(String projectId, String emailAddress,
 			String msg, AsyncCallback<String> asyncCallback) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void rapidUserCreationAction(int projectId, String newName,
+	public void rapidUserCreationAction(String projectId, String newName,
 			AsyncCallback<UserListDto> asyncCallback) {
 		// TODO Auto-generated method stub
 		

@@ -1,6 +1,6 @@
 <?php
-namespace store;
-use store\mongo\MongoLexStore;
+namespace libraries\lfdictionary\store;
+use libraries\lfdictionary\store\mongo\MongoLexStore;
 class LexStoreFactory
 {
 	public static function  getLexStore($storeType, $databaseName)

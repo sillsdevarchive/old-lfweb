@@ -73,8 +73,7 @@
 		require_once(APPPATH . '/helpers/loader_helper.php');
 
 		//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
-		$project_id= "51e3b48b9cde7fef33e7aef7";
-		if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!='') {
+		if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!="") {
 			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id);
 			echo $lexClientEnvironment->getSettings();
 			?>

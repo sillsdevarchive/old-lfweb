@@ -70,7 +70,7 @@ public interface IBaseService {
 	 * 
 	 * @param asyncCallback
 	 */
-	void getSettingUserFieldsSetting(int userId,
+	void getSettingUserFieldsSetting(String userId,
 			AsyncCallback<SettingFieldsDto> asyncCallback);
 
 	/**
@@ -78,7 +78,7 @@ public interface IBaseService {
 	 * 
 	 * @param asyncCallback
 	 */
-	void getSettingUserTasksSetting(int userId,
+	void getSettingUserTasksSetting(String userId,
 			AsyncCallback<SettingTasksDto> asyncCallback);
 
 	/**
@@ -86,7 +86,7 @@ public interface IBaseService {
 	 * 
 	 * @param asyncCallback
 	 */
-	void getSettingUserSettings(int userId,
+	void getSettingUserSettings(String userId,
 			AsyncCallback<UserSettingsDto> asyncCallback);
 
 	/**
@@ -122,7 +122,7 @@ public interface IBaseService {
 	 *            the project which need to update name
 	 * @param asyncCallback
 	 */
-	void updateProjectName(String projectName, int projectId,
+	void updateProjectName(String projectName, String projectId,
 			AsyncCallback<ProjectDto> asyncCallback);
 
 	/**
@@ -133,7 +133,7 @@ public interface IBaseService {
 	 *            the project which the user will add in
 	 * @param asyncCallback
 	 */
-	void addUserToProject(int userId, int projectId,
+	void addUserToProject(String userId, String projectId,
 			AsyncCallback<UserListDto> asyncCallback);
 
 	/**
@@ -144,7 +144,7 @@ public interface IBaseService {
 	 *            the project which the user will removed
 	 * @param asyncCallback
 	 */
-	void removeUserFromProjectAction(int userId, int projectId,
+	void removeUserFromProjectAction(String userId, String projectId,
 			AsyncCallback<UserListDto> asyncCallback);
 
 	/**
@@ -155,7 +155,7 @@ public interface IBaseService {
 	 *            related project id
 	 * @param asyncCallback
 	 */
-	void updateUserAccessGrant(UserDto userDto, int projectId,
+	void updateUserAccessGrant(UserDto userDto, String projectId,
 			AsyncCallback<UserDto> asyncCallback);
 
 	/**
@@ -168,7 +168,7 @@ public interface IBaseService {
 	 *            a personal message from invitor
 	 * @param asyncCallback
 	 */
-	void inviteFriendByEmail(int projectId, String emailAddress, String msg,
+	void inviteFriendByEmail(String projectId, String emailAddress, String msg,
 			AsyncCallback<String> asyncCallback);
 
 	/**
@@ -179,6 +179,6 @@ public interface IBaseService {
 	 *            user name will used for new user
 	 * @param asyncCallback
 	 */
-	void rapidUserCreationAction(int projectId, String newName,
+	void rapidUserCreationAction(String projectId, String newName,
 			AsyncCallback<UserListDto> asyncCallback);
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Transliteration;
+namespace libraries\lfdictionary\Transliteration;
 use libraries\lfdictionary\common\LoggerFactory;
 class WordTransliterationFilter extends PHPTransliteration {
 	//TODO XZ 2013-5-7 transliteration is not best idea, is may have problems with different language.
