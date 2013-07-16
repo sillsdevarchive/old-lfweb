@@ -1,5 +1,5 @@
 <?php
-namespace store;
+namespace libraries\lfdictionary\store;
 interface ILexStore
 {
 	/**

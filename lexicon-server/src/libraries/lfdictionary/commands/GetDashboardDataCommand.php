@@ -1,10 +1,10 @@
 <?php
-namespace \libraries\lfdictionary\commands;
-use dashboardtool\DashboardDbType;
+namespace libraries\lfdictionary\commands;
+use \libraries\lfdictionary\dashboardtool\DashboardDbType;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use dashboardtool\DashboardToolFactory;
+use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\common\LoggerFactory;
 class GetDashboardDataCommand {
 	var $_filePath;
@@ -29,7 +29,7 @@ class GetDashboardDataCommand {
 		// read the current counter values from the lift file
 		$this->processFile();
 
-		$result=new \dto\DashboardActivitiesDTO();
+		$result=new libraries\lfdictionary\dto\DashboardActivitiesDTO();
 		$result->setStatsExamplesCount($this->_exampleCount);
 		$result->setStatsMeaningsCount($this->_meaningCount);
 		$result->setStatsPOSCount($this->_posCount);

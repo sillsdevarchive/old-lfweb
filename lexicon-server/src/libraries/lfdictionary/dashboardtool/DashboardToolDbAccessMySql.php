@@ -1,10 +1,10 @@
 <?php
-namespace dashboardtool;
+namespace libraries\lfdictionary\dashboardtool;
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use \lfbase\common\DataConnector;
-use \lfbase\common\DataConnection;
-use libraries\lfdictionary\common\LoggerFactory;
+use \libraries\lfdictionary\common\DataConnector;
+use \libraries\lfdictionary\common\DataConnection;
+use \libraries\lfdictionary\common\LoggerFactory;
 class DashboardToolDbAccessMySql implements IDashboardToolDbAccess
 {
 	

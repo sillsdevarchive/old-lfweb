@@ -218,7 +218,7 @@ class LFDictionaryAPI
 
 		// get all from lift file.
 		$existWordsList=$this->getList(1,PHP_INT_MAX);
-		if ( \lfbase\common\TextFormatHelper::startsWith($filename,"GWTU-")) {
+		if ( \libraries\lfdictionary\common\TextFormatHelper::startsWith($filename,"GWTU-")) {
 			// it is from uploaded file.
 			$uploadedFolder = PHP_UPLOAD_PATH . session_id();
 			$uploadedBinFile=$uploadedFolder . "/" . $filename . ".bin";
@@ -239,7 +239,7 @@ class LFDictionaryAPI
 			unlink($uploadedInfoFile);
 			rmdir($uploadedFolder);
 			// format conversion
-			$words=\lfbase\common\TextFormatHelper::convertToUTF8String($fileData);
+			$words=\libraries\lfdictionary\common\TextFormatHelper::convertToUTF8String($fileData);
 		}
 		$existWords= array();
 		$wordEntries=$existWordsList['entries'];
@@ -323,7 +323,6 @@ class LFDictionaryAPI
 
 		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->_projectNodeId, $this->_lexProject->getLiftFilePath(),$actRange);
 		$result = $command->execute();
-
 		return $result->encode();
 	}
 
@@ -504,7 +503,7 @@ class LFDictionaryAPI
 
 		$currentState = $this->_lexProject->projectState->getState();
 		switch ($currentState) {
-			case \environment\ProjectStates::Error:
+			case \libraries\lfdictionary\environment\ProjectStates::Error:
 			case '':
 				// Have another go at importing
 				break;
@@ -512,9 +511,9 @@ class LFDictionaryAPI
 				return $this->state();
 		}
 
-		$this->_lexProject->projectState->setState(\environment\ProjectStates::Importing, "Importing from LanguageDepot");
+		$this->_lexProject->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Importing, "Importing from LanguageDepot");
 
-		$importer = new \environment\LanguageDepotImporter($this->_projectNodeId);
+		$importer = new \libraries\lfdictionary\environment\LanguageDepotImporter($this->_projectNodeId);
 		$importer->cloneRepository($user, $password, $soruceURI);
 		$importer->importContinue($this->_lexProject->projectState);
 		return $this->state();
@@ -528,7 +527,7 @@ class LFDictionaryAPI
 		$currentState = $this->_lexProject->projectState->getState();
 		$progress = 0;
 		switch ($currentState) {
-			case \environment\ProjectStates::Importing:
+			case \libraries\lfdictionary\environment\ProjectStates::Importing:
 				$importer = new \environment\LanguageDepotImporter($this->_projectNodeId);
 				$importer->importContinue($this->_lexProject->projectState);
 				$progress = $importer->progress();
@@ -536,7 +535,7 @@ class LFDictionaryAPI
 		}
 		$state = $this->_lexProject->projectState->getState();
 		$message = $this->_lexProject->projectState->getMessage();
-		$dto = new \dto\ProjectStateDTO($state, $message);
+		$dto = new \libraries\lfdictionary\dto\ProjectStateDTO($state, $message);
 		$dto->Progress = $progress;
 		return $dto->encode();
 	}

@@ -1,6 +1,6 @@
 <?php
-namespace dashboardtool;
-class HistoricalHgDataFetcher extends \lfbase\common\HgWrapper
+namespace libraries\lfdictionary\dashboardtool;
+class HistoricalHgDataFetcher extends \libraries\lfdictionary\common\HgWrapper
 {
 	function __construct($repositoryPath) {		
 		parent::__construct($repositoryPath);

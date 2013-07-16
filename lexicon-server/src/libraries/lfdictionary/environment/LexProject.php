@@ -39,7 +39,7 @@ class LexProject
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
 			if (file_exists($this->projectPath)) {
-				$this->projectState->setState(\environment\ProjectStates::Ready);
+				$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 			}
 		}
 		$this->setupRoleAndPermissions();
@@ -119,7 +119,7 @@ class LexProject
 		$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
 		$hg->init();
 	
-		$this->projectState->setState(\environment\ProjectStates::Ready);
+		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 	}
 	
 	private function makeLanguageForgeSettingsFolderReady() {
@@ -247,7 +247,7 @@ class LexProject
 		if ($this->_liftFilePath) {
 			return $this->_liftFilePath;
 		}
-		if ($this->projectState->getState() != \environment\ProjectStates::Ready) {
+		if ($this->projectState->getState() != \libraries\lfdictionary\environment\ProjectStates::Ready) {
 			return null;
 		}
 		

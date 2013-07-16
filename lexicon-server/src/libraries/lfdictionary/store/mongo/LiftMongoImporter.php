@@ -1,5 +1,5 @@
 <?php
-namespace store\mongo;
+namespace libraries\lfdictionary\store\mongo;
 use store\ILiftImporter;
 use store\LiftScanner;
 use store\LiftStates;

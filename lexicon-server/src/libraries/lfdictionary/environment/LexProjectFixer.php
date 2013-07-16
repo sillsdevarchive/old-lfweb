@@ -1,5 +1,5 @@
 <?php
-namespace environment;
+namespace libraries\lfdictionary\environment;
 
 use libraries\lfdictionary\common\LoggerFactory;
 class LexProjectFixer

@@ -1,5 +1,5 @@
 <?php
-namespace dashboardtool;
+namespace libraries\lfdictionary\dashboardtool;
 class ActivityFieldType
 {
 	const COUNT_ENTRY = "COUNT_ENTRY";

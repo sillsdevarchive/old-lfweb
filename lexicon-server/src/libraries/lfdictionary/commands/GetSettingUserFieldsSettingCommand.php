@@ -1,5 +1,5 @@
 <?php
-namespace \libraries\lfdictionary\commands;
+namespace libraries\lfdictionary\commands;
 use mapper\FieldSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');

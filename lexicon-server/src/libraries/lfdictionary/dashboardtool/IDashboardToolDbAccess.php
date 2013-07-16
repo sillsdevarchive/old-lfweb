@@ -1,5 +1,5 @@
 <?php
-namespace dashboardtool;
+namespace libraries\lfdictionary\dashboardtool;
 interface IDashboardToolDbAccess
 {
 
