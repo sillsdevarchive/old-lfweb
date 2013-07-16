@@ -63,6 +63,11 @@ class MapperModel /*extends CI_Model*/
 		}
 	}
 	
+	public function searchByQuery($query, $fields = array())
+	{
+		return $this->_mapper->searchByQuery($this, $query, $fields = array());
+	}
+	
 	/**
 	 * Reads the model from the mongo collection
 	 * @see MongoMapper::read()
@@ -257,6 +262,21 @@ class MongoMapper
 			$item[$this->_idKey] = $id;
 			unset($item['_id']);
 			$model->entries[] = $item;
+		}
+	}
+	
+
+	public function searchByQuery($model, $query, $fields = array())
+	{
+		$data = $this->_collection->findOne($query, $fields);
+		if ($data === NULL)
+		{
+			return;
+		}
+		try {
+			$this->decode($model, $data);
+		} catch (\Exception $ex) {
+			throw new \Exception("Exception thrown while reading", $ex->getCode(), $ex);
 		}
 	}
 	

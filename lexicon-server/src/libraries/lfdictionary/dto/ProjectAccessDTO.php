@@ -20,12 +20,12 @@ class ProjectAccessDTO {
 	);
 	
 	/**
-	 * @var ProjectAccess
+	 * @var LFProjectAccess
 	 */
 	private $_projectAccess;
 
 	/**
-	 * @param ProjectAccess $projectAccess
+	 * @param LFProjectAccess $projectAccess
 	 */
 	public function __construct($projectAccess) {
 		$this->_projectAccess = $projectAccess;

@@ -1,5 +1,7 @@
 <?php
 namespace libraries\lfdictionary\environment;
+use models\ProjectAccessModel;
+
 use models\ProjectModel;
 
 use models\UserModel;
@@ -18,27 +20,26 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	}
 
 	/**
-	 * @param ProjectAccess $projectAccess
-	 * @see libraries\lfdictionary\environment.IEnvironment::readProjectAccess()
+	 * @param LFProjectAccess $projectAccess
+	 * @see libraries\lfdictionary\environment.IEnvironment::readLFProjectAccess()
 	 */
-	public function readProjectAccess($projectAccess) {
-		$sql = sprintf(
-			"SELECT nid,uid,lf_role FROM lf_access WHERE nid=%d AND uid=%d AND is_active!=0",
-			$projectAccess->projectId, $projectAccess->userId
-		);
-		$result = $this->_connection->execute($sql);
-		if ($row = $this->_connection->fetchrow($result)) {
-			$projectAccess->setRole(ProjectRole::mapRoleFromHost($row['lf_role']));
+	public function readLFProjectAccess($projectAccess) {
+		$projectAccessModel = new ProjectAccessModel();
+		$projectAccessModel->readyByProjectIdAndUserID($projectAccess->projectId, $projectAccess->userId);
+		
+		if ($projectAccessModel->id!=null) {
+			LoggerFactory::getLogger()->logInfoMessage($projectAccessModel->lf_role);
+			$projectAccess->setRole(ProjectRole::mapRoleFromHost($projectAccessModel->lf_role));
 		} else {
-			Drupal7EnvironmentFixer::fixProjectAccess($this, $projectAccess);
+			MongoDBEnvironmentFixer::fixLFProjectAccess($this, $projectAccess);
 		}
 	}
 	
 	/**
-	 * @param ProjectAccess $projectAccess
-	 * @see libraries\lfdictionary\environment.IEnvironment::writeProjectAccess()
+	 * @param LFProjectAccess $projectAccess
+	 * @see libraries\lfdictionary\environment.IEnvironment::writeLFProjectAccess()
 	 */
-	public function writeProjectAccess($projectAccess) {
+	public function writeLFProjectAccess($projectAccess) {
 		$hostRole = ProjectRole::mapRoleToHost($projectAccess->getRole());
 		$sql = sprintf(
 			"INSERT lf_access SET lf_role='%s',nid=%d,uid=%d ON DUPLICATE KEY UPDATE lf_role='%s'",

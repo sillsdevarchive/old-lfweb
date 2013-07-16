@@ -7,7 +7,7 @@ class AllEnvironmentTests extends TestSuite {
 
 	function __construct() {
 		parent::__construct();
-		$this->addFile(TEST_PATH . 'EnvironmentTest/ProjectAccess_Test.php');
+		$this->addFile(TEST_PATH . 'EnvironmentTest/LFProjectAccess_Test.php');
 		$this->addFile(TEST_PATH . 'EnvironmentTest/ProjectPermission_Test.php');
 		$this->addFile(TEST_PATH . 'EnvironmentTest/ProjectRole_Test.php');
 		$this->addFile(TEST_PATH . 'EnvironmentTest/ProjectModel_Test.php');

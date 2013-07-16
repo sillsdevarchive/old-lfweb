@@ -17,7 +17,7 @@ class LexClientEnvironment
 	public $userModel;
 	
 	/**
-	 * @var ProjectAccess
+	 * @var LFProjectAccess
 	 */
 	public $projectAccess;
 	
@@ -41,7 +41,7 @@ class LexClientEnvironment
 		$this->_userId = $userId;
 		$this->LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		$this->userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
-		$this->projectAccess = new \libraries\lfdictionary\environment\ProjectAccess($projectNodeId, $userId);
+		$this->projectAccess = new \libraries\lfdictionary\environment\LFProjectAccess($projectNodeId, $userId);
 		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->LFProjectModel->getName());
 		
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%s) U=%s (%s)',

@@ -2,21 +2,21 @@
 use lfbase\environment\ProjectRole;
 use lfbase\environment\IEnvironmentMapper;
 use lfbase\environment\ProjectPermission;
-use lfbase\environment\ProjectAccess;
+use lfbase\environment\LFProjectAccess;
 
 require_once(dirname(__FILE__) . '/../testconfig.php');
 
-class ProjectAccessMockEnvironment implements IEnvironmentMapper {
+class LFProjectAccessMockEnvironment implements IEnvironmentMapper {
 
 	public function __construct() {
 		ProjectRole::add('admin', new ProjectPermission(ProjectPermission::CAN_ADMIN), 1, 1);
 		ProjectRole::add('user', new ProjectPermission(ProjectPermission::CAN_EDIT_ENTRY), 1, 1);
 	}
 
-	public function writeProjectAccess($projectAccess) {
+	public function writeLFProjectAccess($projectAccess) {
 	}
 
-	public function readProjectAccess($projectAccess) {
+	public function readLFProjectAccess($projectAccess) {
 		$projectAccess->setRole('admin');
 	}
 	
