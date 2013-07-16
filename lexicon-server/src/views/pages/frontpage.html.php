@@ -53,7 +53,6 @@
 			<p><a href="/create_account" class="arrowed">Get Involved Today</a></p>
 		</div>
 		
-		<!--
 		<div class="sfcontainer cf">
 			<h2>Latest News</h2>
 			
@@ -85,4 +84,3 @@
 			</div>
 			
 		</div>
-		-->
