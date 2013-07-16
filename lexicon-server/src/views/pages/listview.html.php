@@ -1,4 +1,4 @@
-﻿<script type="text/javascript">
+<script type="text/javascript">
 	(function($) {
 		$(document).ready(function ()
 		{
@@ -65,7 +65,7 @@
 						$("#titleletter-button-0").trigger("click");
 				},
 				error: function(result) {
-					alert("error when try to get title letters: " + JSON.stringify(result));
+					alert("error when trying to get title letters: " + JSON.stringify(result));
 				}
 			});
 		});
