@@ -1,5 +1,5 @@
 <div class="sfcontainer banner">
-	<img src="/images/beach3.jpg" width="965px" height="360px" alt="on the beach" />
+	<img src="/images/CommunityTeam.jpg" width="965px" height="360px" alt="on the beach" />
 </div>
 		<div class="sfcontainer cf">
 			<h2>About Language Forge</h2>

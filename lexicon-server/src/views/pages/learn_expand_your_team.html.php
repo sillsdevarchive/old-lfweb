@@ -1,5 +1,5 @@
 <div class="sfcontainer banner">
-	<img src="/images/beach2.jpg" width="965px" height="360px" alt="on the beach" />
+	<img src="/images/TeamAtWork.jpg" width="965px" height="360px" alt="on the beach" />
 </div>
 		<div class="sfcontainer cf">
 			<h2>Expand Your Team</h2>
