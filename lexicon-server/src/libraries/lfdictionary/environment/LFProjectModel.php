@@ -2,7 +2,7 @@
 namespace libraries\lfdictionary\environment;
 
 require_once(dirname(__FILE__) . '/../Config.php');
-use libraries\lfdictionary\environment\ProjectAccess;
+use libraries\lfdictionary\environment\LFProjectAccess;
 use libraries\lfdictionary\environment\ProjectRole;
 
 /**
@@ -200,7 +200,7 @@ class LFProjectModel {
 	private function attachProjectRoleToUserListDto($userlistdto)
 	{
 		foreach ($userlistdto->getUsers() as $value) {
-			$projectAccess = new ProjectAccess($this->_projectId, $value->getUserId());
+			$projectAccess = new LFProjectAccess($this->_projectId, $value->getUserId());
 			$value->setUserRole($projectAccess->getRole());
 		}
 		return $userlistdto;
@@ -273,7 +273,7 @@ class LFProjectModel {
 	 * @param int $id
 	 * @return booll
 	 */
-	// TODO move this to a different class (maybe ProjectAccess)
+	// TODO move this to a different class (maybe LFProjectAccess)
 	static function roleExists($id) {
 		return EnvironmentMapper::connect()->roleExists($id);
 	}

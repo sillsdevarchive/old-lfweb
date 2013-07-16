@@ -15,8 +15,8 @@ class LanguageDepotEnvironmentMapper implements IEnvironmentMapper {
 	}
 	
 	// methods not implemented
-	public function readProjectAccess($projectAccess) { }
-	public function writeProjectAccess($projectAccess) { }
+	public function readLFProjectAccess($projectAccess) { }
+	public function writeLFProjectAccess($projectAccess) { }
 	public function searchUser($name, $indexBegin, $indexEnd) { }
 	public function removeUserFromProject($projectId, $userId) { }
 	public function emailExists($email) { }

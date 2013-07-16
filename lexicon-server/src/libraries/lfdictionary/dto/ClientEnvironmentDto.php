@@ -1,7 +1,7 @@
 <?php
 namespace libraries\lfdictionary\dto;
 
-use libraries\lfdictionary\environment\UserModel;
+use libraries\lfdictionary\environment\LFUserModel;
 class ClientEnvironmentDto {
 	/**
 	 * @var LFProjectModel
@@ -9,19 +9,19 @@ class ClientEnvironmentDto {
 	private $_LFProjectModel;
 
 	/**
-	 * @var UserModel
+	 * @var LFUserModel
 	 */
 	private $_userModel;
 	
 	/**
-	 * @var ProjectAccess
+	 * @var LFProjectAccess
 	 */
 	private $_projectAccess;
 	
 	/**
 	 * @param LFProjectModel $LFProjectModel
 	 * @param UserModel $userModel
-	 * @param ProjectAccess $projectAccess
+	 * @param LFProjectAccess $projectAccess
 	 */
 	function __construct($LFProjectModel, $userModel, $projectAccess) {
 		$this->_LFProjectModel = $LFProjectModel;

@@ -1,7 +1,7 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
-class ProjectAccess {
+class LFProjectAccess {
 
 	/**
 	 * @var int
@@ -88,13 +88,13 @@ class ProjectAccess {
 	
 	private function read() {
 		$this->_reading = true;
-		EnvironmentMapper::connect()->readProjectAccess($this);
+		EnvironmentMapper::connect()->readLFProjectAccess($this);
 		$this->_reading = false;
 	}
 	
 	private function write() {
 		if (!$this->_reading) {
-			EnvironmentMapper::connect()->writeProjectAccess($this);
+			EnvironmentMapper::connect()->writeLFProjectAccess($this);
 		}
 	}
 }

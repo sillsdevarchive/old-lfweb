@@ -12,7 +12,7 @@ require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 class TestUserModel extends UnitTestCase {
 
 	function __construct() {
-		EnvironmentMapper::connect(new ProjectAccessMockEnvironment());
+		EnvironmentMapper::connect(new LFProjectAccessMockEnvironment());
 	}
 	
 	function testGetUserName_Reads() {

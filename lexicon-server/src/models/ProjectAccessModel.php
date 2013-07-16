@@ -14,7 +14,7 @@ class ProjectAccessMongoMapper extends \libraries\sf\MongoMapper
 		static $instance = null;
 		if (null === $instance)
 		{
-			$instance = new ProjectAccessMongoMapper(SF_DATABASE, 'projects');
+			$instance = new ProjectAccessMongoMapper(LF_DATABASE, 'lf_access');
 		}
 		return $instance;
 	}
@@ -27,7 +27,7 @@ class ProjectAccessMongoMapper extends \libraries\sf\MongoMapper
 	}
 }
 
-class ProjectAccess extends \libraries\sf\MapperModel
+class ProjectAccessModel extends \libraries\sf\MapperModel
 {
 	public function __construct($id = NULL)
 	{
@@ -35,51 +35,13 @@ class ProjectAccess extends \libraries\sf\MapperModel
 		parent::__construct(ProjectAccessMongoMapper::instance(), $id);
 	}
 	
-	public function databaseName() {
-		$name = strtolower($this->projectname);
-		$name = str_replace(' ', '_', $name);
-		return 'sf_' . $name;
-	}
-
-	/**
-	 * Removes this project from the collection.
-	 * User references to this project are also removed
-	 */
-	public function remove()
+	public function readyByProjectIdAndUserID($projectId, $userId)
 	{
-		ProjectAccessMongoMapper::instance()->drop($this->databaseName());
-		ProjectAccessMongoMapper::instance()->remove($this->id);
-	}
-	
-	
-	/**
-	 * Adds the $userId as a member of this project.
-	 * You do NOT need to call write() as this method calls it for you
-	 * @param string $userId
-	 */
-	public function addUser($userId) {
-		$this->users->_addRef($userId);
+		
+		$data = $this->searchByQuery(array("user_id" => new \MongoId($userId), "project_id" => new \MongoId($projectId)));
 
 	}
-	
-	
-	/**
-	 * Removes the $userId from this project.
-	 * You do NOT need to call write() as this method calls it for you
-	 * @param string $userId
-	 */
-	public function removeUser($userId) {
-		//$userModel = new UserModel($userId);
-		$this->users->_removeRef($userId);
-		//$userModel->projects->_removeRef($this->id);
-	}
-
-	public function listUsers() {
-		$userList = new UserList_ProjectAccess($this->id);
-		$userList->read();
-		return $userList;
-	}
-	
+		
 	/**
 	 * @var string
 	 */
@@ -104,45 +66,8 @@ class ProjectAccess extends \libraries\sf\MapperModel
 	* @var int
 	*/
 	public $is_active;
-	
-	/**
-	* @var int
-	*/
-	public $created;
-	
-	/**
-	* @var int
-	*/
-	public $modified;
 	// What else needs to be in the model?
 	
 }
-
-class ProjectListModel extends \libraries\sf\MapperListModel
-{
-	public function __construct()
-	{
-		parent::__construct(
-			ProjectAccessMongoMapper::instance(),
-			array(),
-			array('projectname', 'language', 'title')
-		);
-	}
-}
-
-class ProjectList_UserModel extends \libraries\sf\MapperListModel
-{
-
-	public function __construct($userId)
-	{
-		parent::__construct(
-				ProjectAccessMongoMapper::instance(),
-				array('users' => array('$in' => array(new \MongoId($userId)))),
-				array('projectname')
-		);
-	}
-
-}
-
 
 ?>

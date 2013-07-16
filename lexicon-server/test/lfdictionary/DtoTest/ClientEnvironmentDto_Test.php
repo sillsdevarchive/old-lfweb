@@ -1,6 +1,6 @@
 <?php
 use lfbase\environment\EnvironmentMapper;
-use lfbase\environment\ProjectAccess;
+use lfbase\environment\LFProjectAccess;
 use lfbase\environment\UserModel;
 use lfbase\environment\ProjectModel;
 use lfbase\environment\ProjectRole;
@@ -16,12 +16,12 @@ require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 class TestOfClientEnvironment extends UnitTestCase {
 
 	function __construct() {
-		EnvironmentMapper::connect(new ProjectAccessMockEnvironment());
+		EnvironmentMapper::connect(new LFProjectAccessMockEnvironment());
 	}
 
 	function testEncode_NoThrow() {
 		$projectModel = new ProjectModel(TestEnvironment::PROJECT_ID);
-		$projectAccess = new ProjectAccess(TestEnvironment::PROJECT_ID, TestEnvironment::USER_ID);
+		$projectAccess = new LFProjectAccess(TestEnvironment::PROJECT_ID, TestEnvironment::USER_ID);
 		$userModel = new UserModelMockObject(TestEnvironment::USER_ID,"name", "role");
 		$c = new ClientEnvironmentDto($projectModel, $userModel, $projectAccess);
 		$result = $c->encode();

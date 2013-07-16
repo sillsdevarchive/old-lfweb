@@ -9,7 +9,7 @@ use \libraries\lfdictionary\dto\ProjectStateDTO;
 use \libraries\lfdictionary\dto\ListDTO;
 use \libraries\lfdictionary\store\LexStore;
 use \libraries\lfdictionary\common\AsyncRunner;
-use \libraries\lfdictionary\environment\ProjectAccess;
+use \libraries\lfdictionary\environment\LFProjectAccess;
 use \libraries\lfdictionary\environment\ProjectPermission;
 use \libraries\lfdictionary\dto\ResultDTO;
 use \libraries\lfdictionary\dashboardtool\HistoricalHgDataFetcher;
@@ -80,7 +80,7 @@ class LFDictionaryAPI
 		$userId
 		));
 		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
-		$this->_projectAccess = new \libraries\lfdictionary\environment\ProjectAccess($this->_projectNodeId,$this->_userId);
+		$this->_projectAccess = new \libraries\lfdictionary\environment\LFProjectAccess($this->_projectNodeId,$this->_userId);
 		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
 	}
 
@@ -761,7 +761,7 @@ class LFDictionaryAPI
 	$userId=$userJson->id;
 	if ($projectModel->isUserInProject($userId)) {
 	$userDTO = new UserDTO(new \libraries\lfdictionary\environment\LFUserModel($userId));
-	$projectAccess = new ProjectAccess($projectId, $userId);
+	$projectAccess = new LFProjectAccess($projectId, $userId);
 	$userDTO->setUserRole($projectAccess->getRole());
 	return $userDTO->encode();
 	}

@@ -31,10 +31,10 @@ class TestDrupal7EnivronmentMapper extends UnitTestCase {
 	function testWriteProject_ReadsBack() {
 	}
 	
-	function testReadProjectAccess_Reads() {
+	function testReadLFProjectAccess_Reads() {
 	}
 	
-	function testWriteProjectAccess_ReadsBack() {
+	function testWriteLFProjectAccess_ReadsBack() {
 	}
 	
 	

@@ -5,15 +5,15 @@ interface IEnvironmentMapper {
 	
 	/**
 	 * 
-	 * @param ProjectAccess $projectAccess
+	 * @param LFProjectAccess $projectAccess
 	 */
-	public function readProjectAccess($projectAccess);
+	public function readLFProjectAccess($projectAccess);
 	
 	/**
 	 * 
-	 * @param ProjectAccess $projectAccess
+	 * @param LFProjectAccess $projectAccess
 	 */
-	public function writeProjectAccess($projectAccess);
+	public function writeLFProjectAccess($projectAccess);
 	
 	/**
 	 * 
