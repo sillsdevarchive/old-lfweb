@@ -76,7 +76,7 @@ class LFDictionaryAPI
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
 		$this->_projectModel->getName(),
 		$projectNodeId,
-		$this->_userModel->getUserName(),
+		($this->_userModel->id!=NULL && strlen(trim($this->_userModel->id))>0) ? $this->_userModel->getUserName() : "-",
 		$userId
 		));
 		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
