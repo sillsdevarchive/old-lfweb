@@ -47,7 +47,7 @@
 			?>
 			
 		<div class="sub-promotion sfcontainer cf">
-			<img src="/images/girlsmiling.jpg" alt="girl smiling" width="299" height="182" class="left">
+			<img src="/images/girlsmiling.jpg" alt="girl smiling" width="229" height="145" class="left">
 			<h2>The Power of Collaboration</h2>
 			<p>When everyone plays their part in producing a dictionary in your language, everyone benefits.  It's the power of collaboration that provides richer and more accurate dictionaries.  Our technology brings dictionary development to the masses, in a positive environment that focuses participants on the task and works wherever they are.  On the tablet, phone or web, Language Forge is there.</p>
 			<p><a href="/create_account" class="arrowed">Get Involved Today</a></p>
@@ -60,7 +60,7 @@
 				<div class="three-col-1">
 					<p>16 July 2013</p>
 					<h3>Early experiments with language forge under way</h3>
-					<p>We are currently in the process of building the system to the point that we can start sharing dictionaries between language forge, <a href="http://wesay.palaso.org/" class="arrowed">WeSay</a>, and <a href="http://fieldworks.sil.org/flex/" class="arrowed">FieldWorks Language Explorer</a>. We are not ready for real testing yet but will let you know when you can start experimenting.</p>
+					<p>We are currently in the process of building the system to the point that we can start sharing dictionaries between language forge, <a href="http://wesay.palaso.org/" target="_blank">WeSay</a>, and <a href="http://fieldworks.sil.org/flex/" target="_blank" >FieldWorks Language Explorer</a>. We are not ready for real testing yet but will let you know when you can start experimenting.</p>
 				    <!-- <p><a href="#" class="arrowed">Read Article</a></p> -->
 				</div>
 			</div>
