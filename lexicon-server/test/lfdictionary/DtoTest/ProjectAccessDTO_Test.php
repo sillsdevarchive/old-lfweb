@@ -18,7 +18,7 @@ class TestOfProjectAccessDTO extends UnitTestCase {
 
 	function testProjectAccessDTOEncode_ReturnsCorrectJson() {
 		$p = new LFProjectAccess(TestEnvironment::PROJECT_ID, TestEnvironment::USER_ID);
-		$dto = new \lfbase\dto\ProjectAccessDTO($p);
+		$dto = new \libraries\lfdictionary\dto\ProjectAccessDTO($p);
 		$result = json_encode($dto->encode());
 		$this->assertEqual('{"grants":[1],"activerole":"admin","availableroles":{"admin":"admin","user":"user"}}', $result);
 	}

@@ -10,14 +10,14 @@ class TestOfGetWordPackListCommand extends UnitTestCase {
 	function testWordPackListCommand_TwoEntries() {
 		$listDto = new \dto\ListDTO();
 
-		$multiText1 = new \lfbase\dto\MultiText();
+		$multiText1 = new \libraries\lfdictionary\dto\MultiText();
 		$multiText1->addForm("en", "meaning1");
 		$listEntry1 = new \dto\ListEntry();
 		$listEntry1->setGuid("guid0");
 		$listEntry1->addEntry("fr", "entry1");
 		$listEntry1->addMeaning($multiText1);
 
-		$multiText2 = new \lfbase\dto\MultiText();
+		$multiText2 = new \libraries\lfdictionary\dto\MultiText();
 		$multiText2->addForm("en", "meaning1");
 		$listEntry2 = new \dto\ListEntry();
 		$listEntry2->setGuid("guid1");

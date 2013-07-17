@@ -149,7 +149,7 @@ class LFDictionaryAPI
 	 * Delete a Lexical Entry
 	 * @param string $guid
 	 * @param string $mercurialSHA
-	 * @throws \lfbase\common\UserActionDeniedException
+	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
 	 * @return ResultDTO
 	 */
 	function deleteEntry($guid, $mercurialSHA) {
@@ -170,7 +170,7 @@ class LFDictionaryAPI
 	 * Create / Update a single Lexical Entry
 	 * @param EntryDTO $entry
 	 * @param string $action
-	 * @throws \lfbase\common\UserActionDeniedException
+	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
 	 * @return ResultDTO
 	 */
 	function saveEntry($entry, $action) {
@@ -552,7 +552,7 @@ class LFDictionaryAPI
 	
 	// Reviewed This can stay here
 	function getIANAData() {
-	$JSONFile=LF_LIBRARY_PATH . "lfbase/data/IANA.js";
+	$JSONFile=LF_LIBRARY_PATH . "/data/IANA.js";
 	$result= file_get_contents($JSONFile);
 	return json_decode($result);
 	}
@@ -823,7 +823,7 @@ class LFDictionaryAPI
 //Main Function
 function main() {
 
-	//\lfbase\common\LFDrupal::loadDrupal();
+	//\libraries\lfdictionary\common\LFDrupal::loadDrupal();
 	//error handler must register after drupal loaded!, otherwise will be replace by drupal's handler
 	\libraries\lfdictionary\common\ErrorHandler::register();
 	global $user;

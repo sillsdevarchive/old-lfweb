@@ -6,9 +6,9 @@ require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 class TestOfDataConnector extends UnitTestCase {
 
 	function testConnect_Defaults_SameReference() {
-		$d1 = \lfbase\common\DataConnector::connect();
-		$this->assertIsA($d1, '\lfbase\common\DataConnection');
-		$d2 = \lfbase\common\DataConnector::connect();
+		$d1 = \libraries\lfdictionary\common\DataConnector::connect();
+		$this->assertIsA($d1, '\libraries\lfdictionary\common\DataConnection');
+		$d2 = \libraries\lfdictionary\common\DataConnector::connect();
 		$this->assertReference($d1, $d2);
 	}
 	

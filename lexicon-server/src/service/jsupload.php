@@ -69,8 +69,8 @@
 require_once(dirname(__FILE__) . '/Config.php');
 require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
 
-$drupalLoaded = \lfbase\common\LFDrupal::loadDrupal();
-\lfbase\common\ErrorHandler::register();
+$drupalLoaded = \libraries\lfdictionary\common\LFDrupal::loadDrupal();
+\libraries\lfdictionary\common\ErrorHandler::register();
 
 $projectId = isset($_SESSION['projectid']) ? $_SESSION['projectid'] : '';
 if($projectId=='' && IS_DEV_MODE == 0 ){

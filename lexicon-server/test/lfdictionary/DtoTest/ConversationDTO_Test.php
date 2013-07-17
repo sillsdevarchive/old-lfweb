@@ -6,7 +6,7 @@ require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 class TestOfConversationDTO extends UnitTestCase {
 
 	function testConversationDTOEncode_ReturnsCorrectJson() {
-		$rootDto = new \lfbase\dto\ConversationDTO();
+		$rootDto = new \libraries\lfdictionary\dto\ConversationDTO();
 		$rootDto->setClass("TestClassRoot");
 		$rootDto->setReference("TestRef");
 		$rootDto->setGuid("00000000-1111-2222-3333-444444444444");
@@ -15,7 +15,7 @@ class TestOfConversationDTO extends UnitTestCase {
 		$rootDto->setComment("This is a test question");
 		$rootDto->setStatus("");
 		
-		$childDto = new \lfbase\dto\ConversationDTO();
+		$childDto = new \libraries\lfdictionary\dto\ConversationDTO();
 		$childDto->setClass("TestClass");
 		$childDto->setReference("");
 		$childDto->setGuid("88888888-1111-2222-3333-444444444444");
@@ -33,10 +33,10 @@ class TestOfConversationDTO extends UnitTestCase {
 
 	function testConversationListDTOEncode_ReturnsCorrectJson() {
 
-		$conversationListDTO = new \lfbase\dto\ConversationListDTO();
+		$conversationListDTO = new \libraries\lfdictionary\dto\ConversationListDTO();
 		
 		
-		$rootDto = new \lfbase\dto\ConversationDTO();
+		$rootDto = new \libraries\lfdictionary\dto\ConversationDTO();
 		$rootDto->setClass("TestClassRoot");
 		$rootDto->setReference("TestRef");
 		$rootDto->setGuid("00000000-1111-2222-3333-444444444444");
@@ -45,7 +45,7 @@ class TestOfConversationDTO extends UnitTestCase {
 		$rootDto->setComment("This is a test question");
 		$rootDto->setStatus("");
 		
-		$childDto = new \lfbase\dto\ConversationDTO();
+		$childDto = new \libraries\lfdictionary\dto\ConversationDTO();
 		$childDto->setClass("TestClass");
 		$childDto->setReference("");
 		$childDto->setGuid("88888888-1111-2222-3333-444444444444");

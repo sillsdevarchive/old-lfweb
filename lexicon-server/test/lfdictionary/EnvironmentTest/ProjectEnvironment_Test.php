@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 // require_once(TEST_PATH . 'EnvironmentTest/DrupalTestEnvironment.php');
 
 // DrupalTestEnvironment::setDrupalTestDataConnection();
-// \lfbase\common\LFDrupal::loadDrupal();
+// \libraries\lfdictionary\common\LFDrupal::loadDrupal();
 
 // Test project
 define('PROJECT_NID', 284);

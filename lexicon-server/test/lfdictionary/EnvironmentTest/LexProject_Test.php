@@ -3,7 +3,7 @@ require_once(dirname(__FILE__) . '/../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
-use \lfbase\common\HgWrapper;
+use \libraries\lfdictionary\common\HgWrapper;
 
 class LexProjectTestEnvironment {
 	
@@ -34,7 +34,7 @@ class LexProjectTestEnvironment {
 			if (!file_exists($this->getProjectPath())) {
 				mkdir($this->getProjectPath());
 			}
-			$this->_hg = new \lfbase\common\HgWrapper($this->getProjectPath());
+			$this->_hg = new \libraries\lfdictionary\common\HgWrapper($this->getProjectPath());
 			$this->_hg->init();
 		}
 // 		echo "construct";

@@ -59,7 +59,7 @@ class MongoTestEnvironment {
 		foreach ($words as $word) {
 			$guid = self::guid();
 			$entry = self::createTestEntry($guid, 1, 1, 0);
-			$entry->setEntry(\lfbase\dto\MultiText::create('en', $word));
+			$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('en', $word));
 			$store->writeEntry($entry);
 		}
 	}
@@ -67,15 +67,15 @@ class MongoTestEnvironment {
 	private static function createTestEntry($guid, $id, $senseCount = 1, $exampleCount = 1) {
 		$entry = \dto\EntryDTO::create($guid);
 		$word = "Word $id";
-		$entry->setEntry(\lfbase\dto\MultiText::create('fr', $word));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', $word));
 		for ($i = 0; $i < $senseCount; $i++) {
 			$sense = \dto\Sense::create();
 			$sense->setPartOfSpeech('n');
-			$sense->setDefinition(\lfbase\dto\MultiText::create('en', "$word Definition $i"));
+			$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', "$word Definition $i"));
 			for ($j = 0; $j < $exampleCount; $j++) {
 				$example = \dto\Example::create(
-						\lfbase\dto\MultiText::create('fr', "$word Example $j"),
-						\lfbase\dto\MultiText::create('en', "$word Example Translation $j")
+						\libraries\lfdictionary\dto\MultiText::create('fr', "$word Example $j"),
+						\libraries\lfdictionary\dto\MultiText::create('en', "$word Example Translation $j")
 				);
 				$sense->addExample($example);
 			}

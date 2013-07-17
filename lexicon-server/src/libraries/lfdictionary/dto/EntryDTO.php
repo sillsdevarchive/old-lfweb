@@ -125,7 +125,7 @@ class EntryDTO {
 		}
 		$this->_guid = $value['guid'];
 		$this->mercurialSHA = $value['mercurialSHA'];
-		$this->_entry = \lfbase\dto\MultiText::createFromArray($value['entry']);
+		$this->_entry = \libraries\lfdictionary\dto\MultiText::createFromArray($value['entry']);
 		foreach ($value['senses'] as $senseValue) {
 			$sense = Sense::createFromArray($senseValue);
 			$this->addSense($sense);

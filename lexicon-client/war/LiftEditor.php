@@ -48,8 +48,8 @@
 		require_once(LF_LIBRARY_PATH . "lfbase/Loader.php");
 
 		//Load Drupal		
-		$errorHandler = new \lfbase\common\ErrorHandler();
-		\lfbase\common\LFDrupal::loadDrupal();
+		$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
+		\libraries\lfdictionary\common\LFDrupal::loadDrupal();
 
 		global $user; // TODO the user info should be encapsulated in LFDrupal CP 2012-09
 		$projectNodeId = isset($_GET['projectid']) ? $_GET['projectid'] : $_GET['p'];

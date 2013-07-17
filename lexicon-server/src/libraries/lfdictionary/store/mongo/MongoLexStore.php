@@ -74,7 +74,7 @@ class MongoLexStore implements ILexStore
 	public function readEntry($guid) {
 		$collection = $this->_mongoDB->Entries;
 		$result = $collection->findOne(array('guid' => $guid));
-		$entry = libraries\lfdictionary\dto\EntryDTO::create($guid);
+		$entry = EntryDTO::create($guid);
 		$entry->decode($result);
 		return $entry;
 	}
@@ -254,7 +254,7 @@ class MongoLexStore implements ILexStore
 		foreach ($cursor as $entry) {
 			$entryPart = $entry['entry'];
 			if (array_key_exists($lang, $entryPart) && $transliterationFilter->isWordStartWithTitleLetter($titleLetter,$entryPart[$lang], $lang)){
-				$entryDto = \libraries\lfdictionary\dto\EntryDTO::create($entry['guid']);
+				$entryDto = EntryDTO::create($entry['guid']);
 				$entryDto->decode($entry);
 				$dto->addEntry($entryDto);
 			}

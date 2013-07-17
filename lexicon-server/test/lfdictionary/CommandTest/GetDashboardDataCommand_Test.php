@@ -4,8 +4,8 @@ require_once(SIMPLETEST_PATH . 'autorun.php');
 
 require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
 
-use \lfbase\common\DataConnector;
-use \lfbase\common\DataConnection;
+use \libraries\lfdictionary\common\DataConnector;
+use \libraries\lfdictionary\common\DataConnection;
 
 class TestOfGetDashboardDataCommand extends UnitTestCase {
 

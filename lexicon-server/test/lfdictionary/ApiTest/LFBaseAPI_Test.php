@@ -12,7 +12,7 @@ use lfbase\common\DataConnection;
 
 require_once(dirname(__FILE__) . '/../testconfig.php');
 require_once(LF_BASE_PATH . "/lfbase/Loader.php");
-\lfbase\common\LFDrupal::loadDrupal();
+\libraries\lfdictionary\common\LFDrupal::loadDrupal();
 
 require_once(SIMPLETEST_PATH . 'autorun.php');
 

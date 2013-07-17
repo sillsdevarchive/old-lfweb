@@ -23,7 +23,7 @@ users:{
 projects:{
 	"_id" : ObjectId("51e3b48b9cde7fef33e7aef7"),
 	"projectname" : "th-thai_food-dictionary",
-	"language" : "en",
+	"language" : "th",
 	"title" : "test project"
 }
 

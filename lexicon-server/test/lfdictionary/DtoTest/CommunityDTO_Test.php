@@ -7,14 +7,14 @@ class TestOfCommunityDTO extends UnitTestCase {
 
 	function testEncode_ListAddCommunity_JsonCorrect() {
 	
-		$community = new \lfbase\dto\CommunityDTO();
+		$community = new \libraries\lfdictionary\dto\CommunityDTO();
 		$community->addCommunityId(86);
 		$community->addCommunityName('Telugu');
 		
 		$result = json_encode($community->encode());
 		$this->assertEqual('{"CommunityId":86,"CommunityName":"Telugu"}', $result);
 		
-		$CommunityListDTO = new \lfbase\dto\CommunityListDTO();
+		$CommunityListDTO = new \libraries\lfdictionary\dto\CommunityListDTO();
 		$CommunityListDTO->addListCommunity($community);
 		$result = json_encode($CommunityListDTO->encode());
 		

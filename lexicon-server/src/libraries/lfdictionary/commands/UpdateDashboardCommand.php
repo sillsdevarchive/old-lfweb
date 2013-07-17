@@ -162,7 +162,7 @@ class UpdateDashboardCommand
 	public function error() {
 		$asyncRunner = $this->createAsyncRunner();
 		$output = $asyncRunner->getOutput();
-		$errors = \lfbase\common\HgWrapper::errorMessageFilter($output);
+		$errors = \libraries\lfdictionary\common\HgWrapper::errorMessageFilter($output);
 		return $errors;
 	}
 

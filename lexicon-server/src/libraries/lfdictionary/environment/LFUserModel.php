@@ -163,7 +163,7 @@ class LFUserModel {
 	 * @param string $password
 	 * @param string $email
 	 * @throws Exception if the userName or email are empty
-	 * @return null | \lfbase\environment\UserModel
+	 * @return null | \libraries\lfdictionary\environment\UserModel
 	 */
 	public static function addUser($userName, $firstName, $lastName, $password, $email) {
 		if ($userName == "" || $email == "") {

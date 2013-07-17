@@ -211,7 +211,7 @@ body.loading .view-loading-progress {
 .readonly-view-view-only {
 	height: 710px;
 	width: auto;
-	padding-top: 120px;
+	padding-top: 60px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -219,7 +219,7 @@ body.loading .view-loading-progress {
 .readonly-view-view-with-edit {
 	height: 710px;
 	width: auto;
-	padding-top: 0px;
+	padding-top: 11px;
 	padding-left: 250px;
 	padding-right: 10px;
 }

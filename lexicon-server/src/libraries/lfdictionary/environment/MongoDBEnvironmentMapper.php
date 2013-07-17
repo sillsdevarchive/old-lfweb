@@ -108,7 +108,7 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 * @param int $indexEnd
 	 */
 	public function searchUser($name, $indexBegin, $indexEnd) {
-		$userlistdto = new  \lfbase\dto\UserListDTO();
+		$userlistdto = new  \libraries\lfdictionary\dto\UserListDTO();
 		if ($name) {
 			$sql = sprintf("SELECT u.uid, u.name FROM {users} u INNER JOIN {users_roles} ur ON u.uid = ur.uid WHERE LOWER(u.name) LIKE LOWER('%s') OR LOWER(u.name) LIKE LOWER('%s') OR LOWER(u.name) LIKE LOWER('%s')","%".$name."%", $name."%", "%".$name);
 			$result = db_query_range($sql, $indexBegin, $indexEnd);

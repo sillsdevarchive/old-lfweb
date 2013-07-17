@@ -13,7 +13,7 @@ class TestOfLiftUpdater extends UnitTestCase {
 </definition>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$multitext = \lfbase\dto\MultiText::create('th', 'new text');
+		$multitext = \libraries\lfdictionary\dto\MultiText::create('th', 'new text');
 		
 		\mapper\LiftUpdater::addMultiText($srcXml, $multitext);
 	
@@ -33,7 +33,7 @@ XML;
 </definition>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$multitext = \lfbase\dto\MultiText::create('en', 'updated text');
+		$multitext = \libraries\lfdictionary\dto\MultiText::create('en', 'updated text');
 		
 		\mapper\LiftUpdater::mergeMultiText($srcXml, $multitext);
 	
@@ -51,7 +51,7 @@ XML;
 </definition>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$multitext = \lfbase\dto\MultiText::create('en', 'updated text');
+		$multitext = \libraries\lfdictionary\dto\MultiText::create('en', 'updated text');
 		$multitext->addForm('th', 'new text');
 		
 		\mapper\LiftUpdater::mergeMultiText($srcXml, $multitext);
@@ -73,8 +73,8 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$example = \dto\Example::create(
-			\lfbase\dto\MultiText::create('th', 'example text'),
-			\lfbase\dto\MultiText::create('en', 'translation text')
+			\libraries\lfdictionary\dto\MultiText::create('th', 'example text'),
+			\libraries\lfdictionary\dto\MultiText::create('en', 'translation text')
 		);
 		
 		\mapper\LiftUpdater::addExampleToSense($srcXml, $example);
@@ -101,8 +101,8 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$example = \dto\Example::create(
-			\lfbase\dto\MultiText::create('th', 'updated example'),
-			\lfbase\dto\MultiText::create('en', 'updated translation')
+			\libraries\lfdictionary\dto\MultiText::create('th', 'updated example'),
+			\libraries\lfdictionary\dto\MultiText::create('en', 'updated translation')
 		);
 		
 		\mapper\LiftUpdater::mergeExample($srcXml, $example);
@@ -141,11 +141,11 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$sense = \dto\Sense::create();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'updated definition'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
 		$sense->setPartOfSpeech('updated PartOfSpeech');
 		$example = \dto\Example::create(
-			\lfbase\dto\MultiText::create('th', 'updated example'),
-			\lfbase\dto\MultiText::create('en', 'updated translation')
+			\libraries\lfdictionary\dto\MultiText::create('th', 'updated example'),
+			\libraries\lfdictionary\dto\MultiText::create('en', 'updated translation')
 		);
 		$sense->addExample($example);
 		
@@ -188,13 +188,13 @@ XML;
 		$srcXml = simplexml_load_string($src);
 		$sense = \dto\Sense::create();
 		$example = \dto\Example::create(
-			\lfbase\dto\MultiText::create('th', 'updated example'),
-			\lfbase\dto\MultiText::create('en', 'updated translation')
+			\libraries\lfdictionary\dto\MultiText::create('th', 'updated example'),
+			\libraries\lfdictionary\dto\MultiText::create('en', 'updated translation')
 		);
 		$sense->addExample($example);
 		$example = \dto\Example::create(
-			\lfbase\dto\MultiText::create('th', 'new example'),
-			\lfbase\dto\MultiText::create('en', 'new translation')
+			\libraries\lfdictionary\dto\MultiText::create('th', 'new example'),
+			\libraries\lfdictionary\dto\MultiText::create('en', 'new translation')
 		);
 		$sense->addExample($example);
 		
@@ -229,7 +229,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$sense = \dto\Sense::create();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'updated definition'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
 		
 		\mapper\LiftUpdater::mergeSense($srcXml, $sense);
 	
@@ -249,7 +249,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$sense = \dto\Sense::create();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'new definition'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'new definition'));
 		
 		\mapper\LiftUpdater::addSenseToEntry($srcXml, $sense);
 	
@@ -276,11 +276,11 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \lfbase\common\UUIDGenerate::uuid_generate_php();
+		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
 		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\lfbase\dto\MultiText::create('th', 'updated form'));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'updated form'));
 		$sense = \dto\Sense::create();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'updated definition'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
 		$entry->addSense($sense);
 		
 		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
@@ -316,14 +316,14 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \lfbase\common\UUIDGenerate::uuid_generate_php();
+		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
 		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\lfbase\dto\MultiText::create('th', 'updated form'));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'updated form'));
 		$sense = \dto\Sense::create();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'updated definition'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
 		$entry->addSense($sense);
 		$sense = \dto\Sense::create();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'new definition'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'new definition'));
 		$entry->addSense($sense);
 		
 		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
@@ -352,9 +352,9 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \lfbase\common\UUIDGenerate::uuid_generate_php();
+		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
 		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\lfbase\dto\MultiText::create('th', 'updated form'));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'updated form'));
 		
 		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
 	
@@ -376,9 +376,9 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \lfbase\common\UUIDGenerate::uuid_generate_php();
+		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
 		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\lfbase\dto\MultiText::create('th', 'new form'));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'new form'));
 		
 		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
 	

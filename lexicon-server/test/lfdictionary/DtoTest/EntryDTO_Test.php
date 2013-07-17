@@ -7,15 +7,15 @@ class TestOfEntryDTO extends UnitTestCase {
 
 	function testEncode_EntryAndSense_JsonCorrect() {
 		$entry = \dto\EntryDTO::create("guid0");
-		$entry->setEntry(\lfbase\dto\MultiText::create('fr', 'form1'));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'form1'));
 		
 		$sense = new \dto\Sense();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'definition1'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
 		$sense->setSemanticDomainName('semantic-domain-ddp4');
 		$sense->setSemanticDomainValue('2.1 Body');
 		$sense->addExample(\dto\Example::create(
-			\lfbase\dto\MultiText::create('en', 'example1'),
-			\lfbase\dto\MultiText::create('fr', 'translation1')
+			\libraries\lfdictionary\dto\MultiText::create('en', 'example1'),
+			\libraries\lfdictionary\dto\MultiText::create('fr', 'translation1')
 		));
 		
 		$entry->addSense($sense);
@@ -27,16 +27,16 @@ class TestOfEntryDTO extends UnitTestCase {
 	
 	function testCreateFromArray_Sample_Correct() {
 		$entry = \dto\EntryDTO::create("guid0");
-		$entry->setEntry(\lfbase\dto\MultiText::create('fr', 'form1'));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'form1'));
 		
 		$sense = new \dto\Sense();
-		$sense->setDefinition(\lfbase\dto\MultiText::create('en', 'definition1'));
+		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
 		$sense->setPartOfSpeech('Noun');
 		$sense->setSemanticDomainName('semantic-domain-ddp4');
 		$sense->setSemanticDomainValue('2.1 Body');
 		$sense->addExample(\dto\Example::create(
-			\lfbase\dto\MultiText::create('en', 'example1'),
-			\lfbase\dto\MultiText::create('fr', 'translation1')
+			\libraries\lfdictionary\dto\MultiText::create('en', 'example1'),
+			\libraries\lfdictionary\dto\MultiText::create('fr', 'translation1')
 		));
 		
 		$entry->addSense($sense);

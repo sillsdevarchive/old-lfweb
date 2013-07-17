@@ -10,7 +10,7 @@ class TestOfProjectRole extends UnitTestCase {
 	
 	function testGet_NoRole_Throws() {
 		$this->expectException('\Exception');
-		$result = \lfbase\environment\ProjectRole::get('bogus');
+		$result = \libraries\lfdictionary\environment\ProjectRole::get('bogus');
 	}
 	
 	function testAddGet_Returns() {

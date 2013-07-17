@@ -26,7 +26,7 @@ class ListEntry {
 	
 	public function __construct($guid = null) {
 		$this->guid = $guid;
-		$this->entry = \lfbase\dto\MultiText::create();
+		$this->entry = \libraries\lfdictionary\dto\MultiText::create();
 		$this->meanings = array();
 	}
 	
@@ -67,9 +67,9 @@ class ListEntry {
 	static public function createFromParts($guid, $word, $definitions) {
 		$entry = new ListEntry();
 		$entry->setGuid($guid);
-		$entry->setEntry(\lfbase\dto\MultiText::createFromArray($word));
+		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::createFromArray($word));
 		foreach ($definitions as $definition) {
-			$multiText = \lfbase\dto\MultiText::createFromArray($definition['definition']);
+			$multiText = \libraries\lfdictionary\dto\MultiText::createFromArray($definition['definition']);
 			$entry->addMeaning($multiText);
 		}
 		return $entry;

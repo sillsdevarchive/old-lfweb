@@ -9,28 +9,28 @@ class TestOfEntryListDTO extends UnitTestCase {
 		$entry = new \dto\EntryListDTO();
 		
 		$entry1 = \dto\EntryDTO::create("guid0");
-		$entry1->setEntry(\lfbase\dto\MultiText::create('fr', 'form1'));
+		$entry1->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'form1'));
 		
 		$sense1 = new \dto\Sense();
-		$sense1->setDefinition(\lfbase\dto\MultiText::create('en', 'definition1'));
+		$sense1->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
 		$sense1->setSemanticDomainName('semantic-domain-ddp4');
 		$sense1->setSemanticDomainValue('2.1 Body');
 		$sense1->addExample(\dto\Example::create(
-			\lfbase\dto\MultiText::create('en', 'example1'),
-			\lfbase\dto\MultiText::create('fr', 'translation1')
+			\libraries\lfdictionary\dto\MultiText::create('en', 'example1'),
+			\libraries\lfdictionary\dto\MultiText::create('fr', 'translation1')
 		));
 		$entry1->addSense($sense1);
 		
 		$entry2 = \dto\EntryDTO::create("guid1");
-		$entry2->setEntry(\lfbase\dto\MultiText::create('th', 'form2'));
+		$entry2->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'form2'));
 		
 		$sense2 = new \dto\Sense();
-		$sense2->setDefinition(\lfbase\dto\MultiText::create('en', 'definition2'));
+		$sense2->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition2'));
 		$sense2->setSemanticDomainName('semantic-domain-ddp4');
 		$sense2->setSemanticDomainValue('2.1 Body');
 		$sense2->addExample(\dto\Example::create(
-		\lfbase\dto\MultiText::create('fr', 'example2'),
-		\lfbase\dto\MultiText::create('th', 'translation2')
+		\libraries\lfdictionary\dto\MultiText::create('fr', 'example2'),
+		\libraries\lfdictionary\dto\MultiText::create('th', 'translation2')
 		));
 		$entry2->addSense($sense2);
 		

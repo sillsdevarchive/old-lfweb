@@ -77,7 +77,7 @@ class LiftScanner
 		$lexicalForms = $node->{'lexical-unit'};
 		if ($lexicalForms) {
 			$guid = (string)$node['guid'];
-			$entry = libraries\lfdictionary\dto\EntryDTO::create($guid);
+			$entry = \libraries\lfdictionary\dto\EntryDTO::create($guid);
 			$entry->setGuid((string)$node['guid']);
 			$entry->setEntry($this->readMultiText($lexicalForms));
 			if(isset($node->{'sense'})) {
@@ -151,7 +151,7 @@ class LiftScanner
 	/**
 	 * Reads a MultiText from the XmlNode $node
 	 * @param XmlNode $node
-	 * @return \lfbase\dto\MultiText
+	 * @return \libraries\lfdictionary\dto\MultiText
 	 */
 	
 	public function readMultiText($node) {

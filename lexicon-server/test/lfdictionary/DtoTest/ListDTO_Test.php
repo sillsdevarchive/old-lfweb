@@ -8,7 +8,7 @@ class TestOfListDTO extends UnitTestCase {
 	function testListDTO_Encode_EntryAndSense_JsonCorrect() {
 		$entry = new \dto\ListDTO();
 		
-		$multiText = new \lfbase\dto\MultiText();
+		$multiText = new \libraries\lfdictionary\dto\MultiText();
 		$multiText->addForm("en", "meaning1");
 		
 		$listEntry = new \dto\ListEntry();

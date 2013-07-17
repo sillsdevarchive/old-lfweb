@@ -57,8 +57,8 @@ class Example {
 	}
 	
 	function decode($value) {
-		$this->_example = \lfbase\dto\MultiText::createFromArray($value['example']);
-		$this->_translation = \lfbase\dto\MultiText::createFromArray($value['translation']);
+		$this->_example = \libraries\lfdictionary\dto\MultiText::createFromArray($value['example']);
+		$this->_translation = \libraries\lfdictionary\dto\MultiText::createFromArray($value['translation']);
 	}
 	
 	/**

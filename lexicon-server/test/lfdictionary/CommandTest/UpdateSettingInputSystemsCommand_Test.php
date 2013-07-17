@@ -18,11 +18,11 @@ class TestOfUpdateSettingInputSystemsCommand extends UnitTestCase {
 		if (!file_exists($this->_path)) {
 			mkdir($this->_path);
 		}
-		$command = new \lfbase\commands\UpdateSettingInputSystemsCommand($this->_path,$this->JSON_SOURCE);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_path,$this->JSON_SOURCE);
 		$command->execute();
 		
 		// get file and to json again!
-		$command = new \lfbase\commands\GetSettingInputSystemsCommand($this->_path);
+		$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_path);
 		$result = json_encode($command->execute());
 		$this->assertEqual($this->JSON_SOURCE, $result);
 	}

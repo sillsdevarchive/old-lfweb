@@ -6,7 +6,7 @@ require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 class TestOfListEntry extends UnitTestCase {
 
 	function testEncode_JsonCorrect() {
-		$multiText = \lfbase\dto\MultiText::create('en', 'meaning1');
+		$multiText = \libraries\lfdictionary\dto\MultiText::create('en', 'meaning1');
 
 		$listEntry = new \dto\ListEntry();
 		$listEntry->setGuid("abcd");

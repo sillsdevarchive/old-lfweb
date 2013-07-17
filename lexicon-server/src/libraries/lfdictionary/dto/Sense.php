@@ -30,7 +30,7 @@ class Sense {
 	
 	function __construct() {
 		$this->_examples = array();
-		$this->_definition = \lfbase\dto\MultiText::create();
+		$this->_definition = \libraries\lfdictionary\dto\MultiText::create();
 		$this->_partOfSpeech = '';
 	}
 	
@@ -133,7 +133,7 @@ class Sense {
 	
 	function decode($value) {
 	
-		$this->_definition = \lfbase\dto\MultiText::createFromArray($value['definition']);
+		$this->_definition = \libraries\lfdictionary\dto\MultiText::createFromArray($value['definition']);
 		$this->_partOfSpeech = $value['POS'];
 		$this->_semanticDomainValue= $value['SemDomValue'];
 		$this->_semanticDomainName= $value['SemDomName'];

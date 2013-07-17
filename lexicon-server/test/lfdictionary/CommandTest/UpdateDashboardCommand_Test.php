@@ -5,8 +5,8 @@ require_once(SIMPLETEST_PATH . 'autorun.php');
 require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
 require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 
-use \lfbase\common\DataConnector;
-use \lfbase\common\DataConnection;
+use \libraries\lfdictionary\common\DataConnector;
+use \libraries\lfdictionary\common\DataConnection;
 
 class TestOfUpdateDashboardDataCommand extends UnitTestCase {
 

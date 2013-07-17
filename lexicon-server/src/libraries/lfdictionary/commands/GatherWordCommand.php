@@ -57,7 +57,7 @@ class GatherWordCommand
 	function processFile() {
 		$this->gatherWords=urldecode($this->gatherWords);
 		// remove exist
-		$this->newWordsArr=array_diff(\lfbase\common\WordsParser::parsingToArray($this->gatherWords) ,$this->exitWordsArr);
+		$this->newWordsArr=array_diff(\libraries\lfdictionary\common\WordsParser::parsingToArray($this->gatherWords) ,$this->exitWordsArr);
 
 		if (count($this->newWordsArr)>0){
 
@@ -69,7 +69,7 @@ class GatherWordCommand
 				if ($wordEntry=trim($results)!=""){
 					$entryXml = $rootXml->addChild('entry');
 					$entryXml['dateCreated'] = $entryXml['dateModified'] = gmdate("Y-m-d\TH:i:s\Z");
-					$entryXml['guid'] = \lfbase\common\UUIDGenerate::uuid_generate_php();
+					$entryXml['guid'] = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
 					$entryXml['id'] = $results . "_" . $entryXml['guid'];
 
 					$ChildUnitXml=$entryXml->addChild('lexical-unit');

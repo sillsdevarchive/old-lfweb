@@ -178,10 +178,10 @@ class LanguageDepotAPI {
 	 */
 	function addUserToProject($projectId, $userName, $roleId) {
 		try {
-			if (!\lfbase\environment\LFProjectModel::roleExists($roleId)) {
+			if (!\libraries\lfdictionary\environment\LFProjectModel::roleExists($roleId)) {
 				return "402"; // invalid role ID
 			}
-			$LFProjectModel = \lfbase\environment\LFProjectModel::getProjectByName($projectId);
+			$LFProjectModel = \libraries\lfdictionary\environment\LFProjectModel::getProjectByName($projectId);
 			if (!$LFProjectModel) {
 				return "402"; // project doesn't exist
 			}
@@ -200,10 +200,10 @@ class LanguageDepotAPI {
 // Main Function
 function main() {
 
-	\lfbase\common\ErrorHandler::register();
+	\libraries\lfdictionary\common\ErrorHandler::register();
 
 	$api = new LanguageDepotAPI();
-	\lfbase\common\jsonRPCServer::handle($api);
+	\libraries\lfdictionary\common\jsonRPCServer::handle($api);
 }
 
 if (!defined('TestMode')) {

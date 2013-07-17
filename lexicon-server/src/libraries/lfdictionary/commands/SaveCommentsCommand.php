@@ -78,7 +78,7 @@ class SaveCommentsCommand {
 				}
 
 				$newMessageNode->setAttribute("date", $this->_datetime);
-				$newNodeGuid=strtolower (\lfbase\common\UUIDGenerate::uuid_generate_php());
+				$newNodeGuid=strtolower (\libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php());
 				$newMessageNode->setAttribute("guid",  $newNodeGuid);
 					
 				$entries->item(0)->parentNode->appendChild($newMessageNode);
