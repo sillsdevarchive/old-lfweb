@@ -191,7 +191,7 @@
     height:     100%;
     width:      100%;
     background: rgba( 220, 220, 220, 0.6 ) 
-                url('./images/dic-view-loading.gif') 
+                url('./../images/lfdictionary/dic-view-loading.gif') 
                 50% 50% 
                 no-repeat;
 }
@@ -255,11 +255,11 @@ body.loading .view-loading-progress {
 }
 
 .accordion .ico-view-switch {
-	background: url('./images/eye.png') no-repeat 2px 3px;
+	background: url('./../images/lfdictionary/eye.png') no-repeat 2px 3px;
 }
 
 .accordion .ico-edit-switch {
-	background: url('./images/ico08.gif') no-repeat 2px 3px;
+	background: url('./../images/lfdictionary/ico08.gif') no-repeat 2px 3px;
 }
 
 .view-switch-noarrow {
