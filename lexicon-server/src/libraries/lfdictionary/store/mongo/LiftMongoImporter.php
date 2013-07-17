@@ -1,8 +1,8 @@
 <?php
 namespace libraries\lfdictionary\store\mongo;
-use store\ILiftImporter;
-use store\LiftScanner;
-use store\LiftStates;
+use libraries\lfdictionary\store\ILiftImporter;
+use libraries\lfdictionary\store\LiftScanner;
+use libraries\lfdictionary\store\LiftStates;
 /**
  * LiftMongoImporter imports lift data into the mongo database
  */

@@ -35,12 +35,12 @@ class LFDictionaryAPI
 	var $_projectPath;
 	
 	/**
-	 * @var int
+	 * @var String
 	 */
 	protected $_userId;
 	
 	/**
-	 * @var int
+	 * @var String
 	 */
 	protected $_projectNodeId;
 	
@@ -419,7 +419,7 @@ class LFDictionaryAPI
 	 */
 	function getTitleLetterList()
 	{
-		if ($this->_projectNodeId === null || $this->_projectNodeId <= 0) {
+		if ($this->_projectNodeId === null || strlen($this->_projectNodeId) <= 0) {
 			throw new \Exception("Invalid project node ID $projectNodeId");
 		}
 
@@ -427,12 +427,11 @@ class LFDictionaryAPI
 		
 		//looking for ldml which has <exemplarCharacters type="index">
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
-		//TODO ZX 2013-4, how to get Dictionary language.
-		$languageCode = "th-TH";
+		$languageCode = $this->_projectModel->getLanguageCode();
 		$fileName = preg_replace('/-+/', '_', $languageCode);
 		while(true)
 		{
-			$fileFullPath = LF_LIBRARY_PATH . "lfbase/data/ldml-core-common-main/" . $fileName.".xml";
+			$fileFullPath = LF_LIBRARY_PATH . "/data/ldml-core-common-main/" . $fileName.".xml";
 			if (file_exists($fileFullPath))
 			{
 				$xml_str = file_get_contents($fileFullPath);
@@ -484,10 +483,8 @@ class LFDictionaryAPI
 	function getWordsByTitleLetter($letter)
 	{
 		$this->isReadyOrThrow();
-		$store = $this->getLexStore();
-		
-		//TODO ZX 2013-4, how to get Dictionary language.
-		$result = $store->searchEntriesAsWordList("th",trim($letter), null, null);
+		$store = $this->getLexStore();	
+		$result = $store->searchEntriesAsWordList($this->_projectModel->getLanguageCode(),trim($letter), null, null);
 		return $result->encode();
 	}
 	
@@ -546,7 +543,7 @@ class LFDictionaryAPI
 	private $_lexStore;
 	private function getLexStore() {
 		if (!isset($this->_lexStore)) {
-			$this->_lexStore = new \libraries\lfdictionary\store\LexStoreController(\store\LexStoreType::STORE_MONGO, $this->_lexProject->projectName, $this->_lexProject);
+			$this->_lexStore = new \libraries\lfdictionary\store\LexStoreController(\libraries\lfdictionary\store\LexStoreType::STORE_MONGO, $this->_lexProject->projectName, $this->_lexProject);
 		}
 		return $this->_lexStore;
 	}

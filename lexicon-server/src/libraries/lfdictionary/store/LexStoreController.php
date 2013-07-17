@@ -1,8 +1,8 @@
 <?php
-namespace store;
+namespace libraries\lfdictionary\store;
 
-use dto\ListDTO;
-use environment\LexProject;
+use libraries\lfdictionary\dto\ListDTO;
+use libraries\lfdictionary\environment\LexProject;
 
 class LexStoreType
 {

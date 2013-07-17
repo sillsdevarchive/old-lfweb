@@ -1,10 +1,11 @@
 <?php
 namespace libraries\lfdictionary\store\mongo;
 
-use dto\EntryDTO;
-use store\ILexStore;
-use environment\MissingInfoType;
-use Transliteration\WordTransliterationFilter;
+use libraries\lfdictionary\dto\EntryDTO;
+use libraries\lfdictionary\store\ILexStore;
+use libraries\lfdictionary\environment\MissingInfoType;
+use libraries\lfdictionary\Transliteration\WordTransliterationFilter;
+use libraries\lfdictionary\common\LoggerFactory;
 
 class MongoLexStore implements ILexStore
 {
@@ -36,6 +37,7 @@ class MongoLexStore implements ILexStore
 		if (self::$_mongo == null) {
 			self::$_mongo = new \Mongo();
 		}
+		LoggerFactory::getLogger()->logInfoMessage("MongoLexStore: Connect to " . $databaseName);
 		$this->_databaseName = $databaseName;
 		$this->_mongoDB = self::$_mongo->selectDB($databaseName);
 	}
@@ -72,7 +74,7 @@ class MongoLexStore implements ILexStore
 	public function readEntry($guid) {
 		$collection = $this->_mongoDB->Entries;
 		$result = $collection->findOne(array('guid' => $guid));
-		$entry = \dto\EntryDTO::create($guid);
+		$entry = libraries\lfdictionary\dto\EntryDTO::create($guid);
 		$entry->decode($result);
 		return $entry;
 	}
@@ -95,7 +97,7 @@ class MongoLexStore implements ILexStore
 	 * @return dto\ListDTO
 	 */
 	private function queryForListDTO($query, $startFrom = null, $maxEntryCount = null) {
-		$dto = new \dto\ListDTO();
+		$dto = new \libraries\lfdictionary\dto\ListDTO();
 		$dto->entryCount = $this->entryCount();
 		$collection = $this->_mongoDB->Entries;
 		$cursor = $collection->find($query, array('guid' => 1, 'entry' => 1, 'senses.definition' => 1, 'senses.examples' => 1));
@@ -105,7 +107,7 @@ class MongoLexStore implements ILexStore
 		$dto->entryBeginIndex = $startFrom;
 		$dto->entryEndIndex = $startFrom - 1;
 		foreach ($cursor as $entry) {
-			$listEntryDTO = \dto\ListEntry::createFromParts($entry['guid'], $entry['entry'], $entry['senses']);
+			$listEntryDTO = \libraries\lfdictionary\dto\ListEntry::createFromParts($entry['guid'], $entry['entry'], $entry['senses']);
 			$dto->addListEntry($listEntryDTO);
 			$dto->entryEndIndex++;
 		}
@@ -252,7 +254,7 @@ class MongoLexStore implements ILexStore
 		foreach ($cursor as $entry) {
 			$entryPart = $entry['entry'];
 			if (array_key_exists($lang, $entryPart) && $transliterationFilter->isWordStartWithTitleLetter($titleLetter,$entryPart[$lang], $lang)){
-				$entryDto = \dto\EntryDTO::create($entry['guid']);
+				$entryDto = \libraries\lfdictionary\dto\EntryDTO::create($entry['guid']);
 				$entryDto->decode($entry);
 				$dto->addEntry($entryDto);
 			}

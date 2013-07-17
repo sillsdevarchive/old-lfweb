@@ -1,5 +1,5 @@
 <?php
-namespace store;
+namespace libraries\lfdictionary\store;
 
 class LiftStates 
 {
@@ -77,7 +77,7 @@ class LiftScanner
 		$lexicalForms = $node->{'lexical-unit'};
 		if ($lexicalForms) {
 			$guid = (string)$node['guid'];
-			$entry = \dto\EntryDTO::create($guid);
+			$entry = libraries\lfdictionary\dto\EntryDTO::create($guid);
 			$entry->setGuid((string)$node['guid']);
 			$entry->setEntry($this->readMultiText($lexicalForms));
 			if(isset($node->{'sense'})) {

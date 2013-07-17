@@ -53,23 +53,14 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 * @param LFProjectModel $project
 	 */
 	public function readProject($project) {
-		$sql = sprintf("SELECT n.title, fpc.field_lf_project_code_value, flt.field_lf_language_tag_value " .
-			"FROM node AS n " .
-			"INNER JOIN og_membership AS om ON n.nid=om.etid " .
-			"LEFT JOIN field_data_field_lf_project_code AS fpc ON n.nid=fpc.entity_id " .
-			"LEFT JOIN field_data_field_lf_language_tag AS flt ON om.gid=flt.entity_id " .
-			"WHERE n.nid=%d AND om.entity_type='node'",
-			$project->getId()
-		);
 		
-// 		$result = $this->_connection->execute($sql);
-// 		$row = $this->_connection->fetchrow($result);
+		$projectModel = new  ProjectModel($project->getId());
+		$projectModel->read();
 		
-// 		$typeTokens = explode("-", $row['field_lf_project_code_value']);
-// 		$type = $typeTokens[count($typeTokens) - 1];
-
-// 		// set(title, language, name (slug), type);
-// 		$project->set($row['title'], $row['field_lf_language_tag_value'], $row['field_lf_project_code_value'], $type);
+ 		$typeTokens = explode("-", $projectModel->projectname);
+ 		$type = $typeTokens[count($typeTokens) - 1];
+ 		// set(title, language, name (slug), type);
+ 		$project->set($projectModel->title, $projectModel->language, $projectModel->projectname, $type);
 	}
 	
 	/**
