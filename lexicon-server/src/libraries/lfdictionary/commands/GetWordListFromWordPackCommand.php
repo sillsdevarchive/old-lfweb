@@ -34,7 +34,7 @@ class GetWordListFromWordPackCommand
 				
 		}
 
-		$this->_dto = new \dto\EntryListDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\EntryListDTO();
 	}
 
 	function execute() {

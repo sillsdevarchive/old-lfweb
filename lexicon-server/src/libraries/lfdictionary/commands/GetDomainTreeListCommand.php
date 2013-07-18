@@ -34,7 +34,7 @@ class GetDomainTreeListCommand {
 
 		$this->_filePath = $filePath;
 		$this->_languageCode = $languageCode;
-		$this->_dto = new \dto\DomainTreeDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\DomainTreeDTO();
 	}
 
 	function execute(){
@@ -48,7 +48,7 @@ class GetDomainTreeListCommand {
 		$doc->preserveWhiteSpace = false;
 		$doc->Load($this->_filePath);
 
-		$this->_dto = new \dto\DomainTreeDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\DomainTreeDTO();
 		$xpath = new \DOMXPath($doc);
 		$entries = $xpath->query('//Lists/List/Possibilities/CmSemanticDomain/Name/AUni[@ws="' . $this->_languageCode . '"]');
 		$this->processChildren($xpath,$entries,$this->_dto);
@@ -68,7 +68,7 @@ class GetDomainTreeListCommand {
 				
 			$key = $indexNr . " " . $entry->nodeValue;
 				
-			$childDto = new \dto\DomainTreeDTO();
+			$childDto = new \libraries\lfdictionary\dto\DomainTreeDTO();
 			$childDto->setParent($parentDto);
 			$parentDto->add($childDto);
 			$childDto->setGuid($guid);

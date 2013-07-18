@@ -282,7 +282,7 @@ class LFDictionaryAPI
 	function getDomainTreeList() {
 		$this->isReadyOrThrow();
 
-		$command = new \libraries\lfdictionary\commands\GetDomainTreeListCommand(\environment\LexProject::locateSemanticDomainFilePath('en'), 'en');
+		$command = new \libraries\lfdictionary\commands\GetDomainTreeListCommand(\libraries\lfdictionary\environment\LexProject::locateSemanticDomainFilePath('en'), 'en');
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -290,7 +290,7 @@ class LFDictionaryAPI
 	function getDomainQuestion($guid) {
 		$this->isReadyOrThrow();
 
-		$command = new \libraries\lfdictionary\commands\GetDomainQuestionCommand(\environment\LexProject::locateSemanticDomainFilePath('en'), 'en', $guid);
+		$command = new \libraries\lfdictionary\commands\GetDomainQuestionCommand(\libraries\lfdictionary\environment\LexProject::locateSemanticDomainFilePath('en'), 'en', $guid);
 		$result = $command->execute();
 		return $result->encode();
 	}

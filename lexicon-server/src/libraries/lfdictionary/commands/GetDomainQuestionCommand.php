@@ -20,7 +20,7 @@ class GetDomainQuestionCommand {
 		$this->_fileName = $fileName;
 		$this->_langKey = $langKey;
 		$this->_domainGuid = $domainGuid;
-		$this->_dto = new \dto\DomainQuestionDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\DomainQuestionDTO();
 	}
 
 	function execute(){
@@ -33,7 +33,7 @@ class GetDomainQuestionCommand {
 		$doc->preserveWhiteSpace = false;
 		$doc->Load($this->_fileName);
 
-		$this->_dto = new \dto\DomainQuestionDTO();
+		$this->_dto = new \libraries\lfdictionary\dto\DomainQuestionDTO();
 		$xpath = new \DOMXPath($doc);
 		$entries = $xpath->query('//CmSemanticDomain[@guid="' . $this->_domainGuid . '"]');
 
