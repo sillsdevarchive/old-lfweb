@@ -1,4 +1,8 @@
 @CHARSET "UTF-8";
+ol, ul {
+    list-style: none outside none;
+}
+
 #main {
 	padding: 0 0 22px;
 	margin-left: auto;
@@ -19,7 +23,6 @@
 #content {
 	float: left;
 	width: 100%;
-	margin: -43px -322px 0 -1px;
 }
 
 

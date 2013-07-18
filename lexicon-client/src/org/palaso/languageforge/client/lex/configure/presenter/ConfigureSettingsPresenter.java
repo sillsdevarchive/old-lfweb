@@ -50,7 +50,7 @@ public class ConfigureSettingsPresenter
 	@Inject
 	public ILexService lexService;
 
-	protected Map<Integer, UserDto> userDtoList = null;
+	protected Map<String, UserDto> userDtoList = null;
 	protected SortedMap<String, IanaBaseDataDto> languagesData = null;
 	protected SortedMap<String, IanaBaseDataDto> regionsData = null;
 	protected SortedMap<String, IanaBaseDataDto> scriptsData = null;
@@ -257,7 +257,7 @@ public class ConfigureSettingsPresenter
 	// return userDtoList;
 	// }
 
-	public void onGetUserInProjectList(Map<Integer, UserDto> list) {
+	public void onGetUserInProjectList(Map<String, UserDto> list) {
 		list.putAll(userDtoList);
 	}
 
@@ -365,13 +365,13 @@ public class ConfigureSettingsPresenter
 		}
 	}
 
-	private Map<Integer, UserDto> convertListDtoToUserHasMap(
+	private Map<String, UserDto> convertListDtoToUserHasMap(
 			UserListDto userListDto) {
 		JsArray<UserDto> listEntry = userListDto.getEntries();
-		Map<Integer, UserDto> userList = new HashMap<Integer, UserDto>();
+		Map<String, UserDto> userList = new HashMap<String, UserDto>();
 
 		for (int i = 0; i < listEntry.length(); i++) {
-			userList.put(Integer.valueOf(listEntry.get(i).getId()),
+			userList.put(listEntry.get(i).getId(),
 					listEntry.get(i));
 		}
 		return userList;

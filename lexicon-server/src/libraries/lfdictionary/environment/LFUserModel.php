@@ -11,7 +11,7 @@ class LFUserModel {
 	private $_reading;
 	
 	/**
-	 * @var int
+	 * @var string
 	 */
 	private $_userId;
 

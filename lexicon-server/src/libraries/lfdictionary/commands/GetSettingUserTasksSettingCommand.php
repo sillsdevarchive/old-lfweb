@@ -1,11 +1,11 @@
 <?php
 namespace libraries\lfdictionary\commands;
-use mapper\TaskSettingXmlJsonMapper;
+use \libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use \environment\LexiconProjectEnvironment;
-use \environment\LexProjectUserSettings;
+use \libraries\lfdictionary\environment\LexiconProjectEnvironment;
+use \libraries\lfdictionary\environment\LexProjectUserSettings;
 
 class GetSettingUserTasksSettingCommand
 {

@@ -151,7 +151,7 @@ class LiftScanner
 	/**
 	 * Reads a MultiText from the XmlNode $node
 	 * @param XmlNode $node
-	 * @return \libraries\lfdictionary\dto\MultiText
+	 * @return \lfbase\dto\MultiText
 	 */
 	
 	public function readMultiText($node) {

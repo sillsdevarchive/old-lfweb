@@ -1,8 +1,8 @@
 <?php
 namespace libraries\lfdictionary\commands;
-use environment\LexiconProjectEnvironment;
+use \libraries\lfdictionary\environment\LexiconProjectEnvironment;
 
-use mapper\FieldSettingXmlJsonMapper;
+use \libraries\lfdictionary\mapper\FieldSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 

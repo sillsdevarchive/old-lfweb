@@ -1,9 +1,9 @@
 <?php
 namespace libraries\lfdictionary\commands;
-use \libraries\lfdictionary\dashboardtool\DashboardDbType;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
+use libraries\lfdictionary\dashboardtool\DashboardDbType;
 use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\common\LoggerFactory;
 class GetDashboardDataCommand {
@@ -29,7 +29,7 @@ class GetDashboardDataCommand {
 		// read the current counter values from the lift file
 		$this->processFile();
 
-		$result=new libraries\lfdictionary\dto\DashboardActivitiesDTO();
+		$result=new \libraries\lfdictionary\dto\DashboardActivitiesDTO();
 		$result->setStatsExamplesCount($this->_exampleCount);
 		$result->setStatsMeaningsCount($this->_meaningCount);
 		$result->setStatsPOSCount($this->_posCount);
@@ -51,7 +51,7 @@ class GetDashboardDataCommand {
 		$this->counterValuesArray['COUNT_PARTOFSPEECH'] = 0;
 		$this->counterValuesArray['COUNT_EXAMPLE'] = 0;
 
-		$this->dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MYSQL);
+		$this->dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
 		$timeStamps;
 		
 		if ($this->_actRange == 0) {

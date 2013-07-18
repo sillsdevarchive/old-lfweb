@@ -1,12 +1,12 @@
 <?php
 namespace libraries\lfdictionary\commands;
-use environment\LexiconProjectEnvironment;
+use \libraries\lfdictionary\environment\LexiconProjectEnvironment;
 
-use mapper\TaskSettingXmlJsonMapper;
+use \libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
-use environment\LexProjectUserSettings;
+use \libraries\lfdictionary\environment\LexProjectUserSettings;
 
-use environment\LexClientEnvironment;
+use \libraries\lfdictionary\environment\LexClientEnvironment;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 

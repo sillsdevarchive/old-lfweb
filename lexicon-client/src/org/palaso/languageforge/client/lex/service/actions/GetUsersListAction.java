@@ -13,7 +13,7 @@ public class GetUsersListAction extends JsonRpcAction<UserListDto> {
 
 	@Override
 	public String encodeParam(int i) {
-		return String.valueOf(CurrentEnvironmentDto.getCurrentProject().getProjectId());
+		return CurrentEnvironmentDto.getCurrentProject().getProjectId();
 	}
 
 }

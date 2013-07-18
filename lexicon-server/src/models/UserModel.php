@@ -192,7 +192,7 @@ class UserList_ProjectModel extends \libraries\sf\MapperListModel
 		parent::__construct(
 				UserModelMongoMapper::instance(),
 				array('projects' => array('$in' => array(new \MongoId($projectId)))),
-				array('username', 'email', 'name')
+				array('id', 'username', 'email', 'name')
 		);
 	}
 

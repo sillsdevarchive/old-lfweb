@@ -1,6 +1,5 @@
 <?php
 namespace libraries\lfdictionary\mapper;
-require_once(dirname(__FILE__) . '/../../Config.php');
 
 
 class InputSystemXmlJsonMapper {

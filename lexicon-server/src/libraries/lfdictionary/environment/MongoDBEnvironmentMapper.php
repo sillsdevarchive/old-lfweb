@@ -1,11 +1,9 @@
 <?php
 namespace libraries\lfdictionary\environment;
 use models\ProjectAccessModel;
-
 use models\ProjectModel;
-
 use models\UserModel;
-
+use models\ProjectList_UserModel;
 use libraries\lfdictionary\dto\UserDTO;
 
 use libraries\lfdictionary\dto\UserListDTO;
@@ -13,6 +11,8 @@ use libraries\lfdictionary\common\DataConnection;
 use libraries\lfdictionary\common\DataConnector;
 use libraries\lfdictionary\environment\ProjectRole;
 use libraries\lfdictionary\common\LoggerFactory;
+require_once(APPPATH . '/models/ProjectModel.php');
+require_once(APPPATH . '/models/UserModel.php');
 class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEnvironmentMapper {
 
 	public function __construct() {
@@ -89,14 +89,21 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	{
 		$userlistdto = new  UserListDTO();
 		if ($projectId) {
-			$sql = "SELECT u.uid, ur.rid, u.name, u.mail FROM {lf_access} opu INNER JOIN {users} u ON opu.uid = u.uid INNER JOIN {users_roles} ur ON u.uid = ur.uid WHERE u.status = 1 AND opu.nid = $projectId";
-			$result = db_query($sql);
-			foreach ($result as $user) {
-				$userModel= new LFUserModel($user->uid);
-				$userdto = new UserDTO($userModel);
-				$userlistdto->addListUser($userdto);
-			}
+// 			$projectModel = new ProjectModel($projectId);
+// 			$projectModel->listUsers()->read();
+// 			foreach ($projectModel->listUsers()->entries() as $user) {
+// 				$userModel= new LFUserModel($user->id);
+// 				$userdto = new UserDTO($userModel);
+// 				$userlistdto->addListUser($userdto);
+// 			}
+			
+			//TODO XZ listUsers always return 0, an I can not add new user into Project 
+			$userModel= new LFUserModel("51e604b1d4a66e7d19358eca");
+			$userdto = new UserDTO($userModel);
+			$userlistdto->addListUser($userdto);
+			//Test code end
 		}
+		error_log("1111111");
 		return $userlistdto;
 	}
 	

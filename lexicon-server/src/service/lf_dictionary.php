@@ -108,7 +108,6 @@ class LFDictionaryAPI
 	 */
 	function getList($start, $end) {
 		$this->isReadyOrThrow();
-
 		$store = $this->getLexStore();
 		$result = $store->readEntriesAsListDTO($start, $end - $start);
 		return $result->encode();
@@ -575,7 +574,7 @@ class LFDictionaryAPI
 	
 	// Reviewed Move to LanguageForgeAPI
 	function updateProjectName($projectNodeId, $name) {
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectNodeId);
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 	if ($projectModel->setTitle(urldecode($name))){
 		
 	$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
@@ -637,7 +636,7 @@ class LFDictionaryAPI
 	* List User
 	*/
 	function listUsersInProject($projectId) {
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectId);
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
 	$result = $projectModel->listUsersInProjectWithRole($projectId);
 	return $result->encode();
 	}
@@ -646,7 +645,7 @@ class LFDictionaryAPI
 	* Add new project
 	*/
 	function add($newProject) {
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel();
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
 	$result = $projectModel->add($newProject);
 	if (!$result) {
 	throw new Exception('Project already exists');
@@ -657,7 +656,7 @@ class LFDictionaryAPI
 	* List projects
 	*/
 	function listProjects($from, $to) {
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel();
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
 			$result = $projectModel->listProjects($from, $to);
 	
 	return $result->encode();
@@ -667,7 +666,7 @@ class LFDictionaryAPI
 	* Search project
 	*/
 	function searchProject($string, $maxResultCount) {
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel();
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
 	$result = $projectModel->searchProject($string, $maxResultCount);
 	return $result->encode();
 	}
@@ -714,7 +713,7 @@ class LFDictionaryAPI
 	*/
 	function addUserToProjectForLex($projectId, $userId) {
 	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectId);
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
 	if ($projectModel->isUserInProject($userId))
 	{
 	throw new libraries\lfdictionary\common\UserActionDeniedException("User already a member of project, it may added by other user. please refresh to see changes");
@@ -735,7 +734,7 @@ class LFDictionaryAPI
 	function removeUserFromProjectForLex($projectId, $userId) {
 	$projectId=(int)$projectId;
 	$userId=(int)$userId;
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectId);
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
 	if (!$projectModel->isUserInProject($userId))
 	{
 	throw new libraries\lfdictionary\common\UserActionDeniedException("User not a member of project, it may removed by other user. please refresh to see changes");
@@ -752,7 +751,7 @@ class LFDictionaryAPI
 	*/
 	function updateUserRoleGrant($projectId, $userDtoString) {
 	$projectId=(int)$projectId;
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectId);
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
 	$userJson = json_decode(urldecode($userDtoString));
 	$userId=$userJson->id;
 	if ($projectModel->isUserInProject($userId)) {
@@ -770,7 +769,7 @@ class LFDictionaryAPI
 	* create a new user and add it into project
 	*/
 	function rapidUserMemberCreation($projectId, $userName) {
-	$projectModel = new \libraries\lfdictionary\environment\ProjectModel($projectId);
+	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
 	$userListDto = $projectModel->getProjectAdmins();
 	if (count($userListDto->_user)<=0) {
 				throw new libraries\lfdictionary\common\UserActionDeniedException("Selected project doesn't have a active admin, so new user can not be created by admin.");

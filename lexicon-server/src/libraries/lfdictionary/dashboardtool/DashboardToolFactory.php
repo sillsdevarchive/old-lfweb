@@ -5,6 +5,7 @@ class DashboardDbType
 {
 	const DB_TEST  = 0;
 	const DB_MYSQL = 1;
+	const DB_MONGODB = 1;
 }
 
 class DashboardToolFactory
@@ -14,6 +15,8 @@ class DashboardToolFactory
 		switch ($dbType) {
 			case DashboardDbType::DB_MYSQL:
 				return new DashboardToolDbAccessMySql();
+			case DashboardDbType::DB_MONGODB:
+				return new DashboardToolDbAccessMongoDb();
 			case DashboardDbType::DB_TEST:
 				throw new \Exception('Not implemented');
 				break;

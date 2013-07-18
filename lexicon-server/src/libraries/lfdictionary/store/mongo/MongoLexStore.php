@@ -254,7 +254,7 @@ class MongoLexStore implements ILexStore
 		foreach ($cursor as $entry) {
 			$entryPart = $entry['entry'];
 			if (array_key_exists($lang, $entryPart) && $transliterationFilter->isWordStartWithTitleLetter($titleLetter,$entryPart[$lang], $lang)){
-				$entryDto = EntryDTO::create($entry['guid']);
+				$entryDto = \libraries\lfdictionary\dto\EntryDTO::create($entry['guid']);
 				$entryDto->decode($entry);
 				$dto->addEntry($entryDto);
 			}
