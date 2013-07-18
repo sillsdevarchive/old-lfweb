@@ -1,4 +1,6 @@
 @CHARSET "UTF-8";
+
+
 ol, ul {
     list-style: none outside none;
 }
@@ -243,7 +245,7 @@ body.loading .view-loading-progress {
 
 .dic-view-switch {
 	height: 50px;
-	margin-top: 80px;
+	margin-top: 50px;
 	padding: 23px 0 0 20px;
 	position: absolute;
 	width: 206px;
@@ -265,6 +267,10 @@ body.loading .view-loading-progress {
 	background: url('./../images/lfdictionary/ico08.gif') no-repeat 2px 3px;
 }
 
+.view-switch
+{
+	margin:0;
+}
 .view-switch-noarrow {
 	color: #3f7ca4;
 	display: block;

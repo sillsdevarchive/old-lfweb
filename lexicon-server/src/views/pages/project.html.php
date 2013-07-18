@@ -19,7 +19,7 @@
 <div id="ViewSwitch" class="dic-view-switch">
 	<aside id="sidebar-view-switch">
 		<nav class="accordion">
-			<ul id="view-switch">
+			<ul id="view-switch" class ="view-switch">
 				<div style="text-align:center;">
 					<div style=" display:inline-block; width:107px; float: left;">
 						<li id="view_button" style=" border-radius: 10px 0px 0px 10px;"> <a class="view-switch-noarrow" href="#"><span class="ico-view-switch "> View </span></a> </li>
