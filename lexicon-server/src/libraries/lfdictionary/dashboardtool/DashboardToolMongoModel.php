@@ -36,7 +36,7 @@ class DashboardToolMongoModel extends \libraries\sf\MapperModel
 	
 	public function readyByQuery($query)
 	{
-		$data = $this->searchByQuery($query);
+		$data = $this->findOneByQuery($query);
 	}
 		
 	/**

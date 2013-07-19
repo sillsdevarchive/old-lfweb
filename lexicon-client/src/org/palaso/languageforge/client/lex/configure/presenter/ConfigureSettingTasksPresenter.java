@@ -8,7 +8,6 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -613,10 +612,10 @@ public class ConfigureSettingTasksPresenter extends BasePresenter<ConfigureSetti
                     user.getId()), taskDto, asyncCallback);
         } else {
             // apply to all user
-            Map<Integer, UserDto> list = new HashMap<Integer, UserDto>();
+            Map<String, UserDto> list = new HashMap<String, UserDto>();
             eventBus.getUserInProjectList(list);
 
-            Iterator<Integer> itr = list.keySet().iterator();
+            Iterator<String> itr = list.keySet().iterator();
             String userIds = "";
 
             while (itr.hasNext()) {

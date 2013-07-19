@@ -35,10 +35,10 @@ class ProjectAccessModel extends \libraries\sf\MapperModel
 		parent::__construct(ProjectAccessMongoMapper::instance(), $id);
 	}
 	
-	public function readyByProjectIdAndUserID($projectId, $userId)
+	public function findOneByProjectIdAndUserID($projectId, $userId)
 	{
 		
-		$data = $this->searchByQuery(array("user_id" => new \MongoId($userId), "project_id" => new \MongoId($projectId)));
+		$data = $this->findOneByQuery(array("user_id" => new \MongoId($userId), "project_id" => new \MongoId($projectId)));
 
 	}
 		

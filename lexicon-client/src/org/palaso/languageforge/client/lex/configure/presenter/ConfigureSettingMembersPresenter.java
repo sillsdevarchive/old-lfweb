@@ -146,7 +146,7 @@ public class ConfigureSettingMembersPresenter extends
 						filterList(memberSuggestion.getName());
 						if (value instanceof UserDto) {
 							// it is a User
-							Map<Integer, UserDto> list = new HashMap<Integer, UserDto>();
+							Map<String, UserDto> list = new HashMap<String, UserDto>();
 							eventBus.getUserInProjectList(list);
 							checkSuggestString(((UserDto) value).getName(), false);
 
@@ -349,7 +349,7 @@ public class ConfigureSettingMembersPresenter extends
 		} else {
 			List<UserDto> filtedList = new ArrayList<UserDto>();
 
-			Map<Integer, UserDto> list = new HashMap<Integer, UserDto>();
+			Map<String, UserDto> list = new HashMap<String, UserDto>();
 			eventBus.getUserInProjectList(list);
 			List<UserDto> orgList = new ArrayList<UserDto>(list.values());
 
@@ -426,7 +426,7 @@ public class ConfigureSettingMembersPresenter extends
 	private void refreshTable() {
 
 		CellTable<UserDto> cellTable = view.getMemberTable();
-		Map<Integer, UserDto> list = new HashMap<Integer, UserDto>();
+		Map<String, UserDto> list = new HashMap<String, UserDto>();
 		eventBus.getUserInProjectList(list);
 		cellTable.setRowCount(list.values().size());
 		showData(new ArrayList<UserDto>(list.values()));
@@ -595,7 +595,7 @@ public class ConfigureSettingMembersPresenter extends
 					suggs.add(prev);
 				}
 
-				Map<Integer, UserDto> list = new HashMap<Integer, UserDto>();
+				Map<String, UserDto> list = new HashMap<String, UserDto>();
 				eventBus.getUserInProjectList(list);
 
 				// set the value into the suggestion in 2 steps

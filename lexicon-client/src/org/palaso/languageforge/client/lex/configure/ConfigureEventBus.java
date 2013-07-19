@@ -93,7 +93,7 @@ public interface ConfigureEventBus extends EventBus {
 	void updateUserInProjectList(UserListDto listDto);
 
 	@Event(handlers = ConfigureSettingsPresenter.class)
-	void getUserInProjectList(Map<Integer, UserDto> list);
+	void getUserInProjectList(Map<String, UserDto> list);
 
 	@Event(handlers = ConfigureSettingsPresenter.class)
 	void getIanaLanguages(SortedMap<String, IanaBaseDataDto> list);

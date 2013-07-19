@@ -63,9 +63,9 @@ class MapperModel /*extends CI_Model*/
 		}
 	}
 	
-	public function searchByQuery($query, $fields = array())
+	public function findOneByQuery($query, $fields = array())
 	{
-		return $this->_mapper->searchByQuery($this, $query, $fields = array());
+		return $this->_mapper->findOneByQuery($this, $query, $fields = array());
 	}
 	
 	/**
@@ -266,7 +266,7 @@ class MongoMapper
 	}
 	
 
-	public function searchByQuery($model, $query, $fields = array())
+	public function findOneByQuery($model, $query, $fields = array())
 	{
 		$data = $this->_collection->findOne($query, $fields);
 		if ($data === NULL)

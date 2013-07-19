@@ -25,7 +25,7 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 */
 	public function readLFProjectAccess($projectAccess) {
 		$projectAccessModel = new ProjectAccessModel();
-		$projectAccessModel->readyByProjectIdAndUserID($projectAccess->projectId, $projectAccess->userId);
+		$projectAccessModel->findOneByProjectIdAndUserID($projectAccess->projectId, $projectAccess->userId);
 		
 		if ($projectAccessModel->id!=null) {
 			LoggerFactory::getLogger()->logInfoMessage($projectAccessModel->lf_role);

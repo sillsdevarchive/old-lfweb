@@ -503,10 +503,10 @@ public class ConfigureSettingFieldsPresenter
 					String.valueOf(user.getId()), fieldDto, asyncCallback);
 		} else {
 			// apply to all user
-			Map<Integer, UserDto> list = new HashMap<Integer, UserDto>();
+			Map<String, UserDto> list = new HashMap<String, UserDto>();
 			eventBus.getUserInProjectList(list);
 
-			Iterator<Integer> itr = list.keySet().iterator();
+			Iterator<String> itr = list.keySet().iterator();
 			String userIds = "";
 			while (itr.hasNext()) {
 
