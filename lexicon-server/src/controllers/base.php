@@ -23,9 +23,6 @@ class Base extends CI_Controller {
 		$isLoggedIn = $this->ion_auth->logged_in();
 		$this->viewdata['logged_in'] = $isLoggedIn;
 		
-		//TODO how to get selected project ID??
-		$this->viewdata['project_id'] = "51e3b48b9cde7fef33e7aef7";
-		
 		if ($isLoggedIn) {
 			$userId = (string)$this->session->userdata('user_id');
 			$user = new \models\UserModel($userId);

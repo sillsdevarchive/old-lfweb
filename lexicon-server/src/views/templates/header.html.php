@@ -28,7 +28,7 @@
 								-->
 								<li><a href="#">Jamaica Project 2</a></li>
 								<li><a href="#">Jamaica Project 3</a></li>
-								<li><a href="/project">LF Project Page</a></li>
+								<li><a href="/project?pid=51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
 							</ul>
 						</li>
 						<li><a href="/learn_scripture_forge">Learn</a>

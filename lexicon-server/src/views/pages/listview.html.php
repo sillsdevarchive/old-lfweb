@@ -1,3 +1,5 @@
+<?php $project_id = $_GET['pid']; ?>
+
 <script type="text/javascript">
 	(function($) {
 		$(document).ready(function ()
