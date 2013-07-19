@@ -35,14 +35,13 @@ class Base extends CI_Controller {
 			$this->viewdata['projects_count'] = $projects->count;
 			
 			$this->viewdata['projects'] = $projects->entries;
-			if ($isAdmin) {
-				$projectList = new models\ProjectListModel();
-				$projectList->read();
-				$this->viewdata['all_projects_count'] = $projectList->count;
-				$this->viewdata['all_projects'] = $projectList->entries;
-			}
-			
 		}
+		
+		$projectList = new models\ProjectListModel();
+		$projectList->read();
+		$this->viewdata['all_projects_count'] = $projectList->count;
+		$this->viewdata['all_projects'] = $projectList->entries;
+		
 		$view_html = $this->load->view('templates/container.html.php', $this->viewdata, !$render);
 
 		if (!$render) return $view_html;
