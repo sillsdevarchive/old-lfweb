@@ -28,10 +28,9 @@
 								-->
 								<li><a href="#">Jamaica Project 2</a></li>
 								<li><a href="#">Jamaica Project 3</a></li>
-								<?php foreach($all_projects as $project): ?>
+							<!--	<?php foreach($all_projects as $project): ?>
 											<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
-								<?php endforeach;?>
-								
+								<?php endforeach;?>-->
 								<li><a href="/project?pid=51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
 							</ul>
 						</li>
