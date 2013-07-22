@@ -1,5 +1,5 @@
 <div class="sfcontainer banner">
-	<img src="/images/womendiscussion.jpg" width="600px" height="395px" alt="on the beach" />
+	<img src="/images/womendiscussion.jpg" width="965px" height="360px" alt="on the beach" />
 </div>
 <div class="sfcontainer">
 			<h2>Discuss</h2>
