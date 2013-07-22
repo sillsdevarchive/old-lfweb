@@ -34,9 +34,9 @@
 								<li><a href="/project?pid=51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
 							</ul>
 						</li>
-						<li><a href="/learn_scripture_forge">Learn</a>
+						<li><a href="/learn_language_forge">Learn</a>
 							<ul>
-								<li><a href="/learn_scripture_forge">About Language Forge</a></li>
+								<li><a href="/learn_language_forge">About Language Forge</a></li>
 								<li><a href="/learn_expand_your_team">Expand Your Team</a></li>
 								<li><a href="/learn_contribute">Contribute</a></li>
 							</ul>

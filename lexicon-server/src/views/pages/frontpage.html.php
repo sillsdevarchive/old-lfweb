@@ -7,7 +7,7 @@
 					"summary" => "Language Forge enables communities to participate in the dictionary development like never before",
 					"social_media" => "{Social Media}",
 					"image_url" => "community.jpg",
-					"target_url" => "/learn_scripture_forge"
+					"target_url" => "/learn_language_forge"
 					),
 				array(
 					"title" => "Your Team, Expanded",
@@ -30,7 +30,7 @@
 				array(
 					"title" => "Language Forge",
 					"summary" => "Take your dictionary project to the next level by involving tens or hundreds more in expanding your lexicon.  Engage your language's diaspora speakers on the web or their phone, wherever they are.",
-					"target_url" => "/learn_scripture_forge"
+					"target_url" => "/learn_language_forge"
 					),
 				array(
 					"title" => "Expand Your Team",
@@ -47,7 +47,7 @@
 			?>
 			
 		<div class="sub-promotion sfcontainer cf">
-			<img src="/images/girlsmiling.jpg" alt="girl smiling" width="229" height="145" class="left">
+			<img src="/images/girlsmiling.jpg" alt="girl smiling" width="299" height="182" class="left">
 			<h2>The Power of Collaboration</h2>
 			<p>When everyone plays their part in producing a dictionary in your language, everyone benefits.  It's the power of collaboration that provides richer and more accurate dictionaries.  Our technology brings dictionary development to the masses, in a positive environment that focuses participants on the task and works wherever they are.  On the tablet, phone or web, Language Forge is there.</p>
 			<p><a href="/create_account" class="arrowed">Get Involved Today</a></p>

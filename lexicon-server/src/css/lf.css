@@ -129,6 +129,10 @@ div#header {
 	z-index: 10; /* IE6-7 hack for logo */
 }
 
+div#header > div.sfcontainer {
+	overflow: visible;
+}
+
 div#header, div#header a {
 	color: #eeeff0;
 }
@@ -150,6 +154,7 @@ div.sfcontainer {
 	position: relative;
 	width: 960px;
 	height: auto;
+	overflow: auto;
 	margin: 0 auto;
 }
 /* Bootstrap
@@ -392,6 +397,7 @@ input.error, textarea.error {
 	-moz-box-shadow: 0 0 3px #999, inset 0 0 1px #d4d4d4;
 	box-shadow: 0 0 3px #999, inset 0 0 1px #d4d4d4;
 }
+
 
 .blue-btn {
 	width: auto;
