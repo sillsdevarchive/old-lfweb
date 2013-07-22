@@ -2,7 +2,7 @@
 
 namespace libraries\sf;
 
-class MongoMapper
+class MongoMapper extends MapperBase
 {
 	/**
 	 * @var MongoDB
