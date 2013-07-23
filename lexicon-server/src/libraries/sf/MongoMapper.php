@@ -46,10 +46,20 @@ class MongoMapper extends MapperBase
 		return (string)$this->_db;
 	}
 	
-	public function readList($model, $query, $fields = array())
+	public function readList($model, $query, $fields = array(), $sortFields = array(), $limit = 0)
 	{
 		$cursor = $this->_collection->find($query, $fields);
-		$model->count = $cursor->count();
+		
+		if (count($sortFields)>0)
+		{
+			$cursor = $cursor->sort($sortFields);
+		}
+		
+		if ($limit>0)
+		{
+			$cursor = $cursor->limit($limit);
+		}
+		
 		$model->entries = array();
 		foreach ($cursor as $item) {
 			$id = strval($item['_id']);

@@ -5,7 +5,7 @@ class DashboardDbType
 {
 	const DB_TEST  = 0;
 	const DB_MYSQL = 1;
-	const DB_MONGODB = 1;
+	const DB_MONGODB = 2;
 }
 
 class DashboardToolFactory

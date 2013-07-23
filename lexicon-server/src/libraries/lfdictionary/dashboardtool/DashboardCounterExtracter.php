@@ -227,7 +227,7 @@ class DashboardCounterExtracter
 		//echo "Sum of part of speech count ".$this->_speech->length."<br/>";
 		//echo "Sum of example count ".$this->_example->length;
 		
-		$DashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MYSQL);
+		$DashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
 		
 		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_ENTRY, $entries, $timestamp, $hg_version, $hg_hash);
 		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_MEANING, $meaning, $timestamp, $hg_version, $hg_hash);

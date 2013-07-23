@@ -1,5 +1,7 @@
 <?php
 namespace libraries\lfdictionary\dashboardtool;
+
+
 require_once(dirname(__FILE__) . '/../Config.php');
 
 use \libraries\lfdictionary\common\DataConnector;
@@ -78,11 +80,13 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	}
 
 	public function  getTimeStampsByDateRange($projectId, $start, $end){
-		$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp >=FROM_UNIXTIME(".$start.") AND time_stamp <= FROM_UNIXTIME(".$end.") GROUP BY time_stamp ORDER BY hg_version ASC";
-		LoggerFactory::getLogger()->logDebugMessage($sql);
-		//echo ($sql);
-		$query = $this->_dbActivity->execute($sql);
-		return $this->fetchArray($query);
+		//$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp >=FROM_UNIXTIME(".$start.") AND time_stamp <= FROM_UNIXTIME(".$end.") GROUP BY time_stamp ORDER BY hg_version ASC";
+		$dashboardActivitiesList = new DashboardToolMongoListModel();
+		$dashboardActivitiesList->readByQuery(array("projectID" => $projectId, 
+											"time_stamp" => array('$gte'=> $start, '$lte'=>$end)),
+			 								  array("time_stamp", "hg_version"),
+												array("hg_version" => 1),1);
+		return $dashboardActivitiesList->entries;
 	}
 
 	public function  getAllTimeStamps($projectId){
@@ -99,8 +103,8 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	 * @param int $projectId
 	 */
 	public function  getLastReversionEntry($projectId){
-		$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version DESC LIMIT 1";
-		$query = $this->_dbActivity->execute($sql);
+		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version DESC LIMIT 1";
+
 		return $this->fetchArray($query);
 	}
 

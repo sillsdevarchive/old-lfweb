@@ -103,7 +103,6 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 			$userlistdto->addListUser($userdto);
 			//Test code end
 		}
-		error_log("1111111");
 		return $userlistdto;
 	}
 	

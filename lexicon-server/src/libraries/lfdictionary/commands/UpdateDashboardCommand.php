@@ -4,9 +4,9 @@ namespace libraries\lfdictionary\commands;
 require_once(dirname(__FILE__) . '/../Config.php');
 
 use libraries\lfdictionary\common\AsyncRunner;
-use dashboardtool\DashboardToolFactory;
-use dashboardtool\DashboardDbType;
-use dashboardtool\HistoricalHgDataFetcher;
+use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
+use libraries\lfdictionary\dashboardtool\DashboardDbType;
+use libraries\lfdictionary\dashboardtool\HistoricalHgDataFetcher;
 use libraries\lfdictionary\common\LoggerFactory;
 class UpdateDashboardCommand
 {
@@ -60,17 +60,19 @@ class UpdateDashboardCommand
 			}
 		}
 		$projectRepoPath = PROJECTS_HG_ROOT_FOLDER. $this->_LFProjectModel->getName();
-		$dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MYSQL);
+		$dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
 		$historicalHgDataFetcher = new HistoricalHgDataFetcher($projectRepoPath);
 		$asyncRunner =  $this->createAsyncRunner();
 		$lastEntry = $dashboardToolDbAccess->getLastReversionEntry($this->_projectNodeId);
 		$lastReversion="";
 		$lastHash="";
+		error_log("0");
 		if ($lastEntry != null && count($lastEntry) == 1) {
 			$entry=$lastEntry[0];
 			$lastReversion=$entry['hg_version'];
 			$lastHash=$entry['hg_hash'];
 		}
+		error_log("1");
 		LoggerFactory::getLogger()->logDebugMessage("lastDBReversion: " . $lastReversion);
 		LoggerFactory::getLogger()->logDebugMessage("lastDBHash: " . $lastHash);
 		// 2. get last version from HG
