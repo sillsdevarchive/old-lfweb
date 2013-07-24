@@ -204,7 +204,7 @@ public interface ILexService extends IBaseService {
 	 * get a flag that means does server updating dashboard data or not
 	 * 
 	 */
-	void getIsDashboardUpdateToolRunning(AsyncCallback<Integer> asyncCallback);
+	void getIsDashboardUpdateToolRunning(AsyncCallback<ResultDto> asyncCallback);
 
 	/**
 	 * to remove a entry from client cache in case it is not needed.

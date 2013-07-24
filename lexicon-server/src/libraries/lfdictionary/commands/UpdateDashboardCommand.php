@@ -66,13 +66,11 @@ class UpdateDashboardCommand
 		$lastEntry = $dashboardToolDbAccess->getLastReversionEntry($this->_projectNodeId);
 		$lastReversion="";
 		$lastHash="";
-		error_log("0");
 		if ($lastEntry != null && count($lastEntry) == 1) {
 			$entry=$lastEntry[0];
 			$lastReversion=$entry['hg_version'];
 			$lastHash=$entry['hg_hash'];
 		}
-		error_log("1");
 		LoggerFactory::getLogger()->logDebugMessage("lastDBReversion: " . $lastReversion);
 		LoggerFactory::getLogger()->logDebugMessage("lastDBHash: " . $lastHash);
 		// 2. get last version from HG

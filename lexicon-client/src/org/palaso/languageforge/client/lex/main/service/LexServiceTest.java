@@ -141,7 +141,7 @@ public class LexServiceTest extends BaseServiceTest implements ILexService {
 	}
 
 	@Override
-	public void getIsDashboardUpdateToolRunning(AsyncCallback<Integer> asyncCallback) {
+	public void getIsDashboardUpdateToolRunning(AsyncCallback<ResultDto> asyncCallback) {
 		// TODO Auto-generated method stub
 		
 	}

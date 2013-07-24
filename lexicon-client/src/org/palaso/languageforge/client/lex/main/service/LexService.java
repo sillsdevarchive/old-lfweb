@@ -577,7 +577,7 @@ public class LexService extends BaseService implements ILexService {
 	}
 
 	@Override
-	public void getIsDashboardUpdateToolRunning(AsyncCallback<Integer> asyncCallback) {
+	public void getIsDashboardUpdateToolRunning(AsyncCallback<ResultDto> asyncCallback) {
 		GetIsDashboardUpdateToolRunningAction action = new GetIsDashboardUpdateToolRunningAction();
 		remoteAsync.execute(action, asyncCallback);
 	}

@@ -12,19 +12,26 @@ class ResultDTO {
 	private $_succeed;
 	
 	/**
+	* @var string
+	*/
+	private $_code;
+	
+	/**
 	 * @param Boolean $succeed
 	 */
-	public function __construct($succeed) {
+	public function __construct($succeed, $code = "") {
 		$this->_succeed = $succeed;
+		$this->_code = $code;
 	}
 	
 	/**
 	 * Encodes the object into a php array, suitable for use with json_encode
 	 * @return mixed
 	 */
-	function encode() {
+	public function encode() {
 		return array(
 			'succeed' => $this->_succeed,
+		 	'code' => $this->_code,
 		);
 		
 	}

@@ -327,7 +327,8 @@ class LFDictionaryAPI
 
 	function getDashboardUpdateRunning() {
 		$command = new \libraries\lfdictionary\commands\UpdateDashboardCommand($this->_projectNodeId, $this->_projectModel, $this->_lexProject);
-		return $command->execute();
+		$result = new ResultDTO(true, strval($command->execute()));
+		return $result->encode();
 	}
 
 

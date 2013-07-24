@@ -8,6 +8,7 @@ import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.controls.ProgressLabel;
+import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDashboardSettings;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
@@ -267,12 +268,12 @@ public class DashboardMainPresenter extends BasePresenter<DashboardMainView, Das
 					// only run it when dashboard is show
 					if (view.isAttached() && !poller_locker) {
 						poller_locker = true;
-						lexService.getIsDashboardUpdateToolRunning(new AsyncCallback<Integer>() {
+						lexService.getIsDashboardUpdateToolRunning(new AsyncCallback<ResultDto>() {
 
 							@Override
-							public void onSuccess(Integer result) {
+							public void onSuccess(ResultDto result) {
 								DashboardUpdateResultType updateResult = DashboardUpdateResultType.getFromValue(result
-										.toString());
+										.getCode());
 
 								switch (updateResult) {
 								case STANDBY:
