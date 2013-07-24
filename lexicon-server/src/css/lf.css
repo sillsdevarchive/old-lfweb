@@ -186,6 +186,7 @@ div.darkTextLogo {
 
 div#promotion {
 	position: relative;
+	overflow: hidden;
 	width: 958px;
 	height: 400px;
 	margin-top: 12px;
