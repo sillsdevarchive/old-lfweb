@@ -32,7 +32,7 @@ class DashboardToolMongoModel extends \libraries\sf\MapperModel
 	/**
 	* @var string
 	*/
-	public $filed_type;
+	public $field_type;
 	
 	/**
 	* @var int

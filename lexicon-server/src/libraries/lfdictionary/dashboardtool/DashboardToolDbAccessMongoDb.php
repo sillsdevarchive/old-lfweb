@@ -2,10 +2,9 @@
 namespace libraries\lfdictionary\dashboardtool;
 
 
-require_once(dirname(__FILE__) . '/../Config.php');
+use libraries\lfdictionary\dto\DashboardActivitiesDTO;
 
-use \libraries\lfdictionary\common\DataConnector;
-use \libraries\lfdictionary\common\DataConnection;
+require_once(dirname(__FILE__) . '/../Config.php');
 use \libraries\lfdictionary\common\LoggerFactory;
 class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 {
@@ -17,72 +16,76 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 
 	private $liftFilePath;
 
-	/**
-	 * @var DataConnection
-	 */
-	private $_dbActivity;
-
 	public  function __construct() {
-		$this->_dbActivity = DataConnector::connect();
-
-		//echo "filePath".$filePath[0];
 
 	}
 
 	public function insertUpdateCounter($projectId, $field_type, $count, $timestamp, $hg_version, $hg_hash) {
 
 		$counter = $this->getCounterByHashAndFieldType($projectId, $hg_hash, $field_type);
-
 		if (count($counter) > 0) {
+			echo "U ";
 			return $this->updateCounter($projectId, $field_type, $count, $timestamp, $hg_version, $hg_hash);
 		} else {
-			$sql = "INSERT INTO lf_activity (`id`, `projectID`,`field_type`, `counter_value`, `time_stamp`, `hg_version`, `hg_hash`) VALUES (NULL, ".$projectId.", '".$field_type."', ".$count.", FROM_UNIXTIME($timestamp), $hg_version, '$hg_hash');";
-			$result = $this->_dbActivity->execute($sql);
-			if ($result!==FALSE)
-			{
-				return true;
-			}
-			return false;
+			echo "I ";
+		//	$sql = "INSERT INTO lf_activity (`id`, `projectID`,`field_type`, `counter_value`, `time_stamp`, `hg_version`, `hg_hash`) 
+		//	VALUES (NULL, ".$projectId.", '".$field_type."', ".$count.", FROM_UNIXTIME($timestamp), $hg_version, '$hg_hash');";
+			$newActityModel = new DashboardToolMongoModel();
+			$newActityModel->project_id = $projectId;
+			$newActityModel->counter_value = $count;
+			$newActityModel->field_type = $field_type;
+			$newActityModel->hg_hash = $hg_hash;
+			$newActityModel->hg_version = $hg_version;
+			$newActityModel->time_stamp = $timestamp;
+			return $newActityModel->write();
 		}
 
 	}
 
 	public function updateCounter($projectId, $field_type, $count, $timestamp, $hg_version, $hg_hash) {
-		$sql = "UPDATE lf_activity SET
-		 counter_value = $count
-		 , hg_version = $hg_version	
-		 , time_stamp = FROM_UNIXTIME($timestamp)
-		 WHERE projectID = $projectId		
-		 AND field_type ='$field_type'		
-		 AND hg_hash = '$hg_hash';";
-		//echo ($sql);
-		$query = $this->_dbActivity->execute($sql);
-		return $query;
+		$dashboardActivitiesList = new DashboardToolMongoListModel();
+		
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
+											"hg_hash" => $hg_hash,
+											"field_type" => $field_type));
+		
+		foreach ($dashboardActivitiesList->entries as $value)
+		{
+			$dashboardActivitiesModel = new DashboardToolMongoModel($value["id"]);
+			$dashboardActivitiesModel->read();
+			$dashboardActivitiesModel->project_id = $projectId;
+			$dashboardActivitiesModel->counter_value = $count;
+			$dashboardActivitiesModel->field_type = $field_type;
+			$dashboardActivitiesModel->hg_hash = $hg_hash;
+			$dashboardActivitiesModel->hg_version = $hg_version;
+			$dashboardActivitiesModel->time_stamp = $timestamp;
+			$dashboardActivitiesModel->write();
+		}
 	}
 
 
 	public function getCountersByTimeStamp($projectId, $timestamp){
-		$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp = '".$timestamp."'";
-		//echo ($sql);
-		$query = $this->_dbActivity->execute($sql);
-
-		return $this->fetchArray($query);
+		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp = '".$timestamp."'";
+		$dashboardActivitiesList = new DashboardToolMongoListModel();
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
+											"time_stamp" => $timestamp));
+		return $dashboardActivitiesList->entries;
 	}
 
 	public function getCounterByHashAndFieldType($projectId, $hg_hash, $field_type){
 
-		$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId."
-		AND hg_hash = '$hg_hash'
-		AND field_type ='$field_type'";
-		//echo ($sql);
-		$query = $this->_dbActivity->execute($sql);
-		return $this->fetchArray($query);
+		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." AND hg_hash = '$hg_hash' AND field_type ='$field_type'";
+		$dashboardActivitiesList = new DashboardToolMongoListModel();
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
+											"hg_hash" => $hg_hash,
+											"field_type" => $field_type));
+		return $dashboardActivitiesList->entries;
 	}
 
 	public function  getTimeStampsByDateRange($projectId, $start, $end){
 		//$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp >=FROM_UNIXTIME(".$start.") AND time_stamp <= FROM_UNIXTIME(".$end.") GROUP BY time_stamp ORDER BY hg_version ASC";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("projectID" => $projectId,
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
 											"time_stamp" => array('$gte'=> $start, '$lte'=>$end)),
 		array("time_stamp", "hg_version"),
 		array("hg_version" => 1),1);
@@ -90,12 +93,12 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	}
 
 	public function  getAllTimeStamps($projectId){
-		$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version ASC";
-		LoggerFactory::getLogger()->logDebugMessage($sql);
-		//echo ($sql);
-		$query = $this->_dbActivity->execute($sql);
-		//echo "count ".$this->_dbActivity->numrows($query);
-		return $this->fetchArray($query);
+		//$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version ASC";
+		$dashboardActivitiesList = new DashboardToolMongoListModel();
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId),
+		array("time_stamp"),
+		array("hg_version" => 1));
+		return $dashboardActivitiesList->entries;
 	}
 
 	/**
@@ -106,8 +109,8 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version DESC LIMIT 1";
 
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("projectID" => $projectId),
-		array("time_stamp", "hg_version"), array("hg_version" => -1), 1);
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId),
+		array(), array("hg_version" => -1), 1);
 
 		return $dashboardActivitiesList->entries;
 	}
@@ -117,9 +120,12 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	 * @param int $projectId
 	 */
 	public function  getReversionNumberByHash($projectId, $hash){
-		$sql = "SELECT hg_version FROM lf_activity WHERE projectID = ".$projectId." AND hg_hash = '" . $hash . "' LIMIT 1";
-		$query = $this->_dbActivity->execute($sql);
-		return $this->fetchArray($query);
+		//$sql = "SELECT hg_version FROM lf_activity WHERE projectID = ".$projectId." AND hg_hash = '" . $hash . "' LIMIT 1";
+		$dashboardActivitiesList = new DashboardToolMongoListModel();
+		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId, "hg_hash" => $hash),
+		array("hg_version"), array(), 1);
+
+		return $dashboardActivitiesList->entries;
 	}
 
 	public function fetchArray($query) {

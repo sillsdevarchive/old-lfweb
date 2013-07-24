@@ -104,8 +104,7 @@ class GetDashboardDataCommand {
 					$definitionActivitiesArray[] = $this->counterValuesArray['COUNT_MEANING'];
 					$partOfSpeechActivitiesArray[] = $this->counterValuesArray['COUNT_PARTOFSPEECH'];
 					$exampleActivitiesArray[] = $this->counterValuesArray['COUNT_EXAMPLE'];
-					
-					$activityDateArray[] = strtotime($timestamp);
+					$activityDateArray[] = $timestamp;
 				}
 
 				

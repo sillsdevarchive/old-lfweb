@@ -67,6 +67,7 @@ class MongoMapper extends MapperBase
 			unset($item['_id']);
 			$model->entries[] = $item;
 		}
+		$model->count= count($model->entries);
 	}
 	
 

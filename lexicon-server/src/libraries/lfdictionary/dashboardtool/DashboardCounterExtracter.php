@@ -1,10 +1,14 @@
 <?php
 
 namespace libraries\lfdictionary\dashboardtool;
-require_once(dirname(__FILE__) . '/../Config.php');
-require_once(LF_LIBRARY_PATH . '/lfbase/Loader.php');
-require_once(dirname(__FILE__) . '/ActivityFieldType.php');
 
+require_once(dirname(__FILE__)   . '/../../../helpers/loader_helper.php');
+require_once(dirname(__FILE__) . '/ActivityFieldType.php');
+if (!defined('APPPATH'))
+{
+	// this is run from command line, so in this case we don't have APPPATH
+	define('APPPATH', dirname(__FILE__)   . '/../../../');
+}
 
 use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\dashboardtool\DashboardDbType;
@@ -33,7 +37,7 @@ class DashboardCounterExtracter
 		
 		if ($this->projectNodeId == null) {
 			
-			echo "Error project node ID not founnnd", PHP_EOL;
+			echo "Error project node ID not found", PHP_EOL;
 			return;
 		}
 		$errorMessage = array ();
@@ -108,7 +112,7 @@ class DashboardCounterExtracter
 			$hgHash = $hgLogs[0];
 			$hgDate = $hgLogs[1];
 			$hgRev = $hgLogs[2];
-			$timestamp = mktime(0, 0, 0, date("m", strtotime($date)), date("d", strtotime($date)), date("y", strtotime($date)));
+			$timestamp = mktime(0, 0, 0, date("m", strtotime($hgDate)), date("d", strtotime($hgDate)), date("y", strtotime($hgDate)));
 			
 			//echo "timestamp is : ".date("d/m/Y H:i:s",$timestamp)."", PHP_EOL;
 			//echo "hgHash = ".$hgHash." date = ".$date, PHP_EOL;
@@ -147,12 +151,7 @@ class DashboardCounterExtracter
 			echo "argument --pid=xx missing", PHP_EOL;
 			return;
 		} else {
-			if (is_numeric($this->args['pid'])) {
-				$this->projectNodeId = $this->args['pid'];
-			} else {
-				echo "pid '{$this->args['pid']}' is NOT numeric", PHP_EOL;
-				return;
-			}
+			$this->projectNodeId = $this->args['pid'];
 		}
 	}
 	
@@ -233,15 +232,6 @@ class DashboardCounterExtracter
 		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_MEANING, $meaning, $timestamp, $hg_version, $hg_hash);
 		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_PARTOFSPEECH, $speech, $timestamp, $hg_version, $hg_hash);
 		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_EXAMPLE, $example, $timestamp, $hg_version, $hg_hash);
-		if($result) {
-			
-			echo "Counter Insert/Update done (timestamp is : ".date("d/m/Y H:i:s",$timestamp).").", PHP_EOL;
-			return true;
-		} else {
-			echo ("insert failed");
-			return false;
-		}
-
 	}
 	
 	
