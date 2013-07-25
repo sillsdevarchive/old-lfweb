@@ -90,7 +90,7 @@ class GetWordListFromWordPackCommand
 		$entry = null;
 		$lexicalForms = $node->{'lexical-unit'};
 		if ($lexicalForms) {
-			$entry = \dto\EntryDTO::create((string)$node['guid']);
+			$entry = \libraries\lfdictionary\dto\EntryDTO::create((string)$node['guid']);
 			$entry->setEntry($this->readMultiText($lexicalForms));
 			if(isset($node->{'sense'})) {
 				foreach ($node->{'sense'} as $sense) {
@@ -115,7 +115,7 @@ class GetWordListFromWordPackCommand
 	}
 
 	function readSense($node) {
-		$sense = new \dto\Sense();
+		$sense = new \libraries\lfdictionary\dto\Sense();
 
 		//Definition
 		$definition = $node->{'definition'};

@@ -185,7 +185,7 @@ class LFDictionaryAPI
 		}
 		// Save Entry
 		$rawEntry = json_decode($entry, true);
-		$entryDto = dto\EntryDTO::createFromArray($rawEntry);
+		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray($rawEntry);
 		$store = $this->getLexStore();
 		$store->writeEntry($entryDto, $action);
 
