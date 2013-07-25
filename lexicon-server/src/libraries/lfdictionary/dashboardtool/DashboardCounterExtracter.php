@@ -113,7 +113,6 @@ class DashboardCounterExtracter
 			$hgDate = $hgLogs[1];
 			$hgRev = $hgLogs[2];
 			$timestamp = mktime(0, 0, 0, date("m", strtotime($hgDate)), date("d", strtotime($hgDate)), date("y", strtotime($hgDate)));
-			
 			//echo "timestamp is : ".date("d/m/Y H:i:s",$timestamp)."", PHP_EOL;
 			//echo "hgHash = ".$hgHash." date = ".$date, PHP_EOL;
 			$doc = new \DOMDocument;

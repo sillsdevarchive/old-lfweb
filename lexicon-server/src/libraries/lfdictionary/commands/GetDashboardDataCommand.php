@@ -63,9 +63,9 @@ class GetDashboardDataCommand {
 		//echo var_dump($timeStamps);
 		if ($timeStamps != null && count($timeStamps) > 0) {
 			
-			foreach ($timeStamps as $timeStampsRow){
+			foreach ($timeStamps as $key => $value){
 
-				$timestamp = $timeStampsRow['time_stamp'];
+				$timestamp = $key;
 				$currentTimestamp;
 				$counters = $this->dashboardToolDbAccess->getCountersByTimeStamp($this->_projectId, $timestamp);
 				

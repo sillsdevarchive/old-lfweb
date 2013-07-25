@@ -35,7 +35,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 			$newActityModel->counter_value = $count;
 			$newActityModel->field_type = $field_type;
 			$newActityModel->hg_hash = $hg_hash;
-			$newActityModel->hg_version = $hg_version;
+			$newActityModel->hg_version = intval($hg_version);
 			$newActityModel->time_stamp = $timestamp;
 			return $newActityModel->write();
 		}
@@ -57,7 +57,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 			$dashboardActivitiesModel->counter_value = $count;
 			$dashboardActivitiesModel->field_type = $field_type;
 			$dashboardActivitiesModel->hg_hash = $hg_hash;
-			$dashboardActivitiesModel->hg_version = $hg_version;
+			$dashboardActivitiesModel->hg_version = intval($hg_version);
 			$dashboardActivitiesModel->time_stamp = $timestamp;
 			$dashboardActivitiesModel->write();
 		}
@@ -89,16 +89,35 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 											"time_stamp" => array('$gte'=> $start, '$lte'=>$end)),
 		array("time_stamp", "hg_version"),
 		array("hg_version" => 1),1);
-		return $dashboardActivitiesList->entries;
+		$result = array();
+		foreach ($dashboardActivitiesList->entries as $data) {
+			$key = $data['time_stamp'];
+			if (isset($result[$key])) {
+				$result[$key][] = $data;
+			} else {
+				$result[$key] = array($data);
+			}
+		}
+		return $result;
 	}
 
 	public function  getAllTimeStamps($projectId){
 		//$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version ASC";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
 		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId),
-		array("time_stamp"),
+		array("time_stamp","field_type"),
 		array("hg_version" => 1));
-		return $dashboardActivitiesList->entries;
+		
+		$result = array();
+		foreach ($dashboardActivitiesList->entries as $data) {
+			$key = $data['time_stamp'];
+			if (isset($result[$key])) {
+				$result[$key][] = $data;
+			} else {
+				$result[$key] = array($data);
+			}
+		}
+		return $result;
 	}
 
 	/**
