@@ -178,17 +178,21 @@ class LFDictionaryAPI
 		if (!$this->_projectModel->isUserInProject($this->_userId)) {
 			throw new \libraries\lfdictionary\common\UserActionDeniedException('User must have joined the community in order to create/update projects');
 		}
+		error_log("1");
 		// Check that user has edit privileges on the project
 		$userModel = $this->_userModel;
 		if (!$this->_projectAccess->hasPermission(ProjectPermission::CAN_EDIT_ENTRY)) {
 			throw new \libraries\lfdictionary\common\UserActionDeniedException('Access Denied For Update');
 		}
+		error_log("2");
 		// Save Entry
 		$rawEntry = json_decode($entry, true);
 		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray($rawEntry);
+		error_log("3");
 		$store = $this->getLexStore();
+		error_log("4");
 		$store->writeEntry($entryDto, $action);
-
+		error_log("5");
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
 	}

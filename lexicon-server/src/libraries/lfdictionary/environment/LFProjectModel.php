@@ -1,6 +1,8 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
+use models\ProjectAccessModel;
+
 require_once(dirname(__FILE__) . '/../Config.php');
 use libraries\lfdictionary\environment\LFProjectAccess;
 use libraries\lfdictionary\environment\ProjectRole;
@@ -164,8 +166,16 @@ class LFProjectModel {
 	 * This method is for to find whether the User is member of this Project
 	 */
 	public function isUserInProject($userId) {
-		$result = db_query("SELECT u.uid FROM {lf_access} opu INNER JOIN {users} u ON opu.uid = u.uid INNER JOIN {users_roles} ur ON u.uid = ur.uid WHERE u.status = 1 AND opu.nid = $this->_projectId AND u.uid = $userId");
-		return ($result != FALSE)? true : false;
+
+		$projectAccessModel = new ProjectAccessModel();
+		$projectAccessModel->findOneByProjectIdAndUserID($this->_projectId, $userId);
+		
+		if ($projectAccessModel->id!=null && $projectAccessModel->is_active>0) {
+			return true;
+		} else {
+			return false;
+		}
+	
 	}
 	
 	/**

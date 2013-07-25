@@ -41,11 +41,14 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 */
 	public function writeLFProjectAccess($projectAccess) {
 		$hostRole = ProjectRole::mapRoleToHost($projectAccess->getRole());
-		$sql = sprintf(
-			"INSERT lf_access SET lf_role='%s',nid=%d,uid=%d ON DUPLICATE KEY UPDATE lf_role='%s'",
-			$hostRole, $projectAccess->projectId, $projectAccess->userId, $hostRole
-		);
-		$this->_connection->execute($sql);
+		
+		$projectAccessModel =  new ProjectAccessModel();
+		$projectAccessModel->findOneByProjectIdAndUserID($projectAccess->projectId, $projectAccess->userId);
+		$projectAccessModel->is_active = 1;
+		$projectAccessModel->lf_role = $hostRole;
+		$projectAccessModel->project_id = $projectAccess->projectId;
+		$projectAccessModel->user_id = $projectAccess->userId;
+		$projectAccessModel->write();
 	}
 	
 	/**
@@ -68,8 +71,12 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 * @param LFProjectModel $project
 	 */
 	public function writeProject($project) {
-		$sql = sprintf("UPDATE node SET title='%s' WHERE nid=%d AND type='project'", $project->getId());
-		$result = $this->_connection->execute($sql);
+		$projectModel = new ProjectModel($project->getId());
+		$projectModel->read();
+		$projectModel->title=$project->getTitle();
+		$projectModel->language =$project->getLanguageCode();
+		$projectModel->projectname=$project->getName();
+		$projectModel->write();
 	}
 	
 	/**
