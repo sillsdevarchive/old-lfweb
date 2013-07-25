@@ -66,13 +66,12 @@
 ## *     be used as a used as a surreptitious storage area.
 ############################################################################################
 
-require_once(dirname(__FILE__) . '/Config.php');
-require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
+require_once(dirname(__FILE__) . '/../libraries/lfdictionary/Config.php');
+require_once(APPPATH . "/helpers/loader_helper.php");
 
-$drupalLoaded = \libraries\lfdictionary\common\LFDrupal::loadDrupal();
 \libraries\lfdictionary\common\ErrorHandler::register();
 
-$projectId = isset($_SESSION['projectid']) ? $_SESSION['projectid'] : '';
+$projectId = $_GET['pid'];
 if($projectId=='' && IS_DEV_MODE == 0 ){
 	//echo "Access Denied";
 	throw new Exception('Access Denied');

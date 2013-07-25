@@ -227,6 +227,7 @@ class LFDictionaryAPI
 			$uploadedBinFile=$uploadedFolder . "/" . $filename . ".bin";
 			$uploadedInfoFile=$uploadedFolder . "/" . $filename . ".info";
 			// read everything from uploaded file
+			LoggerFactory::getLogger()->logDebugMessage($uploadedBinFile);
 			$fileHandler = fopen($uploadedBinFile, 'r');
 			if (!$fileHandler)
 			{

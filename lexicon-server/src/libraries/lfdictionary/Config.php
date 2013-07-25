@@ -16,6 +16,10 @@ if(!defined('TestMode')) {
 	define('SHOW_ERROR_DETAIL_CLIENT', 1);
 }
 
+if (!defined('APPPATH')) {
+	define('APPPATH', $rootPath = dirname(__FILE__) . '/../../');
+}
+
 if (!defined('LF_LIBRARY_PATH')) {
 	define('LF_LIBRARY_PATH', APPPATH . 'libraries/lfdictionary/');
 }
@@ -56,8 +60,6 @@ define('LEXICON_WORD_LIST_SOURCE', '/var/lib/languageforge/lexicon/wordpacks/');
 
 //point to root folder of dictionaries.
 define('PROJECTS_HG_ROOT_FOLDER', '/var/lib/languageforge/work/');
-
-define('DASHBOARD_TOOL', '/var/www/langforgedictionary/lexicon-dashboard-tool/index.php');
 
 
 define('LANGUAGE_FORGE_DEFAULT_SETTINGS_LEX', 'WeSayConfig.Lex.Default');

@@ -90,7 +90,7 @@
 							<up:Uploader ui:field="textFileUploader" title="Browse"
 								validExtensions="TXT" width="150px" autoSubmit="false"
 								styleName="wordfromtextfileuploderhide" fileInputSize="5"
-								servletPath="../../../api/lex/jsupload.php" height="40px" />
+								servletPath="../../../service/jsupload.php" height="40px" />
 
 							<div style="position: absolute">
 								<g:Button text="{string.GatherWordsFromTextView_Browse}"
