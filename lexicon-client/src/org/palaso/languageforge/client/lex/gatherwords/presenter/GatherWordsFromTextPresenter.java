@@ -13,6 +13,7 @@ import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.gatherwords.GatherWordsEventBus;
 import org.palaso.languageforge.client.lex.gatherwords.view.GatherWordsFromTextView;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
+import org.palaso.languageforge.client.lex.model.ResultDto;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -70,21 +71,21 @@ public class GatherWordsFromTextPresenter
 					if (!isFileUploadCancelled) {
 						lexService.gatherWordsFromText("",
 								uploader.getInputName(),
-								new AsyncCallback<Integer>() {
+								new AsyncCallback<ResultDto>() {
 									@Override
 									public void onFailure(Throwable caught) {
 										eventBus.handleError(caught);
 									}
 
 									@Override
-									public void onSuccess(Integer result) {
+									public void onSuccess(ResultDto result) {
 										view.clearFileUploader();
 										uploader.reset();
 										view.setBtnAddFileEnabled(false);
 										eventBus.displayMessage(
 												MessageFormat.format(
 														I18nConstants.STRINGS.GatherWordsFromTextPresenter_X_words_submitted()
-														, new Object[]{result}));
+														, new Object[]{result.getCode()}));
 									}
 								});
 					}
@@ -138,18 +139,18 @@ public class GatherWordsFromTextPresenter
 					return;
 				}
 				lexService.gatherWordsFromText(view.getText().trim(), "",
-						new AsyncCallback<Integer>() {
+						new AsyncCallback<ResultDto>() {
 							@Override
 							public void onFailure(Throwable caught) {
 								eventBus.handleError(caught);
 							}
 
 							@Override
-							public void onSuccess(Integer result) {
+							public void onSuccess(ResultDto result) {
 								view.clearTextBox();
 								eventBus.displayMessage(MessageFormat.format(
 										I18nConstants.STRINGS.GatherWordsFromTextPresenter_X_words_submitted()
-										, new Object[]{result}));
+										, new Object[]{result.getCode()}));
 							}
 						});
 			}

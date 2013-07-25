@@ -1,9 +1,10 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
+import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.common.Constants;
 
-public class GatherWordsFromTextAction extends JsonRpcAction<Integer> {
+public class GatherWordsFromTextAction extends JsonRpcAction<ResultDto> {
 
 	private String words = "";
 	private String uploadedFileName = "";

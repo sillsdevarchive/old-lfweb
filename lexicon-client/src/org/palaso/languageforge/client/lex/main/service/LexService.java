@@ -489,7 +489,7 @@ public class LexService extends BaseService implements ILexService {
 
 	@Override
 	public void gatherWordsFromText(String string, String uploadedFileName,
-			AsyncCallback<Integer> asyncCallback) {
+			AsyncCallback<ResultDto> asyncCallback) {
 		GatherWordsFromTextAction action = new GatherWordsFromTextAction(
 				string, uploadedFileName);
 		remoteAsync.execute(action, asyncCallback);

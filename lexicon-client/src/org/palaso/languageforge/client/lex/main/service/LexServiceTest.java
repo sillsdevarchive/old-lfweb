@@ -68,7 +68,7 @@ public class LexServiceTest extends BaseServiceTest implements ILexService {
 
 	@Override
 	public void gatherWordsFromText(String string, String uploadedFileName,
-			AsyncCallback<Integer> asyncCallback) {
+			AsyncCallback<ResultDto> asyncCallback) {
 	}
 
 	@Override

@@ -116,7 +116,7 @@ public interface ILexService extends IBaseService {
 	 *            reports the number of words added if successful
 	 */
 	void gatherWordsFromText(String string, String uploadedFileName,
-			AsyncCallback<Integer> asyncCallback);
+			AsyncCallback<ResultDto> asyncCallback);
 
 	/**
 	 * Gets the number of records present in the local cache. The number

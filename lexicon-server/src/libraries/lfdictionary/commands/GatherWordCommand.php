@@ -61,8 +61,8 @@ class GatherWordCommand
 
 		if (count($this->newWordsArr)>0){
 
-			$now = \mapper\LiftUpdater::now();
-			$filePath = \mapper\LiftUpdater::updateFilePath($this->_filePath, $now);
+			$now = \libraries\lfdictionary\mapper\LiftUpdater::now();
+			$filePath = \libraries\lfdictionary\mapper\LiftUpdater::updateFilePath($this->_filePath, $now);
 			$rootXml = new \SimpleXMLElement('<lift />');
 			// loop words array to add text
 			foreach ($this->newWordsArr as $results) {

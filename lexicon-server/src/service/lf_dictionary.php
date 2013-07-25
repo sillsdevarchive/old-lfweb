@@ -234,7 +234,8 @@ class LFDictionaryAPI
 			}
 			if (filesize($uploadedBinFile)==0)
 			{
-				return 0;
+				$result = new ResultDTO(false,0);
+				return $result->encode();
 			}
 			$fileData=fread($fileHandler,filesize($uploadedBinFile));
 			fclose($fileHandler);
@@ -257,7 +258,9 @@ class LFDictionaryAPI
 		}
 
 		$command = new \libraries\lfdictionary\commands\GatherWordCommand($this->_lexProject->getLiftFilePath(),$languageCode,$existWords,$words);
-		return $command->execute();
+		
+		$result = new ResultDTO(true,$command->execute());
+		return $result->encode();
 	}
 
 	function getListForGatherWord() {
