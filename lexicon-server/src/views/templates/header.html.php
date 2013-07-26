@@ -10,7 +10,7 @@
 				
 				<div id="header-nav" class="left">
 				<?php if (!isset($is_static_page)):?>
-					<img align="left" style="margin: 2px 10px 0 0" src="/images/sf_logo_small.png" alt="Language Forge" width="27" height="36" />
+					<img align="left" style="margin: 2px 10px 0 0" src="/images/lf_logo_small.png" alt="Language Forge" width="27" height="36" />
 				<?php endif;?>
 					<ul class="sf-menu">
 						<li><a href="/">Home</a></li>
