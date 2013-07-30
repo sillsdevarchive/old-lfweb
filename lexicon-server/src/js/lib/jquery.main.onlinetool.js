@@ -16,7 +16,7 @@ function initUploader(elementId, fileAddCallback, doneCallback, failCallback) {
 			dataType : 'json',
 			autoUpload : false,
 			acceptFileTypes : /(\.|\/)(text|txt)$/i,
-			maxFileSize : 1024 * 1024 * 5 // 5 MB
+			maxFileSize : 5000000 // 5 MB
 		}).on('fileuploadadd', function(e, data) {
 			jQuery.each(data.files, function(index, file) {
 				var callbackObj = new Object();
@@ -35,7 +35,7 @@ function initUploader(elementId, fileAddCallback, doneCallback, failCallback) {
 			}
 		}).on('fileuploadprogressall', function(e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
-			jQuery('#from-text-fileuploader-progress .bar').css('width', progress + '%');
+			jQuery('#progress .bar').css('width', progress + '%');
 		}).on('fileuploaddone', function(e, data) {
 			jQuery.each(data.result.files, function(index, file) {
 				var callbackObj = new Object();

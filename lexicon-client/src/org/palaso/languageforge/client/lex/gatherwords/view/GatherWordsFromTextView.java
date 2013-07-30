@@ -1,11 +1,7 @@
 package org.palaso.languageforge.client.lex.gatherwords.view;
 
-import gwtupload.client.BaseUploadStatus;
-import gwtupload.client.IUploader.OnChangeUploaderHandler;
-import gwtupload.client.IUploader.OnFinishUploaderHandler;
-import gwtupload.client.IUploader.OnStartUploaderHandler;
-import gwtupload.client.Uploader;
 
+import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
 import org.palaso.languageforge.client.lex.gatherwords.presenter.GatherWordsFromTextPresenter.IGatherWordsFromTextView;
 
 import com.google.gwt.core.client.GWT;
@@ -39,10 +35,6 @@ public class GatherWordsFromTextView extends Composite implements
 	@UiField
 	TextBox txtFileName;
 	@UiField
-	Uploader textFileUploader;
-	@UiField
-	Button btnBrowser;
-	@UiField
 	Button btnAddFile;
 	@UiField
 	Label lblText;
@@ -51,19 +43,11 @@ public class GatherWordsFromTextView extends Composite implements
 	@UiField
 	Button btnAddText;
 	@UiField
-	SimplePanel progressBarPanel;
-	@UiField
 	HorizontalPanel fileUploadPanel;
-	@UiField
-	Button btnCancel;
+
 
 	public GatherWordsFromTextView() {
 		initWidget(binder.createAndBindUi(this));
-
-		// This enables the jsupload progress mechanism through php apc
-		textFileUploader.add(
-				new Hidden("APC_UPLOAD_PROGRESS", textFileUploader
-						.getInputName()), 0);
 	}
 
 	@Override
@@ -87,19 +71,14 @@ public class GatherWordsFromTextView extends Composite implements
 	}
 
 	@Override
-	public void addFileUploaderChangeHandler(OnChangeUploaderHandler handler) {
-		textFileUploader.addOnChangeUploadHandler(handler);
-	}
-
-	@Override
 	public HasValueChangeHandlers<String> getTextValueChangeHandler() {
 		return txtArea;
 	}
 
 	@Override
 	public void setBtnBrowserEnabled(boolean enabled) {
-		textFileUploader.setEnabled(enabled);
-		btnBrowser.setEnabled(enabled);
+	
+		//btnBrowser.setEnabled(enabled);
 
 	}
 
@@ -117,13 +96,12 @@ public class GatherWordsFromTextView extends Composite implements
 
 	@Override
 	public String getFilenameFromUpLoader() {
-
-		return textFileUploader.getFileName();
+		return "";
 	}
 
 	@Override
 	public HasClickHandlers getBrowserFileClickedHandlers() {
-		return btnBrowser;
+		return null;
 	}
 
 	@Override
@@ -139,18 +117,10 @@ public class GatherWordsFromTextView extends Composite implements
 
 	@Override
 	public void submitFile() {
-		textFileUploader.submit();
+		//textFileUploader.submit();
 	}
 
-	@Override
-	public void addOnStartUploaderHandler(OnStartUploaderHandler handler) {
-		textFileUploader.addOnStartUploadHandler(handler);
-	}
 
-	@Override
-	public void addOnFinishUploaderHandler(OnFinishUploaderHandler handler) {
-		textFileUploader.addOnFinishUploadHandler(handler);
-	}
 
 	@Override
 	public void clearTextBox() {
@@ -165,7 +135,7 @@ public class GatherWordsFromTextView extends Composite implements
 
 	@Override
 	public void setAvoidEmptyFiles(boolean avoid) {
-		textFileUploader.avoidEmptyFiles(avoid);
+		//textFileUploader.avoidEmptyFiles(avoid);
 	}
 
 	@Override
@@ -174,40 +144,16 @@ public class GatherWordsFromTextView extends Composite implements
 
 	}
 
-	@Override
-	public SimplePanel getProgressBarPanel() {
-		return progressBarPanel;
-	}
-
-	@Override
-	public void setUploadProgressBar(BaseUploadStatus baseUploadStatus) {
-		textFileUploader.setStatusWidget(baseUploadStatus);
-
-	}
 
 	@Override
 	public void setUploadFileUplodPanelVisible(boolean visible) {
 		fileUploadPanel.setVisible(visible);
 	}
 
-	@Override
-	public void cancelUpload() {
-		textFileUploader.cancel();
-	}
-
-	@Override
-	public HasClickHandlers getUploadCancelClickedHandlers() {
-		return btnCancel;
-	}
 
 	@Override
 	public Widget getWidget() {
 		return this.asWidget();
-	}
-
-	@Override
-	public Uploader getUploader() {
-		return textFileUploader;
 	}
 
 }

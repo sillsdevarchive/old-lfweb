@@ -1,5 +1,6 @@
 package org.palaso.languageforge.client.lex.controls;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -46,4 +47,14 @@ public class JSNIJQueryWrapper {
 			return true;
 		}
 	}-*/;
+
+	public static native void startjQueryFileUpload(String id, 
+			JavaScriptObject fileAddCallback,
+			JavaScriptObject doneCallback,
+			JavaScriptObject failCallback) /*-{
+
+			$wnd.initUploader(id, fileAddCallback, doneCallback, failCallback);
+	
+	}-*/;
+
 }

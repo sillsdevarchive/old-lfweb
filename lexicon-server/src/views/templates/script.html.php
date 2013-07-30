@@ -1,8 +1,13 @@
-		<script src="/js/lib/jquery-ui-1.8.23.custom.min.js"></script>
+		<script src="/js/lib/jquery-ui-1.10.3.custom.min.js"></script>
 		<script src="/js/lib/superfish/superfish.js"></script>
 		<script src="/js/lib/superfish/hoverIntent.js"></script>
 		<script src="/js/lib/slides.min.jquery.js"></script>
+		<script src="/js/lib/jquery.iframe-transport.js"></script>
+		<script src="/js/lib/jquery.fileupload.js"></script>
+		<script src="/js/lib/jquery.fileupload-process.js"></script>
+		<script src="/js/lib/jquery.fileupload-validate.js"></script>
 		<script src="/js/lib/jquery.jsonrpc.js"></script>
+		<script src="/js/lib/jquery.main.onlinetool.js"></script>
 		<script>
 			
 			$(document).ready(function(){
