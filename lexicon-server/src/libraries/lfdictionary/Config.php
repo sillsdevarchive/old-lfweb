@@ -46,8 +46,6 @@ define('WRITING_SYSTEMS_DIR', '/WritingSystems/');
 define('VCS_MASTER_PATH', '/var/vcs/languageforge/');
 define('LANGUAGE_FORGE_WORK_PATH', '/var/lib/languageforge/work/'); // TODO This doesn't need to be configurable. Should be in a static method somewhere CP 2012-10
 
-// use for jsupload.php, you need set executable premission for it to work
-define('PHP_UPLOAD_PATH', '/tmp/php_upload/');
 
 // max file size per post (byte) for jsupload, it you also need to change APC and PHP settings!
 define('PHP_UPLOAD_MAX_FILE_SIZE', 20 * 1024 * 1024);

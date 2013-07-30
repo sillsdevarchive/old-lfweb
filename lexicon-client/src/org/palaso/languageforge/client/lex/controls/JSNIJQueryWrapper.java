@@ -48,13 +48,19 @@ public class JSNIJQueryWrapper {
 		}
 	}-*/;
 
-	public static native void startjQueryFileUpload(String id, 
-			JavaScriptObject fileAddCallback,
-			JavaScriptObject doneCallback,
+	public static native void startjQueryFileUpload(String id,
+			JavaScriptObject fileAddCallback, JavaScriptObject doneCallback,
 			JavaScriptObject failCallback) /*-{
 
-			$wnd.initUploader(id, fileAddCallback, doneCallback, failCallback);
-	
+		$wnd.initUploader(id, fileAddCallback, doneCallback, failCallback);
+
+	}-*/;
+
+	public static native void startUploadFileByFileData(
+			JavaScriptObject preAddedFile) /*-{
+		$wnd.jQuery(function() {
+			preAddedFile.submit();
+		});
 	}-*/;
 
 }

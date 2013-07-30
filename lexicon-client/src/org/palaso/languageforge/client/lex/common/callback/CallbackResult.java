@@ -6,6 +6,10 @@ public abstract class CallbackResult extends JavaScriptObject {
 	protected CallbackResult() {
 	}
 
+	public final native JavaScriptObject getAttachedData() /*-{
+		return this.data;
+	}-*/;
+	
 	public final native boolean isSuccess() /*-{
 		return !!this.success;
 	}-*/;

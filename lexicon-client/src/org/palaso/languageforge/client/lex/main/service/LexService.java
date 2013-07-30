@@ -416,7 +416,7 @@ public class LexService extends BaseService implements ILexService {
 				@Override
 				public void onSuccess(AutoSuggestOptions result) {
 
-					JSONValue val = JSONParser.parseLenient(result
+					JSONValue val = JSONParser.parseLenient(AutoSuggestOptions
 							.encode(result));
 					JSONObject obj = val.isObject();
 					int totSize = (int) obj

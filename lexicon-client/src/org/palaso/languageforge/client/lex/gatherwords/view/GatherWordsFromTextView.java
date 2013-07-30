@@ -1,7 +1,6 @@
 package org.palaso.languageforge.client.lex.gatherwords.view;
 
 
-import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
 import org.palaso.languageforge.client.lex.gatherwords.presenter.GatherWordsFromTextPresenter.IGatherWordsFromTextView;
 
 import com.google.gwt.core.client.GWT;
@@ -11,7 +10,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -44,6 +42,9 @@ public class GatherWordsFromTextView extends Composite implements
 	Button btnAddText;
 	@UiField
 	HorizontalPanel fileUploadPanel;
+	
+	@UiField
+	SimplePanel uploadProgressBar;
 
 
 	public GatherWordsFromTextView() {
@@ -85,7 +86,6 @@ public class GatherWordsFromTextView extends Composite implements
 	@Override
 	public void setBtnAddFileEnabled(boolean enabled) {
 		btnAddFile.setEnabled(enabled);
-
 	}
 
 	@Override
@@ -94,15 +94,6 @@ public class GatherWordsFromTextView extends Composite implements
 
 	}
 
-	@Override
-	public String getFilenameFromUpLoader() {
-		return "";
-	}
-
-	@Override
-	public HasClickHandlers getBrowserFileClickedHandlers() {
-		return null;
-	}
 
 	@Override
 	public HasClickHandlers getFileNameTextboxClickedHandlers() {
@@ -115,12 +106,6 @@ public class GatherWordsFromTextView extends Composite implements
 
 	}
 
-	@Override
-	public void submitFile() {
-		//textFileUploader.submit();
-	}
-
-
 
 	@Override
 	public void clearTextBox() {
@@ -131,12 +116,9 @@ public class GatherWordsFromTextView extends Composite implements
 	@Override
 	public void clearFileUploader() {
 		txtFileName.setValue("");
+		uploadProgressBar.setWidth("0px");
 	}
 
-	@Override
-	public void setAvoidEmptyFiles(boolean avoid) {
-		//textFileUploader.avoidEmptyFiles(avoid);
-	}
 
 	@Override
 	public void setFileNameBoxVisible(boolean visible) {

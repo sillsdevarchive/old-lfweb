@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.model;
 
-import org.palaso.languageforge.client.lex.jsonrpc.RequestModel;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsFieldElementDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 

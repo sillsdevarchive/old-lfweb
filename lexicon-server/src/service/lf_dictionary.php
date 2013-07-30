@@ -221,11 +221,11 @@ class LFDictionaryAPI
 
 		// get all from lift file.
 		$existWordsList=$this->getList(1,PHP_INT_MAX);
-		if ( \libraries\lfdictionary\common\TextFormatHelper::startsWith($filename,"GWTU-")) {
+		if (strlen(trim($filename))>3) {
+			LoggerFactory::getLogger()->logDebugMessage($filename);
 			// it is from uploaded file.
-			$uploadedFolder = PHP_UPLOAD_PATH . session_id();
-			$uploadedBinFile=$uploadedFolder . "/" . $filename . ".bin";
-			$uploadedInfoFile=$uploadedFolder . "/" . $filename . ".info";
+			$uploadedFolder = APPPATH .'/service/fileUploader/files/';
+			$uploadedBinFile=$uploadedFolder . "/" . $filename;
 			// read everything from uploaded file
 			LoggerFactory::getLogger()->logDebugMessage($uploadedBinFile);
 			$fileHandler = fopen($uploadedBinFile, 'r');
@@ -241,8 +241,6 @@ class LFDictionaryAPI
 			$fileData=fread($fileHandler,filesize($uploadedBinFile));
 			fclose($fileHandler);
 			unlink($uploadedBinFile);
-			unlink($uploadedInfoFile);
-			rmdir($uploadedFolder);
 			// format conversion
 			$words=\libraries\lfdictionary\common\TextFormatHelper::convertToUTF8String($fileData);
 		}

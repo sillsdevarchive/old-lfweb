@@ -1,9 +1,8 @@
 package org.palaso.languageforge.client.lex.gatherwords.presenter;
 
-import org.palaso.languageforge.client.lex.common.MessageFormat;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
+import org.palaso.languageforge.client.lex.common.MessageFormat;
 import org.palaso.languageforge.client.lex.common.callback.CallbackComm;
-import org.palaso.languageforge.client.lex.common.callback.CallbackResult;
 import org.palaso.languageforge.client.lex.common.callback.CallbackResultString;
 import org.palaso.languageforge.client.lex.common.callback.ICallback;
 import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
@@ -32,10 +31,11 @@ public class GatherWordsFromTextPresenter
 	@Inject
 	public ILexService lexService;
 
+	private JavaScriptObject preAddedFile = null;
+	
 	public void onStartFromText(SimplePanel panel) {
 		panel.setWidget(view.getWidget());
 		view.setBtnAddFileEnabled(false);
-		view.setAvoidEmptyFiles(true);
 		view.setUploadFileUplodPanelVisible(false);
 		setupFileUploader();
 	}
@@ -46,10 +46,12 @@ public class GatherWordsFromTextPresenter
 			@Override
 			public void onReturn(CallbackResultString result) {
 				view.setFilename(result.getReturnValue());
-				if (result.getReturnValue().trim().length() > 0) {
+				if (result.getReturnValue().trim().length() > 0 && result.getAttachedData()!=null) {
 					view.setBtnAddFileEnabled(true);
+					preAddedFile = result.getAttachedData();
 				} else {
 					view.setBtnAddFileEnabled(false);
+					preAddedFile = null;
 				}
 			}
 		};
@@ -58,8 +60,6 @@ public class GatherWordsFromTextPresenter
 
 			@Override
 			public void onReturn(CallbackResultString result) {
-				Window.alert("Uploaded: " + result.getReturnValue());
-
 				lexService.gatherWordsFromText("", result.getReturnValue().trim(),
 						new AsyncCallback<ResultDto>() {
 							@Override
@@ -70,6 +70,9 @@ public class GatherWordsFromTextPresenter
 							@Override
 							public void onSuccess(ResultDto result) {
 								view.clearFileUploader();
+								view.setUploadFileUplodPanelVisible(false);
+								view.setFileNameBoxVisible(true);
+								preAddedFile = null;
 								view.setBtnAddFileEnabled(false);
 								eventBus.displayMessage(MessageFormat.format(
 										I18nConstants.STRINGS
@@ -88,6 +91,7 @@ public class GatherWordsFromTextPresenter
 				eventBus.handleError(new Throwable("Failed: "
 						+ result.getError().getError()));
 				view.setBtnAddFileEnabled(false);
+				preAddedFile = null;
 			}
 		};
 
@@ -103,70 +107,16 @@ public class GatherWordsFromTextPresenter
 	}
 
 	public void bind() {
-
-		//
-		// view.addOnFinishUploaderHandler(new OnFinishUploaderHandler() {
-		// @Override
-		// public void onFinish(final IUploader uploader) {
-		// view.setFileNameBoxVisible(true);
-		// view.setUploadFileUplodPanelVisible(false);
-		// view.setBtnAddFileEnabled(true);
-		// switch (uploader.getStatus()) {
-		// case SUCCESS:
-		// if (!isFileUploadCancelled) {
-		// lexService.gatherWordsFromText("",
-		// uploader.getInputName(),
-		// new AsyncCallback<ResultDto>() {
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// eventBus.handleError(caught);
-		// }
-		//
-		// @Override
-		// public void onSuccess(ResultDto result) {
-		// view.clearFileUploader();
-		// uploader.reset();
-		// view.setBtnAddFileEnabled(false);
-		// eventBus.displayMessage(
-		// MessageFormat.format(
-		// I18nConstants.STRINGS.GatherWordsFromTextPresenter_X_words_submitted()
-		// , new Object[]{result.getCode()}));
-		// }
-		// });
-		// }
-		// break;
-		// case CANCELED:
-		// isFileUploadCancelled = true;
-		// uploader.cancel();
-		// view.clearFileUploader();
-		// uploader.reset();
-		// eventBus.displayMessage(I18nConstants.STRINGS.GatherWordsFromTextPresenter_upload_canceled());
-		// break;
-		// case ERROR:
-		// isFileUploadCancelled = true;
-		// view.cancelUpload();
-		// view.clearFileUploader();
-		// uploader.reset();
-		// //eventBus.displayMessage("upload failed!");
-		// break;
-		// default:
-		// break;
-		// }
-		// }
-		// });
-		//
 		view.getAddFileClickedHandlers().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				view.setUploadFileUplodPanelVisible(true);
 				view.setFileNameBoxVisible(false);
 				view.setBtnAddFileEnabled(false);
-				// view.submitFile();
-				view.setFileNameBoxVisible(true);
-				view.setUploadFileUplodPanelVisible(false);
-				view.setBtnAddFileEnabled(false);
-				view.clearFileUploader();
-
+				if (preAddedFile!=null)
+				{
+					JSNIJQueryWrapper.startUploadFileByFileData(preAddedFile);
+				}
 			}
 		});
 
@@ -204,13 +154,9 @@ public class GatherWordsFromTextPresenter
 
 		public void setFilename(String text);
 
-		public String getFilenameFromUpLoader();
-
 		public String getFilename();
 
 		public String getText();
-
-		public HasClickHandlers getBrowserFileClickedHandlers();
 
 		public HasClickHandlers getAddFileClickedHandlers();
 
@@ -226,13 +172,9 @@ public class GatherWordsFromTextPresenter
 
 		public void setBtnAddTextEnabled(boolean enabled);
 
-		public void submitFile();
-
 		public void clearTextBox();
 
 		public void clearFileUploader();
-
-		public void setAvoidEmptyFiles(boolean avoid);
 
 		public void setFileNameBoxVisible(boolean visible);
 

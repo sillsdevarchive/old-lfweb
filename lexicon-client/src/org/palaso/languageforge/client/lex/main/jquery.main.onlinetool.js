@@ -22,6 +22,7 @@ function initUploader(elementId, fileAddCallback, doneCallback, failCallback) {
 				var callbackObj = new Object();
 				callbackObj.value = file.name;
 				callbackObj.success = true;
+				callbackObj.data = data;
 				fileAddCallback(callbackObj);
 			});
 		}).on('fileuploadprocessalways', function(e, data) {
