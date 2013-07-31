@@ -50,6 +50,7 @@ public class IanaDto extends JavaScriptObject {
 	 * @return IANADto
 	 */
 	public static final IanaDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

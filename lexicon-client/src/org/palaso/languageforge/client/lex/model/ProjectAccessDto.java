@@ -33,6 +33,7 @@ public class ProjectAccessDto extends JavaScriptObject {
 	}-*/;
 	
 	public static final ProjectAccessDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

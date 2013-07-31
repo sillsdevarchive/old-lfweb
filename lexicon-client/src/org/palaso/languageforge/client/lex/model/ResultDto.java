@@ -25,6 +25,7 @@ public class ResultDto extends JavaScriptObject {
 	}-*/;
 
 	public static final ResultDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

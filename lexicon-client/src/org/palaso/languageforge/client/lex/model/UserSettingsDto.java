@@ -46,6 +46,7 @@ public class UserSettingsDto extends JavaScriptObject {
 	}-*/;
 
 	public static final UserSettingsDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

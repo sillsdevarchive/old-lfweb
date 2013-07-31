@@ -24,6 +24,7 @@ public class ConversationListDto extends JsArray<ConversationDto> {
 	}-*/;
 
 	public static final ConversationListDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

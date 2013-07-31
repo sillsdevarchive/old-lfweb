@@ -40,6 +40,7 @@ public class SettingFieldsFieldWritingSystemDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingFieldsFieldWritingSystemDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

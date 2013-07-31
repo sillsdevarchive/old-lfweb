@@ -36,6 +36,7 @@ public class UserListDto extends JavaScriptObject {
 	 * @return UserListDto
 	 */
 	public static final UserListDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

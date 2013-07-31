@@ -31,6 +31,7 @@ public class SettingFieldsDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingFieldsDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

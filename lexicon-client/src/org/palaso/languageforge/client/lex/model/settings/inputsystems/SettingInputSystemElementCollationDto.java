@@ -57,6 +57,7 @@ public class SettingInputSystemElementCollationDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingInputSystemElementCollationDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

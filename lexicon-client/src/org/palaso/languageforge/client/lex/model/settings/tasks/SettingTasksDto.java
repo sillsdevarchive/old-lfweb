@@ -31,6 +31,7 @@ public class SettingTasksDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingTasksDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

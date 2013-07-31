@@ -2,6 +2,7 @@ package org.palaso.languageforge.client.lex.main.model;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayInteger;
+import com.google.gwt.core.client.JsonUtils;
 
 public class DashboardActivitiesDto extends JavaScriptObject {
 
@@ -48,8 +49,8 @@ public class DashboardActivitiesDto extends JavaScriptObject {
 		return this.statsExamples;
 	}-*/;
 
-	public static final native DashboardActivitiesDto decode(String json)/*-{
-		return eval(json);
-	}-*/;
+	public static final  DashboardActivitiesDto decode(String json){
+		return JsonUtils.safeEval(json);
+	}
 
 }

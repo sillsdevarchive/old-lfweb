@@ -30,6 +30,7 @@ public class UserDto extends JavaScriptObject {
 	}-*/;
 	
 	public static final UserDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

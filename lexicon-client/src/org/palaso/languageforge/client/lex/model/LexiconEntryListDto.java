@@ -51,6 +51,7 @@ public class LexiconEntryListDto extends JsArray<LexiconEntryDto> {
 	 * @return LexiconEntryDto
 	 */
 	public static final LexiconEntryListDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

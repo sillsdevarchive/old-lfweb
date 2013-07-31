@@ -146,6 +146,7 @@ public class SettingInputSystemElementIdentityDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingInputSystemElementIdentityDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

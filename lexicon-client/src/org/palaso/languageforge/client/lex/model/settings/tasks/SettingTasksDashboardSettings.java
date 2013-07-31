@@ -63,14 +63,17 @@ public class SettingTasksDashboardSettings extends JavaScriptObject {
 
 	public static final SettingTasksDashboardSettings decode(String json) {
 		try {
-			return JsonUtils.safeEval(json);
+			if (json.trim() != "") {
+				return JsonUtils.safeEval(json);
+			} else {
+				return SettingTasksDashboardSettings.getNew();
+			}
 		} catch (IllegalArgumentException e) {
 			return SettingTasksDashboardSettings.getNew();
 		}
 	}
 
-	public static final String encode(
-			SettingTasksDashboardSettings object) {
+	public static final String encode(SettingTasksDashboardSettings object) {
 		return new JSONObject(object).toString();
 	}
 

@@ -31,6 +31,7 @@ public class SettingInputSystemsDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingInputSystemsDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

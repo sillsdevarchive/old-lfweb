@@ -2,6 +2,7 @@ package org.palaso.languageforge.client.lex.main.model;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsonUtils;
 
 public class DomainTreeDto extends JavaScriptObject {
 
@@ -32,8 +33,8 @@ public class DomainTreeDto extends JavaScriptObject {
 		return this.children;
 	}-*/;
 
-	public static final native DomainTreeDto decode(String json)/*-{
-		return eval(json);
-	}-*/;
+	public static final DomainTreeDto decode(String json){
+		return JsonUtils.safeEval(json);
+	}
 
 }

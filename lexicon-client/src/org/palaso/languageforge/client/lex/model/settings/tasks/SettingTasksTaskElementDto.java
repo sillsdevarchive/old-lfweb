@@ -350,6 +350,7 @@ public class SettingTasksTaskElementDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingTasksTaskElementDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

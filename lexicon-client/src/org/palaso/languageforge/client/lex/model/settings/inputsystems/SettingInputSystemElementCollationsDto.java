@@ -32,6 +32,7 @@ public class SettingInputSystemElementCollationsDto extends
 
 	public static final SettingInputSystemElementCollationsDto decode(
 			String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

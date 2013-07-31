@@ -12,6 +12,7 @@ public class AutoSuggestOptions extends JavaScriptObject {
 	}
 
 	public static final AutoSuggestOptions decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

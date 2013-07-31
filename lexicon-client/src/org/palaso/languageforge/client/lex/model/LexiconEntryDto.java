@@ -63,6 +63,7 @@ public class LexiconEntryDto extends JavaScriptObject {
 	}-*/;
 
 	public static final LexiconEntryDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 

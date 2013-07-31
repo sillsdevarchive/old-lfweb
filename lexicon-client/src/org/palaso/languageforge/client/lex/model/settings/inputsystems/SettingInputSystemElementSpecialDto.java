@@ -96,6 +96,7 @@ public class SettingInputSystemElementSpecialDto extends JavaScriptObject {
 	}-*/;
 
 	public static final SettingInputSystemElementSpecialDto decode(String json) {
+		json = json.trim() == "" ? json = "[]" : json;
 		return JsonUtils.safeEval(json);
 	}
 
