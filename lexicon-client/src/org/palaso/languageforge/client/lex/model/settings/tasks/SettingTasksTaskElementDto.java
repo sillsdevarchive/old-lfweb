@@ -1,12 +1,8 @@
 package org.palaso.languageforge.client.lex.model.settings.tasks;
 
 import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
-
-public class SettingTasksTaskElementDto extends JavaScriptObject {
+import org.palaso.languageforge.client.lex.model.BaseDto;
+public class SettingTasksTaskElementDto extends BaseDto<SettingTasksTaskElementDto> {
 
 	protected SettingTasksTaskElementDto() {
 	};
@@ -348,15 +344,6 @@ public class SettingTasksTaskElementDto extends JavaScriptObject {
 			return '';
 		}
 	}-*/;
-
-	public static final SettingTasksTaskElementDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(SettingTasksTaskElementDto object) {
-		return new JSONObject(object).toString();
-	}
 
 	public final native String getTaskSpecifiedData() /*-{
 		if (this.hasOwnProperty('taskspecifieddata')) {

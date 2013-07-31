@@ -1,15 +1,12 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
 
 /**
  * This is root Dto of a word entry, if contains word itself and Senses and sub-parts
  */
-public class LexiconEntryDto extends JavaScriptObject {
+public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 
 	// Must have protected ctor with zero args
 	protected LexiconEntryDto() {
@@ -61,15 +58,6 @@ public class LexiconEntryDto extends JavaScriptObject {
 	public final native JsArray<Sense> getSenses() /*-{
 		return this.senses;
 	}-*/;
-
-	public static final LexiconEntryDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(LexiconEntryDto object) {
-		return new JSONObject(object).toString();
-	};
 
 	public final native void setGuid(String guid) /*-{
 		this.guid = guid;

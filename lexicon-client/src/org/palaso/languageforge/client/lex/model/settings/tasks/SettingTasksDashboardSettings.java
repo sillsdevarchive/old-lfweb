@@ -1,10 +1,8 @@
 package org.palaso.languageforge.client.lex.model.settings.tasks;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
-public class SettingTasksDashboardSettings extends JavaScriptObject {
+public class SettingTasksDashboardSettings extends BaseDto<SettingTasksDashboardSettings> {
 
 	protected SettingTasksDashboardSettings() {
 	};
@@ -60,21 +58,5 @@ public class SettingTasksDashboardSettings extends JavaScriptObject {
 		}
 		this.targetwordcount['$'] = count;
 	}-*/;
-
-	public static final SettingTasksDashboardSettings decode(String json) {
-		try {
-			if (json.trim() != "") {
-				return JsonUtils.safeEval(json);
-			} else {
-				return SettingTasksDashboardSettings.getNew();
-			}
-		} catch (IllegalArgumentException e) {
-			return SettingTasksDashboardSettings.getNew();
-		}
-	}
-
-	public static final String encode(SettingTasksDashboardSettings object) {
-		return new JSONObject(object).toString();
-	}
 
 }

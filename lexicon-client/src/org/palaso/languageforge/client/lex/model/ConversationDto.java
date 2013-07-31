@@ -3,10 +3,9 @@ package org.palaso.languageforge.client.lex.model;
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 
-public class ConversationDto extends JavaScriptObject {
+public class ConversationDto extends BaseDto<ConversationDto> {
 
 	protected ConversationDto() {
 	}
@@ -59,10 +58,6 @@ public class ConversationDto extends JavaScriptObject {
 	
 	public final native JsArray<ConversationDto> getChildren()/*-{
 		return this.children;
-	}-*/;
-
-	public static final native ConversationDto decode(String json)/*-{
-		return eval(json);
 	}-*/;
 
 }

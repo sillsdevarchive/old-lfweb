@@ -149,7 +149,7 @@ public class ConfigureSettingTasksPresenter extends BasePresenter<ConfigureSetti
                                                                                                   .getData();
 
                         if (relatedData.getTaskName() == SettingTaskNameType.DASHBOARD) {
-                            SettingTasksDashboardSettings dbSpeData = SettingTasksDashboardSettings.decode(relatedData.getTaskSpecifiedData());
+                            SettingTasksDashboardSettings dbSpeData = SettingTasksDashboardSettings.<SettingTasksDashboardSettings>decode(relatedData.getTaskSpecifiedData());
                             String wordCountString = view.getTargerWordCountTextbox()
                                                          .getText().trim();
 
@@ -181,7 +181,7 @@ public class ConfigureSettingTasksPresenter extends BasePresenter<ConfigureSetti
                                                                                                   .getData();
 
                         if (relatedData.getTaskName() == SettingTaskNameType.DASHBOARD) {
-                            SettingTasksDashboardSettings dbSpeData = SettingTasksDashboardSettings.decode(relatedData.getTaskSpecifiedData());
+                            SettingTasksDashboardSettings dbSpeData =  SettingTasksDashboardSettings.<SettingTasksDashboardSettings>decode(relatedData.getTaskSpecifiedData());
 
                             switch (Integer.parseInt(view.getActivityTimeRangeListBox()
                                                          .getValue(view.getActivityTimeRangeListBox()
@@ -243,7 +243,7 @@ public class ConfigureSettingTasksPresenter extends BasePresenter<ConfigureSetti
     }
 
     private void refreshDashboardSetting(SettingTasksTaskElementDto relatedData) {
-        SettingTasksDashboardSettings dbSpeData = SettingTasksDashboardSettings.decode(relatedData.getTaskSpecifiedData());
+        SettingTasksDashboardSettings dbSpeData = SettingTasksDashboardSettings.<SettingTasksDashboardSettings>decode(relatedData.getTaskSpecifiedData());
 
         view.getTargerWordCountTextbox()
             .setText(String.valueOf(dbSpeData.getTargetWordCount()));

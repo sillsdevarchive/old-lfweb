@@ -1,11 +1,10 @@
 package org.palaso.languageforge.client.lex.model.settings.tasks;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
-public class SettingTasksDto extends JavaScriptObject {
+import com.google.gwt.core.client.JsArray;
+
+public class SettingTasksDto extends BaseDto<SettingTasksDto> {
 
 	protected SettingTasksDto() {
 	};
@@ -29,15 +28,6 @@ public class SettingTasksDto extends JavaScriptObject {
 			SettingTasksTaskElementDto newEntry) /*-{
 		this.tasks.task.push(newEntry);
 	}-*/;
-
-	public static final SettingTasksDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(SettingTasksDto object) {
-		return new JSONObject(object).toString();
-	}
 
 	public static final native SettingTasksDto getCurrentUserSetting() /*-{
 		return $wnd.taskSettings;

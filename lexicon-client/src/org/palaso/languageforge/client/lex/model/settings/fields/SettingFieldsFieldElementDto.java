@@ -4,13 +4,11 @@ import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
 import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
 import org.palaso.languageforge.client.lex.common.SettingFieldMultiplicityType;
 import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
 
-public class SettingFieldsFieldElementDto extends JavaScriptObject {
+public class SettingFieldsFieldElementDto extends BaseDto<SettingFieldsFieldElementDto> {
 
 	protected SettingFieldsFieldElementDto() {
 	};
@@ -323,13 +321,5 @@ public class SettingFieldsFieldElementDto extends JavaScriptObject {
 	// this.version.number = string;
 	// }-*/;
 
-	public static final  SettingFieldsFieldElementDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(SettingFieldsFieldElementDto object) {
-		return new JSONObject(object).toString();
-	}
 
 }

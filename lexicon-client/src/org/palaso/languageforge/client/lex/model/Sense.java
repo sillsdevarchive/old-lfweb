@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.json.client.JSONObject;
 
@@ -9,7 +8,7 @@ import com.google.gwt.json.client.JSONObject;
  * This is a sub-part of LexiconEntryDto
  * 
  */
-public class Sense extends JavaScriptObject {
+public class Sense extends BaseDto<Sense> {
 
 	// Must have protected ctor with zero args
 	protected Sense() {

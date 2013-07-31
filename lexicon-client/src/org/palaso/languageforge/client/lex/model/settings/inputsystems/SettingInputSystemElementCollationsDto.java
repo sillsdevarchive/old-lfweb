@@ -1,8 +1,7 @@
 package org.palaso.languageforge.client.lex.model.settings.inputsystems;
 
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
+
 
 public class SettingInputSystemElementCollationsDto extends
 		JsArray<SettingInputSystemElementCollationDto> {
@@ -30,14 +29,4 @@ public class SettingInputSystemElementCollationsDto extends
 		this.push(newEntry);
 	}-*/;
 
-	public static final SettingInputSystemElementCollationsDto decode(
-			String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(
-			SettingInputSystemElementCollationsDto object){
-		return new JSONObject(object).toString();
-	}
 }

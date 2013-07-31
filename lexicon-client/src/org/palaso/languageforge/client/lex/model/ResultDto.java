@@ -1,12 +1,9 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
-
 /*
  * This is a readonly Dto object.
  * */
-public class ResultDto extends JavaScriptObject {
+public class ResultDto extends BaseDto<ResultDto> {
 
 	protected ResultDto() {
 	};
@@ -23,10 +20,5 @@ public class ResultDto extends JavaScriptObject {
 			return '';
 		}
 	}-*/;
-
-	public static final ResultDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
 
 }

@@ -1,11 +1,10 @@
 package org.palaso.languageforge.client.lex.model.settings.inputsystems;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
-public class SettingInputSystemsDto extends JavaScriptObject {
+import com.google.gwt.core.client.JsArray;
+
+public class SettingInputSystemsDto extends BaseDto<SettingInputSystemsDto> {
 
 	protected SettingInputSystemsDto() {
 	};
@@ -29,14 +28,4 @@ public class SettingInputSystemsDto extends JavaScriptObject {
 			SettingInputSystemElementDto newEntry) /*-{
 		this.list.push(newEntry);
 	}-*/;
-
-	public static final SettingInputSystemsDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(SettingInputSystemsDto object) {
-		return new JSONObject(object).toString();
-	}
-
 }

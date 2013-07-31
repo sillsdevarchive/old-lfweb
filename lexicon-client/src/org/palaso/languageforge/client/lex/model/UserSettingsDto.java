@@ -3,12 +3,9 @@ package org.palaso.languageforge.client.lex.model;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsFieldElementDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
 
-public class UserSettingsDto extends JavaScriptObject {
+public class UserSettingsDto extends BaseDto<UserSettingsDto> {
 
 	protected UserSettingsDto() {
 	};
@@ -45,12 +42,4 @@ public class UserSettingsDto extends JavaScriptObject {
 		this.tasks.task.push(newEntry);
 	}-*/;
 
-	public static final UserSettingsDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(UserSettingsDto object) {
-		return new JSONObject(object).toString();
-	}
 }

@@ -1,15 +1,13 @@
 package org.palaso.languageforge.client.lex.model.settings.inputsystems;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
 /**
  * 
  * Specification: https://sites.google.com/site/ldmlspec/xml-format
  */
 
-public class SettingInputSystemElementDto extends JavaScriptObject {
+public class SettingInputSystemElementDto extends BaseDto<SettingInputSystemElementDto> {
 
 	protected SettingInputSystemElementDto() {
 	};
@@ -86,12 +84,4 @@ public class SettingInputSystemElementDto extends JavaScriptObject {
 		this.ldml.special = dto;
 	}-*/;
 
-	public static final SettingInputSystemElementDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(SettingInputSystemElementDto object) {
-		return new JSONObject(object).toString();
-	}
 }

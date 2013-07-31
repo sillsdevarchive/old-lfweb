@@ -1,16 +1,13 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
 
 /**
  * Dto uses as a array container of UsetDto. 
  * 
  */
 
-public class UserListDto extends JavaScriptObject {
+public class UserListDto extends BaseDto<UserListDto> {
 	
 	protected UserListDto() {
 	};
@@ -29,19 +26,4 @@ public class UserListDto extends JavaScriptObject {
 	}-*/;
 	
 	
-	/**
-	 * Utility to render a String into an object.
-	 * 
-	 * @param json
-	 * @return UserListDto
-	 */
-	public static final UserListDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final  String encode(UserListDto object){
-		return new JSONObject(object).toString();
-	}
-
 }

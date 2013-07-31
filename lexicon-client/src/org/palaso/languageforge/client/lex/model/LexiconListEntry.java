@@ -1,12 +1,9 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.JSONObject;
-
 /**
  * this contains some basic infomation of a word which will show on list.
  */
-public class LexiconListEntry extends JavaScriptObject {
+public class LexiconListEntry extends BaseDto<LexiconListEntry> {
 
 	protected LexiconListEntry() {
 	}
@@ -58,8 +55,5 @@ public class LexiconListEntry extends JavaScriptObject {
 		this.meanings.push(meaning);
 	}-*/;
 
-	public static final String encode(LexiconListEntry object) {
-		return new JSONObject(object).toString();
-	}
 
 }

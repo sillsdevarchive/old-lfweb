@@ -1,10 +1,10 @@
 package org.palaso.languageforge.client.lex.main.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.JsonUtils;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
-public class DomainQuestionDto extends JavaScriptObject {
+import com.google.gwt.core.client.JsArrayString;
+
+public class DomainQuestionDto extends BaseDto<DomainQuestionDto> {
 
 	protected DomainQuestionDto() {
 	}
@@ -24,13 +24,4 @@ public class DomainQuestionDto extends JavaScriptObject {
 	public final native JsArrayString getExampleWords()/*-{
 		return this.exampleWords;
 	}-*/;
-
-	public final native JsArrayString getExampleSentences()/*-{
-		return this.exampleSentences;
-	}-*/;
-
-	public static final DomainQuestionDto decode(String json){
-		return JsonUtils.safeEval(json);
-	}
-
 }

@@ -1,8 +1,6 @@
 package org.palaso.languageforge.client.lex.model;
 
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
 
 /**
  *  this is a collection class which to be a array container of LexiconListEntry
@@ -50,20 +48,5 @@ public class LexiconListDto extends JsArray<LexiconListEntry> {
 			LexiconListEntry newEntry) /*-{
 		this.entries.push(newEntry);
 	}-*/;
-
-	/**
-	 * Utility to render a String into an object.
-	 * 
-	 * @param json
-	 * @return LexWordListDTO
-	 */
-	public static final LexiconListDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(LexiconListDto object) {
-		return new JSONObject(object).toString();
-	}
 
 }

@@ -1,10 +1,6 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
-
-public class ProjectDto extends JavaScriptObject {
+public class ProjectDto extends BaseDto<ProjectDto> {
 
 	protected ProjectDto() {
 	};
@@ -29,14 +25,5 @@ public class ProjectDto extends JavaScriptObject {
 	public final native String getProjectType() /*-{
 		return this.type;
 	}-*/;
-
-	public static final ProjectDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(ProjectDto object) {
-		return new JSONObject(object).toString();
-	}
 
 }

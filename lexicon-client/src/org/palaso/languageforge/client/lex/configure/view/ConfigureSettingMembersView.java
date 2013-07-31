@@ -90,6 +90,7 @@ public class ConfigureSettingMembersView extends Composite implements IConfigure
 		return memberTablePager;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void createMemberTable() {
 		memberTablePager.setPageSize(6);
@@ -111,6 +112,7 @@ public class ConfigureSettingMembersView extends Composite implements IConfigure
 			items.add(role);
 		}
 
+		@SuppressWarnings("rawtypes")
 		AbstractInputCell editTypeComboBox = new ThemedComboBoxCell(items);
 
 		if (isIEVersionSupport()) {

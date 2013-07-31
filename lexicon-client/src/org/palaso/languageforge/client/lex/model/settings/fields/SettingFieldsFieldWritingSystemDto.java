@@ -1,10 +1,8 @@
 package org.palaso.languageforge.client.lex.model.settings.fields;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONObject;
+import org.palaso.languageforge.client.lex.model.BaseDto;
 
-public class SettingFieldsFieldWritingSystemDto extends JavaScriptObject {
+public class SettingFieldsFieldWritingSystemDto extends BaseDto<SettingFieldsFieldWritingSystemDto> {
 
 	protected SettingFieldsFieldWritingSystemDto() {
 	};
@@ -39,14 +37,5 @@ public class SettingFieldsFieldWritingSystemDto extends JavaScriptObject {
 		return this.hasOwnProperty("readOnly");
 	}-*/;
 
-	public static final SettingFieldsFieldWritingSystemDto decode(String json) {
-		json = json.trim() == "" ? json = "[]" : json;
-		return JsonUtils.safeEval(json);
-	}
-
-	public static final String encode(
-			SettingFieldsFieldWritingSystemDto object) {
-		return new JSONObject(object).toString();
-	}
 
 }

@@ -1,11 +1,9 @@
 package org.palaso.languageforge.client.lex.model;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.json.client.JSONObject;
 
 //An overlay type
-public class Example extends JavaScriptObject {
+public class Example extends BaseDto<Example> {
 
 	// Must have protected ctor with zero args
 	protected Example() {
@@ -47,9 +45,5 @@ public class Example extends JavaScriptObject {
 	public final native void setTranslation(MultiText value) /*-{
 		this.translation = value;
 	}-*/;
-
-	public static final String encode(Example object) {
-		return new JSONObject(object).toString();
-	}
 
 }
