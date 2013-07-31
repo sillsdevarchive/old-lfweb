@@ -244,12 +244,12 @@ body.loading .view-loading-progress {
 }
 
 .dic-view-switch {
-	height: 50px;
-	margin-top: 50px;
-	padding: 23px 0 0 20px;
-	position: absolute;
-	width: 206px;
-	z-index: 99999 !important;
+    height: 50px;
+    margin-top: 50px;
+    padding: 23px 10px 0 0;
+    position: absolute;
+    width: 229px;
+    z-index: 99999 !important;
 }
 
 .flexible .sidebar-view-switch {

@@ -97,7 +97,7 @@ legend {display:none;}
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
-	padding:25px 30px 44px;
+	/*padding:25px 30px 44px;*/
 }
 .flexible .content-block {
 	background:#fbfbfb;
@@ -436,6 +436,7 @@ legend {display:none;}
 	overflow:hidden;
 	position:relative;
 	padding:0 55px 19px 0;
+	margin-left: 0px  !important;
 }
 
 .form-word label {
@@ -500,4 +501,8 @@ legend {display:none;}
 .form-box, #main form 
 {
 	padding:0px !important;
+}
+
+.accordion ul, ol {
+    margin: 0 10px 0 !important;
 }
