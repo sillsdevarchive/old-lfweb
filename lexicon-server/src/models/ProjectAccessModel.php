@@ -2,12 +2,14 @@
 
 namespace models;
 
-use libraries\sf\MongoStore;
-use libraries\sf\ReferenceList;
+use models\mapper\MongoMapper;
+
+use models\mapper\Id;
+use models\mapper\ReferenceList;
 
 require_once(APPPATH . '/models/ProjectModel.php');
 
-class ProjectAccessMongoMapper extends \libraries\sf\MongoMapper
+class ProjectAccessMongoMapper extends \models\mapper\MongoMapper
 {
 	public static function instance()
 	{
@@ -27,19 +29,18 @@ class ProjectAccessMongoMapper extends \libraries\sf\MongoMapper
 	}
 }
 
-class ProjectAccessModel extends \libraries\sf\MapperModel
+class ProjectAccessModel extends \models\mapper\MapperModel
 {
 	public function __construct($id = NULL)
 	{
+		$this->id = new Id();
 		$this->users = new ReferenceList();
 		parent::__construct(ProjectAccessMongoMapper::instance(), $id);
 	}
 	
 	public function findOneByProjectIdAndUserID($projectId, $userId)
 	{
-		
-		$data = $this->findOneByQuery(array("user_id" => new \MongoId($userId), "project_id" => new \MongoId($projectId)));
-
+		$this->findOneByQuery(array("user_id" => new \MongoId($userId), "project_id" => new \MongoId($projectId)));
 	}
 		
 	/**

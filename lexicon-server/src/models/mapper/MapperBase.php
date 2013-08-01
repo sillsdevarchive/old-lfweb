@@ -1,5 +1,5 @@
 <?php
-namespace libraries\sf;
+namespace models\mapper;
 
 if (!defined('LF_DATABASE'))
 {

@@ -2,10 +2,10 @@
 
 namespace models;
 
-use libraries\sf\MongoMapper;
-use libraries\sf\MapperModel;
-
-require_once(APPPATH . '/models/ProjectModel.php');
+use models\mapper\MongoMapper;
+use models\mapper\MapperModel;
+use models\mapper\Id;
+use libraries\Bcrypt;
 
 class PasswordModel_MongoMapper extends MongoMapper
 {
@@ -23,14 +23,32 @@ class PasswordModel_MongoMapper extends MongoMapper
 
 class PasswordModel extends MapperModel
 {
-	public function __construct($id = NULL)
+	public function __construct($id = '')
 	{
+		$this->id = new Id();
 		parent::__construct(PasswordModel_MongoMapper::instance(), $id);
 	}
 	
 	public static function remove($id)
 	{
 		PasswordModel_MongoMapper::instance()->remove($id);
+	}
+
+	public function changePassword($newPassword) {
+		$bcrypt = new Bcrypt();
+		$this->password = $bcrypt->hash($newPassword);
+		$this->remember_code = null;
+	}
+	
+	/**
+	 * A utility function to verify if the password in the db matches the given password
+	 * This is primarily used in tests
+	 * @param string $passwordToVerify
+	 * @return bool true if the password matches, false if not
+	 */
+	public function verifyPassword($passwordToVerify) {
+		$bcrypt = new Bcrypt();
+		return $bcrypt->verify($passwordToVerify, $this->password);
 	}
 
 	public $id;

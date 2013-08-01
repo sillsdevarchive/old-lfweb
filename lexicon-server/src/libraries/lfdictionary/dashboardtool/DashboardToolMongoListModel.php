@@ -1,9 +1,9 @@
 <?php
 namespace libraries\lfdictionary\dashboardtool;
 
-use libraries\sf\MongoStore;
-use libraries\sf\ReferenceList;
-class DashboardToolMongoListModel extends \libraries\sf\MapperListModel
+use models\mapper\MongoStore;
+use models\mapper\ReferenceList;
+class DashboardToolMongoListModel extends \models\mapper\MapperListModel
 {
 	public function __construct()
 	{

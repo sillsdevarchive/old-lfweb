@@ -1,11 +1,11 @@
 <?php
 
 namespace libraries\lfdictionary\dashboardtool;
-use libraries\sf\MongoStore;
-use libraries\sf\ReferenceList;
+use models\mapper\MongoStore;
+use models\mapper\ReferenceList;
 
 
-class DashboardToolMongoMapper extends \libraries\sf\MongoMapper
+class DashboardToolMongoMapper extends \models\mapper\MongoMapper
 {
 	public static function instance()
 	{

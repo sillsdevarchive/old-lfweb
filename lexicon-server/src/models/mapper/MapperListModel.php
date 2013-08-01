@@ -1,6 +1,6 @@
 <?php
 
-namespace libraries\sf;
+namespace models\mapper;
 
 class MapperListModel extends MapperBase /*extends CI_Model*/
 {

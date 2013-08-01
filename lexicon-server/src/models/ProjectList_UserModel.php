@@ -1,21 +1,26 @@
 <?php
 namespace models;
 
-use libraries\sf\MongoStore;
-use libraries\sf\ReferenceList;
-class ProjectList_UserModel extends \libraries\sf\MapperListModel
+use models\mapper\MongoMapper;
+
+use models\mapper\MongoStore;
+use models\mapper\ReferenceList;
+use models\mapper\Id;
+
+class ProjectList_UserModel extends \models\mapper\MapperListModel
 {
 
 	public function __construct($userId)
 	{
 		parent::__construct(
-		ProjectModelMongoMapper::instance(),
-		array('users' => array('$in' => array(new \MongoId($userId)))),
-		array('projectname')
+				ProjectModelMongoMapper::instance(),
+				array('users' => array('$in' => array(MongoMapper::mongoID($userId)))),
+				array('projectname')
 		);
 	}
 
 }
+
 
 
 ?>

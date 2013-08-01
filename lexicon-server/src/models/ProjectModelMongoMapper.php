@@ -1,9 +1,9 @@
 <?php
 namespace models;
 
-use libraries\sf\MongoStore;
-use libraries\sf\ReferenceList;
-class ProjectModelMongoMapper extends \libraries\sf\MongoMapper
+use models\mapper\MongoStore;
+use models\mapper\ReferenceList;
+class ProjectModelMongoMapper extends \models\mapper\MongoMapper
 {
 	public static function instance()
 	{

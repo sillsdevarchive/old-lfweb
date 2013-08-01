@@ -74,11 +74,10 @@
 
 		//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
 		if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!="") {
-			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id);
+			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id->asString());
 			echo $lexClientEnvironment->getSettings();
 			?>
-			<script type="text/javascript" language="javascript"
-			src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
+			<script type="text/javascript" src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
 			<?php
 		}
 		?>

@@ -82,7 +82,7 @@ class LexProjectUserSettings
 
 		$filePath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $userName);
 
-		LoggerFactory::getLogger()->logInfoMessage(sprintf("LexProjectUserSettings: %s (%d) using settings '%s'",
+		LoggerFactory::getLogger()->logInfoMessage(sprintf("LexProjectUserSettings: %s (%s) using settings '%s'",
 		$this->_userModel->getUserName(),
 		$this->_userModel->id(),
 		$filePath

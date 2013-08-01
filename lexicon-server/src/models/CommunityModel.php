@@ -4,7 +4,7 @@ namespace models;
 
 require_once(APPPATH . '/models/CommunityModel.php');
 
-class CommunityModelMongoMapper extends \libraries\sf\MongoMapper
+class CommunityModelMongoMapper extends \models\mapper\MongoMapper
 {
 	public static function instance()
 	{
@@ -17,7 +17,7 @@ class CommunityModelMongoMapper extends \libraries\sf\MongoMapper
 	}
 }
 
-class CommunityModel extends \libraries\sf\MapperModel
+class CommunityModel extends \models\mapper\MapperModel
 {
 	public function __construct($id = NULL)
 	{
@@ -104,7 +104,7 @@ class CommunityModel extends \libraries\sf\MapperModel
 	
 }
 
-class CommunityListModel extends \libraries\sf\MapperListModel
+class CommunityListModel extends \models\mapper\MapperListModel
 {
 	public function __construct()
 	{
@@ -116,7 +116,7 @@ class CommunityListModel extends \libraries\sf\MapperListModel
 	}
 }
 
-class CommunityListUsersModel extends \libraries\sf\MapperListModel
+class CommunityListUsersModel extends \models\mapper\MapperListModel
 {
 
 	public function __construct($userId)

@@ -1,6 +1,5 @@
 <?php
 namespace libraries\lfdictionary\environment;
-
 /**
  */
 class LFUserModel {

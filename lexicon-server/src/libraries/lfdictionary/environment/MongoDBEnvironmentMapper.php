@@ -13,7 +13,7 @@ use libraries\lfdictionary\environment\ProjectRole;
 use libraries\lfdictionary\common\LoggerFactory;
 require_once(APPPATH . '/models/ProjectModel.php');
 require_once(APPPATH . '/models/UserModel.php');
-class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEnvironmentMapper {
+class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IEnvironmentMapper {
 
 	public function __construct() {
 		LoggerFactory::getLogger()->logInfoMessage("Uses MongoDBEnvironmentMapper");
@@ -24,7 +24,7 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 * @see libraries\lfdictionary\environment.IEnvironment::readLFProjectAccess()
 	 */
 	public function readLFProjectAccess($projectAccess) {
-		$projectAccessModel = new ProjectAccessModel();
+		$projectAccessModel = new ProjectAccessModel("");
 		$projectAccessModel->findOneByProjectIdAndUserID($projectAccess->projectId, $projectAccess->userId);
 		
 		if ($projectAccessModel->id!=null) {
@@ -57,8 +57,8 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 */
 	public function readProject($project) {
 		
-		$projectModel = new  ProjectModel($project->getId());
-		$projectModel->read();
+		$projectModel = new ProjectModel($project->getId());
+		//$projectModel->read($project->getId());
 		
  		$typeTokens = explode("-", $projectModel->projectname);
  		$type = $typeTokens[count($typeTokens) - 1];
@@ -72,7 +72,6 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 */
 	public function writeProject($project) {
 		$projectModel = new ProjectModel($project->getId());
-		$projectModel->read();
 		$projectModel->title=$project->getTitle();
 		$projectModel->language =$project->getLanguageCode();
 		$projectModel->projectname=$project->getName();
@@ -84,7 +83,6 @@ class MongoDBEnvironmentMapper  extends \libraries\sf\MongoMapper implements IEn
 	 */
 	public function readUser($user) {
 		$userModel = new UserModel($user->id());
-		$userModel->read();
 		$user->set($userModel->name);
 		$user->setUserEmail($userModel->email);
 	}

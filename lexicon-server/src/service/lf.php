@@ -3,13 +3,18 @@
 use libraries\api\ProjectCommands;
 
 use libraries\api\UserCommands;
+use libraries\palaso\CodeGuard;
 
-require_once(APPPATH . 'libraries/Bcrypt.php');
+use libraries\palaso\JsonRpcServer;
+use models\mapper\Id;
+use models\mapper\JsonEncoder;
+use models\mapper\JsonDecoder;
+
 
 require_once(APPPATH . 'models/UserModel.php');
 require_once(APPPATH . 'models/ProjectModel.php');
 
-use libraries\sf\JsonRpcServer;
+use libraries\palaso\JsonRpcServer;
 
 class Lf
 {
@@ -21,7 +26,21 @@ class Lf
 		// TODO put in the LanguageForge style error handler for logging / jsonrpc return formatting etc. CP 2013-07
 		ini_set('display_errors', 0);
 	}
-
+	
+	private function decode($model, $data) {
+		$decoder = new JsonDecoder();
+		$decoder->decode($model, $data);
+	}
+	
+	private function encode($model) {
+		$encoder = new JsonEncoder();
+		return $encoder->encode($model);
+	}
+	
+	//---------------------------------------------------------------
+	// USER API
+	//---------------------------------------------------------------
+	
 	/**
 	 * Create/Update a User
 	 * @param UserModel $json
@@ -29,7 +48,7 @@ class Lf
 	 */
 	public function user_update($params) {
 		$user = new \models\UserModel();
-		JsonRpcServer::decode($user, $params);
+		$this->decode($user, $params);
 		$result = $user->write();
 		return $result;
 	}
@@ -40,7 +59,7 @@ class Lf
 	 */
 	public function user_read($id) {
 		$user = new \models\UserModel($id);
-		return $user;
+		return $this->encode($user);
 	}
 	
 	/**
@@ -49,8 +68,7 @@ class Lf
 	 * @return int Total number of users deleted.
 	 */
  	public function user_delete($userIds) {
- 		$result = UserCommands::deleteUsers($userIds);
- 		return $result;
+ 		return UserCommands::deleteUsers($userIds);
  	}
 
 	// TODO Pretty sure this is going to want some paging params
@@ -66,6 +84,20 @@ class Lf
 		return $list;
 	}
 	
+	public function change_password($userId, $newPassword) {
+		if (!is_string($userId) && !is_string($newPassword)) {
+			throw new \Exception("Invalid args\n" . var_export($userId, true) . "\n" . var_export($newPassword, true));
+		}
+		$user = new \models\PasswordModel($userId);
+		$user->changePassword($newPassword);
+		$user->write();
+	}
+	
+	
+	//---------------------------------------------------------------
+	// PROJECT API
+	//---------------------------------------------------------------
+	
 	/**
 	 * Create/Update a Project
 	 * @param ProjectModel $json
@@ -73,7 +105,7 @@ class Lf
 	 */
 	public function project_update($object) {
 		$project = new \models\ProjectModel();
-		JsonRpcServer::decode($project, $object);
+		$this->decode($project, $object);
 		$result = $project->write();
 		return $result;
 	}
@@ -84,7 +116,7 @@ class Lf
 	 */
 	public function project_read($id) {
 		$project = new \models\ProjectModel($id);
-		return $project;
+		return $this->encode($project);
 	}
 	
 	/**
@@ -93,8 +125,7 @@ class Lf
 	 * @return int Total number of projects deleted.
 	 */
  	public function project_delete($projectIds) {
- 		$result = ProjectCommands::deleteProjects($projectIds);
- 		return $result;
+ 		return ProjectCommands::deleteProjects($projectIds);
  	}
 
 	// TODO Pretty sure this is going to want some paging params
@@ -104,14 +135,6 @@ class Lf
 		return $list;
 	}
 	
-	public function change_password($userid, $newPassword) {
-		$user = new \models\PasswordModel($userid);
-		$bcrypt = new Bcrypt();
-		$user->password = $bcrypt->hash($newPassword);
-		$user->remember_code = null;
-		$user->write();
-	}
-	
 	public function project_readUser($projectId, $userId) {
 		throw new \Exception("project_readUser NYI");
 	}
@@ -119,7 +142,7 @@ class Lf
 	public function project_updateUser($projectId, $object) {
 		
 		$projectModel = new \models\ProjectModel($projectId);
-		$command = new \libraries\api\ProjectUserCommands($projectModel);
+		$command = new \models\commands\ProjectUserCommands($projectModel);
 		return $command->addUser($object);
 	}
 	

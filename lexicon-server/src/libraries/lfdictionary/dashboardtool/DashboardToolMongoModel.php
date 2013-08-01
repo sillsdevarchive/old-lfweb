@@ -2,12 +2,12 @@
 
 namespace libraries\lfdictionary\dashboardtool;
 
-use libraries\sf\MongoStore;
-use libraries\sf\ReferenceList;
+use models\mapper\MongoStore;
+use models\mapper\ReferenceList;
 
 
 
-class DashboardToolMongoModel extends \libraries\sf\MapperModel
+class DashboardToolMongoModel extends \models\mapper\MapperModel
 {
 	public function __construct($id = NULL)
 	{
