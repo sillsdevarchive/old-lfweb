@@ -32,11 +32,9 @@
 		</nav>
 	</aside>
 	<script type="text/javascript">
-	function runToggle(iDuration, domFirst,domSecond) {
-        $(domFirst).fadeToggle(iDuration, "linear",function() {
-            $(domSecond).fadeToggle(iDuration,"linear",function() {
+	function runToggle(iDuration ,domDiv) {
+            $(domDiv).fadeToggle(iDuration,"linear",function() {
           });
-       }); 
 	};
 
 		(function($) {
@@ -53,14 +51,14 @@
 					{
 						$('#GWTContent').hide();
 						//$('#ViewerContent').show();
-						runToggle(100, $('#ViewerContent'),$('#GWTContent'));
+						runToggle(100, $('#ViewerContent'));
 						$('#view_button').attr('class', 'view-selected');
 						$('#edit_button').attr('class', '');
 					}else
 						{
 							$('#ViewerContent').hide();
 							//$('#GWTContent').show();
-							runToggle(100, $('#GWTContent'),$('#ViewerContent'));
+							runToggle(100, $('#GWTContent'));
 							$('#view_button').attr('class', '');
 							$('#edit_button').attr('class', 'view-selected');
 						}
