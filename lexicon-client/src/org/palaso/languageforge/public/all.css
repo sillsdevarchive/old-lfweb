@@ -388,6 +388,11 @@ legend {display:none;}
 	color:#666;
 	text-decoration:none;
 }
+#content  .navigation ul, ol 
+{
+ margin: 0px !important;
+}
+
 .navigation li a:hover {text-decoration:underline;}
 .navigation .prev a {
 	padding:0 0 0 11px;
@@ -505,4 +510,10 @@ legend {display:none;}
 
 .accordion ul, ol {
     margin: 0 10px 0 !important;
+}
+.addinfo-left-list
+{
+	width:100%;
+	height:100%;
+	margin-bottom: 29px;
 }

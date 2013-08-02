@@ -9,7 +9,7 @@
 		</g:west>
 		<g:center>
 			<g:HTMLPanel>
-				<section id="content" style="position: absolute; left: 0px; top: 0px; bottom: 0px; right:0px;">
+				<section id="content" style="position: absolute; left: 0px; top: 0px; bottom: 0px; right:0px; padding-top: 20px;">
 					<!-- <h2>Thai Language Community - Food Dictionary</h2>  -->
 					<g:FlowPanel ui:field="messageList"/> 
 					<div class="content-block">

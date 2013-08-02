@@ -118,7 +118,7 @@
 .conversation-sub-comment-new {
 	resize: none;
 	width: 100%;
-	board: none;
+	border-style: none;
 	margin: 0;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;

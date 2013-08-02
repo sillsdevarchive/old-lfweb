@@ -445,7 +445,9 @@ div-no-hide {
 	overflow: scroll-y;
 	position: relative;
 	width: 100%;
-	max-height: 610px;
+	max-height: 590px;
+	height: 590px;
+    margin-top: 10px;
 }
 
 .case {

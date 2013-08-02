@@ -32,6 +32,13 @@
 		</nav>
 	</aside>
 	<script type="text/javascript">
+	function runToggle(iDuration, domFirst,domSecond) {
+        $(domFirst).fadeToggle(iDuration, "linear",function() {
+            $(domSecond).fadeToggle(iDuration,"linear",function() {
+          });
+       }); 
+	};
+
 		(function($) {
 			$(document).ready(function(){
 				//default show edit view
@@ -45,13 +52,15 @@
 					if ($(this).attr('id')== 'view_button')
 					{
 						$('#GWTContent').hide();
-						$('#ViewerContent').show();
+						//$('#ViewerContent').show();
+						runToggle(100, $('#ViewerContent'),$('#GWTContent'));
 						$('#view_button').attr('class', 'view-selected');
 						$('#edit_button').attr('class', '');
 					}else
 						{
 							$('#ViewerContent').hide();
-							$('#GWTContent').show();
+							//$('#GWTContent').show();
+							runToggle(100, $('#GWTContent'),$('#ViewerContent'));
 							$('#view_button').attr('class', '');
 							$('#edit_button').attr('class', 'view-selected');
 						}
