@@ -517,3 +517,7 @@ legend {display:none;}
 	height:100%;
 	margin-bottom: 29px;
 }
+
+.content .row {
+    margin-left: 0px !important;
+}
