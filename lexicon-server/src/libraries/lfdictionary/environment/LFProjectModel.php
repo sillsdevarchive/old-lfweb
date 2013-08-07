@@ -167,7 +167,7 @@ class LFProjectModel {
 	 */
 	public function isUserInProject($userId) {
 
-		$projectAccessModel = new ProjectAccessModel();
+		$projectAccessModel = new ProjectAccessModel("");
 		$projectAccessModel->findOneByProjectIdAndUserID($this->_projectId, $userId);
 		
 		if ($projectAccessModel->id!=null && $projectAccessModel->is_active>0) {
