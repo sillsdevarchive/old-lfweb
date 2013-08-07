@@ -125,7 +125,11 @@ public class DashboardMainPresenter extends
 
 	public void onMainWindowResize(ResizeEvent event) {
 		if (view.isAttached()) {
-			refreshChart();
+			try{
+				refreshChart();
+			} catch (Exception e) {
+				// do nothing!
+			}
 		}
 	}
 
