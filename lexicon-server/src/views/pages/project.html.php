@@ -49,18 +49,23 @@
 					e.preventDefault;
 					if ($(this).attr('id')== 'view_button')
 					{
-						$('#GWTContent').hide();
-						//$('#ViewerContent').show();
-						runToggle(100, $('#ViewerContent'));
-						$('#view_button').attr('class', 'view-selected');
-						$('#edit_button').attr('class', '');
+						// check does it already show before show it.
+						if ($('#GWTContent').is(":visible")){
+							$('#GWTContent').hide();
+							//$('#ViewerContent').show();
+							runToggle(100, $('#ViewerContent'));
+							$('#view_button').attr('class', 'view-selected');
+							$('#edit_button').attr('class', '');   
+						}
 					}else
 						{
-							$('#ViewerContent').hide();
-							//$('#GWTContent').show();
-							runToggle(100, $('#GWTContent'));
-							$('#view_button').attr('class', '');
-							$('#edit_button').attr('class', 'view-selected');
+							if ($('#ViewerContent').is(":visible")){
+								$('#ViewerContent').hide();
+								//$('#GWTContent').show();
+								runToggle(100, $('#GWTContent'));
+								$('#view_button').attr('class', '');
+								$('#edit_button').attr('class', 'view-selected');
+							}
 						}
 					});
 
