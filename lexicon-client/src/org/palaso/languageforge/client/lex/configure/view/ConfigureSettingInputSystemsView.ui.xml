@@ -58,7 +58,7 @@
 									<g:Label text="{string.ConfigureSettingInputSystemsView_Abbreviation}" width="100px" height="100%"
 										horizontalAlignment="ALIGN_RIGHT"></g:Label>
 								</div>
-								<div class="lex-dc-column" id="c2">
+								<div class="lex-dc-column textBox-padding-fix" id="c2">
 									
 										<g:TextBox ui:field="txtAbbreviation"
 											width="100%"></g:TextBox>
@@ -208,7 +208,7 @@
 													<g:Label text="{string.ConfigureSettingInputSystemsView_Variant}" width="100px" height="100%"
 														horizontalAlignment="ALIGN_RIGHT"></g:Label>
 												</div>
-												<div class="lex-dc-column" id="c2">
+												<div class="lex-dc-column textBox-padding-fix" id="c2">
 												
 														<g:TextBox ui:field="txtLangIdVariant"
 															width="100%" maxLength="8"></g:TextBox>

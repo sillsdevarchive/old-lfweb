@@ -629,3 +629,7 @@ div-no-hide {
 	height: 40px  !important;
 	margin-bottom: 0px  !important;
 }
+
+.textBox-padding-fix{
+	padding-right: 19px !important;
+}

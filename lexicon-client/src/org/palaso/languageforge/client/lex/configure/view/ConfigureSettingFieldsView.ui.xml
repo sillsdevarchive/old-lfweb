@@ -36,7 +36,7 @@
 								</div>
 								<div class="lex-dc-column" id="c2">
 									<g:ScrollPanel width="auto" height="450px">
-										<cc:FastTree width="auto" height="425px"
+										<cc:FastTree width="auto" height="auto"
 											ui:field="inputSystemsTree">
 										</cc:FastTree>
 									</g:ScrollPanel>
@@ -69,7 +69,7 @@
 									style="overflow: hidden; width:150px; max-width:150px">
 									<g:Label text="{string.ConfigureSettingFieldsView_Name_for_display}" />
 								</div>
-								<div class="lex-dc-column" id="c2">
+								<div class="lex-dc-column textBox-padding-fix" id="c2">
 									<div class="field">
 										<cc:ExtendedTextBox ui:field="txtNameOfDisplay"
 											width="100%"></cc:ExtendedTextBox>
