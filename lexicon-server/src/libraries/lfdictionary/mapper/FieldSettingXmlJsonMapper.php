@@ -64,18 +64,17 @@ class FieldSettingXmlJsonMapper {
 		$entries = $xpath->query('//configuration/components/viewTemplate/fields/field[@index="' . $fieldIndex . '"]');
 		if ($entries->length==1)
 		{
-			$entryParent= $entries->item(0)->parentNode;
-
+			$entryParent= $entries->item(0);
 			foreach ($fieldNewProperties as  $key => $fieldProperty) {
 
-				$innerEntry = $xpath->query($key, $entryParent);
+				$innerEntry = $xpath->query(".//" .  $key, $entryParent);
 				if ($innerEntry->length==1)
 				{
 					$innerEntryNode = $innerEntry->item(0);
+					
 					if ($key==self::FIELD_FIELDNAME)
 					{
 						// just fieldName. should not change.
-
 						continue;
 					}
 					elseif ($key==self::FIELD_AVAILABLEWRITINGSYSTEMS || $key==self::FIELD_WRITINGSYSTEMS)
@@ -90,6 +89,7 @@ class FieldSettingXmlJsonMapper {
 							{
 								foreach ($fieldProperty as $writeSystem){
 									foreach ($writeSystem as  $writeSystemValue){
+									
 										$newIdNode = $dom->createElement(self::FIELD_ID,$writeSystemValue);
 										$innerEntryNode->appendChild($newIdNode);
 									}
@@ -101,6 +101,41 @@ class FieldSettingXmlJsonMapper {
 					}
 
 					$innerEntryNode->nodeValue = $fieldNewProperties[$key];
+					
+				}else if ($innerEntry->length==0)
+				{
+					if ($key==self::FIELD_INDEX)
+					{
+						// we do not need this one
+						continue;
+					}
+					
+					// something new for configration file
+					if ($key==self::FIELD_AVAILABLEWRITINGSYSTEMS || $key==self::FIELD_WRITINGSYSTEMS)
+					{
+						// they are array, should be!
+						if(is_array($fieldProperty))
+						{
+							if (count($fieldProperty)>0)
+							{
+								$newWriteingSystemsNode = $dom->createElement($key);
+								foreach ($fieldProperty as $writeSystem){
+									foreach ($writeSystem as  $writeSystemValue){
+						
+										$newIdNode = $dom->createElement(self::FIELD_ID,$writeSystemValue);
+										$newWriteingSystemsNode->appendChild($newIdNode);
+									}
+								}
+								$entryParent->appendChild($newWriteingSystemsNode);
+							}
+						}
+						
+					}else
+					{
+						$newNode = $dom->createElement($key, $fieldNewProperties[$key]);
+						$entryParent->appendChild($newNode);
+					}
+					
 				}
 			}
 		}else

@@ -14,7 +14,7 @@ class Loader
 			return;
 		}
 
-		error_log("Loader: Loading $classPath");
+		//error_log("Loader: Loading $classPath");
 
 
 		// we assume the class AAA\BBB\CCC is placed in /AAA/BBB/CCC.php
@@ -47,7 +47,7 @@ class Loader
 			require($load);
 		}
 
- 		error_log(sprintf("Loader: exists %s %d", $className, class_exists($className, false)));
+ 		//error_log(sprintf("Loader: exists %s %d", $className, class_exists($className, false)));
 		return class_exists($className, false);
 	}
 
