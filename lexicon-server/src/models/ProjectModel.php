@@ -32,7 +32,7 @@ class ProjectModelMongoMapper extends \models\mapper\MongoMapper
 
 class ProjectModel extends \models\mapper\MapperModel
 {
-	public function __construct($id = NULL)
+	public function __construct($id = '')
 	{
 		$this->id = new Id();
 		$this->users = new ReferenceList();
