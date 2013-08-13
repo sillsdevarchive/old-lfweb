@@ -28,7 +28,6 @@ class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IE
 		$projectAccessModel->findOneByProjectIdAndUserID($projectAccess->projectId, $projectAccess->userId);
 		
 		if ($projectAccessModel->id!=null) {
-			LoggerFactory::getLogger()->logInfoMessage($projectAccessModel->lf_role);
 			$projectAccess->setRole(ProjectRole::mapRoleFromHost($projectAccessModel->lf_role));
 		} else {
 			MongoDBEnvironmentFixer::fixLFProjectAccess($this, $projectAccess);
