@@ -1,10 +1,8 @@
 <?php
 
 use libraries\api\ProjectCommands;
-
 use libraries\api\UserCommands;
 use libraries\palaso\CodeGuard;
-
 use libraries\palaso\JsonRpcServer;
 use models\mapper\Id;
 use models\mapper\JsonEncoder;
@@ -14,17 +12,13 @@ use models\mapper\JsonDecoder;
 require_once(APPPATH . 'models/UserModel.php');
 require_once(APPPATH . 'models/ProjectModel.php');
 
-use libraries\palaso\JsonRpcServer;
-
 class Lf
 {
 	
 	public function __construct()
 	{
-		$CI =& get_instance();
-		$CI->load->library('bcrypt',8); // Might increase this at some future date to increase PW hashing time
 		// TODO put in the LanguageForge style error handler for logging / jsonrpc return formatting etc. CP 2013-07
-		ini_set('display_errors', 0);
+		//ini_set('display_errors', 0);
 	}
 	
 	private function decode($model, $data) {
