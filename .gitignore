@@ -1,4 +1,5 @@
 *~
+*.orig
 .settings
 .externalToolBuilders
 /output
