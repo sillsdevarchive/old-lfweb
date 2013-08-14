@@ -263,7 +263,7 @@
 	filter: alpha(opacity = 50); /* For IE8 and earlier */
 }
 .gwt-Anchor-Nav-Button{
-
+	font-size: 9px;
 }
 
 .gwt-Anchor-Nav-Button:hover {
@@ -274,6 +274,7 @@
 	pointer-events: none;
 	color: #AAAAAA !important;
     cursor: default;
+    font-size: 9px;
 }
 .gwt-Anchor-Nav-Button:active {
 	font-weight: bold;

@@ -396,11 +396,11 @@ legend {display:none;}
 .navigation li a:hover {text-decoration:underline;}
 .navigation .prev a {
 	padding:0 0 0 11px;
-	background:url(./images/arrow06.gif) no-repeat 0 4px;
+	background:url(./images/arrow06.gif) no-repeat 0 2px;
 }
-.navigation .next a {yy
+.navigation .next a {
 	padding:0 11px 0 0;
-	background:url(./images/arrow07.gif) no-repeat 100% 4px;
+	background:url(./images/arrow07.gif) no-repeat 100% 2px;
 }
 #GWTContent .content {
 	overflow:hidden;
