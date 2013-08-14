@@ -38,7 +38,7 @@ public class ConversationItem extends ComplexPanel {
 	private Label footerLabel = null;
 	private Button btnExpendAllReplies = null;
 	private ExtendedCheckBox chkResolved = null;
-	private Button btnPost = null;
+	private Button btnAddComment = null;
 	private static String imgGreenChecked;
 	private ConversationControl conversationControl = null;
 	
@@ -67,8 +67,8 @@ public class ConversationItem extends ComplexPanel {
 		buildStructure();
 	}
 
-	protected HasClickHandlers getPostButtonClickHandlers() {
-		return btnPost;
+	protected HasClickHandlers getAddCommentButtonClickHandlers() {
+		return btnAddComment;
 	}
 
 	protected HasClickHandlers getExpendedClickHandlers() {
@@ -171,8 +171,8 @@ public class ConversationItem extends ComplexPanel {
 			chkResolved = new ExtendedCheckBox("This conversation is resolved.");
 			chkResolved.setStyleName("conversation-checkBox-resolved");
 
-			btnPost = new Button("Post");
-			btnPost.setWidth("100px");
+			btnAddComment = new Button("Add comment");
+			btnAddComment.setWidth("120px");
 			FlowPanel panelRow = new FlowPanel();
 			FlowPanel panelRowInner = new FlowPanel();
 			panelRow.add(panelRowInner);
@@ -198,7 +198,7 @@ public class ConversationItem extends ComplexPanel {
 			panelRightCell.getElement().setId("item-footer-row-right-cell");
 			panelFooter.add(panelRow);
 			panelMidCell.add(chkResolved);
-			panelRightCell.add(btnPost);
+			panelRightCell.add(btnAddComment);
 			super.add(panelHeader, getElement());
 			super.add(panelLeftCheckMarker, getElement());
 			super.add(panelCommentContainer, getElement());
