@@ -63,9 +63,8 @@ public class ConfigureSettingPropertiesPresenter
 
 			@Override
 			public void onSuccess(ProjectDto result) {
-				CurrentEnvironmentDto.getCurrentProject().setProjectName(
-						result.getProjectName());
-				refersh(); // maybe not needed
+				CurrentEnvironmentDto.getCurrentProject().setProjectTitle(
+						result.getProjectTitle());
 				eventBus.displayMessage(I18nConstants.STRINGS.ConfigureSettingPropertiesPresenter_Name_changed_you_may_need_to_reload_page_to_see_changes());
 				//eventBus.reloadLex();			
 			}
