@@ -211,4 +211,10 @@ public interface ILexService extends IBaseService {
 	 * @param id
 	 */
 	void removeEntryFromCache(String id);
+	
+	/**
+	 * to reset the cache to empty
+	 */
+	void resetCache();
+
 }

@@ -152,4 +152,10 @@ public class LexServiceTest extends BaseServiceTest implements ILexService {
 		
 	}
 
+	@Override
+	public void resetCache() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

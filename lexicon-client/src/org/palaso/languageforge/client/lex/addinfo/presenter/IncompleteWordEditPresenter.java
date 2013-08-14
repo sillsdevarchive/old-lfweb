@@ -1,5 +1,6 @@
 package org.palaso.languageforge.client.lex.addinfo.presenter;
 
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
@@ -131,7 +132,7 @@ public class IncompleteWordEditPresenter extends
 	public void onWordUpdated() {
 		entryPresenter.updateModel();
 		final LexiconEntryDto entryDTO = entryPresenter.getModel();
-
+		ConsoleLog.log("Before add-info save.");
 		LexService.saveEntry(entryDTO, new AsyncCallback<ResultDto>() {
 
 			@Override
@@ -145,6 +146,7 @@ public class IncompleteWordEditPresenter extends
 
 			@Override
 			public void onSuccess(ResultDto result) {
+				ConsoleLog.log("Add-info save success.");
 				if (isNewEntry) {
 					view.showNotification(
 							I18nConstants.STRINGS
@@ -157,6 +159,7 @@ public class IncompleteWordEditPresenter extends
 									.IncompleteWordEditPresenter_Entry_updated_successfully(),
 							true);
 				}
+				ConsoleLog.log("Remove old key: " + entryDTO.getId());
 				LexService.removeEntryFromCache(entryDTO.getId());
 				eventBus.clientDataRefresh(IncompleteWordListPresenter
 						.getEntryFieldType());

@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.AutoSuggestPresenterOption;
 import org.palaso.languageforge.client.lex.common.AutoSuggestPresenterOptionResultSet;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
@@ -51,6 +52,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Singleton;
 
@@ -258,8 +260,7 @@ public class LexService extends BaseService implements ILexService {
 			}
 			return;
 		}
-
-		if (lexServiceCache.getLexEntryDtoFromCache(key) == null || forceReload) {
+		if (!lexServiceCache.isEntryCacheHasIt(key) || forceReload) {
 			AsyncCallback<LexiconEntryDto> internalAsyncCallback = new AsyncCallback<LexiconEntryDto>() {
 				@Override
 				public void onFailure(Throwable caught) {
@@ -268,6 +269,7 @@ public class LexService extends BaseService implements ILexService {
 
 				@Override
 				public void onSuccess(LexiconEntryDto result) {
+					ConsoleLog.log("Reload from Server[getEntry]: " + key);
 					lexServiceCache.putLexEntryDtoIntoCache(key, result);
 					asyncCallback.onSuccess(result);
 				}
@@ -275,6 +277,7 @@ public class LexService extends BaseService implements ILexService {
 			GetEntryAction action = new GetEntryAction(key);
 			remoteAsync.execute(action, internalAsyncCallback);
 		} else {
+			ConsoleLog.log("Load from cache[getEntry]: " + key);
 			asyncCallback.onSuccess(lexServiceCache
 					.getLexEntryDtoFromCache(key));
 		}
@@ -303,6 +306,7 @@ public class LexService extends BaseService implements ILexService {
 			@Override
 			public void onSuccess(ResultDto result) {
 
+				ConsoleLog.log("onSuccess: " + entry.getId());
 				// update cache if it is present
 				lexServiceCache.putLexEntryDtoIntoCache(entry.getId(), entry);
 
@@ -588,6 +592,12 @@ public class LexService extends BaseService implements ILexService {
 		{
 			lexServiceCache.removeLexEntryFromCache(id);
 		}
+	}
+
+	@Override
+	public void resetCache() {
+		lexServiceCache.clearAll();
+		lexServiceCache.setCacheType(null);
 	}
 
 }
