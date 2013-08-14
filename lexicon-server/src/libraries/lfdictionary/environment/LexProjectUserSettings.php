@@ -182,7 +182,7 @@ class LexProjectUserSettings
 		$fieldSetting["Label"]=$displayName;
 		if ($fieldSetting["Visible"]==true){
 			// allow user change it!
-			$fieldSetting["Visible"]= $visibility=="Visible";
+			$fieldSetting["Visible"]= $enabled;
 		}
 		$fieldSetting["Languages"]= array();
 		foreach ($writingSystemsList as $writingSystem) {

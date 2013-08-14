@@ -25,7 +25,12 @@ public class FieldSettingsEntry extends JavaScriptObject {
 	}-*/;
 	
 	public final native boolean getVisible() /*-{
-		return this.Visible;
+		if ( this.Visible.toUpperCase() === "FALSE"){
+			return false;
+		}else
+		{
+			return true;
+		}
 	}-*/;
 
 	public final native void setVisible(boolean visible) /*-{

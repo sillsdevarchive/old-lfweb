@@ -8,6 +8,7 @@ package org.palaso.languageforge.client.lex.presenter;
 
 import java.util.ArrayList;
 
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
@@ -115,7 +116,9 @@ public class SensePresenter extends
 		// Part of speech
 		JsArray<LexiconPosition> list = getPOSList();
 
+		ConsoleLog.log("POS->Visible: " + fieldSettings.value("POS").getVisible());
 		if (fieldSettings.value("POS").getVisible()) {
+			ConsoleLog.log("POS->Visible: True");
 			view.setPartOfSpeechPanelVisible(true);
 			boolean isPartOsSpeechEnabled = true;
 			if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
@@ -131,7 +134,7 @@ public class SensePresenter extends
 		} else {
 			view.setPartOfSpeechPanelVisible(false);
 		}
-
+		ConsoleLog.log("Example->Visible: " + fieldSettings.value("Example").getVisible());
 		if (fieldSettings.value("Example").getVisible()) {
 			for (int i = 0, n = model.getExampleCount(); i < n; ++i) {
 				createExamplePresenterInView(model.getExample(i),
