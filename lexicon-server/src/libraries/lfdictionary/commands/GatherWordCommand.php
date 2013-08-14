@@ -3,6 +3,9 @@
 namespace libraries\lfdictionary\commands;
 require_once(dirname(__FILE__) . '/../Config.php');
 
+use libraries\lfdictionary\dto\EntryDTO;
+use libraries\lfdictionary\dto\MultiText;
+
 
 class GatherWordCommand
 {
@@ -30,21 +33,27 @@ class GatherWordCommand
 	 * @var String
 	 */
 	var $lang;
-	
+
 	/**
-	* @var Int
-	*/
+	 * @var Int
+	 */
 	var $_addedCount;
+
+	/**
+	 * @var LexStore
+	 */
+	var $_lexStore;
 
 	/**
 	 * @param string $filePath
 	 * @param mixed $dtoEncoded
 	 */
-	function __construct($filePath, $language, $exitWordsArr, $gatherwords) {
+	function __construct($filePath, $language, $exitWordsArr, $gatherwords, $lexStore) {
 		$this->_filePath = $filePath;
 		$this->gatherWords = $gatherwords;
 		$this->exitWordsArr = $exitWordsArr;
 		$this->lang = $language;
+		$this->_lexStore = $lexStore;
 
 	}
 
@@ -76,10 +85,21 @@ class GatherWordCommand
 					$ChildForm=$ChildUnitXml->addChild('form');
 					$ChildForm->addAttribute('lang', $this->lang);
 					$ChildForm->addChild('text',$results);
-					$this->_addedCount+=1;
+					$this->saveIntoDatabase($this->lang, $results);
+					$this->_addedCount += 1;
 				}
 			}
 			$this->_result = $rootXml->saveXML($filePath) ;
+		}
+	}
+
+	function saveIntoDatabase($lang, $word)
+	{
+		if (isset($this->_lexStore))
+		{
+			$entryDTO = EntryDTO::create(\libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php());
+			$entryDTO->setEntry(MultiText::create($lang, $word));
+			$this->_lexStore->writeEntry($entryDTO, 'new');
 		}
 	}
 };

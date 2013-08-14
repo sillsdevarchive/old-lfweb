@@ -251,7 +251,7 @@ class LFDictionaryAPI
 			}
 		}
 
-		$command = new \libraries\lfdictionary\commands\GatherWordCommand($this->_lexProject->getLiftFilePath(),$languageCode,$existWords,$words);
+		$command = new \libraries\lfdictionary\commands\GatherWordCommand($this->_lexProject->getLiftFilePath(), $languageCode, $existWords, $words, $this->getLexStore());
 		
 		$result = new ResultDTO(true,$command->execute());
 		return $result->encode();
