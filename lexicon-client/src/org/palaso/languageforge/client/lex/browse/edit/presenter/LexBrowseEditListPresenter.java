@@ -207,7 +207,12 @@ public class LexBrowseEditListPresenter extends BasePresenter<LexBrowseEditListP
 	/**
 	 * Re-fill the list to apply the changes happened in cache
 	 */
-	public void onClientDataRefresh(boolean isUpdate) {
+	public void onClientDataRefresh(boolean isUpdate, boolean resetPager) {
+		if (resetPager)
+		{
+			startIndex = 0;
+			selectedRow = -1;
+		}
 		update(!isUpdate, isUpdate, startIndex);
 	}
 

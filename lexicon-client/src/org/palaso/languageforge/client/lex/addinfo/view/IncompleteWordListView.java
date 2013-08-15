@@ -1,6 +1,7 @@
 package org.palaso.languageforge.client.lex.addinfo.view;
 
 import org.palaso.languageforge.client.lex.addinfo.presenter.IncompleteWordListPresenter;
+import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.controls.navigationbar.NavigationBarView;
 
 import com.google.gwt.core.client.GWT;
@@ -24,7 +25,7 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class IncompleteWordListView extends Composite implements
-IncompleteWordListPresenter.IView {
+		IncompleteWordListPresenter.IView {
 
 	interface Binder extends UiBinder<Widget, IncompleteWordListView> {
 	}
@@ -43,9 +44,11 @@ IncompleteWordListPresenter.IView {
 	SimplePanel pager;
 	@UiField
 	FlexTable table;
-	
+
 	@UiField
 	SimplePanel scrollPanel;
+	@UiField
+	ProgressLabel progressBar;
 
 	@Inject
 	public IncompleteWordListView(NavigationBarView navView) {
@@ -53,7 +56,6 @@ IncompleteWordListPresenter.IView {
 		pager.setWidget(navView);
 
 	}
-
 
 	public void applyDataRowStyles() {
 		FlexTable.RowFormatter rf = table.getRowFormatter();
@@ -68,12 +70,12 @@ IncompleteWordListPresenter.IView {
 	}
 
 	public void setRow(int row, String word, String meaning) {
-		word= "<div class=\"browserlistcellDiv\">" + word + "<div>";
-		
-		//meaning= "<div class=\"browserlistcellDiv\">" + meaning + "<div>";
-		
+		word = "<div class=\"browserlistcellDiv\">" + word + "<div>";
+
+		// meaning= "<div class=\"browserlistcellDiv\">" + meaning + "<div>";
+
 		table.setHTML(row, 0, word);
-		//table.setHTML(row, 1, meaning);
+		// table.setHTML(row, 1, meaning);
 	}
 
 	public void clearList() {
@@ -95,11 +97,9 @@ IncompleteWordListPresenter.IView {
 				table.getRowFormatter().removeStyleName(row,
 						"wordlistFlexTableEvenRow");
 			}
-			table.getRowFormatter().addStyleName(row,
-					"wordlistselectedRow");
+			table.getRowFormatter().addStyleName(row, "wordlistselectedRow");
 		} else {
-			table.getRowFormatter().removeStyleName(row,
-					"wordlistselectedRow");
+			table.getRowFormatter().removeStyleName(row, "wordlistselectedRow");
 			if ((row % 2) != 0) {
 				table.getRowFormatter().addStyleName(row,
 						"wordlistFlexTableOddRow");
@@ -114,11 +114,14 @@ IncompleteWordListPresenter.IView {
 		return table;
 	}
 
-
 	@Override
 	public SimplePanel getScrollPanel() {
 		return scrollPanel;
 	}
 
-	
+	@Override
+	public ProgressLabel getProgressLabel() {
+		return progressBar;
+	}
+
 }

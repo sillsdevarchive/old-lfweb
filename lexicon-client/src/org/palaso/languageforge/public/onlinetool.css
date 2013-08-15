@@ -483,6 +483,8 @@ div-no-hide {
 	position: relative;
 	border: 1px solid #F4E6D4;
 	overflow: hidden;
+	text-align: center;
+	background-color: white;
 }
 
 .rwc-ProgressLabel-bar {
@@ -632,4 +634,10 @@ div-no-hide {
 
 .textBox-padding-fix{
 	padding-right: 19px !important;
+}
+
+.addinfo_progressbar
+{
+	font-size: 11px;
+	padding-top: 10px;
 }

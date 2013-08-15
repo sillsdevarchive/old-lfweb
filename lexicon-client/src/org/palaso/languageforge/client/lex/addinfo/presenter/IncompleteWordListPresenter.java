@@ -3,6 +3,7 @@ package org.palaso.languageforge.client.lex.addinfo.presenter;
 import java.util.Collection;
 
 import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
+import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.addinfo.AddInfoEventBus;
 import org.palaso.languageforge.client.lex.addinfo.view.IncompleteWordListView;
 import org.palaso.languageforge.client.lex.common.Constants;
@@ -10,6 +11,7 @@ import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
+import org.palaso.languageforge.client.lex.main.model.DashboardActivitiesDto;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 
 import com.google.gwt.core.client.GWT;
@@ -27,7 +29,8 @@ import com.mvp4g.client.presenter.BasePresenter;
 // TODO: should eliminate code redundancy with classes in .lex.browse.edit but then we have cross-module references 
 
 @Presenter(view = IncompleteWordListView.class)
-public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordListPresenter.IView, AddInfoEventBus> {
+public class IncompleteWordListPresenter extends
+		BasePresenter<IncompleteWordListPresenter.IView, AddInfoEventBus> {
 	/**
 	 * Interface created for MissInfoListView controls , these functions must be
 	 * implemented in MissInfoListView class
@@ -47,6 +50,8 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 		void applyDataRowStyles();
 
 		SimplePanel getScrollPanel();
+
+		ProgressLabel getProgressLabel();
 	}
 
 	private int startIndex, selectedRow = -1;
@@ -91,6 +96,7 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 	 */
 	public void bind() {
 		eventBus.setNavStatus(0, 0, 0);
+
 		view.getTableClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				int row = view.getClickedRow(event);
@@ -114,7 +120,7 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 	public void onStartModule(EntryFieldType entryFieldType) {
 		setEntryFieldType(entryFieldType);
 		selectRow(0);
-		startIndex=0;
+		startIndex = 0;
 		update(true);
 	}
 
@@ -166,7 +172,8 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 	 */
 	public void onLast() {
 		// Move to last page.
-		startIndex = totalCount - (totalCount % Constants.VISIBLE_WORDS_PER_PAGE_COUNT);
+		startIndex = totalCount
+				- (totalCount % Constants.VISIBLE_WORDS_PER_PAGE_COUNT);
 		paginate();
 	}
 
@@ -200,7 +207,8 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 
 				eventBus.wordSelected(this.getRowId(0));
 			}
-			view.setRow(i, entry.getWordFirstForm(), entry.getMeaningFirstForm());
+			view.setRow(i, entry.getWordFirstForm(),
+					entry.getMeaningFirstForm());
 
 		}
 		if (selectedRow == -1) {
@@ -240,21 +248,43 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 	 */
 
 	private void update(boolean force) {
-
+		view.getProgressLabel().setPercent(0);
+		view.getProgressLabel().setText("");
 		// for startup time to get server and add the list to cache
-		LexService.getEntriesWithMissingFieldsAsList(getEntryFieldType(), force,
-				new AsyncCallback<Collection<LexiconListEntry>>() {
+		LexService.getEntriesWithMissingFieldsAsList(getEntryFieldType(),
+				force, new AsyncCallback<Collection<LexiconListEntry>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
 
 						eventBus.handleError(caught);
 					}
-
 					@Override
-					public void onSuccess(Collection<LexiconListEntry> result) {
+					public void onSuccess(
+							final Collection<LexiconListEntry> result) {
 						paginate();
+						LexService.getDashboardData(1,
+								new AsyncCallback<DashboardActivitiesDto>() {
+									@Override
+									public void onSuccess(
+											DashboardActivitiesDto dashboardActivitiesDto) {
 
+										double countPercent = result.size()
+												/ dashboardActivitiesDto
+														.getStatsWordCount() * 100 ;
+
+										view.getProgressLabel().setPercent(
+												(int)countPercent);
+										view.getProgressLabel().setText(
+												"Add Infomation "
+														+ countPercent
+														+ " % Complete");
+									}
+									@Override
+									public void onFailure(Throwable caught) {
+										eventBus.handleError(caught);
+									}
+								});
 					}
 				});
 
@@ -262,13 +292,17 @@ public class IncompleteWordListPresenter extends BasePresenter<IncompleteWordLis
 
 	private void paginate() {
 		// bind the cached list to result
-		LexiconListDto result1 = LexiconListDto.createFromSettings(fieldSettings);
+		LexiconListDto result1 = LexiconListDto
+				.createFromSettings(fieldSettings);
 
 		Object[] obj = LexService.getEntryCollection().toArray();
-		int entriesCount = LexService.getEntriesRecordCount() < startIndex + Constants.VISIBLE_WORDS_PER_PAGE_COUNT ? LexService
-				.getEntriesRecordCount() : startIndex + Constants.VISIBLE_WORDS_PER_PAGE_COUNT;
+		int entriesCount = LexService.getEntriesRecordCount() < startIndex
+				+ Constants.VISIBLE_WORDS_PER_PAGE_COUNT ? LexService
+				.getEntriesRecordCount() : startIndex
+				+ Constants.VISIBLE_WORDS_PER_PAGE_COUNT;
 		if (isScrollbarAdded) {
-			JSNIJQueryWrapper.removeJQueryScrollbars(view.getScrollPanel().getElement());
+			JSNIJQueryWrapper.removeJQueryScrollbars(view.getScrollPanel()
+					.getElement());
 			isScrollbarAdded = false;
 		}
 		if (entriesCount == 0) {

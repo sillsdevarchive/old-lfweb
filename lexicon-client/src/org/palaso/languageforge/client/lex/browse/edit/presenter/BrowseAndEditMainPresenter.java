@@ -25,7 +25,7 @@ public class BrowseAndEditMainPresenter extends
 	public void onGoToLexDicBrowseAndEdit() {
 		ConsoleLog.log("onGoToLexDicBrowseAndEdit reset cache");
 		LexService.resetCache();
-		eventBus.clientDataRefresh(false);
+		eventBus.clientDataRefresh(false, true);
 	}
 
 	

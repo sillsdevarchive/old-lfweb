@@ -164,7 +164,7 @@ public class LexBrowseEditPresenter extends
 
 			@Override
 			public void onSuccess(ResultDto result) {
-				eventBus.clientDataRefresh(!isNewEntry);
+				eventBus.clientDataRefresh(!isNewEntry, false);
 				if (isNewEntry) {
 					view.showMessage(
 							I18nConstants.STRINGS

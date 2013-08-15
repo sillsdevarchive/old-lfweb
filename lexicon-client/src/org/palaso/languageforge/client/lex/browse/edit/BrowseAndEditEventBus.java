@@ -39,7 +39,7 @@ public interface BrowseAndEditEventBus extends EventBus {
 	void goToLexDicBrowseAndEdit();
 
 	@Event(handlers = { LexBrowseEditListPresenter.class })
-	void clientDataRefresh(boolean isUpdate);
+	void clientDataRefresh(boolean isUpdate, boolean resetPager);
 
 	@Event(handlers = LexBrowseEditListPresenter.class)
 	void resultListDTO(LexiconListDto result);
