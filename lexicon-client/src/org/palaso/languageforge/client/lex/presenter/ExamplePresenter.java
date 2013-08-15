@@ -80,7 +80,7 @@ public class ExamplePresenter extends
 		singleNewExample = isSingleNewExample;
 		this.fieldSettings = fieldSettings;
 		this.examplePresenter = examplePresenter;
-		if (this.fieldSettings.value("Translation").getVisible()) {
+		if (this.fieldSettings.value("Translation").getEnabled()) {
 			translationPresenter = new MultiTextPresenter(
 					view.getTranslationMultiText(), model.getTranslation(),
 					MultiText.createLabelFromSettings(this.fieldSettings
@@ -104,7 +104,7 @@ public class ExamplePresenter extends
 	 */
 	public void updateModel() {
 		examplePresenter.updateModel();
-		if (fieldSettings.value("Translation").getVisible()) {
+		if (fieldSettings.value("Translation").getEnabled()) {
 			translationPresenter.updateModel();
 		}
 	}

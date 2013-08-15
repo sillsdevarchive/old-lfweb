@@ -180,9 +180,16 @@ class LexProjectUserSettings
 		$writingSystemsList = $field->getElementsByTagName("writingSystems")->item(0)->childNodes;
 
 		$fieldSetting["Label"]=$displayName;
-		if ($fieldSetting["Visible"]==true){
+		$fieldSetting["Visible"]=$visibility;
+		if ($fieldSetting["Enabled"]==true){
 			// allow user change it!
-			$fieldSetting["Visible"]= $enabled;
+			if (strtoupper($enabled)==="TRUE")
+			{
+				$fieldSetting["Enabled"]= true;
+			}else
+			{
+				$fieldSetting["Enabled"]= false;
+			}
 		}
 		$fieldSetting["Languages"]= array();
 		foreach ($writingSystemsList as $writingSystem) {
@@ -208,13 +215,13 @@ class LexProjectUserSettings
 	}
 
 	private function getDefaultSettingStruct(
-	$wordVisible,
-	$posVisible,
-	$definitionVisible,
-	$exampleVisible,
-	$translationVisible,
-	$newMeaningVisible,
-	$newExampleVisible,
+	$wordEnabled = true,
+	$posEnabled = true,
+	$definitionEnabled = true,
+	$exampleEnabled = true,
+	$translationEnabled = true,
+	$newMeaningEnabled = true,
+	$newExampleEnabled = true,
 	$wordReadonly = false,
 	$posReadonly = false,
 	$definitionReadonly = false,
@@ -222,16 +229,17 @@ class LexProjectUserSettings
 	$translationReadonly = false,
 	$newMeaningReadonly = false,
 	$newExampleReadonly = false) {
+
 		//here is base field settings for each type, if set visible to false here,
 		//will ignore user setting, always keep false
 		return array(
-			"Word" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $wordVisible, "ReadonlyField"=>$wordReadonly),
-			"POS" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $posVisible, "ReadonlyField"=>$posReadonly),
-			"Definition" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $definitionVisible, "ReadonlyField"=>$definitionReadonly),
-			"Example" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $exampleVisible, "ReadonlyField"=>$exampleReadonly),
-			"Translation" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $translationVisible, "ReadonlyField"=>$translationReadonly),
-			"NewMeaning" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $newMeaningVisible, "ReadonlyField"=>$newMeaningReadonly),
-			"NewExample" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Visible" => $newExampleVisible, "ReadonlyField"=>$newExampleReadonly)
+			"Word" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $wordEnabled, "ReadonlyField"=>$wordReadonly, "Visible" => ""),
+			"POS" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $posEnabled, "ReadonlyField"=>$posReadonly, "Visible" => ""),
+			"Definition" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $definitionEnabled, "ReadonlyField"=>$definitionReadonly, "Visible" => ""),
+			"Example" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $exampleEnabled, "ReadonlyField"=>$exampleReadonly, "Visible" => ""),
+			"Translation" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $translationEnabled, "ReadonlyField"=>$translationReadonly, "Visible" => ""),
+			"NewMeaning" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $newMeaningEnabled, "ReadonlyField"=>$newMeaningReadonly, "Visible" => ""),
+			"NewExample" => array("Label" => "", "Languages" => array(""), "Abbreviations" => array(""), "Enabled" => $newExampleEnabled, "ReadonlyField"=>$newExampleReadonly, "Visible" => "")
 		);
 	}
 
@@ -257,11 +265,11 @@ class LexProjectUserSettings
 				$this->_fieldSettings= $this->getDefaultSettingStruct(true,false,false,false,false,false,false,  false,false,false,false,false,false,false);
 				break;
 			case self::FOR_GATHER_WORD_FROM_SEMANTIC_DOMAIN:
-				$meaningFieldVisible=false;
-				$glossFieldVisible=false;
-				$exampleSentenceFieldVisible=false;
-				$exampleTranslationFieldVisible=false;
-				$posFieldVisible=false;
+				$meaningFieldEnabled=false;
+				$glossFieldEnabled=false;
+				$exampleSentenceFieldEnabled=false;
+				$exampleTranslationFieldEnabled=false;
+				$posFieldEnabled=false;
 
 				$xpath = new \DOMXPath($this->_componentsDocTasks);
 				$entries = $xpath->query('//task[@taskName="GatherWordsBySemanticDomains"]');
@@ -277,7 +285,7 @@ class LexProjectUserSettings
 					{
 						if (strtolower($innerEntry->item(0)->nodeValue)=="true")
 						{
-							$meaningFieldVisible=true;
+							$meaningFieldEnabled=true;
 						}
 					}
 
@@ -286,7 +294,7 @@ class LexProjectUserSettings
 					{
 						if (strtolower($innerEntry->item(0)->nodeValue)=="true")
 						{
-							$glossFieldVisible=true;
+							$glossFieldEnabled=true;
 						}
 					}
 
@@ -296,7 +304,7 @@ class LexProjectUserSettings
 					{
 						if (strtolower($innerEntry->item(0)->nodeValue)=="true")
 						{
-							$posFieldVisible=true;
+							$posFieldEnabled=true;
 						}
 					}
 
@@ -305,7 +313,7 @@ class LexProjectUserSettings
 					{
 						if (strtolower($innerEntry->item(0)->nodeValue)=="true")
 						{
-							$exampleSentenceFieldVisible=true;
+							$exampleSentenceFieldEnabled=true;
 						}
 					}
 
@@ -314,13 +322,13 @@ class LexProjectUserSettings
 					{
 						if (strtolower($innerEntry->item(0)->nodeValue)=="true")
 						{
-							$exampleTranslationFieldVisible=true;
+							$exampleTranslationFieldEnabled=true;
 						}
 					}
 
 				}
 
-				$this->_fieldSettings= $this->getDefaultSettingStruct(true,$posFieldVisible,$meaningFieldVisible,$exampleSentenceFieldVisible,$exampleTranslationFieldVisible,false,false,   false,false,false,false,false,false,false);
+				$this->_fieldSettings= $this->getDefaultSettingStruct(true,$posFieldEnabled,$meaningFieldEnabled,$exampleSentenceFieldEnabled,$exampleTranslationFieldEnabled,false,false,   false,false,false,false,false,false,false);
 				break;
 			default:
 				$this->_fieldSettings= $this->getDefaultSettingStruct(true,true,true,true,true,true,true,   false,false,false,false,false,false,false);

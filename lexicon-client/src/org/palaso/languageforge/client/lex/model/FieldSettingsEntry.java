@@ -24,18 +24,22 @@ public class FieldSettingsEntry extends JavaScriptObject {
 		this.Languages=languages;
 	}-*/;
 	
-	public final native boolean getVisible() /*-{
-		if ( this.Visible.toUpperCase() === "FALSE"){
-			return false;
-		}else
-		{
-			return true;
-		}
+	public final native boolean getVisiblity() /*-{
+		return this.Visible;
 	}-*/;
-
-	public final native void setVisible(boolean visible) /*-{
+	
+	public final native void setVisiblity(boolean visible) /*-{
 		this.Visible = visible;
 	}-*/;
+
+	public final native boolean getEnabled() /*-{
+		return this.Enabled;
+	}-*/;
+
+	public final native void setEnabled(boolean enabled) /*-{
+		this.Enabled = enabled;
+	}-*/;
+	
 
 	public final native JsArrayString getAbbreviations() /*-{
 		return this.Abbreviations;

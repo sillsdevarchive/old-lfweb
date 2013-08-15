@@ -116,8 +116,8 @@ public class SensePresenter extends
 		// Part of speech
 		JsArray<LexiconPosition> list = getPOSList();
 
-		ConsoleLog.log("POS->Visible: " + fieldSettings.value("POS").getVisible());
-		if (fieldSettings.value("POS").getVisible()) {
+		ConsoleLog.log("POS->Enabled: " + fieldSettings.value("POS").getEnabled());
+		if (fieldSettings.value("POS").getEnabled()) {
 			ConsoleLog.log("POS->Visible: True");
 			view.setPartOfSpeechPanelVisible(true);
 			boolean isPartOsSpeechEnabled = true;
@@ -134,8 +134,8 @@ public class SensePresenter extends
 		} else {
 			view.setPartOfSpeechPanelVisible(false);
 		}
-		ConsoleLog.log("Example->Visible: " + fieldSettings.value("Example").getVisible());
-		if (fieldSettings.value("Example").getVisible()) {
+		ConsoleLog.log("Example->Enabled: " + fieldSettings.value("Example").getEnabled());
+		if (fieldSettings.value("Example").getEnabled()) {
 			for (int i = 0, n = model.getExampleCount(); i < n; ++i) {
 				createExamplePresenterInView(model.getExample(i),
 						exampleLabel(examplePresenters.size()), fieldSettings
@@ -143,7 +143,7 @@ public class SensePresenter extends
 			}
 		}
 
-		if (fieldSettings.value("NewExample").getVisible()) {
+		if (fieldSettings.value("NewExample").getEnabled()) {
 			if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
 				if (!singleNewMeaning) {
 					showNewExampleBlock();
@@ -215,7 +215,7 @@ public class SensePresenter extends
 				presenter.getView());
 		final SensePresenter sensePresenter = this;
 		presenter.getView().setTranslationPanelVisible(
-				fieldSettings.value("Translation").getVisible());
+				fieldSettings.value("Translation").getEnabled());
 		presenter.getRemoveButtonClickHandlers().addClickHandler(
 				new ClickHandler() {
 					@Override
@@ -235,7 +235,7 @@ public class SensePresenter extends
 	 */
 	public void updateModel() {
 		meaningPresenter.updateModel();
-		if (fieldSettings.value("POS").getVisible() && !fieldSettings.value("POS").isReadonlyField()) {
+		if (fieldSettings.value("POS").getEnabled() && !fieldSettings.value("POS").isReadonlyField()) {
 			model.setPOS(view.getSelectedPOS());
 		}
 		for (int i = 0, n = examplePresenters.size(); i < n; ++i) {
