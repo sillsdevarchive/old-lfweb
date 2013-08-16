@@ -1,0 +1,281 @@
+@charset "UTF-8";
+
+.gwt-TabLayoutPanel {
+	height: 100%;
+}
+
+/** the tab bar */
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
+	
+}
+
+/** the individual tab in the tab bar */
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
+	cursor: hand;
+	min-width: 80px;
+	min-height: 40px;
+	background: none repeat scroll 0 0 #DDECF4;
+	text-align: center;
+	settingsTopUserBox vertical-align: middle;
+	float: left;
+	margin-right: 3px;
+	color: #131B32;
+	font-size: 14px;
+	padding: 18px 5px 0 5px;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
+	cursor: default;
+	border-top: 6px solid #E67345;
+	padding: 12px 5px 0;
+}
+
+.gwt-TabLayoutPanelTab-selected:hover {
+	cursor: default !important;
+	border-top: 6px solid #E67345 !important;
+	padding: 12px 5px 0 !important;
+}
+
+.gwt-TabLayoutPanelTab:hover {
+	cursor: default;
+	border-top: 6px solid #F5E3DC;
+	padding: 12px 5px 0;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
+	border: 1px solid #E9E7E7;
+	background-color: #FAF6F1;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabInner {
+	
+}
+
+.gwt-SuggestBoxPopup {
+	margin-left: 10px;
+	margin-top: 2px;
+	z-index: 10;
+}
+
+.gwt-SuggestBoxPopup .item {
+	background: #FAF3EB;
+	color: black;
+	padding: 0px 8px;
+	line-height: 20px;
+}
+
+.gwt-SuggestBoxPopup .item-selected {
+	background-color: #7ca1c2;
+	color: white;
+	border-radius: 3px;
+}
+
+.gwt-SuggestBoxPopup .suggestPopupContent {
+	border: thin solid #464646;
+}
+
+.gwt-SuggestBoxPopup .suggestPopupTop,.gwt-SuggestBoxPopup .suggestPopupBottom,.gwt-SuggestBoxPopup suggestPopupTopLeft,.gwt-SuggestBoxPopup .suggestPopupTopCenter,.gwt-SuggestBoxPopup .suggestPopupTopRight,.gwt-SuggestBoxPopup .suggestPopupMiddleLeft,.gwt-SuggestBoxPopup .suggestPopupMiddleRight,.gwt-SuggestBoxPopup .suggestPopupBottomLeft,.gwt-SuggestBoxPopup .suggestPopupBottomCenter,.gwt-SuggestBoxPopup .suggestPopupBottomRight,.gwt-SuggestBoxPopup .suggestPopupTopLeftInner,.gwt-SuggestBoxPopup .suggestPopupTopLeft
+	{
+	display: none;
+}
+
+.gwt-SuggestBoxPopup .autocompleterNext {
+	background: transparent url('./images/vertical_nextprev.gif') no-repeat
+		scroll 2px 2px;
+}
+
+.gwt-SuggestBoxPopup .autocompleterPrev {
+	background: transparent url('./images/vertical_nextprev.gif') no-repeat
+		scroll 2px -36px;
+}
+
+.gwt-SuggestBoxPopup .item-selected .autocompleterNext {
+	background: transparent url('./images/vertical_nextprev.gif') no-repeat
+		scroll -16px 1px;
+}
+
+.gwt-SuggestBoxPopup .item-selected .autocompleterPrev {
+	background: transparent url('./images/vertical_nextprev.gif') no-repeat
+		scroll -16px -36px;
+}
+
+.gwt-Button {
+	float: left;
+	color: #fff;
+	margin: -3px 2px 0;
+	text-decoration: none;
+	border-radius: 5px;
+	box-shadow: 0 1px 0 #b88974;
+	background-color: #e67345;
+	padding: 5px 10px;
+	text-shadow: 0 1px 0 #ca653d;
+	border: 0px none;
+}
+
+.gwt-Button:hover {
+	background-color: #FF9970;
+}
+
+.gwt-Button:active {
+	background-color: #C94916;
+}
+
+.gwt-Button[disabled] {
+	border-color: #CCCCCC;
+	box-shadow: 0 0px 0 #CCCCCC;
+	background-color: #CCCCCC;
+	text-shadow: 0 0px 0 #CCCCCC;
+}
+
+.gwt-TextBox {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #E3D2BF;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 1px 0 #E7E7E7 inset;
+	overflow: hidden;
+	padding: 0 5px;
+	min-height: 2.4em;
+	float: left;
+}
+
+.gwt-TextBox[disabled] {
+	background: none repeat scroll 0 0 #F9F9F9;
+}
+
+.gwt-TextBox-readonly {
+	background: none repeat scroll 0 0 #E9E9E9;
+}
+
+.gwt-TextBox-fileinput {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #E3D2BF;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 1px 0 #E7E7E7 inset;
+	min-height: 45px;
+	overflow: hidden;
+	padding: 0 0px;
+}
+
+.gwt-InlineLabel {
+	background: url('./images/bg-tooltip.png') no-repeat scroll 0 0
+		transparent;
+	color: #FFFFFF;
+	font-size: 11px;
+	height: 24px;
+	line-height: 20px;
+	position: absolute;
+	margin-top: 13px;
+	margin-left: 0px;
+	text-align: center;
+	width: 49px;
+	overflow: hidden;
+}
+
+.gwt-aside {
+	margin: 0 0 0 0;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+.gwt-content-height {
+	height: 623px;
+}
+
+.gwt-wordsbrowsetable {
+	background: none repeat scroll 0 0 transparent;
+	border-top: 1px solid #E3E2E2;
+	overflow: hidden;
+	padding: 7px 0;
+	vertical-align: top;
+	margin: 0 0 0 0 !important;
+	max-width: 187px !important;
+	font-size: 12px;
+	width: 187px !important;
+}
+
+.gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled,.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled
+	{
+	margin: 0;
+	text-decoration: none;
+}
+
+.gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled
+	{
+	padding: 3px 5px 3px 5px;
+}
+
+.gwt-ToggleButton-up {
+	border: none;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.gwt-ToggleButton-up-hovering {
+	border: none;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.gwt-ToggleButton-up-disabled {
+	border: none;
+	cursor: default;
+	opacity: .5;
+	zoom: 1;
+	filter: alpha(opacity =           40);
+}
+
+.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled
+	{
+	padding: 3px 5px 3px 5px;
+}
+
+.gwt-ToggleButton-down {
+	background-position: 0 -513px;
+	border: none;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.gwt-ToggleButton-down-hovering {
+	background-position: 0 -513px;
+	border: none;
+	border-color: #9cf #69e #69e #7af;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.gwt-ToggleButton-down-disabled {
+	background-position: 0 -513px;
+	border: none;
+	cursor: default;
+	zoom: 1;
+	opacity: 0.5;
+	filter: alpha(opacity =         50); /* For IE8 and earlier */
+}
+
+.gwt-Anchor-Nav-Button {
+
+}
+
+.gwt-Anchor-Nav-Button:hover {
+	color: #000000;
+	cursor: pointer;
+}
+
+.gwt-Anchor-Nav-Button-disable {
+	pointer-events: none;
+	color: #AAAAAA !important;
+	cursor: default;
+}
+
+.gwt-Anchor-Nav-Button:active {
+	font-weight: bold;
+	cursor: pointer;
+}
+
