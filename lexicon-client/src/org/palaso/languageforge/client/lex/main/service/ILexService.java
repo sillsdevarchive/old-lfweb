@@ -216,5 +216,12 @@ public interface ILexService extends IBaseService {
 	 * to reset the cache to empty
 	 */
 	void resetCache();
+	
+	/**
+	 * get a words count from server
+	 * #this will not pass cache
+	 */
+	
+	void getWordCountInDatabase(AsyncCallback<ResultDto> asyncCallback);
 
 }

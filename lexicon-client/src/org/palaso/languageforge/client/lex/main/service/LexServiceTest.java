@@ -158,4 +158,9 @@ public class LexServiceTest extends BaseServiceTest implements ILexService {
 		
 	}
 
+	@Override
+	public void getWordCountInDatabase(AsyncCallback<ResultDto> asyncCallback) {
+		// TODO Auto-generated method stub
+	}
+
 }

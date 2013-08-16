@@ -6,11 +6,13 @@ import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
 import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.addinfo.AddInfoEventBus;
 import org.palaso.languageforge.client.lex.addinfo.view.IncompleteWordListView;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
+import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.main.model.DashboardActivitiesDto;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 
@@ -256,30 +258,35 @@ public class IncompleteWordListPresenter extends
 
 					@Override
 					public void onFailure(Throwable caught) {
-
 						eventBus.handleError(caught);
 					}
+
 					@Override
 					public void onSuccess(
 							final Collection<LexiconListEntry> result) {
 						paginate();
-						LexService.getDashboardData(1,
-								new AsyncCallback<DashboardActivitiesDto>() {
+
+						// so now we need to know how many words in server
+						// for update progress bar
+						LexService
+								.getWordCountInDatabase(new AsyncCallback<ResultDto>() {
+
 									@Override
-									public void onSuccess(
-											DashboardActivitiesDto dashboardActivitiesDto) {
+									public void onSuccess(ResultDto resultDto) {
+										double serverCount = Double
+												.parseDouble(resultDto
+														.getCode());
 
-										double countPercent = result.size()
-												/ dashboardActivitiesDto
-														.getStatsWordCount() * 100 ;
-
+										int countPercent = (int) (((serverCount - (double) result
+												.size()) / serverCount) * 100);
 										view.getProgressLabel().setPercent(
-												(int)countPercent);
+												(int) countPercent);
 										view.getProgressLabel().setText(
 												"Add Infomation "
 														+ countPercent
 														+ " % Complete");
 									}
+
 									@Override
 									public void onFailure(Throwable caught) {
 										eventBus.handleError(caught);

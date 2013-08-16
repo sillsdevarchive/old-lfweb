@@ -43,6 +43,7 @@ import org.palaso.languageforge.client.lex.main.service.actions.GetEntryAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetIsDashboardUpdateToolRunningAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetListAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetMissingInfoListAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetWordCountInDatabaseAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetWordsListForGatherWordAction;
 import org.palaso.languageforge.client.lex.main.service.actions.SaveEntryAction;
 import org.palaso.languageforge.client.lex.main.service.actions.SaveNewCommentAction;
@@ -598,6 +599,12 @@ public class LexService extends BaseService implements ILexService {
 	public void resetCache() {
 		lexServiceCache.clearAll();
 		lexServiceCache.setCacheType(null);
+	}
+
+	@Override
+	public void getWordCountInDatabase(AsyncCallback<ResultDto> asyncCallback) {
+		GetWordCountInDatabaseAction action = new GetWordCountInDatabaseAction();
+		remoteAsync.execute(action, asyncCallback);
 	}
 
 }

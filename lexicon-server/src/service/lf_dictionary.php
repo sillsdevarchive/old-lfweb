@@ -818,6 +818,18 @@ class LFDictionaryAPI
 			);
 		}
 	}
+	
+	/**
+	 * simply count the word in database and return.
+	 */
+	
+	function getWordCountInDatabaseAction(){
+		$this->isReadyOrThrow();
+		$store = $this->getLexStore();
+		$wordCount = $store->entryCount();
+		$result = new \libraries\lfdictionary\dto\ResultDTO(true, strval($wordCount));
+		return $result->encode();
+	}
 
 }
 
