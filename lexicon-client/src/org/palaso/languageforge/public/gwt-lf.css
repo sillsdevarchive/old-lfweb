@@ -102,8 +102,6 @@
 		scroll -16px -36px;
 }
 
-
-
 .gwt-Button {
 	float: left;
 	color: #fff;
@@ -144,7 +142,7 @@
 }
 
 .gwt-TextBox[disabled] {
-    background: none repeat scroll 0 0 #F9F9F9;
+	background: none repeat scroll 0 0 #F9F9F9;
 }
 
 .gwt-TextBox-readonly {
@@ -201,8 +199,6 @@
 	width: 187px !important;
 }
 
-
-
 .gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled,.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled
 	{
 	margin: 0;
@@ -231,7 +227,7 @@
 	cursor: default;
 	opacity: .5;
 	zoom: 1;
-	filter: alpha(opacity =   40);
+	filter: alpha(opacity =           40);
 }
 
 .gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled
@@ -260,24 +256,26 @@
 	cursor: default;
 	zoom: 1;
 	opacity: 0.5;
-	filter: alpha(opacity = 50); /* For IE8 and earlier */
+	filter: alpha(opacity =         50); /* For IE8 and earlier */
 }
-.gwt-Anchor-Nav-Button{
-	font-size: 9px;
+
+.gwt-Anchor-Nav-Button {
+
 }
 
 .gwt-Anchor-Nav-Button:hover {
 	color: #000000;
 	cursor: pointer;
 }
+
 .gwt-Anchor-Nav-Button-disable {
 	pointer-events: none;
 	color: #AAAAAA !important;
-    cursor: default;
-    font-size: 9px;
+	cursor: default;
 }
+
 .gwt-Anchor-Nav-Button:active {
 	font-weight: bold;
 	cursor: pointer;
 }
-}
+
