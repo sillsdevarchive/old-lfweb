@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lexicon-client" default="deploy" basedir=".">
+
+	<property name="output.folder" value="./../lexicon-server/src/js/gwt/" />
+	
+	<target name="prepare">
+		<mkdir dir="${output.folder}lifteditor" />
+	</target>
+	
+	<target name="clean" description="Cleans Target folder">
+		<delete dir="${output.folder}lifteditor" failonerror="false" />
+	</target>
+
+	<target name="deploy" depends="clean, prepare">
+		<copy todir="${output.folder}lifteditor">
+			<fileset dir="./war/lifteditor/">
+				<include name="**" />
+			</fileset>
+		</copy>
+	</target>
+</project>
