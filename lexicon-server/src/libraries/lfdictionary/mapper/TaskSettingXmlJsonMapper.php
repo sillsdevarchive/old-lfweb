@@ -205,34 +205,38 @@ class TaskSettingXmlJsonMapper {
 			default:
 				// must have one. here we have normal case
 				if ($entries->length==1)
-			{
-				$entry = $entries->item(0);
+				{
+					$entry = $entries->item(0);
 
-				foreach ($taskNewProperties as  $key => $taskProperty) {
-					if ($key==self::TASK_TASKNAME)
-					{
-						// just taskname. should not change.
-						continue;
-					}elseif ($key==self::TASK_VISIBLE)
-					{
-						//VISIBLE is a Attribute
-						if (strtolower($taskNewProperties[self::TASK_VISIBLE])=="true")
+					foreach ($taskNewProperties as  $key => $taskProperty) {
+						if ($key==self::TASK_TASKNAME)
 						{
-							$entry->setAttribute(self::TASK_VISIBLE,"true");
-						}else
+							// just taskname. should not change.
+							continue;
+						}elseif ($key==self::TASK_VISIBLE)
 						{
-							$entry->setAttribute(self::TASK_VISIBLE,"false");
+							//VISIBLE is a Attribute
+							if (strtolower($taskNewProperties[self::TASK_VISIBLE])=="true")
+							{
+								$entry->setAttribute(self::TASK_VISIBLE,"true");
+							}else
+							{
+								$entry->setAttribute(self::TASK_VISIBLE,"false");
+							}
+							continue;
 						}
-						continue;
-					}
-					$innerEntry = $xpath->query($key, $entry);
-					if ($innerEntry->length==1)
-					{
-						$innerEntry->item(0)->nodeValue = $taskNewProperties[$key];
+						$innerEntry = $xpath->query($key, $entry);
+						if ($innerEntry->length==1)
+						{
+							$innerEntry->item(0)->nodeValue = $taskNewProperties[$key];
+						}else {
+							// new Property
+							$newNode = $dom->createElement($key, $taskNewProperties[$key]);
+							$entry->appendChild($newNode);
+						}
 					}
 				}
-			}
-			break;
+				break;
 		}
 	}
 
@@ -274,8 +278,8 @@ class TaskSettingXmlJsonMapper {
 							}else{
 								$taskAttributes[$propertyChild->nodeName] = array("$" => $propertyChild->nodeValue);
 							}
-							
-							
+								
+								
 							break;
 						default:
 							//not supports!
@@ -287,7 +291,7 @@ class TaskSettingXmlJsonMapper {
 			}
 		}
 		$result =  array(
-	 					self::TASK_TASKS => array (self::TASK_TASK => $subTasks)
+				self::TASK_TASKS => array (self::TASK_TASK => $subTasks)
 		);
 		return $result;
 	}
