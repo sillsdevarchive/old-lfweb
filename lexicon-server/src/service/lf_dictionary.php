@@ -321,7 +321,7 @@ class LFDictionaryAPI
 	function getDashboardData($actRange) {
 		$this->isReadyOrThrow();
 
-		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->_projectNodeId, $this->_lexProject->getLiftFilePath(),$actRange);
+		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->getLexStore(), $this->_projectNodeId, $this->_lexProject->getLiftFilePath(), $actRange);
 		$result = $command->execute();
 		return $result->encode();
 	}

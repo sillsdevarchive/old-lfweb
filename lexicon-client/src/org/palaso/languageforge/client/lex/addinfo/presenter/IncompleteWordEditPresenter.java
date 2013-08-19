@@ -87,6 +87,8 @@ public class IncompleteWordEditPresenter extends
 			message = I18nConstants.STRINGS
 					.IncompleteWordEditPresenter_All_words_have_part_of_speech_information();
 			break;
+		default:
+			throw new RuntimeException("Unsupports entry field.");
 		}
 
 		if (!message.isEmpty()) {

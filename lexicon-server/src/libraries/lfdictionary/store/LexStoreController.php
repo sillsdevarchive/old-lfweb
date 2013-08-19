@@ -130,6 +130,10 @@ class LexStoreController
 		return $this->_lexStore->searchEntriesAsWordList($lang, $titleLetter, $startFrom, $maxEntryCount);
 	}
 	
+	public function  getAllEntries() {
+		return $this->_lexStore->getAllEntries();
+	}
+	
 }
 
 ?>

@@ -9,6 +9,25 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.palaso.languageforge.client.lex.common.CheckableItem;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
+import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.IPersistable;
+import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
+import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
+import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
+import org.palaso.languageforge.client.lex.common.SettingInputSystemItem;
+import org.palaso.languageforge.client.lex.common.SettingInputSystemItemHelper;
+import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
+import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingFieldsView;
+import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
+import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
+import org.palaso.languageforge.client.lex.controls.FastTree;
+import org.palaso.languageforge.client.lex.controls.FastTreeItem;
+import org.palaso.languageforge.client.lex.controls.TextChangeEvent;
+import org.palaso.languageforge.client.lex.controls.TextChangeEventHandler;
+import org.palaso.languageforge.client.lex.controls.TreeItemSelectedHandler;
+import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.FieldSettingsEntry;
@@ -19,25 +38,6 @@ import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsFi
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsFieldWritingSystemDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemElementDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemsDto;
-import org.palaso.languageforge.client.lex.common.CheckableItem;
-import org.palaso.languageforge.client.lex.common.ConsoleLog;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
-import org.palaso.languageforge.client.lex.common.IPersistable;
-import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
-import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
-import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
-import org.palaso.languageforge.client.lex.common.SettingInputSystemItem;
-import org.palaso.languageforge.client.lex.common.SettingInputSystemItemHelper;
-import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
-import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
-import org.palaso.languageforge.client.lex.controls.FastTree;
-import org.palaso.languageforge.client.lex.controls.FastTreeItem;
-import org.palaso.languageforge.client.lex.controls.TextChangeEvent;
-import org.palaso.languageforge.client.lex.controls.TextChangeEventHandler;
-import org.palaso.languageforge.client.lex.controls.TreeItemSelectedHandler;
-import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
-import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingFieldsView;
-import org.palaso.languageforge.client.lex.main.service.ILexService;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
@@ -46,8 +46,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -266,12 +264,16 @@ public class ConfigureSettingFieldsPresenter
 			SettingFieldsFieldElementDto relatedData) {
 		// Rule-1: when "Definition" unckecked, all other in "LexSense" should
 		// unchecked.
+		
 		// Rule-2: when "Example Sentence" unckecked, all other in
 		// "LexExampleSentence" should unchecked.
+		
 		// Rule-3: when any in "LexSense" checked, "Definition" should also
 		// checked.
+		
 		// Rule-4: when any in "LexExampleSentence" checked, "Example Sentence"
 		// should also checked.
+		
 		ConsoleLog.log("Dependece check: " + relatedData.getFieldName() + " / "
 				+ relatedData.getEnabled());
 		if (relatedData.getClassName() == SettingFieldClassNameType.LEXSENSE) {
@@ -296,14 +298,19 @@ public class ConfigureSettingFieldsPresenter
 												.equalsIgnoreCase("definition")
 										&& !isInIgnoreList(data)) {
 									data.setEnabled(false);
-									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
-											.getWidget();
-									if (chkBox.getValue() == true) {
-										((ExtendedCheckBox) treeChildItem
-												.getWidget()).fireClick();
-									}
+									
+//									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+//											.getWidget();
+									
 									ConsoleLog.log(data.getFieldName() + " / "
-											+ data.getEnabled());
+											+ data.getEnabled() + " / " + ((ExtendedCheckBox) treeChildItem
+											.getWidget()).getText());
+									
+//									if (chkBox.getValue() == true) {
+//										
+//										chkBox.setEnabled(false);
+//									}
+									
 								}
 							}
 						}
@@ -366,7 +373,7 @@ public class ConfigureSettingFieldsPresenter
 							// saving operation.
 							relatedData.setEnabled(event.getValue()
 									.booleanValue());
-							//fieldsDependenceChecker(relatedData);
+							fieldsDependenceChecker(relatedData);
 						}
 					});
 				} else if (item.getData() instanceof String) {

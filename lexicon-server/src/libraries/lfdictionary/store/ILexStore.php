@@ -83,5 +83,9 @@ interface ILexStore
 	*/
 	public function searchEntriesAsWordList($lang, $titleLetter, $startFrom, $maxEntryCount);
 
+	/**
+	 * get all entries and all parts of entry into a EntryListDTO.
+	 */
+	public function getAllEntries();
 }
 ?>

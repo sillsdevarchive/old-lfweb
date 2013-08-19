@@ -76,9 +76,9 @@ public class ExtendedCheckBox extends CheckBox {
 		checkBoxLabelElement = (LabelElement) this.getElement().getLastChild();
 	}
 
-	public void fireClick() 
+	public void changeValue() 
 	{
-		fireClickInternal(checkBoxInputElement.getId());
+		changeValueInternal(checkBoxInputElement.getId());
 	};
 	
 	@Override
@@ -95,7 +95,7 @@ public class ExtendedCheckBox extends CheckBox {
 		$wnd.stylingCheckBox(inputElement, labelElement);
 	}-*/;
 	
-	private static native void fireClickInternal(String checkBoxID) /*-{
+	private static native void changeValueInternal(String checkBoxID) /*-{
 		$wnd.rechangeCheckboxes(checkBoxID);
 	}-*/;
 }

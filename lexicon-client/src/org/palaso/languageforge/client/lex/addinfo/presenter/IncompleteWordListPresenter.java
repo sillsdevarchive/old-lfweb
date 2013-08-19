@@ -2,19 +2,21 @@ package org.palaso.languageforge.client.lex.addinfo.presenter;
 
 import java.util.Collection;
 
-import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
-import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.addinfo.AddInfoEventBus;
 import org.palaso.languageforge.client.lex.addinfo.view.IncompleteWordListView;
-import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
+import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
+import org.palaso.languageforge.client.lex.controls.ProgressLabel;
+import org.palaso.languageforge.client.lex.main.model.DashboardActivitiesDto;
+import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
-import org.palaso.languageforge.client.lex.model.ResultDto;
-import org.palaso.languageforge.client.lex.main.model.DashboardActivitiesDto;
-import org.palaso.languageforge.client.lex.main.service.ILexService;
+import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDashboardSettings;
+import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
+import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
@@ -266,35 +268,87 @@ public class IncompleteWordListPresenter extends
 							final Collection<LexiconListEntry> result) {
 						paginate();
 
-						// so now we need to know how many words in server
-						// for update progress bar
-						LexService
-								.getWordCountInDatabase(new AsyncCallback<ResultDto>() {
-
-									@Override
-									public void onSuccess(ResultDto resultDto) {
-										double serverCount = Double
-												.parseDouble(resultDto
-														.getCode());
-
-										int countPercent = (int) (((serverCount - (double) result
-												.size()) / serverCount) * 100);
-										view.getProgressLabel().setPercent(
-												(int) countPercent);
-										view.getProgressLabel().setText(
-												"Add Infomation "
-														+ countPercent
-														+ " % Complete");
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-										eventBus.handleError(caught);
-									}
-								});
+						// // so now we need to know how many words in server
+						// // for update progress bar
+						// LexService
+						// .getWordCountInDatabase(new
+						// AsyncCallback<ResultDto>() {
+						//
+						// @Override
+						// public void onSuccess(ResultDto resultDto) {
+						// double serverCount = Double
+						// .parseDouble(resultDto
+						// .getCode());
+						//
+						// int countPercent = (int) (((serverCount - (double)
+						// result
+						// .size()) / serverCount) * 100);
+						// view.getProgressLabel().setPercent(
+						// (int) countPercent);
+						// view.getProgressLabel().setText(
+						// "Add Infomation "
+						// + countPercent
+						// + " % Complete");
+						// }
+						//
+						// @Override
+						// public void onFailure(Throwable caught) {
+						// eventBus.handleError(caught);
+						// }
+						// });
 					}
 				});
 
+		// use dashboard data to show the progress bar
+		LexService.getDashboardData(1,
+				new AsyncCallback<DashboardActivitiesDto>() {
+
+					@Override
+					public void onSuccess(DashboardActivitiesDto result) {
+						SettingTasksDashboardSettings dashboardSpeData = getDashboardSettings();
+						// calculate percent
+						int targetWordCount = dashboardSpeData
+								.getTargetWordCount();
+
+						int statsWordCountPercent = (result.getStatsWordCount() * 100)
+								/ targetWordCount;
+						int statsPercent = 0;
+
+						switch (getEntryFieldType()) {
+						case DEFINITION:
+							statsPercent = statsWordCountPercent == 0 ? result
+									.getStatsMeanings() : (result
+									.getStatsMeanings() * 100)
+									/ result.getStatsWordCount();
+							break;
+						case POS:
+							statsPercent = statsWordCountPercent == 0 ? result
+									.getStatsPos()
+									: (result.getStatsPos() * 100)
+											/ result.getStatsWordCount();
+							break;
+						case EXAMPLESENTENCE:
+							statsPercent = statsWordCountPercent == 0 ? result
+									.getStatsExamples() : (result
+									.getStatsExamples() * 100)
+									/ result.getStatsWordCount();
+							break;
+						default:
+							throw new RuntimeException();
+						}
+
+						view.getProgressLabel().setPercent((int) statsPercent);
+						view.getProgressLabel().setText(
+								"Add Infomation " + statsPercent
+										+ " % Complete");
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						eventBus.handleError(caught);
+					}
+				});
 	}
 
 	private void paginate() {
@@ -374,6 +428,24 @@ public class IncompleteWordListPresenter extends
 				eventBus.setNextButtonEnabled(true);
 			}
 		}
+	}
+
+	private SettingTasksDashboardSettings getDashboardSettings() {
+		JsArray<SettingTasksTaskElementDto> tasksDto = SettingTasksDto
+				.getCurrentUserSetting().getEntries();
+		if (tasksDto.length() > 0) {
+			for (int i = 0; i < tasksDto.length(); i++) {
+				SettingTasksTaskElementDto taskElementDto = tasksDto.get(i);
+
+				if (taskElementDto.getTaskName() == SettingTaskNameType.DASHBOARD) {
+					SettingTasksDashboardSettings taskDashboardSpeData = SettingTasksDashboardSettings
+							.<SettingTasksDashboardSettings> decode(taskElementDto
+									.getTaskSpecifiedData());
+					return taskDashboardSpeData;
+				}
+			}
+		}
+		return SettingTasksDashboardSettings.getNew();
 	}
 
 }
