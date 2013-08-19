@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.browse.edit.presenter;
 
-import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
