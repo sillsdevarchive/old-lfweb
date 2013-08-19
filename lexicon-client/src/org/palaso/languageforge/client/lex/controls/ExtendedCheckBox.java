@@ -3,6 +3,8 @@ package org.palaso.languageforge.client.lex.controls;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.LabelElement;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.HasDirection.Direction;
 import com.google.gwt.i18n.shared.DirectionEstimator;
 import com.google.gwt.resources.client.ClientBundle;
@@ -15,27 +17,28 @@ public class ExtendedCheckBox extends CheckBox {
 
 	boolean styled = false;
 	private Widget oldParent = null;
-
 	private InputElement checkBoxInputElement = null;
 	private LabelElement checkBoxLabelElement = null;
+	private static Integer refIdIndex = 0;
 
 	protected interface JsResource extends ClientBundle {
 		@Source("ExtendedCheckBox.js")
 		TextResource ExtendedCheckBoxJsResource();
 
 	}
-//
-//	public interface Resources extends ClientBundle {
-//		  public static final Resources INSTANCE =
-//		      GWT.create(Resources.class);
-//		 
-//		  @NotStrict
-//		  @Source("ExtendedCheckBox.css")
-//		  public CssResource css();
-//		}
-	
+
+	//
+	// public interface Resources extends ClientBundle {
+	// public static final Resources INSTANCE =
+	// GWT.create(Resources.class);
+	//
+	// @NotStrict
+	// @Source("ExtendedCheckBox.css")
+	// public CssResource css();
+	// }
+
 	static {
-		//Resources.INSTANCE.css().ensureInjected();
+		// Resources.INSTANCE.css().ensureInjected();
 		JsResource bundle = GWT.create(JsResource.class);
 		JavascriptInjector
 				.inject(bundle.ExtendedCheckBoxJsResource().getText());
@@ -74,13 +77,23 @@ public class ExtendedCheckBox extends CheckBox {
 	private void init() {
 		checkBoxInputElement = (InputElement) this.getElement().getFirstChild();
 		checkBoxLabelElement = (LabelElement) this.getElement().getLastChild();
+		checkBoxInputElement.setId("ex_chkbox_" + refIdIndex.toString());
+		refIdIndex++;
 	}
 
-	public void changeValue() 
-	{
-		changeValueInternal(checkBoxInputElement.getId());
-	};
-	
+	@Override
+	public void setValue(Boolean value) {
+		super.setValue(value);
+		if (isAttached()) {
+			changeValueInternal(this.checkBoxInputElement.getId(), value);
+		}
+	}
+
+	@Override
+	public Boolean getValue() {
+		return super.getValue();
+	}
+
 	@Override
 	public void onLoad() {
 		if (!styled) {
@@ -94,8 +107,9 @@ public class ExtendedCheckBox extends CheckBox {
 			LabelElement labelElement) /*-{
 		$wnd.stylingCheckBox(inputElement, labelElement);
 	}-*/;
-	
-	private static native void changeValueInternal(String checkBoxID) /*-{
-		$wnd.rechangeCheckboxes(checkBoxID);
+
+	private static native void changeValueInternal(String checkBoxID,
+			boolean value) /*-{
+		$wnd.checkCheckboxes(checkBoxID, value);
 	}-*/;
 }

@@ -264,24 +264,57 @@ public class ConfigureSettingFieldsPresenter
 			SettingFieldsFieldElementDto relatedData) {
 		// Rule-1: when "Definition" unckecked, all other in "LexSense" should
 		// unchecked.
-		
+
 		// Rule-2: when "Example Sentence" unckecked, all other in
 		// "LexExampleSentence" should unchecked.
-		
+
 		// Rule-3: when any in "LexSense" checked, "Definition" should also
 		// checked.
-		
+
 		// Rule-4: when any in "LexExampleSentence" checked, "Example Sentence"
 		// should also checked.
-		
+
 		ConsoleLog.log("Dependece check: " + relatedData.getFieldName() + " / "
 				+ relatedData.getEnabled());
+		FastTree tree = view.getFieldsTree();
 		if (relatedData.getClassName() == SettingFieldClassNameType.LEXSENSE) {
 			// isInIgnoreList
-			if (relatedData.getFieldName().equalsIgnoreCase("definition")) {
-				// rule 1
-				if (relatedData.getEnabled() == false) {
-					FastTree tree = view.getFieldsTree();
+			if (relatedData.getFieldName().equalsIgnoreCase("definition")
+					&& relatedData.getEnabled() == false) {
+
+				for (FastTreeItem treeItem : tree.getItems()) {
+					for (FastTreeItem treeChildItem : treeItem.getChildren()) {
+						CheckableItem chkItem = (CheckableItem) treeChildItem
+								.getData();
+
+						if (chkItem.getData() != null
+								&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+							SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+									.getData();
+							if (data.getClassName() == SettingFieldClassNameType.LEXSENSE
+									&& !data.getFieldName().equalsIgnoreCase(
+											"definition")
+									&& !isInIgnoreList(data)) {
+
+								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+										.getWidget();
+								ConsoleLog.log(data.getFieldName());
+								
+									data.setEnabled(false);
+									chkBox.setValue(false);
+									
+									ConsoleLog.log(data.getFieldName() + " / "
+											+ chkBox.getValue() + " / "
+											+ chkBox.getText());
+
+							}
+						}
+
+					}
+				}
+			} else {
+				// rule 3
+				if (!isInIgnoreList(relatedData)) {
 					for (FastTreeItem treeItem : tree.getItems()) {
 						for (FastTreeItem treeChildItem : treeItem
 								.getChildren()) {
@@ -291,35 +324,15 @@ public class ConfigureSettingFieldsPresenter
 									&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
 								SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
 										.getData();
-								ConsoleLog.log("Dependece check looking for: "
-										+ data.getFieldName());
-								if (data.getClassName() == SettingFieldClassNameType.LEXSENSE
-										&& !data.getFieldName()
-												.equalsIgnoreCase("definition")
-										&& !isInIgnoreList(data)) {
-									data.setEnabled(false);
-									
-//									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
-//											.getWidget();
-									
-									ConsoleLog.log(data.getFieldName() + " / "
-											+ data.getEnabled() + " / " + ((ExtendedCheckBox) treeChildItem
-											.getWidget()).getText());
-									
-//									if (chkBox.getValue() == true) {
-//										
-//										chkBox.setEnabled(false);
-//									}
-									
+								if (data.getFieldName().equalsIgnoreCase(
+										"definition")) {
+									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+											.getWidget();
+									chkBox.setValue(true);
 								}
 							}
 						}
 					}
-				}
-			} else {
-				// rule 3
-				if (!isInIgnoreList(relatedData)) {
-
 				}
 			}
 
@@ -373,7 +386,8 @@ public class ConfigureSettingFieldsPresenter
 							// saving operation.
 							relatedData.setEnabled(event.getValue()
 									.booleanValue());
-							fieldsDependenceChecker(relatedData);
+							ConsoleLog.log("addValueChangeHandler: " + event.getValue());
+							//fieldsDependenceChecker(relatedData);
 						}
 					});
 				} else if (item.getData() instanceof String) {
