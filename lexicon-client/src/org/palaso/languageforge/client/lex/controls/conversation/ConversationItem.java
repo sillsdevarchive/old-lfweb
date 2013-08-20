@@ -37,6 +37,8 @@ public class ConversationItem extends ComplexPanel {
 	private RichTextArea commentTextbox = null;
 	private Label footerLabel = null;
 	private Button btnExpendAllReplies = null;
+	private ExtendedCheckBox chkTodo = null;
+	private ExtendedCheckBox chkReviewed = null;
 	private ExtendedCheckBox chkResolved = null;
 	private Button btnAddComment = null;
 	private static String imgGreenChecked;
@@ -167,7 +169,10 @@ public class ConversationItem extends ComplexPanel {
 			commentTextbox.setStyleName("conversation-sub-comment-new");
 			commentTextbox.setHeight("100px");
 			panelCommentContainer.add(commentTextbox);
-
+			chkTodo = new ExtendedCheckBox("To-do");
+			chkTodo.setStyleName("conversation-checkBox-resolved");
+			chkReviewed = new ExtendedCheckBox("This conversation is reviewed.");
+			chkReviewed.setStyleName("conversation-checkBox-resolved");
 			chkResolved = new ExtendedCheckBox("This conversation is resolved.");
 			chkResolved.setStyleName("conversation-checkBox-resolved");
 
@@ -197,21 +202,43 @@ public class ConversationItem extends ComplexPanel {
 			panelMidCell.getElement().setId("item-footer-row-right-cell");
 			panelRightCell.getElement().setId("item-footer-row-right-cell");
 			panelFooter.add(panelRow);
+
+			panelMidCell.add(chkTodo);
+			panelMidCell.add(chkReviewed);
 			panelMidCell.add(chkResolved);
 			panelRightCell.add(btnAddComment);
 			super.add(panelHeader, getElement());
 			super.add(panelLeftCheckMarker, getElement());
 			super.add(panelCommentContainer, getElement());
 			super.add(panelFooter, getElement());
-			chkResolved
+			chkReviewed
 					.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
+						@Override
+						public void onValueChange(
+								ValueChangeEvent<Boolean> event) {
+							//TODO cyu	isMarked = event.getValue();
+						}
+					});
+			chkTodo
+					.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+		
+						@Override
+						public void onValueChange(
+								ValueChangeEvent<Boolean> event) {
+							//TODO cyu isMarked = event.getValue();
+						}
+					});
+			chkResolved
+					.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+		
 						@Override
 						public void onValueChange(
 								ValueChangeEvent<Boolean> event) {
 							isMarked = event.getValue();
 						}
 					});
+			
 		} else {
 			panelHeader.setStyleName("conversation-sub-header");
 			panelLeftCheckMarker.setStyleName("conversation-sub-checkmarker");

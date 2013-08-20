@@ -77,7 +77,7 @@ public class ReviewMainPresenter extends
 						.getRootConversationItem();
 				AnnotationMessageStatusType statusType = newConversationItem
 						.getIsMarked() ? AnnotationMessageStatusType.CLOSED
-						: AnnotationMessageStatusType.UNCLOSED;
+						: AnnotationMessageStatusType.REVIEWED;
 				lexService.saveNewComments(statusType, event
 						.getRootConversationItem().getReferencedGuid(),
 						newConversationItem.getNewCommentHtml(), false,
@@ -124,7 +124,7 @@ public class ReviewMainPresenter extends
 
 					@Override
 					public void onClick(ClickEvent event) {
-						getQuestions(AnnotationMessageStatusType.UNCLOSED,
+						getQuestions(AnnotationMessageStatusType.REVIEWED,
 								ConversationAnnotationType.QUESTION);
 					}
 				});
@@ -172,7 +172,7 @@ public class ReviewMainPresenter extends
 
 					@Override
 					public void onClick(ClickEvent event) {
-						getRecentChanges(AnnotationMessageStatusType.UNCLOSED,
+						getRecentChanges(AnnotationMessageStatusType.REVIEWED,
 								ConversationAnnotationType.UNDEFINED);
 					}
 				});

@@ -10,7 +10,8 @@ class SaveCommentsCommand {
 
 	public static $STATUS_UNDEFINED = "undefined";
 	public static $STATUS_CLOSED = "closed";
-	public static $STATUS_UNCLOSED = "unclosed";
+	public static $STATUS_REVIEWED = "reviewed";
+	public static $STATUS_TODO = "todo";
 
 
 	var $_fileName;

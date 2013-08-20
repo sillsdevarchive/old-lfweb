@@ -49,6 +49,21 @@ class ConversationDTO {
 	 * @var ConversationDTO
 	 */
 	var $_parent;
+	
+	/**
+	* @var string
+	*/
+	var $_resolved;
+	
+	/**
+	* @var string
+	*/
+	var $_reviewed;
+	
+	/**
+	* @var string
+	*/
+	var $_todo;
 
 	/**
 	 * @param String $guid
@@ -116,6 +131,18 @@ class ConversationDTO {
 	function getParent(){
 		return $this->_parent;
 	}
+	
+	function setStatusResolved($resolved) {
+		$this->_resolved = $resolved;
+	}
+	
+	function setStatusReviewed($reviewed) {
+		$this->_reviewed = $reviewed;
+	}
+	
+	function setStatusTodo($todo) {
+		$this->_todo = $todo;
+	}
 
 
 	/**
@@ -140,7 +167,10 @@ class ConversationDTO {
 			"date" => $this->_date,
 			"comment" => $this->_comment,
 			"status" => $this->_status,
-		    "children" => $children
+		    "children" => $children,
+		    "status.resolved" => $this->_resolved,
+		    "status.reviewed" => $this->_reviewed,
+		    "status.todo" => $this->_todo
 		);
 
 	}
