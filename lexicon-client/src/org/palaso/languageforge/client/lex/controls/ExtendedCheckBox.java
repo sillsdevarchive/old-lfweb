@@ -3,8 +3,11 @@ package org.palaso.languageforge.client.lex.controls;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.LabelElement;
+import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.event.logical.shared.AttachEvent.Handler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.i18n.client.HasDirection.Direction;
 import com.google.gwt.i18n.shared.DirectionEstimator;
 import com.google.gwt.resources.client.ClientBundle;
@@ -20,6 +23,7 @@ public class ExtendedCheckBox extends CheckBox {
 	private InputElement checkBoxInputElement = null;
 	private LabelElement checkBoxLabelElement = null;
 	private static Integer refIdIndex = 0;
+	private boolean isChecked =false;
 
 	protected interface JsResource extends ClientBundle {
 		@Source("ExtendedCheckBox.js")
@@ -83,7 +87,7 @@ public class ExtendedCheckBox extends CheckBox {
 
 	@Override
 	public void setValue(Boolean value) {
-		super.setValue(value);
+		isChecked = value;
 		if (isAttached()) {
 			changeValueInternal(this.checkBoxInputElement.getId(), value);
 		}
@@ -91,7 +95,7 @@ public class ExtendedCheckBox extends CheckBox {
 
 	@Override
 	public Boolean getValue() {
-		return super.getValue();
+		return isChecked;
 	}
 
 	@Override
@@ -100,7 +104,30 @@ public class ExtendedCheckBox extends CheckBox {
 			oldParent = this.getParent();
 			stylingCheckBox(checkBoxInputElement, checkBoxLabelElement);
 			styled = true;
+//		super.addAttachHandler(new Handler() {
+//			
+//			@Override
+//			public void onAttachOrDetach(AttachEvent event) {
+//				if (event.isAttached())
+//				{
+//					changeValueInternal(checkBoxInputElement.getId(), isChecked);
+//				}
+//			}
+//		});
 		}
+	}
+
+	public HandlerRegistration addValueChangeHandler(
+			final ValueChangeHandler<Boolean> handler) {
+		
+		return super.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				isChecked=event.getValue().booleanValue();
+				handler.onValueChange(event);
+			}
+		});
 	}
 
 	private static native void stylingCheckBox(InputElement inputElement,

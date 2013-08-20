@@ -372,7 +372,7 @@ public class ConfigureSettingFieldsPresenter
 		FastTreeItem topTreeItem = new FastTreeItem();
 		topTreeItem.setData(item);
 		if (item.isCheckable()) {
-			ExtendedCheckBox chkBox = new ExtendedCheckBox(
+			final ExtendedCheckBox chkBox = new ExtendedCheckBox(
 					item.getDisplayText());
 			if (item.getData() != null) {
 				if (item.getData() instanceof SettingFieldsFieldElementDto) {
@@ -384,10 +384,9 @@ public class ConfigureSettingFieldsPresenter
 								ValueChangeEvent<Boolean> event) {
 							// the change is makes on DS directly, so easy for
 							// saving operation.
-							relatedData.setEnabled(event.getValue()
-									.booleanValue());
+							relatedData.setEnabled(chkBox.getValue().booleanValue());
 							ConsoleLog.log("addValueChangeHandler: " + event.getValue());
-							//fieldsDependenceChecker(relatedData);
+							fieldsDependenceChecker(relatedData);
 						}
 					});
 				} else if (item.getData() instanceof String) {
