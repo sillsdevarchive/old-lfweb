@@ -184,7 +184,7 @@ public interface ILexService extends IBaseService {
 	 * 
 	 * @param asyncCallback
 	 */
-	void saveNewComments(AnnotationMessageStatusType messageStatus,
+	void saveNewComments(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo,
 			String parentGuid, String commentMessage, boolean isRootMessage,
 			AsyncCallback<ConversationDto> asyncCallback);
 

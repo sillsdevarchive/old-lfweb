@@ -305,7 +305,7 @@ class LFDictionaryAPI
 		return $result->encode();
 	}
 
-	function saveNewComment($messageStatus,$parentGuid, $commentMessage,$isRootMessage) {
+	function saveNewComment($messageStatus, $isStatusReviewed, $isStatusTodo, $parentGuid, $commentMessage, $isRootMessage) {
 		$this->isReadyOrThrow();
 
 		$chorusNotesFilePath = $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
@@ -313,7 +313,7 @@ class LFDictionaryAPI
 		$w3cDateString = $now->format(DateTime::W3C);
 		$userModel = $this->_userModel;
 		$messageType=0;
-		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
+		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus, $isStatusReviewed, $isStatusTodo,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
 		$result = $command->execute();
 		return $result->encode();
 	}

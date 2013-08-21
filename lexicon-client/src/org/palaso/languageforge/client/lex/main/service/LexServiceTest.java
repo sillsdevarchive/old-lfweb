@@ -126,7 +126,7 @@ public class LexServiceTest extends BaseServiceTest implements ILexService {
 	}
 
 	@Override
-	public void saveNewComments(AnnotationMessageStatusType messageStatus,
+	public void saveNewComments(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo,
 			String parentGuid, String commentMessage, boolean isRootMessage,
 			AsyncCallback<ConversationDto> asyncCallback) {
 		// TODO Auto-generated method stub
