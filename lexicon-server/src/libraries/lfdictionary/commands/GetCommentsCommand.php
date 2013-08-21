@@ -73,7 +73,7 @@ class GetCommentsCommand {
 
 		$closedList= array();
 
-		if  ($this->_status==GetCommentsCommand::$STATUS_CLOSED || $this->_status==GetCommentsCommand::$STATUS_REVIEWED)
+		if  ($this->_status==GetCommentsCommand::$STATUS_CLOSED /*|| $this->_status==GetCommentsCommand::$STATUS_REVIEWED*/)
 		{
 			$closedListEntries = $xpath->query('//notes/annotation/message[@status="' . GetCommentsCommand::$STATUS_CLOSED . '"]');
 
@@ -96,12 +96,12 @@ class GetCommentsCommand {
 				{
 					continue;
 				}
-			}else if($this->_status==GetCommentsCommand::$STATUS_REVIEWED){
+			}/*else if($this->_status==GetCommentsCommand::$STATUS_REVIEWED){
 				if (array_key_exists($entry->getAttributeNode ("guid")->value,$closedList))
 				{
 					continue;
 				}
-			}else {
+			}*/else {
 				//undefined
 			}
 			$convDto = new \libraries\lfdictionary\dto\ConversationDTO();

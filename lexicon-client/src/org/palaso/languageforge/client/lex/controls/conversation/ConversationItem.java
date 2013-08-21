@@ -4,7 +4,6 @@ package org.palaso.languageforge.client.lex.controls.conversation;
 import java.util.Date;
 
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
-import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.MessageFormat;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 
@@ -46,9 +45,7 @@ public class ConversationItem extends ComplexPanel {
 	private Button btnAddComment = null;
 	private static String imgGreenChecked;
 	private ConversationControl conversationControl = null;
-	
-	private AnnotationMessageStatusType annotationMessageStatusType;
-	
+		
 	static {
 		imgGreenChecked =  GWT.getModuleBaseURL() +"/images/ConversationControlGreenChecked.png";
 	}
