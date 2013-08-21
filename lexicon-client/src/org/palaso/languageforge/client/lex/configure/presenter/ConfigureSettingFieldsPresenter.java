@@ -278,7 +278,7 @@ public class ConfigureSettingFieldsPresenter
 				+ relatedData.getEnabled());
 		FastTree tree = view.getFieldsTree();
 		if (relatedData.getClassName() == SettingFieldClassNameType.LEXSENSE) {
-			// isInIgnoreList
+
 			if (relatedData.getFieldName().equalsIgnoreCase("definition")
 					&& relatedData.getEnabled() == false) {
 
@@ -299,13 +299,13 @@ public class ConfigureSettingFieldsPresenter
 								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
 										.getWidget();
 								ConsoleLog.log(data.getFieldName());
-								
-									data.setEnabled(false);
-									chkBox.setValue(false);
-									
-									ConsoleLog.log(data.getFieldName() + " / "
-											+ chkBox.getValue() + " / "
-											+ chkBox.getText());
+
+								data.setEnabled(false);
+								chkBox.setValue(false);
+
+								ConsoleLog.log(data.getFieldName() + " / "
+										+ chkBox.getValue() + " / "
+										+ chkBox.getText());
 
 							}
 						}
@@ -329,6 +329,7 @@ public class ConfigureSettingFieldsPresenter
 									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
 											.getWidget();
 									chkBox.setValue(true);
+									data.setEnabled(true);
 								}
 							}
 						}
@@ -337,34 +338,63 @@ public class ConfigureSettingFieldsPresenter
 			}
 
 		} else if (relatedData.getClassName() == SettingFieldClassNameType.LEXEXAMPLESENTENCE) {
-			// if
-			// (relatedData.getFieldName().equalsIgnoreCase("ExampleSentence"))
-			// {
-			// // rule 2
-			// if (relatedData.getEnabled() == false) {
-			// for (CheckableItem chkItem : fieldsListDs.values()) {
-			// if (chkItem.getData() != null) {
-			// SettingFieldsFieldElementDto data =
-			// (SettingFieldsFieldElementDto) chkItem
-			// .getData();
-			// if (data.getClassName() ==
-			// SettingFieldClassNameType.LEXEXAMPLESENTENCE
-			// && !data
-			// .getFieldName()
-			// .equalsIgnoreCase("ExampleSentence")
-			// && !isInIgnoreList(data)) {
-			// data.setEnabled(false);
-			// chkItem.setChecked(false);
-			// }
-			// }
-			// }
-			// }
-			// } else {
-			// // rule 4
-			// if (!isInIgnoreList(relatedData)) {
-			//
-			// }
-			// }
+			if (relatedData.getFieldName().equalsIgnoreCase("ExampleSentence")
+					&& relatedData.getEnabled() == false) {
+				// rule 2
+				for (FastTreeItem treeItem : tree.getItems()) {
+					for (FastTreeItem treeChildItem : treeItem.getChildren()) {
+						CheckableItem chkItem = (CheckableItem) treeChildItem
+								.getData();
+
+						if (chkItem.getData() != null
+								&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+							SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+									.getData();
+							if (data.getClassName() == SettingFieldClassNameType.LEXEXAMPLESENTENCE
+									&& !data.getFieldName().equalsIgnoreCase(
+											"ExampleSentence")
+									&& !isInIgnoreList(data)) {
+
+								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+										.getWidget();
+								ConsoleLog.log(data.getFieldName());
+
+								data.setEnabled(false);
+								chkBox.setValue(false);
+
+								ConsoleLog.log(data.getFieldName() + " / "
+										+ chkBox.getValue() + " / "
+										+ chkBox.getText());
+
+							}
+						}
+
+					}
+				}
+			} else {
+				// rule 4
+				if (!isInIgnoreList(relatedData)) {
+					for (FastTreeItem treeItem : tree.getItems()) {
+						for (FastTreeItem treeChildItem : treeItem
+								.getChildren()) {
+							CheckableItem chkItem = (CheckableItem) treeChildItem
+									.getData();
+							if (chkItem.getData() != null
+									&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+								SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+										.getData();
+								if (data.getFieldName().equalsIgnoreCase(
+										"ExampleSentence")) {
+									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+											.getWidget();
+									chkBox.setValue(true);
+									data.setEnabled(true);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -384,8 +414,8 @@ public class ConfigureSettingFieldsPresenter
 								ValueChangeEvent<Boolean> event) {
 							// the change is makes on DS directly, so easy for
 							// saving operation.
-							relatedData.setEnabled(chkBox.getValue().booleanValue());
-							ConsoleLog.log("addValueChangeHandler: " + event.getValue());
+							relatedData.setEnabled(chkBox.getValue()
+									.booleanValue());
 							fieldsDependenceChecker(relatedData);
 						}
 					});
