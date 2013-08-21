@@ -141,6 +141,33 @@ class LFDictionaryAPI
 		$store = $this->getLexStore();
 		$result = $store->readEntry($guid);
 		//TODO check does a Id exists in sense and example, if not fill it and write back to mongoDb
+		//TODO maybe do this when LIFT->DB import??
+
+// 		//Sense Level
+// 		$isWriteBackNeeded = FALSE;
+// 		foreach ($result->_senses as $sense)
+// 		{
+
+// 			if (!(isset($sense->_id) && strlen(trim($sense->_id))>0))
+// 			{
+// 				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+// 				$isWriteBackNeeded = TRUE;
+// 			}
+// 			//Example Level
+// 			foreach ($sense->_examples as $example)
+// 			{
+// 				if (!(isset($example->_id) && strlen(trim($example->_id))>0))
+// 				{
+// 					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+// 					$isWriteBackNeeded = TRUE;
+// 				}
+// 			}
+// 		}
+// 		if ($isWriteBackNeeded==TRUE)
+// 		{
+// 			$result = $store->writeEntry($result,"update");
+// 		}
+
 		return $result->encode();
 	}
 
@@ -577,7 +604,7 @@ class LFDictionaryAPI
 	function updateProjectName($projectNodeId, $name) {
 		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		if ($projectModel->setTitle(urldecode($name))){
-			
+				
 			//reload
 			$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 			$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
@@ -818,11 +845,11 @@ class LFDictionaryAPI
 			);
 		}
 	}
-	
+
 	/**
 	 * simply count the word in database and return.
 	 */
-	
+
 	function getWordCountInDatabaseAction(){
 		$this->isReadyOrThrow();
 		$store = $this->getLexStore();
