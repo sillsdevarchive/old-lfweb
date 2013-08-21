@@ -563,11 +563,11 @@ public class LexService extends BaseService implements ILexService {
 	}
 
 	@Override
-	public void saveNewComments(AnnotationMessageStatusType messageStatus,
+	public void saveNewComments(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo,
 			String parentGuid, String commentMessage, boolean isRootMessage,
 			AsyncCallback<ConversationDto> asyncCallback) {
 
-		SaveNewCommentAction action = new SaveNewCommentAction(messageStatus,
+		SaveNewCommentAction action = new SaveNewCommentAction(messageStatus,isStatusReviewed, isStatusTodo, 
 				parentGuid, commentMessage, isRootMessage);
 		remoteAsync.execute(action, asyncCallback);
 

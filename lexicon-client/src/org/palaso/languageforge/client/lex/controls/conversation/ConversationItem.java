@@ -3,6 +3,8 @@ package org.palaso.languageforge.client.lex.controls.conversation;
 
 import java.util.Date;
 
+import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.MessageFormat;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 
@@ -10,7 +12,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ComplexPanel;
@@ -24,6 +25,8 @@ public class ConversationItem extends ComplexPanel {
 	private boolean isRootComment = false;
 	private boolean isNewComment = false;
 	private boolean isMarked = false;
+	private boolean isTodo = false;
+	private boolean isReviewed = false;
 	private String refGuid = "";
 	/*
 	 * a comment has follow parts - header - left check mark - comment container
@@ -44,6 +47,7 @@ public class ConversationItem extends ComplexPanel {
 	private static String imgGreenChecked;
 	private ConversationControl conversationControl = null;
 	
+	private AnnotationMessageStatusType annotationMessageStatusType;
 	
 	static {
 		imgGreenChecked =  GWT.getModuleBaseURL() +"/images/ConversationControlGreenChecked.png";
@@ -145,6 +149,14 @@ public class ConversationItem extends ComplexPanel {
 	public boolean getIsResolvedCheck() {
 		return isMarked;
 	}
+	
+	public boolean getIsReviewedCheck() {
+		return isReviewed;
+	}
+	
+	public boolean getIsTodoCheck() {
+		return isTodo;
+	}
 
 	public String getReferencedGuid() {
 		return refGuid;
@@ -217,7 +229,7 @@ public class ConversationItem extends ComplexPanel {
 						@Override
 						public void onValueChange(
 								ValueChangeEvent<Boolean> event) {
-							//TODO cyu	isMarked = event.getValue();
+							isReviewed = event.getValue();
 						}
 					});
 			chkTodo
@@ -226,7 +238,7 @@ public class ConversationItem extends ComplexPanel {
 						@Override
 						public void onValueChange(
 								ValueChangeEvent<Boolean> event) {
-							//TODO cyu isMarked = event.getValue();
+							isTodo = event.getValue();
 						}
 					});
 			chkResolved
@@ -351,6 +363,22 @@ public class ConversationItem extends ComplexPanel {
 	public void setIsMarked(boolean marked) {
 		isMarked = marked;
 		updateMarkerStatus();
+	}
+
+	public boolean isTodo() {
+		return isTodo;
+	}
+
+	public void setTodo(boolean isTodo) {
+		this.isTodo = isTodo;
+	}
+
+	public boolean isReviewed() {
+		return isReviewed;
+	}
+
+	public void setReviewed(boolean isReviewed) {
+		this.isReviewed = isReviewed;
 	}
 
 	public boolean getIsMarked() {
