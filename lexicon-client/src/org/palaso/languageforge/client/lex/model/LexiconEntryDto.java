@@ -39,10 +39,6 @@ public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 		return this.entry;
 	}-*/;
 
-	public final native String getId() /*-{
-		return this.guid;
-	}-*/;
-
 	public final native String getMercurialSHA() /*-{
 		return this.mercurialSHA;
 	}-*/;
@@ -60,6 +56,10 @@ public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 		return this.senses;
 	}-*/;
 
+	public final native String getId() /*-{
+		return this.guid;
+	}-*/;
+	
 	public final native void setGuid(String guid) /*-{
 		this.guid = guid;
 	}-*/;

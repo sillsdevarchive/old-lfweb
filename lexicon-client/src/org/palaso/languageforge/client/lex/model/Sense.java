@@ -157,4 +157,12 @@ public class Sense extends BaseDto<Sense> {
 	public final native void setMetadata(EntryMetadataDto metadata) /*-{
 		this.metadata = metadata;
 	}-*/;
+
+	public final native String getId() /*-{
+		return this.id;
+	}-*/;
+
+	public final native void setId(String id) /*-{
+		this.id = id;
+	}-*/;
 }

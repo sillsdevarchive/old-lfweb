@@ -23,10 +23,31 @@ class Example {
 	 */
 	var $_metadata;
 	
-	function __construct() {	
+	/**
+	 *
+	 * @var String
+	 */
+	var $_id;
+	
+	function __construct() {
+		$this->_id = "";
 		$this->_example = new \libraries\lfdictionary\dto\MultiText();
 		$this->_translation = new \libraries\lfdictionary\dto\MultiText();
 		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
+	}
+	
+	/**
+	 * @return String
+	 */
+	function getId() {
+		return $this->_id;
+	}
+	
+	/**
+	 * @param String $id
+	 */
+	function setId($id) {
+		$this->_id = $id;
 	}
 
 	/**
@@ -60,10 +81,11 @@ class Example {
 	function encode() {
 		$translation = $this->_translation->encode();
 		
-		return array("example" => $this->_example->encode(), "translation" => $translation, "metadata" => $this->_metadata->encode());		
+		return array("id" => $this->_id, "example" => $this->_example->encode(), "translation" => $translation, "metadata" => $this->_metadata->encode());		
 	}
 	
 	function decode($value) {
+		$this->_id = $value['id'];
 		$this->_example = \libraries\lfdictionary\dto\MultiText::createFromArray($value['example']);
 		$this->_translation = \libraries\lfdictionary\dto\MultiText::createFromArray($value['translation']);
 		$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);

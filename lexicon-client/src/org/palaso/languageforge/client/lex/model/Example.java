@@ -60,4 +60,11 @@ public class Example extends BaseDto<Example> {
 		this.metadata = metadata;
 	}-*/;
 
+	public final native String getId() /*-{
+		return this.id;
+	}-*/;
+
+	public final native void setId(String id) /*-{
+		this.id = id;
+	}-*/;
 }

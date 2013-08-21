@@ -140,7 +140,7 @@ class LFDictionaryAPI
 
 		$store = $this->getLexStore();
 		$result = $store->readEntry($guid);
-
+		//TODO check does a Id exists in sense and example, if not fill it and write back to mongoDb
 		return $result->encode();
 	}
 

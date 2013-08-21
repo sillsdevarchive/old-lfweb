@@ -144,21 +144,11 @@ public class Tools {
 				for (int i = 0; i < modified.getEntry().keys().length(); i++) {
 					String key = modified.getEntry().keys().get(i);
 					if (original.getEntry().value(key) == null) {
-						ConsoleLog
-								.log("EntryCheck: original value with Key not found - "
-										+ key);
 						isChange = true;
 						break;
 					} else {
 						if (modified.getEntry().value(key).trim()
 								.compareTo(original.getEntry().value(key).trim()) != 0) {
-							ConsoleLog.log("EntryCheck: value not the same - "
-									+ modified.getEntry().value(key) + " / "
-									+ original.getEntry().value(key));
-							ConsoleLog.log("EntryCheck: value not the same - "
-									+ modified.getEntry().value(key).length()
-									+ " / "
-									+ original.getEntry().value(key).length());
 							isChange = true;
 							break;
 						}
@@ -172,7 +162,7 @@ public class Tools {
 				}
 			} else {
 				// size diff, entry changed
-				ConsoleLog.log("Change metadata for Entry By size changed");
+				ConsoleLog.log("Change metadata for Entry by size changed");
 				modified.getMetadata().setModifiedBy(userName);
 				modified.getMetadata().setModifiedById(userId);
 				modified.getMetadata().setModifiedDate(unixTimeStamp);
@@ -253,7 +243,79 @@ public class Tools {
 				}
 
 				// -->Example Level
-
+//				for (int j = 0; j < modifiedSense.getExampleCount(); j++) {
+//					Example modifiedExample = modifiedSense.getExample(j);
+//					Example originalExample = null;
+//					boolean isExampleChange = false;
+//					if (i < original.getSenseCount() && originalSense!=null) {
+//						originalExample = originalSense.getExample(j);
+//					}
+//
+//					if (originalSense != null) {
+//						// we have a sense at the same index with modified one.
+//						if (!(modifiedSense.getDescription().compareTo(
+//								originalSense.getDescription()) == 0
+//								|| modifiedSense.getPOS().compareTo(
+//										originalSense.getPOS()) == 0
+//								|| modifiedSense.getSemanticDomainName().compareTo(
+//										originalSense.getSemanticDomainName()) == 0 || modifiedSense
+//								.getSemanticDomainValue().compareTo(
+//										originalSense.getSemanticDomainValue()) == 0)) {
+//							isSenseChange = true;
+//						} else {
+//							// check Definition
+//							for (int k = 0; k < modifiedSense.getDefinition()
+//									.keys().length(); j++) {
+//								String key = modifiedSense.getDefinition().keys()
+//										.get(j);
+//								if (originalSense.getDefinition().value(key) == null) {
+//									isSenseChange = true;
+//									break;
+//								} else {
+//									if (modifiedSense
+//											.getDefinition()
+//											.value(key)
+//											.compareTo(
+//													originalSense.getDefinition()
+//															.value(key)) != 0) {
+//										isSenseChange = true;
+//										break;
+//									}
+//								}
+//							}
+//						}
+//						if (isSenseChange) {
+//							ConsoleLog.log("SenseChanged compared to original");
+//							modifiedSense.getMetadata().setModifiedBy(userName);
+//							modifiedSense.getMetadata().setModifiedById(userId);
+//							modifiedSense.getMetadata().setModifiedDate(
+//									unixTimeStamp);
+//						}
+//					} else {
+//						// no original find, could be new.
+//
+//						if (modifiedSense.getMetadata().getCreatedbyId()
+//								.equalsIgnoreCase("")) {
+//							ConsoleLog.log("Could be new Sense");
+//							// no creator, new one
+//							modifiedSense.getMetadata().setCreatedby(userName);
+//							modifiedSense.getMetadata().setCreatedbyId(userId);
+//							modifiedSense.getMetadata().setCreatedDate(
+//									unixTimeStamp);
+//							modifiedSense.getMetadata().setModifiedBy(userName);
+//							modifiedSense.getMetadata().setModifiedById(userId);
+//							modifiedSense.getMetadata().setModifiedDate(
+//									unixTimeStamp);
+//						} else {
+//							ConsoleLog.log("SenseChanged");
+//							// update
+//							modifiedSense.getMetadata().setModifiedBy(userName);
+//							modifiedSense.getMetadata().setModifiedById(userId);
+//							modifiedSense.getMetadata().setModifiedDate(
+//									unixTimeStamp);
+//						}
+//					}
+//				}
 			}
 
 		}

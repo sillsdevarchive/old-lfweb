@@ -34,13 +34,36 @@ class Sense {
 	 */
 	var $_metadata;
 	
+	/**
+	 *
+	 * @var String
+	 */
+	var $_id;
+	
 	function __construct() {
+		$this->_id = "";
 		$this->_examples = array();
 		$this->_definition = \libraries\lfdictionary\dto\MultiText::create();
 		$this->_partOfSpeech = '';
 		
 		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
 	}
+	
+
+	/**
+	 * @return String
+	 */
+	function getId() {
+		return $this->_id;
+	}
+	
+	/**
+	 * @param String $id
+	 */
+	function setId($id) {
+		$this->_id = $id;
+	}
+	
 	
 	/**
 	 * @return MultiText
@@ -131,6 +154,7 @@ class Sense {
 		$definition = $this->_definition->encode();
 		
 			return array(
+				"id" => $this->_id,
 				"definition" => $definition,
 				"POS" => $this->_partOfSpeech,
 				"examples" => $examples,
@@ -141,7 +165,7 @@ class Sense {
 	}
 	
 	function decode($value) {
-	
+		$this->_id = $value['id'];
 		$this->_definition = \libraries\lfdictionary\dto\MultiText::createFromArray($value['definition']);
 		$this->_partOfSpeech = $value['POS'];
 		$this->_semanticDomainValue= $value['SemDomValue'];
