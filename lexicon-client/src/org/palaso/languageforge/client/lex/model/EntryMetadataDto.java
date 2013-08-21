@@ -80,4 +80,28 @@ public class EntryMetadataDto extends BaseDto<EntryMetadataDto> {
 		}
 	}-*/;
 
+	public final native void setCreatedbyId(String value) /*-{
+		this.crid = value;
+	}-*/;
+
+	public final native void setCreatedby(String value) /*-{
+		this.crname = value;
+	}-*/;
+
+	public final native void setCreatedDate(int value) /*-{
+		this.crdate = value;
+	}-*/;
+
+	public final native void setModifiedById(String value) /*-{
+		this.modid = value;
+	}-*/;
+
+	public final native void setModifiedBy(String value) /*-{
+		this.modname = value;
+	}-*/;
+
+	public final native void setModifiedDate(int value) /*-{
+		this.moddate = value;
+	}-*/;
+
 }

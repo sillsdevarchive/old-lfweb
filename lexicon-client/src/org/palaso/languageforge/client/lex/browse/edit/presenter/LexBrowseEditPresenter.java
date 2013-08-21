@@ -2,6 +2,7 @@ package org.palaso.languageforge.client.lex.browse.edit.presenter;
 
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.Tools;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
@@ -36,7 +37,8 @@ public class LexBrowseEditPresenter extends
 	private EntryPresenter entryPresenter = null;
 	private FieldSettings fieldSettings = FieldSettings.fromWindow();
 	private boolean isNewEntry = false;
-
+	private LexiconEntryDto originalEntry =null;
+	
 	public void onStart() {
 	}
 
@@ -54,6 +56,7 @@ public class LexBrowseEditPresenter extends
 	 * 
 	 */
 	public void onWordCreated() {
+		originalEntry = null;
 		eventBus.setUpdateButtonEnable(true);
 		entryPresenter = new EntryPresenter(view.createDictionaryView(false),
 				LexiconEntryDto.createFromSettings(fieldSettings),
@@ -67,6 +70,7 @@ public class LexBrowseEditPresenter extends
 	 */
 	public void onWordDeleted() {
 		// eventBus.showLoadingIndicator();
+		originalEntry =null;
 		if (entryPresenter==null)
 		{
 			// fail safe
@@ -119,6 +123,8 @@ public class LexBrowseEditPresenter extends
 
 			@Override
 			public void onSuccess(LexiconEntryDto result) {
+				// keep a copy for update check and setting timestamp
+				originalEntry = (LexiconEntryDto) Tools.cloneJavaScriptObject(result) ;
 				renderWord(result);
 				eventBus.setUpdateButtonEnable(true);
 				boolean allowDelete=false;
@@ -150,7 +156,7 @@ public class LexBrowseEditPresenter extends
 		}
 		
 		entryPresenter.updateModel();
-		final LexiconEntryDto entryDTO = entryPresenter.getModel();
+		final LexiconEntryDto entryDTO = Tools.updateMetadata(entryPresenter.getModel(), originalEntry);
 		// eventBus.showLoadingIndicator();
 		LexService.saveEntry(entryDTO, new AsyncCallback<ResultDto>() {
 
@@ -164,6 +170,7 @@ public class LexBrowseEditPresenter extends
 
 			@Override
 			public void onSuccess(ResultDto result) {
+				originalEntry = (LexiconEntryDto) Tools.cloneJavaScriptObject(entryDTO) ;
 				eventBus.clientDataRefresh(!isNewEntry, false);
 				if (isNewEntry) {
 					view.showMessage(
@@ -194,5 +201,7 @@ public class LexBrowseEditPresenter extends
 				view.createDictionaryView(allowEdit),
 				result, fieldSettings);
 	}
+	
+
 
 }
