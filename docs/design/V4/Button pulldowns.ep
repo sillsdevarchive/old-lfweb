@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<Document xmlns="http://www.evolus.vn/Namespace/Pencil"><Properties/><Pages><Page><Properties><Property name="name">Untitled Page</Property><Property name="id">1377065312204_7093</Property><Property name="width">1623</Property><Property name="height">888</Property><Property name="dimBackground"/><Property name="transparentBackground"/><Property name="backgroundColor">#ffffff</Property></Properties><Content><g xmlns="http://www.w3.org/2000/svg" p:type="Group" xmlns:p="http://www.evolus.vn/Namespace/Pencil" transform="matrix(1,0,0,1,696,11)" id="a43a933afa6a4f27ae85f6c834c6fb62" p:sizing-gow="140" p:sizing-goh="117"><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Combo" id="30139811b9894bd390c95947b6d6d9a2" transform="matrix(1,0,0,1,0,0)" p:sizing-ox="0" p:sizing-oy="0" p:sizing-ow="140" p:sizing-oh="25"><p:metadata><p:property name="box"><![CDATA[140,25]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[      Settings]]></p:property><p:property name="textColor"><![CDATA[#3973ADFF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="140" height="25" p:name="htmlObject" id="d224d59acbba4f398dd08daba401e9d5" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 140px; height: 25px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="788688241c2b4f97a607cc5cfe8f2119">
+                    <menulist style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 140px; height: 25px; font-family: Arial; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(57, 115, 173); opacity: 1;" p:name="xulControl" id="f613b609c1a74d309281a63b8c3f9965" sizetopopup="pref" label="      Settings" accesskey="" width="140" height="25"/>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Listbox" id="b4b6c83b174b4f79851d23a64fc066f5" transform="matrix(1,0,0,1,0,22)" p:sizing-ox="0" p:sizing-oy="22" p:sizing-ow="140" p:sizing-oh="95"><p:metadata><p:property name="box"><![CDATA[140,95]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="items"><![CDATA[#Input Systems
+Fields
+Tasks
+Properties
+Members]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA["Liberation Sans",Arial,sans-serif|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="140" height="95" p:name="htmlObject" id="2422da73023e459dae9e7b0bb0b6c0d9" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 140px; height: 95px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="90794fdb427f46529c34e723c3fc7e66">
+                    <listbox style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 140px; height: 95px; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;" p:name="xulControl" id="941c75837b8143b582bc40fc0d670d8a" width="140" height="95"><listitem label="Input Systems" type="" checked="false" selected="true"/><listitem label="Fields" type="" checked="false" selected="false"/><listitem label="Tasks" type="" checked="false" selected="false"/><listitem label="Properties" type="" checked="false" selected="false"/><listitem label="Members" type="" checked="false" selected="false"/></listbox>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:Bitmap" id="2b57ce4261f443a087992f30ad2b5040" transform="matrix(1,0,0,1,0,4.79998779296875)" p:sizing-ox="0" p:sizing-oy="4.79998779296875" p:sizing-ow="21" p:sizing-oh="22"><p:metadata><p:property name="box"><![CDATA[21,22]]></p:property><p:property name="imageData"><![CDATA[39,40,../../../lexicon-client/war/images/ico04.png]]></p:property><p:property name="withBlur"><![CDATA[false]]></p:property><p:property name="fillColor"><![CDATA[#FFFFFF00]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[0|]]></p:property></p:metadata>
+            <defs>
+                <filter height="1.2558399" y="-0.12792" width="1.06396" x="-0.03198" p:name="imageShading" id="dd406b1c95a24e68946fafa7c0566a33">
+                    <feGaussianBlur stdDeviation="1.3325" in="SourceAlpha"/>
+                </filter>
+                <g p:name="container" id="f4811de33a804f7c956173330f09fe49">
+                    <rect style="fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0); stroke-opacity: 1; stroke-width: 0; fill-opacity: 0;" p:name="bgRect" id="dc58a232345848d48f80827576749f7d" width="21" height="22" transform="translate(0,0)"/>
+                    <g p:name="imageContainer" id="0f4715938b5e487681b7d448f4e1b475" transform="scale(0.5384615384615384,0.55)">
+                        <image x="0" y="0" p:name="image" id="ce185b482ac241f59b1a558b3d19ea20" xlink:href="../../../lexicon-client/war/images/ico04.png" xmlns:xlink="http://www.w3.org/1999/xlink" width="39" height="40"/>
+                    </g>
+                </g>
+            </defs>
+            <use xlink:href="#f4811de33a804f7c956173330f09fe49" xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(1, 1)" p:filter="url(#dd406b1c95a24e68946fafa7c0566a33)" style="opacity: 0.6; visibility: hidden; display: none;" p:name="bgCopy" id="f849b8f9baf64f718be3244536bc8c9a"/>
+            <use xlink:href="#f4811de33a804f7c956173330f09fe49" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+        </g></g><g xmlns="http://www.w3.org/2000/svg" p:type="Group" xmlns:p="http://www.evolus.vn/Namespace/Pencil" transform="matrix(1,0,0,1,325,11)" id="dcf6be8f4984448082c9f2c64c9e012e" p:sizing-gow="180" p:sizing-goh="114.75"><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Combo" id="8610fb71d77e4b8593252e1e3ef4e998" transform="matrix(1,0,0,1,1,0)" p:sizing-ox="1" p:sizing-oy="0" p:sizing-ow="179" p:sizing-oh="25"><p:metadata><p:property name="box"><![CDATA[179,25]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[      Add Information]]></p:property><p:property name="textColor"><![CDATA[#3973ADFF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="179" height="25" p:name="htmlObject" id="7db7df10ce404f8abf8e4f9bde9c29c7" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 179px; height: 25px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="4556df2a04e74e5abcdd23f5e58e37ae">
+                    <menulist style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 179px; height: 25px; font-family: Arial; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(57, 115, 173); opacity: 1;" p:name="xulControl" id="e04e97da888e4878b7ff6ca371f5ef54" sizetopopup="pref" label="      Add Information" accesskey="" width="179" height="25"/>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Listbox" id="255992b5186147818841762b7afaa9a9" transform="matrix(1,0,0,1,0,22)" p:sizing-ox="0" p:sizing-oy="22" p:sizing-ow="180" p:sizing-oh="92.75"><p:metadata><p:property name="box"><![CDATA[180,92.75]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="items"><![CDATA[#Add meanings
+Add grammatical usage
+Add examples
+]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA["Liberation Sans",Arial,sans-serif|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="180" height="92.75" p:name="htmlObject" id="4bbc691a19d9489eb1816d0ef357b201" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 180px; height: 92.75px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="4c5d6af3821843de84aaa2a2eb24c3a7">
+                    <listbox style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 180px; height: 92.75px; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;" p:name="xulControl" id="01cf4d88627a42dfb1b693482d8dcd92" width="180" height="92.75"><listitem label="Add meanings" type="" checked="false" selected="true"/><listitem label="Add grammatical usage" type="" checked="false" selected="false"/><listitem label="Add examples" type="" checked="false" selected="false"/><listitem label="" type="" checked="false" selected="false"/></listbox>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:Bitmap" id="bcd048aa37164cf3b6d79d77ac42ac40" transform="matrix(1,0,0,1,6,3.79998779296875)" p:sizing-ox="6" p:sizing-oy="3.79998779296875" p:sizing-ow="12" p:sizing-oh="13"><p:metadata><p:property name="box"><![CDATA[12,13]]></p:property><p:property name="imageData"><![CDATA[12,13,../../../lexicon-client/war/images/ico07.gif]]></p:property><p:property name="withBlur"><![CDATA[false]]></p:property><p:property name="fillColor"><![CDATA[#FFFFFF00]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[0|]]></p:property></p:metadata>
+            <defs>
+                <filter height="1.2558399" y="-0.12792" width="1.06396" x="-0.03198" p:name="imageShading" id="7c8b84464f044f8fac955d3e2750b7ee">
+                    <feGaussianBlur stdDeviation="1.3325" in="SourceAlpha"/>
+                </filter>
+                <g p:name="container" id="3a11f0c842d84cfdbb26feab3b139f1f">
+                    <rect style="fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0); stroke-opacity: 1; stroke-width: 0; fill-opacity: 0;" p:name="bgRect" id="7d514e9d49f249a495e97901723b6236" width="12" height="13" transform="translate(0,0)"/>
+                    <g p:name="imageContainer" id="a37f77e62ede43b8983174fa001610dd" transform="scale(1,1)">
+                        <image x="0" y="0" p:name="image" id="c87114834948472eb7a6abc82c26ad66" xlink:href="../../../lexicon-client/war/images/ico07.gif" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="13"/>
+                    </g>
+                </g>
+            </defs>
+            <use xlink:href="#3a11f0c842d84cfdbb26feab3b139f1f" xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(1, 1)" p:filter="url(#7c8b84464f044f8fac955d3e2750b7ee)" style="opacity: 0.6; visibility: hidden; display: none;" p:name="bgCopy" id="f769f063cb094a48b0a364d280e11949"/>
+            <use xlink:href="#3a11f0c842d84cfdbb26feab3b139f1f" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+        </g></g><g xmlns="http://www.w3.org/2000/svg" p:type="Group" xmlns:p="http://www.evolus.vn/Namespace/Pencil" transform="matrix(1,0,0,1,164,11)" id="5025e593aa97438a86a369646c8b11c5" p:sizing-gow="152" p:sizing-goh="103"><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Combo" id="86cab97b83bf45fd978e53c7c8a587ba" transform="matrix(1,0,0,1,0,0)" p:sizing-ox="0" p:sizing-oy="0" p:sizing-ow="152" p:sizing-oh="25"><p:metadata><p:property name="box"><![CDATA[152,25]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[      Gather Words]]></p:property><p:property name="textColor"><![CDATA[#3973ADFF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="152" height="25" p:name="htmlObject" id="d4302fe5812c4a75b2ad4bc17e27c7ab" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 152px; height: 25px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="574a74901f754e9aa0fbe7753b7d0406">
+                    <menulist style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 152px; height: 25px; font-family: Arial; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(57, 115, 173); opacity: 1;" p:name="xulControl" id="a29d406bd63c41bc832dad1042379957" sizetopopup="pref" label="      Gather Words" accesskey="" width="152" height="25"/>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Listbox" id="39cd8694792544769a7f8c50b5271972" transform="matrix(1,0,0,1,0,22)" p:sizing-ox="0" p:sizing-oy="22" p:sizing-ow="152" p:sizing-oh="81"><p:metadata><p:property name="box"><![CDATA[152,81]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="items"><![CDATA[#Browse and Edit
+From Texts
+From Semantic Domains
+From a Word List]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA["Liberation Sans",Arial,sans-serif|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="152" height="81" p:name="htmlObject" id="5003401457494e879e293592f1f76ee9" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 152px; height: 81px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="2bb1b77ca77b40d1960fa0cf67be1c46">
+                    <listbox style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 152px; height: 81px; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;" p:name="xulControl" id="ce3b32a35cf8427f8385c8af6cb6ad2c" width="152" height="81"><listitem label="Browse and Edit" type="" checked="false" selected="true"/><listitem label="From Texts" type="" checked="false" selected="false"/><listitem label="From Semantic Domains" type="" checked="false" selected="false"/><listitem label="From a Word List" type="" checked="false" selected="false"/></listbox>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:Bitmap" id="5ba9c700a9bb473b841ae45fc2d03061" transform="matrix(1,0,0,1,6,7.79998779296875)" p:sizing-ox="6" p:sizing-oy="7.79998779296875" p:sizing-ow="14" p:sizing-oh="10"><p:metadata><p:property name="box"><![CDATA[14,10]]></p:property><p:property name="imageData"><![CDATA[14,10,../../../lexicon-server/src/images/lfdictionary/ico05.gif]]></p:property><p:property name="withBlur"><![CDATA[false]]></p:property><p:property name="fillColor"><![CDATA[#FFFFFF00]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[0|]]></p:property></p:metadata>
+            <defs>
+                <filter height="1.2558399" y="-0.12792" width="1.06396" x="-0.03198" p:name="imageShading" id="b896cbd59dfd4c5b8887a59916eb77d7">
+                    <feGaussianBlur stdDeviation="1.3325" in="SourceAlpha"/>
+                </filter>
+                <g p:name="container" id="1fe4e240aad04271b09172fe37108a65">
+                    <rect style="fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0); stroke-opacity: 1; stroke-width: 0; fill-opacity: 0;" p:name="bgRect" id="801d69ee12ad4d79b8f102385b7a7320" width="14" height="10" transform="translate(0,0)"/>
+                    <g p:name="imageContainer" id="bd572974ae884f83bc7524867ea28fea" transform="scale(1,1)">
+                        <image x="0" y="0" p:name="image" id="0897c5bbf38b47afb5833bc1c6e2f536" xlink:href="../../../lexicon-server/src/images/lfdictionary/ico05.gif" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="10"/>
+                    </g>
+                </g>
+            </defs>
+            <use xlink:href="#1fe4e240aad04271b09172fe37108a65" xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(1, 1)" p:filter="url(#b896cbd59dfd4c5b8887a59916eb77d7)" style="opacity: 0.6; visibility: hidden; display: none;" p:name="bgCopy" id="7bd862255d084150b820f19423c2badd"/>
+            <use xlink:href="#1fe4e240aad04271b09172fe37108a65" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+        </g></g><g xmlns="http://www.w3.org/2000/svg" p:type="Group" xmlns:p="http://www.evolus.vn/Namespace/Pencil" transform="matrix(1,0,0,1,13,11)" id="46e72f78026943818f5b60b580f5c295" p:sizing-gow="140" p:sizing-goh="85.25"><g p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Combo" id="0eaca01158d547ef9ca4e845eae22bf3" transform="matrix(1,0,0,1,0,0)" p:sizing-ox="0" p:sizing-oy="0" p:sizing-ow="140" p:sizing-oh="25"><p:metadata><p:property name="box"><![CDATA[140,25]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[       View]]></p:property><p:property name="textColor"><![CDATA[#3973ADFF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="140" height="25" p:name="htmlObject" id="2fe39838f1ea4165972ccdf0a61855d1" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 140px; height: 25px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="4daaa056dca24b5a921458928020ae2c">
+                    <menulist style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 140px; height: 25px; font-family: Arial; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(57, 115, 173); opacity: 1;" p:name="xulControl" id="d1b8ca8362b14dbea242eb461ba569e0" sizetopopup="pref" label="       View" accesskey="" width="140" height="25"/>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g p:type="Shape" p:def="Evolus.NativeGUI:Listbox" id="106a442a08c749f688eb21be908d9f54" transform="matrix(1,0,0,1,0,24)" p:sizing-ox="0" p:sizing-oy="24" p:sizing-ow="140" p:sizing-oh="61.25"><p:metadata><p:property name="box"><![CDATA[140,61.25]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="items"><![CDATA[#Dashboard
+Browse words]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA["Liberation Sans",Arial,sans-serif|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="140" height="61.25" p:name="htmlObject" id="091e24f226104e4c88179220adb9913c" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 140px; height: 61.25px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="f9ba6fa855684569981aa837d14f4b01">
+                    <listbox style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 140px; height: 61.25px; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;" p:name="xulControl" id="6767c9b160e04911b8206b32aa286dac" width="140" height="61.25"><listitem label="Dashboard" type="" checked="false" selected="true"/><listitem label="Browse words" type="" checked="false" selected="false"/></listbox>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:Bitmap" id="31cad0a05ac741379fd166e3b9fe7825" transform="matrix(1,0,0,1,6,4.79998779296875)" p:sizing-ox="6" p:sizing-oy="4.79998779296875" p:sizing-ow="19" p:sizing-oh="19"><p:metadata><p:property name="box"><![CDATA[19,19]]></p:property><p:property name="imageData"><![CDATA[19,19,../../../lexicon-server/src/images/lfdictionary/eye.png]]></p:property><p:property name="withBlur"><![CDATA[false]]></p:property><p:property name="fillColor"><![CDATA[#FFFFFF00]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[0|]]></p:property></p:metadata>
+            <defs>
+                <filter height="1.2558399" y="-0.12792" width="1.06396" x="-0.03198" p:name="imageShading" id="dece530939124ebf9bd746619f56e2f2">
+                    <feGaussianBlur stdDeviation="1.3325" in="SourceAlpha"/>
+                </filter>
+                <g p:name="container" id="10d636aa4e4b4d72a3a6a23d79796b61">
+                    <rect style="fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0); stroke-opacity: 1; stroke-width: 0; fill-opacity: 0;" p:name="bgRect" id="8047958592754c60b046cff0a57b0ae6" width="19" height="19" transform="translate(0,0)"/>
+                    <g p:name="imageContainer" id="da86a3c1388d4df2a50bf65c67fbd0b7" transform="scale(1,1)">
+                        <image x="0" y="0" p:name="image" id="f43659979d9d454a8886a1e862a81fc2" xlink:href="../../../lexicon-server/src/images/lfdictionary/eye.png" xmlns:xlink="http://www.w3.org/1999/xlink" width="19" height="19"/>
+                    </g>
+                </g>
+            </defs>
+            <use xlink:href="#10d636aa4e4b4d72a3a6a23d79796b61" xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(1, 1)" p:filter="url(#dece530939124ebf9bd746619f56e2f2)" style="opacity: 0.6; visibility: hidden; display: none;" p:name="bgCopy" id="d4017ad9f5934ba4b3370232bce33279"/>
+            <use xlink:href="#10d636aa4e4b4d72a3a6a23d79796b61" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+        </g></g><g xmlns="http://www.w3.org/2000/svg" p:type="Group" xmlns:p="http://www.evolus.vn/Namespace/Pencil" transform="translate(519,11)" id="f2522b895c244dd3bdb991ac09c3adff" p:sizing-gow="167.5" p:sizing-goh="113.5"><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Combo" id="fd85e5de35d1496eb75b8e512abb3903" transform="matrix(1,0,0,1,0,0)" p:sizing-ox="0" p:sizing-oy="0" p:sizing-ow="167.5" p:sizing-oh="25"><p:metadata><p:property name="box"><![CDATA[167.5,25]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[       Review]]></p:property><p:property name="textColor"><![CDATA[#3973ADFF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="167.5" height="25" p:name="htmlObject" id="a6a5f23a53c14ca09d0de73437efcebf" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 167.5px; height: 25px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="dd635c699ea446778fd483410e6b9bf1">
+                    <menulist style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 167.5px; height: 25px; font-family: Arial; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(57, 115, 173); opacity: 1;" p:name="xulControl" id="188a899532d3485a877c772ab9d185f7" sizetopopup="pref" label="       Review" accesskey="" width="167.5" height="25"/>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.NativeGUI:Listbox" id="b8f332f0c7df4630acb3c768375ae803" transform="matrix(1,0,0,1,0,21)" p:sizing-ox="0" p:sizing-oy="21" p:sizing-ow="167.5" p:sizing-oh="92.5"><p:metadata><p:property name="box"><![CDATA[167.5,92.5]]></p:property><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="items"><![CDATA[#Process Web Submissions
+Process Comments
+Discuss Words
+Recent Progress]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA["Liberation Sans",Arial,sans-serif|normal|normal|13px|none]]></p:property></p:metadata>
+            <foreignObject x="0" y="0" width="167.5" height="92.5" p:name="htmlObject" id="6017acc7afd54275a1282deeefad0e6e" style="">
+                <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="-moz-box-sizing: border-box; overflow: hidden; position: relative; font-size: 0px; width: 167.5px; height: 92.5px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="e59e01dab17b4af3bf6fe8fec9c75f13">
+                    <listbox style="margin: 0px ! important; min-width: 0px ! important; -moz-box-sizing: border-box; vertical-align: middle; width: 167.5px; height: 92.5px; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;" p:name="xulControl" id="5acaee475b39449785b6697be565b0a8" width="167.5" height="92.5"><listitem label="Process Web Submissions" type="" checked="false" selected="true"/><listitem label="Process Comments" type="" checked="false" selected="false"/><listitem label="Discuss Words" type="" checked="false" selected="false"/><listitem label="Recent Progress" type="" checked="false" selected="false"/></listbox>
+                    <html:div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></html:div>
+                </html:div>
+            </foreignObject>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:Bitmap" id="44931eaea32d4e49a04cffc3ee3dbf94" transform="matrix(1,0,0,1,4,2.79998779296875)" p:sizing-ox="4" p:sizing-oy="2.79998779296875" p:sizing-ow="22" p:sizing-oh="18"><p:metadata><p:property name="box"><![CDATA[22,18]]></p:property><p:property name="imageData"><![CDATA[152,123,../../../lexicon-server/src/images/lfdictionary/CommentBlue.png]]></p:property><p:property name="withBlur"><![CDATA[false]]></p:property><p:property name="fillColor"><![CDATA[#FFFFFF00]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[0|]]></p:property></p:metadata>
+            <defs>
+                <filter height="1.2558399" y="-0.12792" width="1.06396" x="-0.03198" p:name="imageShading" id="bcc3fab25bd2416688eed8105320bec3">
+                    <feGaussianBlur stdDeviation="1.3325" in="SourceAlpha"/>
+                </filter>
+                <g p:name="container" id="8d2049a74df24893847840334f1c03b2">
+                    <rect style="fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0); stroke-opacity: 1; stroke-width: 0; fill-opacity: 0;" p:name="bgRect" id="a265cd64ad994fe992bf2875256fba48" width="22" height="18" transform="translate(0,0)"/>
+                    <g p:name="imageContainer" id="98756360200c49eb881e46a92871739d" transform="scale(0.14473684210526316,0.14634146341463414)">
+                        <image x="0" y="0" p:name="image" id="c3897e2ec09547a98eacdfec500ccf71" xlink:href="../../../lexicon-server/src/images/lfdictionary/CommentBlue.png" xmlns:xlink="http://www.w3.org/1999/xlink" width="152" height="123"/>
+                    </g>
+                </g>
+            </defs>
+            <use xlink:href="#8d2049a74df24893847840334f1c03b2" xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(1, 1)" p:filter="url(#bcc3fab25bd2416688eed8105320bec3)" style="opacity: 0.6; visibility: hidden; display: none;" p:name="bgCopy" id="73c616dd353e4a23b51abaed13b7899c"/>
+            <use xlink:href="#8d2049a74df24893847840334f1c03b2" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+        </g></g></Content></Page></Pages></Document>
