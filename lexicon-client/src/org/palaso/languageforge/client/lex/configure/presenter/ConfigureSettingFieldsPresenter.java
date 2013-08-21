@@ -298,14 +298,10 @@ public class ConfigureSettingFieldsPresenter
 
 								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
 										.getWidget();
-								ConsoleLog.log(data.getFieldName());
 
 								data.setEnabled(false);
 								chkBox.setValue(false);
 
-								ConsoleLog.log(data.getFieldName() + " / "
-										+ chkBox.getValue() + " / "
-										+ chkBox.getText());
 
 							}
 						}
@@ -357,14 +353,9 @@ public class ConfigureSettingFieldsPresenter
 
 								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
 										.getWidget();
-								ConsoleLog.log(data.getFieldName());
 
 								data.setEnabled(false);
 								chkBox.setValue(false);
-
-								ConsoleLog.log(data.getFieldName() + " / "
-										+ chkBox.getValue() + " / "
-										+ chkBox.getText());
 
 							}
 						}
