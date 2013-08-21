@@ -4,8 +4,8 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.json.client.JSONObject;
 
 /**
- * The Dto uses for the definition / pos of a word entry, and it also contains examples as a sub-part.
- * This is a sub-part of LexiconEntryDto
+ * The Dto uses for the definition / pos of a word entry, and it also contains
+ * examples as a sub-part. This is a sub-part of LexiconEntryDto
  * 
  */
 public class Sense extends BaseDto<Sense> {
@@ -16,7 +16,8 @@ public class Sense extends BaseDto<Sense> {
 
 	public final static Sense createFromSettings(FieldSettings settings) {
 		Sense result = Sense.createObject().cast();
-		result.setDefinition(MultiText.createFromSettings(settings.value("Definition")));
+		result.setDefinition(MultiText.createFromSettings(settings
+				.value("Definition")));
 		result.initialize();
 		return result;
 	}
@@ -28,7 +29,7 @@ public class Sense extends BaseDto<Sense> {
 
 	// JSNI overlay methods
 	public final native MultiText getDefinition() /*-{
-		
+
 		//hacks #1090
 		if (this.definition == null || this.definition.length == 0) {
 			this.definition = {};
@@ -125,7 +126,7 @@ public class Sense extends BaseDto<Sense> {
 		return $wnd.settingsPartOfSpeech;
 	}-*/;
 
-	public static final String encode(Sense object){
+	public static final String encode(Sense object) {
 		return new JSONObject(object).toString();
 	}
 
@@ -143,5 +144,17 @@ public class Sense extends BaseDto<Sense> {
 
 	public final native void setSemanticDomainValue(String v) /*-{
 		this.SemDomValue = v;
+	}-*/;
+
+	public final native EntryMetadataDto getMetadata() /*-{
+		//hacks #1090
+		if (this.metadata == null || this.metadata.length == 0) {
+			this.metadata = {};
+		}
+		return this.metadata;
+	}-*/;
+
+	public final native void setMetadata(EntryMetadataDto metadata) /*-{
+		this.metadata = metadata;
 	}-*/;
 }

@@ -28,10 +28,18 @@ class Sense {
 	 */
 	var $_examples;
 	
+	/**
+	 *
+	 * @var EntryMetadataDTO
+	 */
+	var $_metadata;
+	
 	function __construct() {
 		$this->_examples = array();
 		$this->_definition = \libraries\lfdictionary\dto\MultiText::create();
 		$this->_partOfSpeech = '';
+		
+		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
 	}
 	
 	/**
@@ -127,7 +135,8 @@ class Sense {
 				"POS" => $this->_partOfSpeech,
 				"examples" => $examples,
 				"SemDomValue"  => $this->_semanticDomainValue,
-				"SemDomName"  => $this->_semanticDomainName
+				"SemDomName"  => $this->_semanticDomainName, 
+				"metadata" =>  $this->_metadata->encode()
 				);		
 	}
 	
@@ -137,6 +146,7 @@ class Sense {
 		$this->_partOfSpeech = $value['POS'];
 		$this->_semanticDomainValue= $value['SemDomValue'];
 		$this->_semanticDomainName= $value['SemDomName'];
+		$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);
 		foreach ($value['examples'] as $exampleValue) {
 			$example = Example::createFromArray($exampleValue);
 			$this->addExample($example);

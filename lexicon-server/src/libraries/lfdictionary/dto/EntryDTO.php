@@ -26,6 +26,12 @@ class EntryDTO {
 	 */
 	var $_senses;
 	
+	/**
+	 *
+	 * @var EntryMetadataDTO
+	 */
+	var $_metadata;
+	
 	private function __construct($guid=null) {
 		$this->_guid = $guid;
 		$this->_entry = new \libraries\lfdictionary\dto\MultiText();
@@ -109,7 +115,8 @@ class EntryDTO {
 			"guid" => $this->_guid,
 			"mercurialSHA" => $this->mercurialSHA,
 			"entry" => $this->_entry->encode(),
-			"senses" => $senses
+			"senses" => $senses,
+			"metadata" => $this->_metadata->encode()
 		);
 		
 	}
@@ -126,6 +133,7 @@ class EntryDTO {
 		$this->_guid = $value['guid'];
 		$this->mercurialSHA = $value['mercurialSHA'];
 		$this->_entry = \libraries\lfdictionary\dto\MultiText::createFromArray($value['entry']);
+		$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);
 		foreach ($value['senses'] as $senseValue) {
 			$sense = Sense::createFromArray($senseValue);
 			$this->addSense($sense);

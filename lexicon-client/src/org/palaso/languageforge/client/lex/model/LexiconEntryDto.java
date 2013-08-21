@@ -4,7 +4,8 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 
 /**
- * This is root Dto of a word entry, if contains word itself and Senses and sub-parts
+ * This is root Dto of a word entry, if contains word itself and Senses and
+ * sub-parts
  */
 public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 
@@ -32,7 +33,7 @@ public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 		JsArrayString keys = entry.keys();
 		return entry.value(keys.get(0));
 	}
-	
+
 	// JSNI overlay methods
 	public final native MultiText getEntry() /*-{
 		return this.entry;
@@ -113,6 +114,18 @@ public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 		this.senses.splice(index, 1);
 	}-*/;
 
+	public final native EntryMetadataDto getMetadata() /*-{
+		//hacks #1090
+		if (this.metadata == null || this.metadata.length == 0) {
+			this.metadata = {};
+		}
+		return this.metadata;
+	}-*/;
+
+	public final native void setMetadata(EntryMetadataDto metadata) /*-{
+		this.metadata = metadata;
+	}-*/;
+
 	/**
 	 * @return the first meaning (definition) of the entry OR an empty MultiText
 	 *         if the entry doesn't contain any senses.
@@ -124,7 +137,8 @@ public class LexiconEntryDto extends BaseDto<LexiconEntryDto> {
 			return getSense(0).getDefinition();
 		} else {
 			// return empty MultiText
-			return MultiText.createFromSettings(FieldSettings.fromWindow().value("Definition"));
+			return MultiText.createFromSettings(FieldSettings.fromWindow()
+					.value("Definition"));
 		}
 
 	};

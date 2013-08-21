@@ -17,9 +17,16 @@ class Example {
 	 */
 	var $_translation;
 	
+	/**
+	 *
+	 * @var EntryMetadataDTO
+	 */
+	var $_metadata;
+	
 	function __construct() {	
 		$this->_example = new \libraries\lfdictionary\dto\MultiText();
 		$this->_translation = new \libraries\lfdictionary\dto\MultiText();
+		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
 	}
 
 	/**
@@ -53,12 +60,13 @@ class Example {
 	function encode() {
 		$translation = $this->_translation->encode();
 		
-		return array("example" => $this->_example->encode(), "translation" => $translation);		
+		return array("example" => $this->_example->encode(), "translation" => $translation, "metadata" => $this->_metadata->encode());		
 	}
 	
 	function decode($value) {
 		$this->_example = \libraries\lfdictionary\dto\MultiText::createFromArray($value['example']);
 		$this->_translation = \libraries\lfdictionary\dto\MultiText::createFromArray($value['translation']);
+		$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);
 	}
 	
 	/**
