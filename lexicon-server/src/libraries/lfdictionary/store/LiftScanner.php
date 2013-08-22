@@ -40,7 +40,6 @@ class LiftScanner
 	public function scanEntries($foundEntryCallback, $processEntryCallback = null) {
 		$reader = new \XMLReader();
 		$reader->open($this->_liftFilePath);
-		
 		$stop = false;
 		while ($reader->read() && !$stop) {
 			switch ($reader->nodeType) {
@@ -96,11 +95,18 @@ class LiftScanner
 	 */
 	public function readSense($node) {
 		$sense = new \libraries\lfdictionary\dto\Sense();
-	
 		// Definition
 		$definition = $node->{'definition'};
 		$sense->setDefinition($this->readMultiText($definition));
-	
+		
+		//id
+		if(isset($node->{'id'})) {
+			$sense->setId($node->{'id'});
+		}else {
+			// no id? create a one
+			$sense->setId( \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php());
+		}
+		
 		// Part Of Speech
 		if(isset($node->{'grammatical-info'})) {
 			$partOfSpeech = (string)$node->{'grammatical-info'}->attributes()->value;
@@ -133,6 +139,14 @@ class LiftScanner
 	public function readExample($node) {
 		$example = new \libraries\lfdictionary\dto\Example();
 	
+		//id
+		if(isset($node->{'id'})) {
+			$example->setId($node->{'id'});
+		}else {
+			// no id? create a one
+			$example->setId( \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php());
+		}
+		
 		// Example multitext
 		$exampleXml = $node;
 		$example->setExample($this->readMultiText($exampleXml));

@@ -36,7 +36,7 @@ class EntryDTO {
 		$this->_guid = $guid;
 		$this->_entry = new \libraries\lfdictionary\dto\MultiText();
 		$this->_senses = array();
-		$this->_metadata = array();
+		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
 	}
 
 	/**
@@ -108,10 +108,13 @@ class EntryDTO {
 	 * @return mixed
 	 */
 	function encode() {
+		error_log("entry encode 1");
 		$senses = array();
+		error_log("entry encode 2");
 		foreach ($this->_senses as $sense) {
 			$senses[] = $sense->encode();
 		}
+		error_log("entry encode 3");
 		return array(
 				"guid" => $this->_guid,
 				"mercurialSHA" => $this->mercurialSHA,

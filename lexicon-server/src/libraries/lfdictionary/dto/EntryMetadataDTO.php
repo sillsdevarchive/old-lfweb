@@ -43,6 +43,13 @@ class EntryMetadataDTO {
 	var $_modifiedDate;
 	
 	public function __construct() {
+
+		$this->_createdbyId = "";
+		$this->_createdby = "";
+		$this->_createdDate = 0;
+		$this->_modifiedById = "";
+		$this->_modifiedBy = "";
+		$this->_modifiedDate = 0;
 	}
 	
 	/**
