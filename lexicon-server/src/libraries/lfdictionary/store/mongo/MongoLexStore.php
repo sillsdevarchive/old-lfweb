@@ -74,6 +74,10 @@ class MongoLexStore implements ILexStore
 	public function readEntry($guid) {
 		$collection = $this->_mongoDB->Entries;
 		$result = $collection->findOne(array('guid' => $guid));
+		if ($result==null)
+		{
+			return null;
+		}
 		$entry = EntryDTO::create($guid);
 		$entry->decode($result);
 		return $entry;

@@ -51,7 +51,7 @@ class LFDictionaryAPI
 
 
 	/**
-	 * @var ProjectModel
+	 * @var LFUserModel
 	 */
 	private $_userModel;
 
@@ -206,7 +206,7 @@ class LFDictionaryAPI
 		$rawEntry = json_decode($entry, true);
 		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray($rawEntry);
 		$store = $this->getLexStore();
-		$store->writeEntry($entryDto, $action);
+		$store->writeEntry($entryDto, $action, $this->_userModel->id(), $this->_userModel->getUserName());
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
 	}

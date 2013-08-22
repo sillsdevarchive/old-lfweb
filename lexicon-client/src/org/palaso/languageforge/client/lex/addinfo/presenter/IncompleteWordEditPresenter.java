@@ -38,7 +38,6 @@ public class IncompleteWordEditPresenter extends
 	public ILexService LexService;
 	private EntryPresenter entryPresenter;
 	private boolean isNewEntry = false;
-	private LexiconEntryDto originalEntry =null;
 	/**
 	 * Empty constructor for MissInfoEditPresenter
 	 * 
@@ -121,7 +120,6 @@ public class IncompleteWordEditPresenter extends
 
 			@Override
 			public void onSuccess(LexiconEntryDto result) {
-				originalEntry = (LexiconEntryDto) Tools.cloneJavaScriptObject(result) ;
 				renderWord(result);
 			}
 
@@ -135,7 +133,7 @@ public class IncompleteWordEditPresenter extends
 	 */
 	public void onWordUpdated() {
 		entryPresenter.updateModel();
-		final LexiconEntryDto entryDTO = Tools.updateMetadata(entryPresenter.getModel(), originalEntry);
+		final LexiconEntryDto entryDTO = entryPresenter.getModel();
 		ConsoleLog.log("Before add-info save.");
 		LexService.saveEntry(entryDTO, new AsyncCallback<ResultDto>() {
 
@@ -151,7 +149,6 @@ public class IncompleteWordEditPresenter extends
 			@Override
 			public void onSuccess(ResultDto result) {
 				ConsoleLog.log("Add-info save success.");
-				originalEntry = (LexiconEntryDto) Tools.cloneJavaScriptObject(entryDTO) ;
 				if (isNewEntry) {
 					view.showNotification(
 							I18nConstants.STRINGS

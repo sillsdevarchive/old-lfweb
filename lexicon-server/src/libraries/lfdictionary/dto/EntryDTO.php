@@ -108,13 +108,10 @@ class EntryDTO {
 	 * @return mixed
 	 */
 	function encode() {
-		error_log("entry encode 1");
 		$senses = array();
-		error_log("entry encode 2");
 		foreach ($this->_senses as $sense) {
 			$senses[] = $sense->encode();
 		}
-		error_log("entry encode 3");
 		return array(
 				"guid" => $this->_guid,
 				"mercurialSHA" => $this->mercurialSHA,
