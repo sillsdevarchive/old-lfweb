@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -169,6 +170,32 @@ public class ConversationItem extends ComplexPanel {
 		btnExpendAllReplies = new Button();
 		btnExpendAllReplies.setSize("20px", "20px");
 
+		//BODY
+		FlowPanel panelRowBody = new FlowPanel();
+		FlowPanel panelRowInnerBody = new FlowPanel();
+		panelRowBody.add(panelRowInnerBody);
+		FlowPanel panelBodyLeftCell = new FlowPanel();
+		FlowPanel panelBodyMidCell = new FlowPanel();
+		FlowPanel panelBodyRightCell = new FlowPanel();
+		
+
+		panelRowInnerBody.add(panelBodyLeftCell);
+		panelRowInnerBody.add(panelBodyMidCell);
+		panelRowInnerBody.add(panelBodyRightCell);
+		
+		panelRowBody.setStyleName("item-body-row");
+		panelRowInnerBody.getElement().setId("item-body-row-inner");
+
+		panelBodyLeftCell.setStyleName("item-body-row-cells");
+		panelBodyMidCell.setStyleName("item-body-row-cells");
+		panelBodyMidCell.setWidth("100%");
+		panelBodyRightCell.setStyleName("item-body-row-cells");
+
+		panelBodyLeftCell.getElement().setId("item-body-row-left-cell");
+		panelBodyMidCell.getElement().setId("item-body-row-right-cell");
+		panelBodyRightCell.getElement().setId("item-body-row-right-cell");
+		panelBodyLeftCell.add(getVoteBlock());
+		
 		if (isNewComment) {
 			panelHeader.setStyleName("conversation-sub-header-new");
 			panelCommentContainer
@@ -187,38 +214,42 @@ public class ConversationItem extends ComplexPanel {
 
 			btnAddComment = new Button("Add comment");
 			btnAddComment.setWidth("120px");
-			FlowPanel panelRow = new FlowPanel();
-			FlowPanel panelRowInner = new FlowPanel();
-			panelRow.add(panelRowInner);
+			
+			//FOOTER
+			FlowPanel panelRowFooter = new FlowPanel();
+			FlowPanel panelRowInnerFooter = new FlowPanel();
+			panelRowFooter.add(panelRowInnerFooter);
 
-			FlowPanel panelLeftCell = new FlowPanel();
-			FlowPanel panelMidCell = new FlowPanel();
-			FlowPanel panelRightCell = new FlowPanel();
+			FlowPanel panelFooterLeftCell = new FlowPanel();
+			FlowPanel panelFooterMidCell = new FlowPanel();
+			FlowPanel panelFooterRightCell = new FlowPanel();
 
-			panelRowInner.add(panelLeftCell);
-			panelRowInner.add(panelMidCell);
-			panelRowInner.add(panelRightCell);
+			panelRowInnerFooter.add(panelFooterLeftCell);
+			panelRowInnerFooter.add(panelFooterMidCell);
+			panelRowInnerFooter.add(panelFooterRightCell);
 
-			panelRow.setStyleName("item-footer-row");
-			panelRowInner.getElement().setId("item-footer-row-inner");
+			panelRowFooter.setStyleName("item-footer-row");
+			panelRowInnerFooter.getElement().setId("item-footer-row-inner");
 
-			panelLeftCell.setStyleName("item-footer-row-cells");
-			panelMidCell.setStyleName("item-footer-row-cells");
-			panelMidCell.setWidth("300px");
-			panelRightCell.setStyleName("item-footer-row-cells");
+			panelFooterLeftCell.setStyleName("item-footer-row-cells");
+			panelFooterMidCell.setStyleName("item-footer-row-cells");
+			panelFooterMidCell.setWidth("300px");
+			panelFooterRightCell.setStyleName("item-footer-row-cells");
 
-			panelLeftCell.getElement().setId("item-footer-row-left-cell");
-			panelMidCell.getElement().setId("item-footer-row-right-cell");
-			panelRightCell.getElement().setId("item-footer-row-right-cell");
-			panelFooter.add(panelRow);
+			panelFooterLeftCell.getElement().setId("item-footer-row-left-cell");
+			panelFooterMidCell.getElement().setId("item-footer-row-right-cell");
+			panelFooterRightCell.getElement().setId("item-footer-row-right-cell");
 
-			panelMidCell.add(chkTodo);
-			panelMidCell.add(chkReviewed);
-			panelMidCell.add(chkResolved);
-			panelRightCell.add(btnAddComment);
+
+			panelFooterMidCell.add(chkTodo);
+			panelFooterMidCell.add(chkReviewed);
+			panelFooterMidCell.add(chkResolved);
+			panelFooter.add(panelRowFooter);
+			panelFooterRightCell.add(btnAddComment);
+			panelBodyMidCell.add(panelCommentContainer);
 			super.add(panelHeader, getElement());
 			super.add(panelLeftCheckMarker, getElement());
-			super.add(panelCommentContainer, getElement());
+			super.add(panelRowBody, getElement());
 			super.add(panelFooter, getElement());
 			chkReviewed
 					.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
@@ -286,18 +317,18 @@ public class ConversationItem extends ComplexPanel {
 				panelFooter.add(panelRow);
 				panelLeftCell.add(footerLabel);
 				panelRightCell.add(btnExpendAllReplies);
-
+				panelBodyMidCell.add(panelCommentContainer);
 				super.add(panelHeader, getElement());
-				super.add(panelCommentContainer, getElement());
+				super.add(panelRowBody, getElement());
 				super.add(panelFooter, getElement());
 
 			} else {
 				panelFooter.setStyleName("conversation-sub-footer-reply", true);
 				panelFooter.add(footerLabel);
-
+				panelBodyMidCell.add(panelCommentContainer);
 				super.add(panelHeader, getElement());
 				super.add(panelLeftCheckMarker, getElement());
-				super.add(panelCommentContainer, getElement());
+				super.add(panelRowBody, getElement());
 				super.add(panelFooter, getElement());
 			}
 
@@ -353,6 +384,22 @@ public class ConversationItem extends ComplexPanel {
 		}
 	}
 
+	private FlowPanel getVoteBlock()
+	{
+		FlowPanel votePanel = new FlowPanel();
+		votePanel.setStyleName("conversation-vote");
+		Button voteUp = new Button();
+		Button voteDown = new Button();
+		Label votesLabel = new Label("0");
+		voteUp.setStyleName("conversation-vote-up");
+		voteDown.setStyleName("conversation-vote-down");
+		votesLabel.setStyleName("conversation-vote-count");
+		votePanel.add(voteUp);
+		votePanel.add(votesLabel);
+		votePanel.add(voteDown);
+		return votePanel;
+	}
+	
 	public boolean getIsRootComment() {
 		return isRootComment;
 	}
