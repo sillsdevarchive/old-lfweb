@@ -5,6 +5,8 @@ use libraries\lfdictionary\dto\ListDTO;
 use libraries\lfdictionary\environment\LexProject;
 use libraries\lfdictionary\dto\EntryDTO;
 use libraries\lfdictionary\dto\Example;
+use libraries\lfdictionary\dto\Sense;
+use \libraries\lfdictionary\common\LoggerFactory;
 
 class LexStoreType
 {
@@ -173,6 +175,8 @@ class LexStoreController
 			}
 		}else {
 			//check and update exists Entry
+
+			//clone
 			$newEntryCopy = EntryDTO::createFromArray(unserialize(serialize($entry->encode())));
 			$originalEntryCopy = EntryDTO::createFromArray(unserialize(serialize($original->encode())));
 
@@ -182,103 +186,123 @@ class LexStoreController
 			//remove non-need part
 			$newEntryCopy->_senses = Array();
 			$originalEntryCopy->_senses = Array();
-			$newEntryCopy->_metadata = Array();
-			$originalEntryCopy->_metadata = Array();
+			$newEntryCopy->_metadata =  new \libraries\lfdictionary\dto\EntryMetadataDTO();
+			$originalEntryCopy->_metadata =  new \libraries\lfdictionary\dto\EntryMetadataDTO();
 
 			//compare
-			if (json_encode($newEntryCopy)!==json_encode($originalEntryCopy))
+			if (strcmp(json_encode($newEntryCopy->encode()), json_encode($originalEntryCopy->encode()))!=0)
 			{
 				//changed
+				LoggerFactory::getLogger()->logDebugMessage("Entry Changed...");
 				$entry->_metadata->_modifiedBy=$userName;
 				$entry->_metadata->_modifiedById=$userId;
 				$entry->_metadata->_modifiedDate=$unixTimeStamp;
+			}
 
-				//sense
-				foreach ($copyOfSenses as $sense)
-				{
-					$isSenseMatch = false;
+			LoggerFactory::getLogger()->logDebugMessage("Looking for changes in Senses...");
+			//check and update exists Sense
+			foreach ($copyOfSenses as $sense)
+			{
+				$isSenseIdMatch = false;
+				$newSenseCopy = Sense::createFromArray(unserialize(serialize($sense->encode())));
+				$copyOfExamples = $newSenseCopy->_examples;
+				if(isset($copyOfOriginalSenses)){
 					foreach ($copyOfOriginalSenses as $originalSense)
 					{
 						if ($sense->getId()==$originalSense->getId())
 						{
-							$isSenseMatch = true;
+							LoggerFactory::getLogger()->logDebugMessage("Original Sense with Id found: ". $sense->getId());
+							$isSenseIdMatch = true;
 							break;
 						}
-							
-					}
-					if ($isSenseMatch==true)
-					{
-						$newSenseCopy = Sense::createFromArray(unserialize(serialize($sense->encode())));
-						$originalSenseCopy = Sense::createFromArray(unserialize(serialize($originalSense->encode())));
-							
-						$copyOfExamples = $newSenseCopy->_examples;
-						$copyOfOriginalExamples = $originalSenseCopy->_examples;
-			
-						//remove non-need part
-						$newSenseCopy->_examples = Array();
-						$originalSenseCopy->_examples = Array();
-						$newSenseCopy->_metadata = Array();
-						$originalSenseCopy->_metadata = Array();
 
-						//compare
-						if (json_encode($newEntryCopy)!==json_encode($originalEntryCopy))
-						{
-							//changed
-							$sense->_metadata->_modifiedBy=$userName;
-							$sense->_metadata->_modifiedById=$userId;
-							$sense->_metadata->_modifiedDate=$unixTimeStamp;
-						}
-					}else {
-						// new sense
-						$sense->_metadata->_createdby=$userName;
-						$sense->_metadata->_createdbyId=$userId;
-						$sense->_metadata->_createdDate=$unixTimeStamp;
+					}
+				}
+				if ($isSenseIdMatch==true)
+				{
+					LoggerFactory::getLogger()->logDebugMessage("Clone senses...");
+					$originalSenseCopy = Sense::createFromArray(unserialize(serialize($originalSense->encode())));
+					$copyOfOriginalExamples = $originalSenseCopy->_examples;
+
+					//remove non-need part
+					$newSenseCopy->_examples = Array();
+					$originalSenseCopy->_examples = Array();
+					$newSenseCopy->_metadata =  new \libraries\lfdictionary\dto\EntryMetadataDTO();
+					$originalSenseCopy->_metadata =  new \libraries\lfdictionary\dto\EntryMetadataDTO();
+
+					//compare
+					LoggerFactory::getLogger()->logDebugMessage("Compare senses...");
+					if (strcmp(json_encode($newSenseCopy->encode()),json_encode($originalSenseCopy->encode())) != 0)
+					{
+						//changed
+						LoggerFactory::getLogger()->logDebugMessage("Sense Changed...");
 						$sense->_metadata->_modifiedBy=$userName;
 						$sense->_metadata->_modifiedById=$userId;
 						$sense->_metadata->_modifiedDate=$unixTimeStamp;
+					}else {
+						LoggerFactory::getLogger()->logDebugMessage("Sense nothing changes...");
 					}
+				}else {
+					// new sense
+					LoggerFactory::getLogger()->logDebugMessage("new Sense...");
+					$sense->_metadata->_createdby=$userName;
+					$sense->_metadata->_createdbyId=$userId;
+					$sense->_metadata->_createdDate=$unixTimeStamp;
+					$sense->_metadata->_modifiedBy=$userName;
+					$sense->_metadata->_modifiedById=$userId;
+					$sense->_metadata->_modifiedDate=$unixTimeStamp;
+				}
 					
-					//Example
-					foreach ($copyOfExamples as $example)
-					{
-						$isExampleMatch = false;
+				//Example
+				LoggerFactory::getLogger()->logDebugMessage("Looking for changes in Examples...");
+				foreach ($copyOfExamples as $example)
+				{
+					$isExampleIdMatch = false;
+					if(isset($copyOfOriginalExamples)){
 						foreach ($copyOfOriginalExamples as $originalExample)
 						{
 							if ($example->getId()==$originalExample->getId())
 							{
-								$isExampleMatch = true;
+								LoggerFactory::getLogger()->logDebugMessage("Original Example with Id found: ". $example->getId());
+								$isExampleIdMatch = true;
 								break;
 							}
 
 						}
-						
-						if ($isExampleMatch==true)
+					}
+
+					if ($isExampleIdMatch==true)
+					{
+						LoggerFactory::getLogger()->logDebugMessage("Clone Example...");
+						$newExampleCopy = Example::createFromArray(unserialize(serialize($example->encode())));
+						$originalExampleCopy = Example::createFromArray(unserialize(serialize($originalExample->encode())));
+
+
+						//remove non-need part
+						$newExampleCopy->_metadata =  new \libraries\lfdictionary\dto\EntryMetadataDTO();
+						$originalExampleCopy->_metadata =  new \libraries\lfdictionary\dto\EntryMetadataDTO();
+
+						//compare
+						LoggerFactory::getLogger()->logDebugMessage("Compare Examples...");
+						if (strcmp(json_encode($newExampleCopy->encode()), json_encode($originalExampleCopy->encode()))!=0)
 						{
-							$newExampleCopy = Example::createFromArray(unserialize(serialize($example->encode())));
-							$originalExampleCopy = Example::createFromArray(unserialize(serialize($originalExample->encode())));
-
-
-							//remove non-need part
-							$newExampleCopy->_metadata = Array();
-							$originalExampleCopy->_metadata = Array();
-
-							//compare
-							if (json_encode($newExampleCopy)!==json_encode($originalExampleCopy))
-							{
-								//changed
-								$example->_metadata->_modifiedBy=$userName;
-								$example->_metadata->_modifiedById=$userId;
-								$example->_metadata->_modifiedDate=$unixTimeStamp;
-							}
-						}else {
-							// new example
-							$example->_metadata->_createdby=$userName;
-							$example->_metadata->_createdbyId=$userId;
-							$example->_metadata->_createdDate=$unixTimeStamp;
+							//changed
+							LoggerFactory::getLogger()->logDebugMessage("Example changed...");
 							$example->_metadata->_modifiedBy=$userName;
 							$example->_metadata->_modifiedById=$userId;
 							$example->_metadata->_modifiedDate=$unixTimeStamp;
+						}else {
+							LoggerFactory::getLogger()->logDebugMessage("Example nothing changes...");
 						}
+					}else {
+						// new example
+						LoggerFactory::getLogger()->logDebugMessage("new Example...");
+						$example->_metadata->_createdby=$userName;
+						$example->_metadata->_createdbyId=$userId;
+						$example->_metadata->_createdDate=$unixTimeStamp;
+						$example->_metadata->_modifiedBy=$userName;
+						$example->_metadata->_modifiedById=$userId;
+						$example->_metadata->_modifiedDate=$unixTimeStamp;
 					}
 				}
 			}

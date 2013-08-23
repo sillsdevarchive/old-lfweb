@@ -170,8 +170,14 @@ class Sense {
 		}
 		$this->_definition = \libraries\lfdictionary\dto\MultiText::createFromArray($value['definition']);
 		$this->_partOfSpeech = $value['POS'];
-		$this->_semanticDomainValue= $value['SemDomValue'];
-		$this->_semanticDomainName= $value['SemDomName'];
+
+		if (isset( $value['SemDomValue'])){
+			$this->_semanticDomainValue = $value['SemDomValue'];
+		}
+		
+		if (isset( $value['SemDomName'])){
+			$this->_semanticDomainName = $value['SemDomName'];
+		}
 		
 		if (isset($value['metadata'])){
 			$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);
