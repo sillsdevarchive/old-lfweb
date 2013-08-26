@@ -30,6 +30,11 @@ class UserModelWithPassword extends \models\mapper\MapperModel
 	 */
 	public $name;
 	
+	/**
+	 * 
+	 * @var bool
+	 */
+	public $active;
 	
 	/**
 	 * @var string

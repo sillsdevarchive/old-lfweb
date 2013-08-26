@@ -1,5 +1,7 @@
 <?php
 
+use libraries\lfdictionary\dto\ResultDTO;
+
 use models\dto\ProjectSettingsDto;
 
 use models\ProjectModel;
@@ -69,9 +71,15 @@ class Lf
 	public function user_create($params) {
 		$user = new \models\UserModelWithPassword();
 		JsonDecoder::decode($user, $params);
+		if (\models\UserModel::usernameExists($user->username)) {
+			$dto = new ResultDTO(false, "usernameExists");
+			return $dto->encode();
+		}
 		$user->encryptPassword();
-		$result = $user->write();
-		return $result;
+		$user->active = false;
+		$user->write();
+		$dto = new ResultDTO(true);
+		return $dto->encode();
 	}
 
 	/**

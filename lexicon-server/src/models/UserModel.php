@@ -54,6 +54,19 @@ class UserModel extends \models\mapper\MapperModel
 	}
 	
 	/**
+	 * 
+	 * @param string $username
+	 */
+	public static function usernameExists($username) {
+		$user = new UserModel();
+		$user->findOneByQuery(array("username" => $username));
+		if ($user->id->asString() != '') {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 *	Adds the user as a member of $projectId
 	 *  You do must call write() as both the user model and the project model!!!
 	 * @param string $projectId

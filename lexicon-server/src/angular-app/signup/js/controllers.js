@@ -8,26 +8,24 @@ angular.module(
 )
 .controller('UserCtrl', ['$scope', 'userService', function UserCtrl($scope, userService) {
 
-	$scope.vars = {};
+	$scope.record = {};
+	$scope.success = {
+		'state':false,
+		'message':''
+	};
+	$scope.record.id = '';
 
 	$scope.createUser = function(record) {
 		userService.create(record, function(result) {
 			if (result.ok) {
-				console.log("user signup success");
+				$scope.success.state = true;
+				$scope.success.message = "";
 			} else {
-				console.log("error condition");
+				$scope.success.state = false;
+				$scope.success.message = "An error occurred in the signup process";
 			}
 		});
 		return true;
 	};
-
-
-	$scope.changePassword = function(record) {
-//		console.log("changePassword() called with ", record);
-		userService.changePassword(record.id, record.password, function(result) {
-//			console.log("Password successfully changed.");
-		});
-	};
-	
 }])
 ;

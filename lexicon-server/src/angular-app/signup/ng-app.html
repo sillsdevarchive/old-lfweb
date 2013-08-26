@@ -1,36 +1,42 @@
 <div class="container" ng-app="signup" ng-cloak>
-	<legend>Create an Account</legend>
-
-	<div ng-controller="UserCtrl" class="span4">
-		<form ng-submit="createUser(record)" name="userForm">
-		<fieldset>
-			<legend>Sign Up Below</legend>
-			<div class="well">
-				<div>
-					<label>User Name</label>
-					<input required type="text" placeholder="(username)" ng-model="record.username"/>
+	<div ng-controller="UserCtrl">
+		<legend>Create an Account</legend>
+	
+		<div class="notification errorMessage" ng-show="!success.state && success.message">{{notify.error}}</div>
+		<div ng-hide="success.state" class="span4">
+			<form ng-submit="createUser(record)" name="userForm">
+			<fieldset>
+				<legend>Sign Up Below</legend>
+				<div class="well">
+					<div>
+						<label>User Name</label>
+						<input required type="text" placeholder="(username)" ng-model="record.username"/>
+					</div>
+					<div>
+						<label>Name</label>
+						<input required type="text" placeholder="(your name here)" ng-model="record.name"/>
+					</div>
+					<div>
+						<label>Email</label>
+						<input required type="text" placeholder="(no email)" ng-model="record.email"/>
+					</div>
+					<div>
+						<label>Password</label>
+						<input required type="password" ng-model="record.password" ng-focus="vars.inputfocus" name="password"/>
+					</div>
+					<div class="large-12">
+						<label>Confirm password</label>
+						<input type="password" ng-model="record.confirm_password" require-equal="record.password" name="confirmPassword"/>
+						<label ng-show="passwordForm.confirmPassword.$error.match">Passwords do not match</label>
+					</div>
 				</div>
-				<div>
-					<label>Name</label>
-					<input required type="text" placeholder="(your name here)" ng-model="record.name"/>
-				</div>
-				<div>
-					<label>Email</label>
-					<input required type="text" placeholder="(no email)" ng-model="record.email"/>
-				</div>
-				<div>
-					<label>Password</label>
-					<input required type="password" ng-model="record.password" ng-focus="vars.inputfocus" name="password"/>
-				</div>
-				<div class="large-12">
-					<label>Confirm password</label>
-					<input type="password" ng-model="record.confirm_password" require-equal="record.password" name="confirmPassword"/>
-					<label ng-show="passwordForm.confirmPassword.$error.match">Passwords do not match</label>
-				</div>
-			</div>
-					<button class="btn btn-primary" type="submit" ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
-						Sign Up <i style="margin-left:5px" class="icon-thumbs-up"></i></button>
-		</fieldset>
-		</form>
+						<button class="btn btn-primary" type="submit" ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
+							Sign Up <i style="margin-left:5px" class="icon-thumbs-up"></i></button>
+			</fieldset>
+			</form>
+		</div>
+		<div ng-show="success.state">
+			Thank you, {{record.name}}.  You are now signed up.  We will contact you when your account is active.
+		</div>
 	</div>
 </div>
