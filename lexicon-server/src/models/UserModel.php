@@ -2,6 +2,10 @@
 
 namespace models;
 
+use models\rights\Roles;
+
+use models\mapper\IdReference;
+
 use models\mapper\MongoMapper;
 
 use models\mapper\Id;
@@ -78,7 +82,7 @@ class UserModel extends \models\mapper\MapperModel
 	}
 	
 	/**
-	 * @var string
+	 * @var IdReference
 	 */
 	public $id;
 	
@@ -97,6 +101,12 @@ class UserModel extends \models\mapper\MapperModel
 	 * @var string
 	 */
 	public $email;
+	
+	/**
+	 * @var string
+	 * @see Roles
+	 */
+	public $role;
 	
 	//public $groups;
 	
@@ -134,7 +144,7 @@ class UserModel extends \models\mapper\MapperModel
 	 */
 	public $mobile_phone;
 	/**
-	 * @var bool
+	 * @var string - possible values are "email", "sms" or "both"
 	 */
 	public $communicate_via;
 	/**
@@ -175,7 +185,7 @@ class UserListModel extends \models\mapper\MapperListModel
 		parent::__construct(
 			UserModelMongoMapper::instance(),
 			array('name' => array('$regex' => '')),
-			array('username', 'email', 'name', 'avatar_ref')
+			array('username', 'email', 'name', 'avatar_ref', 'role')
 		);
 	}
 	

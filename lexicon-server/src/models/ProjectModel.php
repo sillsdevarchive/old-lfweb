@@ -2,8 +2,13 @@
 
 namespace models;
 
-use models\mapper\MongoMapper;
+use libraries\palaso\CodeGuard;
 
+use models\rights\Realm;
+use models\rights\Roles;
+use models\rights\ProjectRoleModel;
+use models\mapper\MapOf;
+use models\mapper\MongoMapper;
 use models\mapper\MongoStore;
 use models\mapper\ReferenceList;
 use models\mapper\Id;
@@ -35,7 +40,9 @@ class ProjectModel extends \models\mapper\MapperModel
 	public function __construct($id = '')
 	{
 		$this->id = new Id();
-		$this->users = new ReferenceList();
+		$this->users = new MapOf(function($data) {
+			return new ProjectRoleModel();
+		});
 		parent::__construct(ProjectModelMongoMapper::instance(), $id);
 	}
 	
@@ -62,9 +69,12 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * You do NOT need to call write() as this method calls it for you
 	 * @param string $userId
 	 */
-	public function addUser($userId) {
-		$this->users->_addRef($userId);
-
+	public function addUser($userId, $role) {
+		$mapper = ProjectModelMongoMapper::instance();
+//		$ProjectModelMongoMapper::mongoID($userId)
+		$model = new ProjectRoleModel();
+		$model->role = $role;
+		$this->users->data[$userId] = $model; 
 	}
 	
 	
@@ -74,19 +84,54 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @param string $userId
 	 */
 	public function removeUser($userId) {
-		//$userModel = new UserModel($userId);
-		$this->users->_removeRef($userId);
-		//$userModel->projects->_removeRef($this->id);
+		unset($this->users->data[$userId]);
 	}
 
 	public function listUsers() {
 		$userList = new UserList_ProjectModel($this->id->asString());
 		$userList->read();
-		return $userList;
+		for ($i = 0, $l = count($userList->entries); $i < $l; $i++) {
+			$userId = $userList->entries[$i]['id'];
+			if (!key_exists($userId, $this->users->data)) {
+				$projectId = $this->id->asString();
+				error_log("User $userId is not a member of project $projectId");
+				continue;
+			}
+			$userList->entries[$i]['role'] = $this->users->data[$userId]->role;
+		}
+ 		return $userList;
 	}
 	
 	/**
-	 * @var string
+	 * Returns true if the given $userId has the $right in this project.
+	 * @param string $userId
+	 * @param int $right
+	 * @return bool
+	 */
+	public function hasRight($userId, $right) {
+		$role = $this->users->data[$userId]->role;
+		$result = Roles::hasRight(Realm::PROJECT, $role, $right);
+		return $result;
+	}
+	
+	/**
+	 * Returns the rights array for the $userId role.
+	 * @param string $userId
+	 * @return array
+	 */
+	public function getRightsArray($userId) {
+		CodeGuard::checkTypeAndThrow($userId, 'string');
+		if (!key_exists($userId, $this->users->data)) {
+			$result = array();
+		} else {
+			$role = $this->users->data[$userId]->role;
+			$result = Roles::getRightsArray(Realm::PROJECT, $role);
+		}
+		return $result;
+	}
+	
+	/**
+	 * @var Id
 	 */
 	public $id;
 	
@@ -101,7 +146,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	public $language;
 	
 	/**
-	 * @var ReferenceList
+	 * @var MapOf<ProjectRoleModel>
 	 */
 	public $users;
 	
@@ -113,6 +158,32 @@ class ProjectModel extends \models\mapper\MapperModel
 	
 	// What else needs to be in the model?
 	
+}
+
+class ProjectListModel extends \models\mapper\MapperListModel
+{
+	public function __construct()
+	{
+		parent::__construct(
+			ProjectModelMongoMapper::instance(),
+			array(),
+			array('projectname', 'language')
+		);
+	}
+}
+
+class ProjectList_UserModel extends \models\mapper\MapperListModel
+{
+
+	public function __construct($userId)
+	{
+		parent::__construct(
+				ProjectModelMongoMapper::instance(),
+				array('users.' . $userId => array('$exists' => true)),
+				array('projectname')
+		);
+	}
+
 }
 
 
