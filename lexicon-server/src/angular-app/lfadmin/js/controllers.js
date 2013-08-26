@@ -4,7 +4,7 @@
 
 angular.module(
 	'sfAdmin.controllers',
-	[ 'sf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap' ]
+	[ 'lf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap' ]
 )
 .controller('UserCtrl', ['$scope', 'userService', function UserCtrl($scope, userService) {
 

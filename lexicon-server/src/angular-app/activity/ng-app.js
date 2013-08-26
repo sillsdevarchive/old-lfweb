@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('activity', 
 		[
-		 'sf.services',
+		 'lf.services',
 		 'ui.bootstrap',
 		 'activity.filters'
 		])

@@ -45,8 +45,6 @@ class Roles {
 		// Project Admin
 		$rights = self::$_rights[Realm::PROJECT][Roles::USER];
 		$rights[] = Domain::PROJECTS + Operation::EDIT_OWN;
-		$rights[] = Domain::TEXTS + Operation::CREATE; 
-		$rights[] = Domain::TEXTS + Operation::EDIT_OTHER;
 		$rights[] = Domain::QUESTIONS + Operation::CREATE;
 		$rights[] = Domain::QUESTIONS + Operation::EDIT_OTHER;
 		$rights[] = Domain::USERS + Operation::CREATE;
@@ -59,7 +57,6 @@ class Roles {
 		$rights = array();
 		self::grantAllOnDomain($rights, Domain::USERS);
 		self::grantAllOnDomain($rights, Domain::PROJECTS);
-		self::grantAllOnDomain($rights, Domain::TEXTS);
 		self::grantAllOnDomain($rights, Domain::QUESTIONS);
 		self::grantAllOnDomain($rights, Domain::ANSWERS);
 		self::grantAllOnDomain($rights, Domain::COMMENTS);
