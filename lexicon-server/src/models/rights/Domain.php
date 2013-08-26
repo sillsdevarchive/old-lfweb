@@ -11,16 +11,6 @@ class Domain {
 	const COMMENTS		= 150;
 	const LEX_ENTRY		= 160;
 	
-	public static $domains = array(
-			self::ANY,
-			self::USERS,
-			self::PROJECTS,
-			self::QUESTIONS,
-			self::ANSWERS,
-			self::COMMENTS,
-			self::LEX_ENTRY
-	);
-	
 }
 
 ?>

@@ -1,11 +1,10 @@
 'use strict';
 
 // Services
-// LanguageForge common services
+// ScriptureForge common services
 angular.module('lf.services', ['jsonRpc'])
 	.service('userService', ['jsonRpc', function(jsonRpc) {
 		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
-
 		this.read = function(id, callback) {
 			jsonRpc.call('user_read', [id], callback);
 		};
@@ -31,7 +30,6 @@ angular.module('lf.services', ['jsonRpc'])
 	}])
 	.service('projectService', ['jsonRpc', function(jsonRpc) {
 		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
-		
 		this.read = function(projectId, callback) {
 			jsonRpc.call('project_read', [projectId], callback);
 		};

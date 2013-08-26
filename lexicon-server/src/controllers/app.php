@@ -29,7 +29,7 @@ class App extends Secure_base {
 			$data['jsProjectFiles'] = array();
 			self::addJavascriptFiles("angular-app/$app", $data['jsProjectFiles']);
 				
-			$data['title'] = "Scripture Forge";
+			$data['title'] = "Language Forge";
 			
 			$this->_render_page("angular-app", $data);
 		}
