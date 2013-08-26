@@ -97,7 +97,7 @@ angular.module('lf.services', ['jsonRpc'])
 		};
 		
 		this.project = function(projectId) {
-			return '/app/sfchecks#/project/' + projectId;
+			return '/app/projects#/project/' + projectId + '/settings';
 			
 		};
 		
