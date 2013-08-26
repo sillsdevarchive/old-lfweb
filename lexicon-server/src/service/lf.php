@@ -1,19 +1,12 @@
 <?php
 
 use models\dto\ProjectSettingsDto;
-
 use models\ProjectModel;
-
 use models\dto\ActivityListDto;
-
 use models\commands\ActivityCommands;
-
 use models\AnswerModel;
-
 use models\QuestionModel;
-
 use libraries\palaso\CodeGuard;
-
 use libraries\palaso\JsonRpcServer;
 use models\commands\ProjectCommands;
 use models\commands\QuestionCommands;
