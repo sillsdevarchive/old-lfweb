@@ -11,8 +11,10 @@ public class Example extends BaseDto<Example> {
 
 	public final static Example createFromSettings(FieldSettings settings) {
 		Example result = Example.createObject().cast();
-		result.setExample(MultiText.createFromSettings(settings.value("Example")));
-		result.setTranslation(MultiText.createFromSettings(settings.value("Translation")));
+		result.setExample(MultiText.createFromSettings(settings
+				.value("Example")));
+		result.setTranslation(MultiText.createFromSettings(settings
+				.value("Translation")));
 		return result;
 	}
 
@@ -46,4 +48,23 @@ public class Example extends BaseDto<Example> {
 		this.translation = value;
 	}-*/;
 
+	public final native EntryMetadataDto getMetadata() /*-{
+		//hacks #1090
+		if (this.metadata == null || this.metadata.length == 0) {
+			this.metadata = {};
+		}
+		return this.metadata;
+	}-*/;
+
+	public final native void setMetadata(EntryMetadataDto metadata) /*-{
+		this.metadata = metadata;
+	}-*/;
+
+	public final native String getId() /*-{
+		return this.id;
+	}-*/;
+
+	public final native void setId(String id) /*-{
+		this.id = id;
+	}-*/;
 }

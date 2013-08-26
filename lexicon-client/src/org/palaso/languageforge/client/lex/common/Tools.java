@@ -1,5 +1,6 @@
 package org.palaso.languageforge.client.lex.common;
 
+
 public class Tools {
 
 	/**
@@ -82,4 +83,5 @@ public class Tools {
 		// actually has the most recent cost counts
 		return p[n];
 	}
+
 }

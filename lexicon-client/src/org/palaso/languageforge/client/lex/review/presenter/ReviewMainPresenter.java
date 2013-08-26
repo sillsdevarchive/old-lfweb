@@ -5,6 +5,7 @@ import java.util.Date;
 import org.palaso.languageforge.client.lex.model.ConversationDto;
 import org.palaso.languageforge.client.lex.model.ConversationListDto;
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationControl;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationItem;
@@ -77,9 +78,12 @@ public class ReviewMainPresenter extends
 						.getRootConversationItem();
 				AnnotationMessageStatusType statusType = newConversationItem
 						.getIsMarked() ? AnnotationMessageStatusType.CLOSED
-						: AnnotationMessageStatusType.UNCLOSED;
-				lexService.saveNewComments(statusType, event
-						.getRootConversationItem().getReferencedGuid(),
+						: AnnotationMessageStatusType.UNDEFINED;
+				
+			
+				lexService.saveNewComments(statusType, newConversationItem
+						.isReviewed(), newConversationItem
+						.isTodo(), event.getRootConversationItem().getReferencedGuid(),
 						newConversationItem.getNewCommentHtml(), false,
 						new AsyncCallback<ConversationDto>() {
 
@@ -124,7 +128,7 @@ public class ReviewMainPresenter extends
 
 					@Override
 					public void onClick(ClickEvent event) {
-						getQuestions(AnnotationMessageStatusType.UNCLOSED,
+						getQuestions(AnnotationMessageStatusType.REVIEWED,
 								ConversationAnnotationType.QUESTION);
 					}
 				});
@@ -172,7 +176,7 @@ public class ReviewMainPresenter extends
 
 					@Override
 					public void onClick(ClickEvent event) {
-						getRecentChanges(AnnotationMessageStatusType.UNCLOSED,
+						getRecentChanges(AnnotationMessageStatusType.REVIEWED,
 								ConversationAnnotationType.UNDEFINED);
 					}
 				});

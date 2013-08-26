@@ -74,6 +74,10 @@ class MongoLexStore implements ILexStore
 	public function readEntry($guid) {
 		$collection = $this->_mongoDB->Entries;
 		$result = $collection->findOne(array('guid' => $guid));
+		if ($result==null)
+		{
+			return null;
+		}
 		$entry = EntryDTO::create($guid);
 		$entry->decode($result);
 		return $entry;
@@ -127,7 +131,7 @@ class MongoLexStore implements ILexStore
 		$count = $cursor->count();
 		return $count;
 	}
-
+	
 	/**
 	 * Deletes an entry from the Store
 	 * @param string $guid
@@ -261,6 +265,20 @@ class MongoLexStore implements ILexStore
 		}
 		return $dto;
 	}
+	
+	public function  getAllEntries() {
+		$collection = $this->_mongoDB->Entries;
+		$cursor = $collection->find();
+		$dtoList = new \libraries\lfdictionary\dto\EntryListDTO();
+		foreach ($cursor as $entry) {
+			$entryPart = $entry['entry'];
+			$entryDto = \libraries\lfdictionary\dto\EntryDTO::create($entry['guid']);
+			$entryDto->decode($entry);
+			$dtoList->addEntry($entryDto);
+		}
+		return $dtoList;
+	}
+	
 }
 
 ?>

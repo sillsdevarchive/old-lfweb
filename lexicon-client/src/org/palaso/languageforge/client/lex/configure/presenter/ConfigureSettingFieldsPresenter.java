@@ -9,6 +9,25 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.palaso.languageforge.client.lex.common.CheckableItem;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
+import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.IPersistable;
+import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
+import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
+import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
+import org.palaso.languageforge.client.lex.common.SettingInputSystemItem;
+import org.palaso.languageforge.client.lex.common.SettingInputSystemItemHelper;
+import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
+import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingFieldsView;
+import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
+import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
+import org.palaso.languageforge.client.lex.controls.FastTree;
+import org.palaso.languageforge.client.lex.controls.FastTreeItem;
+import org.palaso.languageforge.client.lex.controls.TextChangeEvent;
+import org.palaso.languageforge.client.lex.controls.TextChangeEventHandler;
+import org.palaso.languageforge.client.lex.controls.TreeItemSelectedHandler;
+import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.FieldSettingsEntry;
@@ -19,24 +38,6 @@ import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsFi
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsFieldWritingSystemDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemElementDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemsDto;
-import org.palaso.languageforge.client.lex.common.CheckableItem;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
-import org.palaso.languageforge.client.lex.common.IPersistable;
-import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
-import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
-import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
-import org.palaso.languageforge.client.lex.common.SettingInputSystemItem;
-import org.palaso.languageforge.client.lex.common.SettingInputSystemItemHelper;
-import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
-import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
-import org.palaso.languageforge.client.lex.controls.FastTree;
-import org.palaso.languageforge.client.lex.controls.FastTreeItem;
-import org.palaso.languageforge.client.lex.controls.TextChangeEvent;
-import org.palaso.languageforge.client.lex.controls.TextChangeEventHandler;
-import org.palaso.languageforge.client.lex.controls.TreeItemSelectedHandler;
-import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
-import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingFieldsView;
-import org.palaso.languageforge.client.lex.main.service.ILexService;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
@@ -66,35 +67,37 @@ public class ConfigureSettingFieldsPresenter
 	// only a copy of Fields setting, and all in referenced, so we can easy to
 	// persist to server.
 	private SettingFieldsDto fieldDto = null;
-	private List<CheckableItem> fieldsListDs;
-
+	private ArrayList<CheckableItem> fieldsListDs;
+	// private HashMap<String, CheckableItem> fieldsListDs;
 	private SettingInputSystemItemHelper sisHelper;
 
 	public void bind() {
 
-		view.getInputSystemMoveDownClickHandlers().addClickHandler(new ClickHandler() {
+		view.getInputSystemMoveDownClickHandlers().addClickHandler(
+				new ClickHandler() {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				FastTree tree = view.getInputSystemsTree();
-				if (tree.getSelectedItem() != null) {
-					tree.getSelectedItem().moveItemDown();
-					updateInputSystems();
-				}
-			}
-		});
+					@Override
+					public void onClick(ClickEvent event) {
+						FastTree tree = view.getInputSystemsTree();
+						if (tree.getSelectedItem() != null) {
+							tree.getSelectedItem().moveItemDown();
+							updateInputSystems();
+						}
+					}
+				});
 
-		view.getInputSystemMoveUpClickHandlers().addClickHandler(new ClickHandler() {
+		view.getInputSystemMoveUpClickHandlers().addClickHandler(
+				new ClickHandler() {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				FastTree tree = view.getInputSystemsTree();
-				if (tree.getSelectedItem() != null) {
-					tree.getSelectedItem().moveItemUp();
-					updateInputSystems();
-				}
-			}
-		});
+					@Override
+					public void onClick(ClickEvent event) {
+						FastTree tree = view.getInputSystemsTree();
+						if (tree.getSelectedItem() != null) {
+							tree.getSelectedItem().moveItemUp();
+							updateInputSystems();
+						}
+					}
+				});
 
 		view.getFieldsTree().setItemSelectedCallbackHandler(
 				new TreeItemSelectedHandler() {
@@ -144,25 +147,29 @@ public class ConfigureSettingFieldsPresenter
 					}
 				});
 
-		view.getSetupHideIfEmptyToggleButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				if (view.getFieldsTree().getSelectedItem() != null) {
-					FastTreeItem item = view.getFieldsTree().getSelectedItem();
+		view.getSetupHideIfEmptyToggleButton().addClickHandler(
+				new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						if (view.getFieldsTree().getSelectedItem() != null) {
+							FastTreeItem item = view.getFieldsTree()
+									.getSelectedItem();
 
-					CheckableItem checkableItem = (CheckableItem) item
-							.getData();
+							CheckableItem checkableItem = (CheckableItem) item
+									.getData();
 
-					SettingFieldsFieldElementDto fieldElementDto = (SettingFieldsFieldElementDto) (checkableItem
-							.getData());
+							SettingFieldsFieldElementDto fieldElementDto = (SettingFieldsFieldElementDto) (checkableItem
+									.getData());
 
-					boolean newVisibility = !view.getSetupHideIfEmptyToggleButton().getValue();
+							boolean newVisibility = !view
+									.getSetupHideIfEmptyToggleButton()
+									.getValue();
 
-					fieldElementDto.setVisibility(newVisibility);
+							fieldElementDto.setVisibility(newVisibility);
 
-				}
-			}
-		});
+						}
+					}
+				});
 	}
 
 	public void onAttachFieldsView(SimplePanel simplePanel) {
@@ -253,11 +260,140 @@ public class ConfigureSettingFieldsPresenter
 
 	}
 
+	private void fieldsDependenceChecker(
+			SettingFieldsFieldElementDto relatedData) {
+		// Rule-1: when "Definition" unckecked, all other in "LexSense" should
+		// unchecked.
+
+		// Rule-2: when "Example Sentence" unckecked, all other in
+		// "LexExampleSentence" should unchecked.
+
+		// Rule-3: when any in "LexSense" checked, "Definition" should also
+		// checked.
+
+		// Rule-4: when any in "LexExampleSentence" checked, "Example Sentence"
+		// should also checked.
+
+		ConsoleLog.log("Dependece check: " + relatedData.getFieldName() + " / "
+				+ relatedData.getEnabled());
+		FastTree tree = view.getFieldsTree();
+		if (relatedData.getClassName() == SettingFieldClassNameType.LEXSENSE) {
+
+			if (relatedData.getFieldName().equalsIgnoreCase("definition")
+					&& relatedData.getEnabled() == false) {
+
+				for (FastTreeItem treeItem : tree.getItems()) {
+					for (FastTreeItem treeChildItem : treeItem.getChildren()) {
+						CheckableItem chkItem = (CheckableItem) treeChildItem
+								.getData();
+
+						if (chkItem.getData() != null
+								&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+							SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+									.getData();
+							if (data.getClassName() == SettingFieldClassNameType.LEXSENSE
+									&& !data.getFieldName().equalsIgnoreCase(
+											"definition")
+									&& !isInIgnoreList(data)) {
+
+								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+										.getWidget();
+
+								data.setEnabled(false);
+								chkBox.setValue(false);
+
+
+							}
+						}
+
+					}
+				}
+			} else {
+				// rule 3
+				if (!isInIgnoreList(relatedData)) {
+					for (FastTreeItem treeItem : tree.getItems()) {
+						for (FastTreeItem treeChildItem : treeItem
+								.getChildren()) {
+							CheckableItem chkItem = (CheckableItem) treeChildItem
+									.getData();
+							if (chkItem.getData() != null
+									&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+								SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+										.getData();
+								if (data.getFieldName().equalsIgnoreCase(
+										"definition")) {
+									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+											.getWidget();
+									chkBox.setValue(true);
+									data.setEnabled(true);
+								}
+							}
+						}
+					}
+				}
+			}
+
+		} else if (relatedData.getClassName() == SettingFieldClassNameType.LEXEXAMPLESENTENCE) {
+			if (relatedData.getFieldName().equalsIgnoreCase("ExampleSentence")
+					&& relatedData.getEnabled() == false) {
+				// rule 2
+				for (FastTreeItem treeItem : tree.getItems()) {
+					for (FastTreeItem treeChildItem : treeItem.getChildren()) {
+						CheckableItem chkItem = (CheckableItem) treeChildItem
+								.getData();
+
+						if (chkItem.getData() != null
+								&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+							SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+									.getData();
+							if (data.getClassName() == SettingFieldClassNameType.LEXEXAMPLESENTENCE
+									&& !data.getFieldName().equalsIgnoreCase(
+											"ExampleSentence")
+									&& !isInIgnoreList(data)) {
+
+								ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+										.getWidget();
+
+								data.setEnabled(false);
+								chkBox.setValue(false);
+
+							}
+						}
+
+					}
+				}
+			} else {
+				// rule 4
+				if (!isInIgnoreList(relatedData)) {
+					for (FastTreeItem treeItem : tree.getItems()) {
+						for (FastTreeItem treeChildItem : treeItem
+								.getChildren()) {
+							CheckableItem chkItem = (CheckableItem) treeChildItem
+									.getData();
+							if (chkItem.getData() != null
+									&& chkItem.getData() instanceof SettingFieldsFieldElementDto) {
+								SettingFieldsFieldElementDto data = (SettingFieldsFieldElementDto) chkItem
+										.getData();
+								if (data.getFieldName().equalsIgnoreCase(
+										"ExampleSentence")) {
+									ExtendedCheckBox chkBox = (ExtendedCheckBox) treeChildItem
+											.getWidget();
+									chkBox.setValue(true);
+									data.setEnabled(true);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private FastTreeItem createTreeItem(CheckableItem item) {
 		FastTreeItem topTreeItem = new FastTreeItem();
 		topTreeItem.setData(item);
 		if (item.isCheckable()) {
-			ExtendedCheckBox chkBox = new ExtendedCheckBox(
+			final ExtendedCheckBox chkBox = new ExtendedCheckBox(
 					item.getDisplayText());
 			if (item.getData() != null) {
 				if (item.getData() instanceof SettingFieldsFieldElementDto) {
@@ -269,8 +405,9 @@ public class ConfigureSettingFieldsPresenter
 								ValueChangeEvent<Boolean> event) {
 							// the change is makes on DS directly, so easy for
 							// saving operation.
-							relatedData.setEnabled(event.getValue()
+							relatedData.setEnabled(chkBox.getValue()
 									.booleanValue());
+							fieldsDependenceChecker(relatedData);
 						}
 					});
 				} else if (item.getData() instanceof String) {
@@ -565,7 +702,8 @@ public class ConfigureSettingFieldsPresenter
 
 		fieldSetting.setLabel(sffElement.getDisplayName());
 		fieldSetting
-				.setVisible(sffElement.getVisibility() == SettingFieldVisibilityType.VISIBLE);
+				.setVisiblity(sffElement.getVisibility() == SettingFieldVisibilityType.VISIBLE);
+		fieldSetting.setEnabled(sffElement.getEnabled());
 		JsArrayString jsStringLanguages = (JsArrayString) JsArrayString
 				.createArray();
 		JsArrayString jsStringAbbreviations = (JsArrayString) JsArrayString

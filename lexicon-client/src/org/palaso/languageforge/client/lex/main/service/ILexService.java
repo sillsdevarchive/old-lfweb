@@ -184,7 +184,7 @@ public interface ILexService extends IBaseService {
 	 * 
 	 * @param asyncCallback
 	 */
-	void saveNewComments(AnnotationMessageStatusType messageStatus,
+	void saveNewComments(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo,
 			String parentGuid, String commentMessage, boolean isRootMessage,
 			AsyncCallback<ConversationDto> asyncCallback);
 
@@ -211,4 +211,17 @@ public interface ILexService extends IBaseService {
 	 * @param id
 	 */
 	void removeEntryFromCache(String id);
+	
+	/**
+	 * to reset the cache to empty
+	 */
+	void resetCache();
+	
+	/**
+	 * get a words count from server
+	 * #this will not pass cache
+	 */
+	
+	void getWordCountInDatabase(AsyncCallback<ResultDto> asyncCallback);
+
 }

@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.AutoSuggestPresenterOption;
 import org.palaso.languageforge.client.lex.common.AutoSuggestPresenterOptionResultSet;
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
@@ -42,6 +43,7 @@ import org.palaso.languageforge.client.lex.main.service.actions.GetEntryAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetIsDashboardUpdateToolRunningAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetListAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetMissingInfoListAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetWordCountInDatabaseAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetWordsListForGatherWordAction;
 import org.palaso.languageforge.client.lex.main.service.actions.SaveEntryAction;
 import org.palaso.languageforge.client.lex.main.service.actions.SaveNewCommentAction;
@@ -258,8 +260,7 @@ public class LexService extends BaseService implements ILexService {
 			}
 			return;
 		}
-
-		if (lexServiceCache.getLexEntryDtoFromCache(key) == null || forceReload) {
+		if (!lexServiceCache.isEntryCacheHasIt(key) || forceReload) {
 			AsyncCallback<LexiconEntryDto> internalAsyncCallback = new AsyncCallback<LexiconEntryDto>() {
 				@Override
 				public void onFailure(Throwable caught) {
@@ -268,6 +269,7 @@ public class LexService extends BaseService implements ILexService {
 
 				@Override
 				public void onSuccess(LexiconEntryDto result) {
+					ConsoleLog.log("Reload from Server[getEntry]: " + key);
 					lexServiceCache.putLexEntryDtoIntoCache(key, result);
 					asyncCallback.onSuccess(result);
 				}
@@ -275,6 +277,7 @@ public class LexService extends BaseService implements ILexService {
 			GetEntryAction action = new GetEntryAction(key);
 			remoteAsync.execute(action, internalAsyncCallback);
 		} else {
+			ConsoleLog.log("Load from cache[getEntry]: " + key);
 			asyncCallback.onSuccess(lexServiceCache
 					.getLexEntryDtoFromCache(key));
 		}
@@ -303,6 +306,7 @@ public class LexService extends BaseService implements ILexService {
 			@Override
 			public void onSuccess(ResultDto result) {
 
+				ConsoleLog.log("onSuccess: " + entry.getId());
 				// update cache if it is present
 				lexServiceCache.putLexEntryDtoIntoCache(entry.getId(), entry);
 
@@ -559,11 +563,11 @@ public class LexService extends BaseService implements ILexService {
 	}
 
 	@Override
-	public void saveNewComments(AnnotationMessageStatusType messageStatus,
+	public void saveNewComments(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo,
 			String parentGuid, String commentMessage, boolean isRootMessage,
 			AsyncCallback<ConversationDto> asyncCallback) {
 
-		SaveNewCommentAction action = new SaveNewCommentAction(messageStatus,
+		SaveNewCommentAction action = new SaveNewCommentAction(messageStatus,isStatusReviewed, isStatusTodo, 
 				parentGuid, commentMessage, isRootMessage);
 		remoteAsync.execute(action, asyncCallback);
 
@@ -588,6 +592,18 @@ public class LexService extends BaseService implements ILexService {
 		{
 			lexServiceCache.removeLexEntryFromCache(id);
 		}
+	}
+
+	@Override
+	public void resetCache() {
+		lexServiceCache.clearAll();
+		lexServiceCache.setCacheType(null);
+	}
+
+	@Override
+	public void getWordCountInDatabase(AsyncCallback<ResultDto> asyncCallback) {
+		GetWordCountInDatabaseAction action = new GetWordCountInDatabaseAction();
+		remoteAsync.execute(action, asyncCallback);
 	}
 
 }

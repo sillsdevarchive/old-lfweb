@@ -1,8 +1,10 @@
 package org.palaso.languageforge.client.lex.addinfo.presenter;
 
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.Tools;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
@@ -36,7 +38,6 @@ public class IncompleteWordEditPresenter extends
 	public ILexService LexService;
 	private EntryPresenter entryPresenter;
 	private boolean isNewEntry = false;
-
 	/**
 	 * Empty constructor for MissInfoEditPresenter
 	 * 
@@ -86,6 +87,8 @@ public class IncompleteWordEditPresenter extends
 			message = I18nConstants.STRINGS
 					.IncompleteWordEditPresenter_All_words_have_part_of_speech_information();
 			break;
+		default:
+			throw new RuntimeException("Unsupports entry field.");
 		}
 
 		if (!message.isEmpty()) {
@@ -131,7 +134,7 @@ public class IncompleteWordEditPresenter extends
 	public void onWordUpdated() {
 		entryPresenter.updateModel();
 		final LexiconEntryDto entryDTO = entryPresenter.getModel();
-
+		ConsoleLog.log("Before add-info save.");
 		LexService.saveEntry(entryDTO, new AsyncCallback<ResultDto>() {
 
 			@Override
@@ -145,6 +148,7 @@ public class IncompleteWordEditPresenter extends
 
 			@Override
 			public void onSuccess(ResultDto result) {
+				ConsoleLog.log("Add-info save success.");
 				if (isNewEntry) {
 					view.showNotification(
 							I18nConstants.STRINGS
@@ -157,6 +161,7 @@ public class IncompleteWordEditPresenter extends
 									.IncompleteWordEditPresenter_Entry_updated_successfully(),
 							true);
 				}
+				ConsoleLog.log("Remove old key: " + entryDTO.getId());
 				LexService.removeEntryFromCache(entryDTO.getId());
 				eventBus.clientDataRefresh(IncompleteWordListPresenter
 						.getEntryFieldType());

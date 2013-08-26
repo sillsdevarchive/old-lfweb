@@ -20,4 +20,9 @@
 
 .ext_checkboxAreaCheckedLabel {
 	font-weight: bold;
+	padding-top: 3px;
+}
+
+.ext_checkboxAreaLabel {
+	padding-top: 3px;
 }

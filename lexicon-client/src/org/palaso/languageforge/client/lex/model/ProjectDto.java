@@ -18,6 +18,10 @@ public class ProjectDto extends BaseDto<ProjectDto> {
 		return this.id;
 	}-*/;
 
+	public final native void setProjectTitle(String title) /*-{
+		this.title = title;
+	}-*/;
+	
 	public final native String getProjectTitle() /*-{
 		return this.title;
 	}-*/;

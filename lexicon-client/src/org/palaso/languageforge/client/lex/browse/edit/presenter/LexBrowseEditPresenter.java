@@ -2,6 +2,7 @@ package org.palaso.languageforge.client.lex.browse.edit.presenter;
 
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.Tools;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
@@ -11,6 +12,7 @@ import org.palaso.languageforge.client.lex.browse.edit.view.LexBrowseEditView;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
@@ -35,7 +37,7 @@ public class LexBrowseEditPresenter extends
 	private EntryPresenter entryPresenter = null;
 	private FieldSettings fieldSettings = FieldSettings.fromWindow();
 	private boolean isNewEntry = false;
-
+	
 	public void onStart() {
 	}
 
@@ -118,6 +120,7 @@ public class LexBrowseEditPresenter extends
 
 			@Override
 			public void onSuccess(LexiconEntryDto result) {
+				// keep a copy for update check and setting timestamp
 				renderWord(result);
 				eventBus.setUpdateButtonEnable(true);
 				boolean allowDelete=false;
@@ -163,7 +166,7 @@ public class LexBrowseEditPresenter extends
 
 			@Override
 			public void onSuccess(ResultDto result) {
-				eventBus.clientDataRefresh(!isNewEntry);
+				eventBus.clientDataRefresh(!isNewEntry, false);
 				if (isNewEntry) {
 					view.showMessage(
 							I18nConstants.STRINGS
@@ -193,5 +196,7 @@ public class LexBrowseEditPresenter extends
 				view.createDictionaryView(allowEdit),
 				result, fieldSettings);
 	}
+	
+
 
 }

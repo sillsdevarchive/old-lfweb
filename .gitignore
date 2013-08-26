@@ -4,7 +4,9 @@
 .externalToolBuilders
 /output
 /lexicon-client/war/WEB-INF/classes
-gwt
 /lexicon-client/war/lifteditor
 /lexicon-client/gwt-unitCache
 /.metadata
+lifteditor
+/lexicon-client/.gwt
+

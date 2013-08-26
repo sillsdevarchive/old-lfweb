@@ -6,7 +6,11 @@ require_once(dirname(__FILE__) . '/../Config.php');
 use libraries\lfdictionary\dashboardtool\DashboardDbType;
 use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\common\LoggerFactory;
+use libraries\lfdictionary\dto\EntryListDTO;
 class GetDashboardDataCommand {
+	
+	var $_store = NULL;
+	
 	var $_filePath;
 	var $_projectId=0;
 	var $_wordCount = 0;
@@ -19,10 +23,11 @@ class GetDashboardDataCommand {
 	var $counterValuesArray = array();
 
 	var $dashboardToolDbAccess;
-	function __construct($projectId,$filePath, $actRange) {
+	function __construct($lexStore, $projectId,$filePath, $actRange) {
 		$this->_projectId = $projectId;
 		$this->_filePath = $filePath;
 		$this->_actRange = $actRange;
+		$this->_store = $lexStore;
 	}
 
 	function execute(){
@@ -127,20 +132,53 @@ class GetDashboardDataCommand {
 
 	function processFile() {
 
-		$doc = new \DOMDocument;
-		$doc->preserveWhiteSpace = false;
-		$doc->Load($this->_filePath);
-		$xpath = new \DOMXPath($doc);
+// 		$doc = new \DOMDocument;
+// 		$doc->preserveWhiteSpace = false;
+// 		$doc->Load($this->_filePath);
+// 		$xpath = new \DOMXPath($doc);
 
-		$entries = $xpath->query("entry");
-		$meaning = $xpath->query("entry/sense");
-		$speech = $xpath->query("entry/sense/grammatical-info");
-		$example = $xpath->query("entry/sense/example");
+// 		$entries = $xpath->query("entry");
+// 		$meaning = $xpath->query("entry/sense");
+// 		$speech = $xpath->query("entry/sense/grammatical-info");
+// 		$example = $xpath->query("entry/sense/example");
 
-		$this->_wordCount = $entries->length;
-		$this->_meaningCount = $meaning->length;
-		$this->_posCount = $speech->length;
-		$this->_exampleCount = $example->length;
+		
+		// those value should take from Database.
+
+		if (isset($this->_store)){
+			$entriesListDto = $this->_store->getAllEntries();
+			$entryCount = 0;
+			$meaningCount = 0;
+			$speechCount = 0;
+			$exampleCount = 0;
+			
+			//Entry level
+			foreach ($entriesListDto->_entries as $entry)
+			{
+				$entryCount= $entryCount + 1;
+				
+				//Sense Level
+				foreach ($entry->_senses as $sense)
+				{
+					$meaningCount = $meaningCount + 1;
+					
+					if (trim($sense->_partOfSpeech)!=='')
+					{
+						$speechCount = + 1;
+					}
+					//Example Level
+					foreach ($sense->_examples as $example)
+					{
+						$exampleCount = $exampleCount + 1;
+					}
+				}
+			}
+			
+			$this->_wordCount = $entryCount;
+			$this->_meaningCount = $meaningCount;
+			$this->_posCount = $speechCount;
+			$this->_exampleCount = $exampleCount;
+		}
 
 	}
 }

@@ -26,47 +26,47 @@ use \libraries\lfdictionary\environment\EnvironmentMapper;
  */
 class LFDictionaryAPI
 {
-	
+
 	/**
 	 * @var LexProject
 	 */
 	private $_projectAccess;
 	private $_lexProject;
 	var $_projectPath;
-	
+
 	/**
 	 * @var String
 	 */
 	protected $_userId;
-	
+
 	/**
 	 * @var String
 	 */
 	protected $_projectNodeId;
-	
+
 	/**
 	 * @var ProjectModel
 	 */
 	protected $_projectModel;
-	
-	
+
+
 	/**
-	 * @var ProjectModel
+	 * @var LFUserModel
 	 */
 	private $_userModel;
-	
+
 	function __construct($projectNodeId, $userId) {
 		$this->_logger = LoggerFactory::getLogger();
 		$this->_logger->logInfoMessage("LFDictionaryAPI p:$projectNodeId u:$userId");
 		$this->_userId = $userId;
 		$this->_projectNodeId = $projectNodeId;
-	
+
 		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		$this->initialize($projectNodeId, $userId);
 	}
-	
+
 	protected function initialize($projectNodeId, $userId) {
-		
+
 		LoggerFactory::getLogger()->logInfoMessage("Lexicon Project initialize...");
 		$this->_userId = $userId;
 		$this->_projectNodeId = $projectNodeId;
@@ -141,6 +141,25 @@ class LFDictionaryAPI
 		$store = $this->getLexStore();
 		$result = $store->readEntry($guid);
 
+ 		//Sense Level
+ 		foreach ($result->_senses as $sense)
+ 		{
+
+ 			if (!(isset($sense->_id) && strlen(trim($sense->_id))>0))
+ 			{
+ 				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+ 			}
+ 			//Example Level
+ 			foreach ($sense->_examples as $example)
+ 			{
+ 				if (!(isset($example->_id) && strlen(trim($example->_id))>0))
+ 				{
+ 					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+
+ 				}
+ 			}
+		}
+
 		return $result->encode();
 	}
 
@@ -187,7 +206,7 @@ class LFDictionaryAPI
 		$rawEntry = json_decode($entry, true);
 		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray($rawEntry);
 		$store = $this->getLexStore();
-		$store->writeEntry($entryDto, $action);
+		$store->writeEntry($entryDto, $action, $this->_userModel->id(), $this->_userModel->getUserName());
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
 	}
@@ -252,7 +271,7 @@ class LFDictionaryAPI
 		}
 
 		$command = new \libraries\lfdictionary\commands\GatherWordCommand($this->_lexProject->getLiftFilePath(), $languageCode, $existWords, $words, $this->getLexStore());
-		
+
 		$result = new ResultDTO(true,$command->execute());
 		return $result->encode();
 	}
@@ -305,7 +324,7 @@ class LFDictionaryAPI
 		return $result->encode();
 	}
 
-	function saveNewComment($messageStatus,$parentGuid, $commentMessage,$isRootMessage) {
+	function saveNewComment($messageStatus, $isStatusReviewed, $isStatusTodo, $parentGuid, $commentMessage, $isRootMessage) {
 		$this->isReadyOrThrow();
 
 		$chorusNotesFilePath = $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
@@ -313,7 +332,7 @@ class LFDictionaryAPI
 		$w3cDateString = $now->format(DateTime::W3C);
 		$userModel = $this->_userModel;
 		$messageType=0;
-		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
+		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus, $isStatusReviewed, $isStatusTodo,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -321,7 +340,7 @@ class LFDictionaryAPI
 	function getDashboardData($actRange) {
 		$this->isReadyOrThrow();
 
-		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->_projectNodeId, $this->_lexProject->getLiftFilePath(),$actRange);
+		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->getLexStore(), $this->_projectNodeId, $this->_lexProject->getLiftFilePath(), $actRange);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -360,8 +379,8 @@ class LFDictionaryAPI
 		$resultTask=$this->getUserTasksSetting($userId);
 		$resultFields=$this->getUserFieldsSetting($userId);
 		$result =  array(
-	"tasks" => $resultTask["tasks"],
-	"fields" => $resultFields["fields"]
+				"tasks" => $resultTask["tasks"],
+				"fields" => $resultFields["fields"]
 		);
 		return $result;
 	}
@@ -425,7 +444,7 @@ class LFDictionaryAPI
 		}
 
 		// get project language : FieldSettings.fromWindow().value("Word").getAbbreviations().get(0);
-		
+
 		//looking for ldml which has <exemplarCharacters type="index">
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
 		$languageCode = $this->_projectModel->getLanguageCode();
@@ -478,17 +497,17 @@ class LFDictionaryAPI
 		return  array("tl" => array());
 	}
 
-    /**
+	/**
 	 * get words
 	 */
 	function getWordsByTitleLetter($letter)
 	{
 		$this->isReadyOrThrow();
-		$store = $this->getLexStore();	
+		$store = $this->getLexStore();
 		$result = $store->searchEntriesAsWordList($this->_projectModel->getLanguageCode(),trim($letter), null, null);
 		return $result->encode();
 	}
-	
+
 
 	/**
 	 * @param string $type 'LanguageDepot'
@@ -548,274 +567,287 @@ class LFDictionaryAPI
 		}
 		return $this->_lexStore;
 	}
-	
-	
-	
+
+
+
 	// Reviewed This can stay here
 	function getIANAData() {
-	$JSONFile=LF_LIBRARY_PATH . "/data/IANA.js";
-	$result= file_get_contents($JSONFile);
-	return json_decode($result);
+		$JSONFile=LF_LIBRARY_PATH . "/data/IANA.js";
+		$result= file_get_contents($JSONFile);
+		return json_decode($result);
 	}
-	
+
 	// Reviewed This can stay here
 	function getSettingInputSystems() {
-	$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_projectPath);
-	$result = $command->execute();
-	return $result;
+		$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_projectPath);
+		$result = $command->execute();
+		return $result;
 	}
-	
+
 	// Reviewed This is ok here CP
 	function updateSettingInputSystems($inputSystems) {
-	// don't use rawurldecode here, because it does not decode "+" -> " "
+		// don't use rawurldecode here, because it does not decode "+" -> " "
 		$inputSystems = urldecode($inputSystems);
-	$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_projectPath,$inputSystems);
-	$command->execute();
-	return $this->getSettingInputSystems();
+		$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_projectPath,$inputSystems);
+		$command->execute();
+		return $this->getSettingInputSystems();
 	}
-	
-	// Reviewed Move to LanguageForgeAPI
+
 	function updateProjectName($projectNodeId, $name) {
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
-	if ($projectModel->setTitle(urldecode($name))){
-		
-	$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
-	return $getProjectDtO->encode();
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+		if ($projectModel->setTitle(urldecode($name))){
+				
+			//reload
+			$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+			$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
+			return $getProjectDtO->encode();
+		}
+		else {
+			throw new Exception("Project name can not be updated.");
+		}
 	}
-	else {
-	throw new Exception("Project name can not be updated.");
-	}
-	}
-	
+
 	protected function getUserNameById($userId) {
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
 		$strName = $userModel->getUserName();
 		return mb_strtolower($strName, mb_detect_encoding($strName));
 	}
-	
-	
+
+
 	/**
-	* Check User exists
-	*
-	* @return Boolean value
-	*/
+	 * Check User exists
+	 *
+	 * @return Boolean value
+	 */
 	function isUser($userName) {
 	 $userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$result = $userModel->isUser($userName);
-	return $result;
+	 $result = $userModel->isUser($userName);
+	 return $result;
 	}
-	
+
 	/**
-	* Add New User
-	*/
+	 * Add New User
+	 */
 	function addUser($newuser) {
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$result = $userModel->addUser($newuser);
-	return $result->encode();
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
+		$result = $userModel->addUser($newuser);
+		return $result->encode();
 	}
-	
+
 	/**
-	* Search User
-	*/
+	 * Search User
+	 */
 	function searchUser($search) {
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$result = $userModel->searchUser($search);
-	return $result->encode();
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
+		$result = $userModel->searchUser($search);
+		return $result->encode();
 	}
-	
+
 	/**
-	* Add User to Project
-	*/
+	 * Add User to Project
+	 */
 	function addUserToProject($projectId, $userName) {
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$result = $userModel->addUserToProject($projectId, $userName);
-	return $result;
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
+		$result = $userModel->addUserToProject($projectId, $userName);
+		return $result;
 	}
-	
+
 	/**
-	* List User
-	*/
+	 * List User
+	 */
 	function listUsersInProject($projectId) {
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
-	$result = $projectModel->listUsersInProjectWithRole($projectId);
-	return $result->encode();
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		$result = $projectModel->listUsersInProjectWithRole($projectId);
+		return $result->encode();
 	}
-	
+
 	/**
-	* Add new project
-	*/
+	 * Add new project
+	 */
 	function add($newProject) {
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
-	$result = $projectModel->add($newProject);
-	if (!$result) {
-	throw new Exception('Project already exists');
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
+		$result = $projectModel->add($newProject);
+		if (!$result) {
+			throw new Exception('Project already exists');
+		}
 	}
-	}
-	
+
 	/**
-	* List projects
-	*/
+	 * List projects
+	 */
 	function listProjects($from, $to) {
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
-			$result = $projectModel->listProjects($from, $to);
-	
-	return $result->encode();
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
+		$result = $projectModel->listProjects($from, $to);
+
+		return $result->encode();
 	}
-	
+
 	/**
-	* Search project
-	*/
+	 * Search project
+	 */
 	function searchProject($string, $maxResultCount) {
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
-	$result = $projectModel->searchProject($string, $maxResultCount);
-	return $result->encode();
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
+		$result = $projectModel->searchProject($string, $maxResultCount);
+		return $result->encode();
 	}
-	
+
 	/**
-	* Add new community
-	*/
+	 * Add new community
+	 */
 	function addCommunity($newCommunity) {
-	$communityModel = new \libraries\lfdictionary\environment\CommunityModel($this->_userId);
-	$result = $communityModel->addCommunity($newCommunity);
-	if(!$result)
-	throw new Exception('Community already exists');
+		$communityModel = new \libraries\lfdictionary\environment\CommunityModel($this->_userId);
+		$result = $communityModel->addCommunity($newCommunity);
+		if(!$result)
+			throw new Exception('Community already exists');
 	}
-	
+
 	/**
-	* List communities
-	*/
+	 * List communities
+	 */
 	function listCommunities($from, $to) {
-	$communityModel = new \libraries\lfdictionary\environment\CommunityModel($this->_userId);
-	$result = $communityModel->listCommunities($from, $to);
-	return $result->encode();
+		$communityModel = new \libraries\lfdictionary\environment\CommunityModel($this->_userId);
+		$result = $communityModel->listCommunities($from, $to);
+		return $result->encode();
 	}
-	
+
 	/**
-	* Search Community
-	*/
+	 * Search Community
+	 */
 	function searchCommunity($string, $maxResultCount) {
-	$communityModel = new \libraries\lfdictionary\environment\CommunityModel($this->_userId);
-	$result = $communityModel->searchCommunity($string, $maxResultCount);
-	return $result->encode();
+		$communityModel = new \libraries\lfdictionary\environment\CommunityModel($this->_userId);
+		$result = $communityModel->searchCommunity($string, $maxResultCount);
+		return $result->encode();
 	}
-	
+
 	/**
-	* member search for Auto Suggest in Setting->Member tab
-	*/
+	 * member search for Auto Suggest in Setting->Member tab
+	 */
 	function getMembersForAutoSuggest($search,$begin,$end) {
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$result = EnvironmentMapper::connect()->searchUser($search,$begin,$end);
-	return $result->encode();
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
+		$result = EnvironmentMapper::connect()->searchUser($search,$begin,$end);
+		return $result->encode();
 	}
-	
+
 	/**
-	* Add User to Project (this will return a new user list in JSON)
-	*/
+	 * Add User to Project (this will return a new user list in JSON)
+	 */
 	function addUserToProjectForLex($projectId, $userId) {
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
-	if ($projectModel->isUserInProject($userId))
-	{
-	throw new libraries\lfdictionary\common\UserActionDeniedException("User already a member of project, it may added by other user. please refresh to see changes");
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		if ($projectModel->isUserInProject($userId))
+		{
+			throw new libraries\lfdictionary\common\UserActionDeniedException("User already a member of project, it may added by other user. please refresh to see changes");
+		}
+		$result = EnvironmentMapper::connect()->addUserToProject($projectId, $userId);
+		if ($result) {
+			$result = $projectModel->listUsersInProjectWithRole($projectId);
+		}
+		else {
+			$result= new \libraries\lfdictionary\dto\UserListDTO();
+		}
+		return $result->encode();
 	}
-	$result = EnvironmentMapper::connect()->addUserToProject($projectId, $userId);
-	if ($result) {
-	$result = $projectModel->listUsersInProjectWithRole($projectId);
-			}
-			else {
-				$result= new \libraries\lfdictionary\dto\UserListDTO();
-			}
-			return $result->encode();
-	}
-	
+
 	/**
-	* Add User to Project (this will return a new user list in JSON)
-	*/
+	 * Add User to Project (this will return a new user list in JSON)
+	 */
 	function removeUserFromProjectForLex($projectId, $userId) {
-	$projectId=(int)$projectId;
-	$userId=(int)$userId;
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
-	if (!$projectModel->isUserInProject($userId))
-	{
-	throw new libraries\lfdictionary\common\UserActionDeniedException("User not a member of project, it may removed by other user. please refresh to see changes");
+		$projectId=(int)$projectId;
+		$userId=(int)$userId;
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		if (!$projectModel->isUserInProject($userId))
+		{
+			throw new libraries\lfdictionary\common\UserActionDeniedException("User not a member of project, it may removed by other user. please refresh to see changes");
+		}
+		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
+		$result = EnvironmentMapper::connect()->removeUserFromProject($projectId, $userId);
+		// always reload new list
+		$result = $projectModel->listUsersInProjectWithRole();
+		return $result->encode();
 	}
-	$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	$result = EnvironmentMapper::connect()->removeUserFromProject($projectId, $userId);
-	// always reload new list
-			$result = $projectModel->listUsersInProjectWithRole();
-			return $result->encode();
-	}
-	
+
 	/**
-	* change a user's access role
-	*/
+	 * change a user's access role
+	 */
 	function updateUserRoleGrant($projectId, $userDtoString) {
-	$projectId=(int)$projectId;
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
-	$userJson = json_decode(urldecode($userDtoString));
-	$userId=$userJson->id;
-	if ($projectModel->isUserInProject($userId)) {
-	$userDTO = new UserDTO(new \libraries\lfdictionary\environment\LFUserModel($userId));
-	$projectAccess = new LFProjectAccess($projectId, $userId);
-	$userDTO->setUserRole($projectAccess->getRole());
-	return $userDTO->encode();
+		$projectId=(int)$projectId;
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		$userJson = json_decode(urldecode($userDtoString));
+		$userId=$userJson->id;
+		if ($projectModel->isUserInProject($userId)) {
+			$userDTO = new UserDTO(new \libraries\lfdictionary\environment\LFUserModel($userId));
+			$projectAccess = new LFProjectAccess($projectId, $userId);
+			$userDTO->setUserRole($projectAccess->getRole());
+			return $userDTO->encode();
+		}
+		else {
+			throw new libraries\lfdictionary\common\UserActionDeniedException("User is not a member of project.");
+		}
 	}
-	else {
-	throw new libraries\lfdictionary\common\UserActionDeniedException("User is not a member of project.");
-	}
-	}
-	
+
 	/**
-	* create a new user and add it into project
-	*/
+	 * create a new user and add it into project
+	 */
 	function rapidUserMemberCreation($projectId, $userName) {
-	$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
-	$userListDto = $projectModel->getProjectAdmins();
-	if (count($userListDto->_user)<=0) {
-				throw new libraries\lfdictionary\common\UserActionDeniedException("Selected project doesn't have a active admin, so new user can not be created by admin.");
-	}
-	$users = $userListDto->getUsers();
-	$userDto = $users[0]; // use first one if there have mutil-admins
-	$userModel= new \libraries\lfdictionary\environment\LFUserModel($userDto->getUserId());
-	if ($projectModel->isUserInProjectByName($userName)) {
-	throw new libraries\lfdictionary\common\UserActionDeniedException("User name already exist!");
-			}
+		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		$userListDto = $projectModel->getProjectAdmins();
+		if (count($userListDto->_user)<=0) {
+			throw new libraries\lfdictionary\common\UserActionDeniedException("Selected project doesn't have a active admin, so new user can not be created by admin.");
+		}
+		$users = $userListDto->getUsers();
+		$userDto = $users[0]; // use first one if there have mutil-admins
+		$userModel= new \libraries\lfdictionary\environment\LFUserModel($userDto->getUserId());
+		if ($projectModel->isUserInProjectByName($userName)) {
+			throw new libraries\lfdictionary\common\UserActionDeniedException("User name already exist!");
+		}
 			
-			$newUserId =  EnvironmentMapper::connect()->createNewUser($userName, $userName, $userModel->getUserEmail());
-	if (!$newUserId) {
-	throw new libraries\lfdictionary\common\UserActionDeniedException("Error saving user account.");
+		$newUserId =  EnvironmentMapper::connect()->createNewUser($userName, $userName, $userModel->getUserEmail());
+		if (!$newUserId) {
+			throw new libraries\lfdictionary\common\UserActionDeniedException("Error saving user account.");
+		}
+		return $this->addUserToProjectForLex($projectId,$newUserId);
 	}
-	return $this->addUserToProjectForLex($projectId,$newUserId);
-	}
-	
+
 	/**
-	* invite user by send a email
-		 */
-		function inviteByEmail($gid, $recEmail, $pmessage) {
-	
-	$node = node_load($gid);
-	$variables = array(
-	'@group' => $node->title,
-	'@description' => $node->og_description,
-	'@site' => variable_get('site_name', 'drupal'),
-			    '!group_url' => url("og/subscribe/$node->nid", array('absolute' => TRUE)),
-	'@body' => $pmessage,
-	);
-	
-	global $user;
-	$from = $user->mail;
-	$result = drupal_mail('og', 'invite_user', $recEmail, $GLOBALS['language'], $variables, $from);
-	
-			if (!$result['result']) {
-	throw new \libraries\lfdictionary\common\UserActionDeniedException("Unable to send e-mail. Please contact the site administrator if the problem persists.");
+	 * invite user by send a email
+	 */
+	function inviteByEmail($gid, $recEmail, $pmessage) {
+
+		$node = node_load($gid);
+		$variables = array(
+				'@group' => $node->title,
+				'@description' => $node->og_description,
+				'@site' => variable_get('site_name', 'drupal'),
+				'!group_url' => url("og/subscribe/$node->nid", array('absolute' => TRUE)),
+				'@body' => $pmessage,
+		);
+
+		global $user;
+		$from = $user->mail;
+		$result = drupal_mail('og', 'invite_user', $recEmail, $GLOBALS['language'], $variables, $from);
+
+		if (!$result['result']) {
+			throw new \libraries\lfdictionary\common\UserActionDeniedException("Unable to send e-mail. Please contact the site administrator if the problem persists.");
+		}
+		else {
+			return array(
+					"text" => "Invite Sent."
+			);
+		}
 	}
-	else {
-	return array(
-	"text" => "Invite Sent."
-				);
-	}
+
+	/**
+	 * simply count the word in database and return.
+	 */
+
+	function getWordCountInDatabaseAction(){
+		$this->isReadyOrThrow();
+		$store = $this->getLexStore();
+		$wordCount = $store->entryCount();
+		$result = new \libraries\lfdictionary\dto\ResultDTO(true, strval($wordCount));
+		return $result->encode();
 	}
 
 }

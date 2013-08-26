@@ -8,18 +8,22 @@ import org.palaso.languageforge.client.lex.common.Constants;
 public class SaveNewCommentAction extends JsonRpcAction<ConversationDto> {
 
 	private AnnotationMessageStatusType messageStatus;
+	private boolean isStatusReviewed;
+	private boolean isStatusTodo;
 	private String parentGuid;
 	private String commentMessage;
 	private boolean isRootMessage;
 	
-	public SaveNewCommentAction(AnnotationMessageStatusType messageStatus, String parentGuid,
+	public SaveNewCommentAction(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo, String parentGuid,
 			String commentMessage, boolean isRootMessage) {
-		super(Constants.LEX_API_PATH, Constants.LEX_API, "saveNewComment", 4);
+		super(Constants.LEX_API_PATH, Constants.LEX_API, "saveNewComment", 6);
 		
 		this.messageStatus = messageStatus;
 		this.parentGuid = parentGuid;
 		this.commentMessage = commentMessage;
 		this.isRootMessage = isRootMessage;
+		this.isStatusReviewed = isStatusReviewed;
+		this.isStatusTodo = isStatusTodo;
 	}
 
 	@Override
@@ -33,10 +37,21 @@ public class SaveNewCommentAction extends JsonRpcAction<ConversationDto> {
 				return "";
 			}
 		case 1:
-			return this.parentGuid;
+			
+			if ( this.isStatusReviewed) {
+				return AnnotationMessageStatusType.REVIEWED.getValue();
+			} 
+			else return "";
 		case 2:
-			return this.commentMessage;
+			if (this.isStatusTodo) {
+				return AnnotationMessageStatusType.TODO.getValue();
+			}
+			else return "";
 		case 3:
+			return this.parentGuid;
+		case 4:
+			return this.commentMessage;
+		case 5:
 			if (isRootMessage){
 				return "1";
 			}else

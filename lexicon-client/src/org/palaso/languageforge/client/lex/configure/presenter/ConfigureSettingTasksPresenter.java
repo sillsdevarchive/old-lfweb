@@ -377,24 +377,24 @@ public class ConfigureSettingTasksPresenter extends BasePresenter<ConfigureSetti
                                         relatedData.setShowMeaningField(event.getValue());
                                         fieldSettingsSemanticDomain.value(
                                             "Definition")
-                                                                   .setVisible(event.getValue());
+                                                                   .setEnabled(event.getValue());
                                     } else if (checkBox.getText()
                                                            .equalsIgnoreCase(PART_OF_SPEECH)) {
                                         relatedData.setShowPOSField(event.getValue());
                                         fieldSettingsSemanticDomain.value("POS")
-                                                                   .setVisible(event.getValue());
+                                                                   .setEnabled(event.getValue());
                                     } else if (checkBox.getText()
                                                            .equalsIgnoreCase(EXAMPLE_SENTENCE)) {
                                         relatedData.setShowExampleSentenceField(event.getValue());
                                         fieldSettingsSemanticDomain.value(
                                             "Example")
-                                                                   .setVisible(event.getValue());
+                                                                   .setEnabled(event.getValue());
                                     } else if (checkBox.getText()
                                                            .equalsIgnoreCase(EXAMPLE_TRANSLATION)) {
                                         relatedData.setShowExampleTranslationField(event.getValue());
                                         fieldSettingsSemanticDomain.value(
                                             "Translation")
-                                                                   .setVisible(event.getValue());
+                                                                   .setEnabled(event.getValue());
                                     }
                                 }
                             }

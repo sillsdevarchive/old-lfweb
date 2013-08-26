@@ -10,8 +10,9 @@ class GetCommentsCommand {
 
 	public static $STATUS_UNDEFINED = "undefined";
 	public static $STATUS_CLOSED = "closed";
-	public static $STATUS_UNCLOSED = "unclosed";
-
+	public static $STATUS_REVIEWED = "reviewed";
+	public static $STATUS_TODO = "todo";
+	
 
 	var $_fileName;
 	var $_status;
@@ -72,7 +73,7 @@ class GetCommentsCommand {
 
 		$closedList= array();
 
-		if  ($this->_status==GetCommentsCommand::$STATUS_CLOSED || $this->_status==GetCommentsCommand::$STATUS_UNCLOSED)
+		if  ($this->_status==GetCommentsCommand::$STATUS_CLOSED /*|| $this->_status==GetCommentsCommand::$STATUS_REVIEWED*/)
 		{
 			$closedListEntries = $xpath->query('//notes/annotation/message[@status="' . GetCommentsCommand::$STATUS_CLOSED . '"]');
 
@@ -95,12 +96,12 @@ class GetCommentsCommand {
 				{
 					continue;
 				}
-			}else if($this->_status==GetCommentsCommand::$STATUS_UNCLOSED){
+			}/*else if($this->_status==GetCommentsCommand::$STATUS_REVIEWED){
 				if (array_key_exists($entry->getAttributeNode ("guid")->value,$closedList))
 				{
 					continue;
 				}
-			}else {
+			}*/else {
 				//undefined
 			}
 			$convDto = new \libraries\lfdictionary\dto\ConversationDTO();
@@ -121,6 +122,9 @@ class GetCommentsCommand {
 				$childDto->setDate(strtotime($childNode->getAttributeNode ("date")->value));
 				$childDto->setComment($childNode->nodeValue);
 				$childDto->setStatus($childNode->getAttributeNode ("status")->value);
+				$childDto->setStatusResolved($childNode->getAttributeNode ("status.resolved")->value);
+				$childDto->setStatusReviewed($childNode->getAttributeNode ("status.reviewed")->value);
+				$childDto->setStatusTodo($childNode->getAttributeNode ("status.todo")->value);
 				$convDto->add($childDto);
 			}
 			//$this->_dto->addConversation($convDto);

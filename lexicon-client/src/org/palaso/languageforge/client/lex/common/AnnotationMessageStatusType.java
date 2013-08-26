@@ -9,7 +9,8 @@ public enum AnnotationMessageStatusType  implements IEnum  {
 	// DO not change name definition here!!! used for JSON mapping
 	UNDEFINED("undefined"),
 	CLOSED("closed"),
-	UNCLOSED("unclosed");
+	REVIEWED("reviewed"),
+	TODO("todo");
 
     private String value;
 	private static Map<AnnotationMessageStatusType, String> table = new EnumMap<AnnotationMessageStatusType, String>(

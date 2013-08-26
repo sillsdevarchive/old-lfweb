@@ -1,10 +1,10 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
-import org.palaso.languageforge.client.lex.model.ConversationListDto;
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
+import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
-import org.palaso.languageforge.client.lex.common.Constants;
+import org.palaso.languageforge.client.lex.model.ConversationListDto;
 
 public class GetCommentsAction extends JsonRpcAction<ConversationListDto> {
 

@@ -80,7 +80,7 @@ public class EntryPresenter extends
 		wordEndPaddingCell = addWordEndingSpaceCell;
 		addWord();
 		// Senses
-		if (fieldSettings.value("Definition").getVisible()) {
+		if (fieldSettings.value("Definition").getEnabled()) {
 			for (int i = 0, n = model.getSenseCount(); i < n; ++i) {
 				createSensePresenterInView(model.getSense(i),
 						getMeaningLabelText(i));
@@ -106,7 +106,7 @@ public class EntryPresenter extends
 	}
 
 	private void addWord() {
-		if (fieldSettings.value("Word").getVisible()) {
+		if (fieldSettings.value("Word").getEnabled()) {
 			MultiText wordMultiText = MultiText
 					.createFromSettings(fieldSettings.value("Word"));
 
@@ -145,7 +145,7 @@ public class EntryPresenter extends
 	 * 
 	 */
 	private void addNewMeaning() {
-		if (fieldSettings.value("NewMeaning").getVisible()) {
+		if (fieldSettings.value("NewMeaning").getEnabled()) {
 			Sense sense = Sense.createFromSettings(fieldSettings);
 			if (singleNewMeaning) {
 				view.setAddNewButtonVisible(false);
@@ -169,7 +169,7 @@ public class EntryPresenter extends
 	}
 
 	private void showNewSenseBlock() {
-		if (fieldSettings.value("NewMeaning").getVisible()) {
+		if (fieldSettings.value("NewMeaning").getEnabled()) {
 			view.setAddNewButtonVisible(true);
 		}
 		view.getAddNewSenseClickHandlers().addClickHandler(new ClickHandler() {

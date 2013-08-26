@@ -3,6 +3,7 @@ package org.palaso.languageforge.client.lex.main.service;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
@@ -43,6 +44,7 @@ class LexServiceCache {
 		lexListEntry.setMeaning(entryDto.getFirstMeaning());
 		isCacheFilled = true;
 		if (!lexEntryDtoCache.containsKey(id)) {
+			ConsoleLog.log("Put to cache by Key[putLexEntryDtoIntoCache]: " + id);
 			// add the DTO to the cache
 			lexEntryDtoCache.put(id, entryDto);
 		}
@@ -53,11 +55,12 @@ class LexServiceCache {
 	}
 
 	public LexiconEntryDto removeLexEntryFromCache(String id) {
-		lexListEntryCache.remove(id);
+		ConsoleLog.log("Remove Key from cache: " + id);
 		return lexEntryDtoCache.remove(id);
 	}
 
 	public LexiconListEntry putLexListEntryIntoCache(String id, LexiconListEntry entry) {
+		ConsoleLog.log("Put to cache by Key[putLexListEntryIntoCache]: " + id);
 		isCacheFilled = true;
 		return lexListEntryCache.put(id, entry);
 	}
@@ -74,7 +77,13 @@ class LexServiceCache {
 		return lexListEntryCache.values();
 	}
 
+	public boolean isEntryCacheHasIt(String key)
+	{
+		return lexEntryDtoCache.containsKey(key);
+	}
+	
 	public LexiconEntryDto getLexEntryDtoFromCache(String key) {
+		ConsoleLog.log("Get from cache by Key[getLexEntryDtoFromCache]: " + key);
 		return lexEntryDtoCache.get(key);
 	}
 

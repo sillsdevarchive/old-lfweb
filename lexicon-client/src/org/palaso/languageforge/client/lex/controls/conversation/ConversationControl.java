@@ -44,7 +44,7 @@ public class ConversationControl extends ComplexPanel {
 		uListElementRoot.appendChild(uListElementMessage);
 		uListElementRoot.appendChild(uListElementReplay);
 
-		newCommentItem.getPostButtonClickHandlers().addClickHandler(new ClickHandler() {
+		newCommentItem.getAddCommentButtonClickHandlers().addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
