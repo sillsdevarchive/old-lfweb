@@ -62,6 +62,19 @@ class Lf
 	}
 
 	/**
+	 * Create a new user with password
+	 * @param UserModel $json
+	 * @return string Id of written object
+	 */
+	public function user_create($params) {
+		$user = new \models\UserModelWithPassword();
+		JsonDecoder::decode($user, $params);
+		$user->encryptPassword();
+		$result = $user->write();
+		return $result;
+	}
+
+	/**
 	 * Read a user from the given $id
 	 * @param string $id
 	 */
