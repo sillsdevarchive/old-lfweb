@@ -98,6 +98,11 @@ class ProjectModel extends \models\mapper\MapperModel
 	/**
 	 * @var string
 	 */
+	public $projectCode;
+	
+	/**
+	 * @var string
+	 */
 	public $projectname;
 	
 	/**

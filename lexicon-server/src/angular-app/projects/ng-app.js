@@ -4,7 +4,7 @@
 angular.module('lfprojects', 
 		[
 		 'lfprojects.projects',
-//		 'lfprojects.project',
+		 'lfprojects.project',
 		 'lfprojects.filters',
 		 'lfprojects.services'
 		])
