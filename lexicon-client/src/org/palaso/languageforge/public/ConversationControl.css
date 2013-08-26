@@ -46,7 +46,7 @@
 	padding-bottom: .2em;
 	border-bottom: solid 1px silver;
 	position: relative;
-	min-height: 5px;
+	min-height: 30px;
 }
 
 .conversation-sub-header-new {
@@ -54,7 +54,7 @@
 	padding-bottom: .2em;
 	border-bottom: solid 1px silver;
 	position: relative;
-	min-height: 5px;
+	min-height: 30px;
 }
 
 .conversation-sub-checkmarker {
@@ -182,6 +182,68 @@
 	text-align: right;
 	width: 50px;
 }
+
+
+
+.item-header-outter-row {
+	width: 100%;
+	display: table;
+	border-spacing: 0;
+	border-collapse: collapse;
+	height: 34px;
+}
+
+#item-header-outter-row-inner {
+	display: table-row;
+}
+
+.item-header-outter-row-cells {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#item-header-outter-row-left-cell {
+	width: auto;
+	padding: 0px 50px 0px 0px;
+	text-align: right;
+}
+
+#item-header-outter-row-right-cell {
+	min-width: 100px;
+	width: 100px;
+	padding-top: 0px;
+}
+
+
+.item-header-inner-row {
+	width: 100%;
+	display: table;
+	border-spacing: 0;
+	border-collapse: collapse;
+	height: 34px;
+}
+
+#item-header-inner-row-inner {
+	display: table-row;
+}
+
+.item-header-inner-row-cells {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#item-header-inner-row-left-cell {
+	min-width: 100px;
+	text-align: left;
+}
+
+#item-header-inner-row-right-cell {
+	min-width: 200px;
+	width: 200px;
+	padding-top: 0px;
+	text-align: right;
+}
+
 
 #item-body-row-right-cell {
 	width: 100%;
