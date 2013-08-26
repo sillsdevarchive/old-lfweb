@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE project>
 <project name="LFWeb" default="build" basedir="..">
 
-	<property name="application.name" value="scriptureforge" />
+	<property name="application.name" value="languageforge" />
 
 	<property name="build.number" value="0.0.0.0" />
 	<property name="build.output" value="output" />
