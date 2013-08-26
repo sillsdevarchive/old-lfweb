@@ -1,9 +1,29 @@
 <?php
 
+use models\rights\Operation;
+use models\rights\Domain;
+use models\rights\Realm;
+use models\rights\Roles;
+
 class Base extends CI_Controller {
+	
+	protected $_isLoggedIn;
+	
+	protected $_user;
 	
 	public function __construct() {
 		parent::__construct();
+		$this->load->library('ion_auth');
+		$this->_isLoggedIn = $this->ion_auth->logged_in();
+		if ($this->_isLoggedIn) {
+			try {
+				$userId = (string)$this->session->userdata('user_id');
+				$this->_user = new \models\UserModel($userId);
+			} catch (Exception $e) {
+				error_log("User not found, logged out.\n" . $e->getMessage());
+				$this->ion_auth->logout();
+			}
+		}
 	}
 	
 	// all child classes should use this method to render their pages
@@ -20,18 +40,15 @@ class Base extends CI_Controller {
 		$this->viewdata['is_admin'] = false;
 		
 		// setup specific variables for header
-		$isLoggedIn = $this->ion_auth->logged_in();
-		$this->viewdata['logged_in'] = $isLoggedIn;
-		
-		if ($isLoggedIn) {
-			$userId = (string)$this->session->userdata('user_id');
-			$user = new \models\UserModel($userId);
-			$isAdmin = $this->ion_auth->is_admin();
+		$this->viewdata['logged_in'] = $this->_isLoggedIn;
+		if ($this->_isLoggedIn) {
+			$isAdmin = Roles::hasRight(Realm::SITE, $this->_user->role, Domain::USERS + Operation::CREATE);
 			$this->viewdata['is_admin'] = $isAdmin;
-			$this->viewdata['user_name'] = $user->name;
-			$this->viewdata['user_id'] = $user->id;
+			$this->viewdata['user_name'] = $this->viewdata['user_name'] = $this->_user->username;
+			$this->viewdata['user_id'] = $this->_user->id;
 			$this->viewdata['small_gravatar_url'] = $this->ion_auth->get_gravatar("30");
-			$projects = $user->listProjects();
+			$this->viewdata['small_avatar_url'] = $this->_user->avatar_ref;
+			$projects = $this->_user->listProjects();
 			$this->viewdata['projects_count'] = $projects->count;
 			
 			$this->viewdata['projects'] = $projects->entries;

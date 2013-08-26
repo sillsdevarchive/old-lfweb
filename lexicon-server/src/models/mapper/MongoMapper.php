@@ -128,7 +128,18 @@ class MongoMapper extends MapperBase
 			throw new \Exception("Exception thrown while reading", $ex->getCode(), $ex);
 		}
 	}
-	
+		/**
+	 * 
+	 * @param string $id
+	 */
+	public function exists($id) {
+		CodeGuard::checkTypeAndThrow($id, 'string');
+		$data = $this->_collection->findOne(array("_id" => self::mongoID($id)));
+		if ($data == NULL) {
+			return false;	
+		}
+		return true;
+	}
 	/**
 	 * 
 	 * @param string $id
