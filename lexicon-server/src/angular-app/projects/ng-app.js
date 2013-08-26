@@ -4,6 +4,7 @@
 angular.module('lfprojects', 
 		[
 		 'lfprojects.projects',
+//		 'lfprojects.project',
 		 'lfprojects.filters',
 		 'lfprojects.services'
 		])
@@ -16,26 +17,19 @@ angular.module('lfprojects',
     		}
 	    );
 	    $routeProvider.when(
-    		'/project/:projectName/:projectId', 
+    		'/project/:projectId', 
     		{
     			templateUrl: '/angular-app/projects/partials/project.html', 
     			controller: 'ProjectCtrl'
     		}
     	);
 	    $routeProvider.when(
-    		'/project/:projectName/:projectId/:textName/:textId', 
-    		{
-    			templateUrl: '/angular-app/projects/partials/questions.html', 
-    			controller: 'QuestionsCtrl'
-    		}
-    	);
-	    $routeProvider.when(
-    		'/project/:projectName/:projectId/:textName/:textId/:questionName/:questionId',
-    		{
-    			templateUrl: '/angular-app/projects/partials/question.html', 
-    			controller: 'QuestionCtrl'
-			}
-		);
+	    		'/project/:projectId/settings', 
+	    		{
+	    			templateUrl: '/angular-app/projects/partials/project-settings.html', 
+	    			controller: 'ProjectSettingsCtrl'
+	    		}
+	    	);
 	    $routeProvider.otherwise({redirectTo: 'projects'});
 	}])
 	.controller('MainCtrl', ['$scope', '$route', '$routeParams', '$location', function($scope, $route, $routeParams, $location) {
@@ -44,8 +38,12 @@ angular.module('lfprojects',
 		$scope.routeParams = $routeParams;
 	}])
 	.controller('BreadcrumbCtrl', ['$scope', '$rootScope', 'breadcrumbService', function($scope, $rootScope, breadcrumbService) {
+		$scope.idmap = breadcrumbService.idmap;
 		$rootScope.$on('$routeChangeSuccess', function(event, current) {
 			$scope.breadcrumbs = breadcrumbService.read();
 		});
+		$scope.$watch('idmap', function(oldVal, newVal, scope) {
+			$scope.breadcrumbs = breadcrumbService.read();
+		}, true);
 	}])
 	;

@@ -15,6 +15,9 @@ angular.module('lf.services', ['jsonRpc'])
 		this.remove = function(userIds, callback) {
 			jsonRpc.call('user_delete', [userIds], callback);
 		};
+		this.changePassword = function(id, password, callback) {
+			jsonRpc.call('change_password', [id, password], callback);
+		};
 		this.list = function(callback) {
 			// TODO Paging CP 2013-07
 			jsonRpc.call('user_list', [], callback);
@@ -24,7 +27,7 @@ angular.module('lf.services', ['jsonRpc'])
 		};
 		this.changePassword = function(userId, newPassword, callback) {
 			jsonRpc.call('change_password', [userId, newPassword], callback);
-		}
+		};
 	}])
 	.service('projectService', ['jsonRpc', function(jsonRpc) {
 		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
@@ -54,17 +57,62 @@ angular.module('lf.services', ['jsonRpc'])
 			// TODO Paging CP 2013-07
 			jsonRpc.call('project_listUsers', [projectId], callback);
 		};
-		this.updatePassword = function(password, callback) {
-			jsonRpc.call('user_updatePassword', [password], callback);
-		};
 	}])
-	.service('CIService', function() {
+	.service('sessionService', function() {
 		this.currentUserId = function() {
-			return window.session.userid;
+			return window.session.userId;
+		};
+		
+		this.realm = {
+			SITE: function() { return window.session.userSiteRights; }
+		};
+		this.domain = {
+				ANY:       function() { return 100;},
+				USERS:     function() { return 110;},
+				PROJECTS:  function() { return 120;},
+				TEXTS:     function() { return 130;},
+				QUESTIONS: function() { return 140;},
+				ANSWERS:   function() { return 150;},
+				COMMENTS:  function() { return 160;}
+		};
+		this.operation = {
+				CREATE:       function() { return 1;},
+				EDIT_OWN:     function() { return 2;},
+				EDIT_OTHER:   function() { return 3;},
+				DELETE_OWN:   function() { return 4;},
+				DELETE_OTHER: function() { return 5;},
+				LOCK:         function() { return 6;}
+		};
+		
+		this.hasRight = function(rights, domain, operation) {
+			var right = domain() + operation();
+			return rights.indexOf(right) != -1;
 		};
 		
 		this.session = function() {
 			return window.session;
+		};
+	})
+	.service('linkService', function() {
+		this.href = function(url, text) {
+			return '<a href="' + url + '">' + text + '</a>';
+		};
+		
+		this.project = function(projectId) {
+			return '/app/sfchecks#/project/' + projectId;
+			
+		};
+		
+		this.text = function(projectId, textId) {
+			return this.project(projectId) + "/" + textId;
+		};
+		
+		this.question = function(projectId, textId, questionId) {
+			return this.text(projectId, textId) + "/" + questionId;
+		};
+		
+		this.user = function(userId) {
+			return '/app/userprofile/' + userId;
 		};
 	})
 	;
