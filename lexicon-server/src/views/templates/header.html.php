@@ -52,14 +52,14 @@
 								<li><a href="#">My Projects</a>
 									<ul>
 									<?php foreach($projects as $project): ?>
-										<li><a href="<?php echo "/app/projectadmin/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+										<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 									<?php endforeach;?>
 									<?php if ($is_admin): ?>
 										<?php if ($projects_count > 0): ?>
 										<li>---</li>
 										<?php endif; ?>
 										<?php foreach($all_projects as $project): ?>
-											<li><a href="<?php echo "/app/projectadmin/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+											<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 										<?php endforeach;?>
 										
 									<?php endif; ?>
@@ -68,13 +68,13 @@
 							</ul>
 							<ul class="sf-menu">
 							<li>
-							<a href="#"><img src="<?php echo $small_gravatar_url; ?>" style="float:left; position:relative; top:-6px; border:1px solid white; margin-right:10px" />Hi, <?php echo $user_name; ?></a>
+							<a href="#"><img src="<?php echo $small_avatar_url; ?>" width="30px" height="30px" style="float:left; position:relative; top:-6px; border:1px solid white; margin-right:10px" />Hi, <?php echo $user_name; ?></a>
 								<ul>
 									<?php if ($is_admin):?>
-									<li><a href="/app/site_admin">Site Administration</a></li>
+									<li><a href="/app/lfadmin">Site Administration</a></li>
 									<?php endif;?>
 									<li><a href="/app/userprofile">My Profile</a></li>
-									<li><a href="/auth/change_password">Change Password</a></li>
+									<li><a href="/app/changepassword">Change Password</a></li>
 									<li><a href="/auth/logout">Logout</a></li>
 								</ul>
 							</li>
