@@ -1,17 +1,10 @@
 		<div id="header" class="png_bg">
 			
 			<div class="sfcontainer">
-				
-				<?php if (isset($is_static_page)):?>
 				<div class="lf-logo">
 					<img src="/images/lf_logo.png" alt="Language Forge" width="96" height="117" class="png_bg" />
 				</div>
-				<?php endif;?>
-				
 				<div id="header-nav" class="left">
-				<?php if (!isset($is_static_page)):?>
-					<img align="left" style="margin: 2px 10px 0 0" src="/images/lf_logo_small.png" alt="Language Forge" width="27" height="36" />
-				<?php endif;?>
 					<ul class="sf-menu">
 						<li><a href="/">Home</a></li>
 						<li><a href="#">Explore</a>
