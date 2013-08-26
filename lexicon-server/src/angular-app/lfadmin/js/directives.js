@@ -2,15 +2,38 @@
 
 /* Directives */
 
-
-angular.module('projectAdmin.directives', [])
-	.directive('appVersion', ['version', function(version) {
+angular.module('sfAdmin.directives', ["jsonRpc", "sfAdmin.filters"]).
+  directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);
     };
   }])
-  // This directive's code is from http://stackoverflow.com/q/16016570/
-  .directive('ngFocus', function($parse, $timeout) {
+  .directive("requireEqual", function() {
+	return {
+		restrict: "A",
+		require: "ngModel",
+		scope: {
+			requireEqual: "=",
+		},
+		// Basic idea is it's a directive to do validation, used like this:
+		// <input type="password" ng-model="record.password"/>
+		// <input type="password" ng-model="record.confirmPassword" require-equal="record.password"/>
+		link: function(scope, elem, attrs, ngModelCtrl) {
+			// If for some reason we're getting called early, when ngModelCtrl
+			// is not yet available, then do nothing.
+			if (!ngModelCtrl) return;			
+			ngModelCtrl.$parsers.unshift(function(newValue) {
+				if (newValue == scope.requireEqual) {
+					ngModelCtrl.$setValidity("match", true);
+				} else {
+					ngModelCtrl.$setValidity("match", false);
+				}
+			});
+		},
+	};
+})
+// This directive's code is from http://stackoverflow.com/q/16016570/
+.directive('ngFocus', function($parse, $timeout) {
 	return function(scope, elem, attrs) {
 		var ngFocusGet = $parse(attrs.ngFocus);
 		var ngFocusSet = ngFocusGet.assign;
