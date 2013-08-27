@@ -10,7 +10,7 @@
 			<typeahead class="typeahead" items="user" term="typeahead.userName" search="queryUser(typeahead.userName)" select="selectUser(item)">
 				<ul>
 					<li typeahead-item="user" ng-repeat="user in users" class="typeahead-item">
-						<img ng-src="{{imageSource(user.avatarRef)}}" class="left img-typeahead-item">
+						<img style="width: 32px" ng-src="{{imageSource(user.avatarRef)}}" class="left">
 						<p class="name">{{user.name}}</p>
 						<p class="email">{{user.email}}</p>
 					</li>

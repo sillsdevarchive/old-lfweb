@@ -18,7 +18,8 @@ class UserModelMongoMapper extends \models\mapper\MongoMapper
 	public static function instance()
 	{
 		static $instance = null;
-		if (null === $instance) {
+		if (null === $instance)
+		{
 			$instance = new UserModelMongoMapper(LF_DATABASE, 'users');
 		}
 		return $instance;
@@ -28,7 +29,8 @@ class UserModelMongoMapper extends \models\mapper\MongoMapper
 
 class UserModel extends \models\mapper\MapperModel
 {
-	public function __construct($id = '') {
+	public function __construct($id = '')
+	{
 		$this->id = new Id();
 		$this->projects = new ReferenceList();
 		parent::__construct(UserModelMongoMapper::instance(), $id);
@@ -38,7 +40,8 @@ class UserModel extends \models\mapper\MapperModel
 	 *	Removes a user from the collection
 	 *  Project references to this user are also removed
 	 */
-	public function remove() {
+	public function remove()
+	{
 		UserModelMongoMapper::instance()->remove($this->id->asString());
 	}
 
@@ -48,19 +51,6 @@ class UserModel extends \models\mapper\MapperModel
 			$default_avatar = "/images/avatar/anonymoose.png";
 			$this->avatar_ref = $default_avatar;
 		}
-	}
-	
-	/**
-	 * 
-	 * @param string $username
-	 */
-	public static function usernameExists($username) {
-		$user = new UserModel();
-		$user->findOneByQuery(array("username" => $username));
-		if ($user->id->asString() != '') {
-			return true;
-		}
-		return false;
 	}
 	
 	/**
@@ -100,6 +90,7 @@ class UserModel extends \models\mapper\MapperModel
 	 * @var string
 	 */
 	public $name;
+	
 	
 	/**
 	 * @var string
@@ -221,7 +212,7 @@ class UserList_ProjectModel extends \models\mapper\MapperListModel
 		parent::__construct(
 				UserModelMongoMapper::instance(),
 				array('projects' => array('$in' => array(MongoMapper::mongoID($projectId)))),
-				array('username', 'email', 'name')
+				array('id', 'username', 'email', 'name', 'avatar_ref', 'role')
 		);
 	}
 

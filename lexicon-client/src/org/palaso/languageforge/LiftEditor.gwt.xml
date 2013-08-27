@@ -10,7 +10,8 @@
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name='com.googlecode.gwt.crypto.Crypto' />
 	<inherits name='com.googlecode.gchart.GChart' />
-
+	<inherits name='com.google.gwt.query.Query'/>
+	<inherits name='gwtquery.plugins.UiEmbedded' />
 	<!-- Specify the app entry point class. -->
 	<entry-point class="org.palaso.languageforge.client.lex.main.MainEntryPoint">
 	</entry-point>

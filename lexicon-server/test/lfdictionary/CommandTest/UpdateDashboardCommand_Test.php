@@ -1,9 +1,9 @@
 <?php
-require_once(dirname(__FILE__) . '/../../TestConfig.php');
-require_once(SimpleTestPath . 'autorun.php');
+require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(SIMPLETEST_PATH . 'autorun.php');
 
-require_once(DicTestPath . 'CommandTest/LiftTestEnvironment.php');
-require_once(DicTestPath . 'MockObject/AllMockObjects.php');
+require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
+require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 
 use \libraries\lfdictionary\common\DataConnector;
 use \libraries\lfdictionary\common\DataConnection;

@@ -35,7 +35,7 @@ angular.module('activity',
 				'action': 'message',
 				'date': 1375947520,
 				'content': {
-					'message': 'Notice: languageforge.org will be unavailable Sunday morning for routine server maintenance'
+					'message': 'Notice: scriptureforge.org will be unavailable Sunday morning for routine server maintenance'
 				}
 			},
 			{

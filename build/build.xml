@@ -48,35 +48,12 @@
 
 	<target name="build" />
 
-	<target name="test-js">
-		 <exec executable="/usr/local/bin/karma">
-			 <arg value="start" />
-			 <arg file="test/karma.conf.js" />
-			 <arg value="--reporters" />
-			 <arg value="teamcity" />
-			 <arg value="--single-run" />
-		 </exec>
-	</target>
-
-	<target name="test-php" depends="prepare">
-		 <echo>##teamcity[importData type='junit' path='lexicon-server/${build.output}/AllTests.xml']</echo>
-		 <exec executable="php" dir="test" output="${build.output}/AllTests.xml"  error="${build.output}/error.log" failonerror="true">
-			 <arg line="AllTests_NoApi.php" />
-			 <arg value="-j" />
-		 </exec>
-	 </target>
-
-	<target name="test">
-		<antcall target="test-js" />
-		<antcall target="test-php" />
-	</target>
-			
 	<target name="copyWeb">
 		<copy todir="${build.output}/package/htdocs">
-			<fileset dir="src"/>
+			<fileset dir="lexicon-server/src"/>
 		</copy>
 		<copy todir="${build.output}/package/lib">
-			<fileset dir="lib"/>
+			<fileset dir="lexicon-server/lib"/>
 		</copy>
 	</target>
 	

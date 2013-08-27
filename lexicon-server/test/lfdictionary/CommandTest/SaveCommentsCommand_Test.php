@@ -1,12 +1,9 @@
 <?php
-use libraries\lfdictionary\commands\SaveCommentsCommand;
+require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(SIMPLETEST_PATH . 'autorun.php');
+require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
-use libraries\lfdictionary\commands\GetCommentsCommand;
-
-require_once(dirname(__FILE__) . '/../../TestConfig.php');
-require_once(SimpleTestPath . 'autorun.php');
-
-require_once(DicTestPath . 'CommandTest/LiftTestEnvironment.php');
+require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
 
 class TestOfSaveCommentsCommand extends UnitTestCase {
 
@@ -44,7 +41,7 @@ class TestOfSaveCommentsCommand extends UnitTestCase {
 			mkdir($this->_path);
 		}
 
-		$sourceChorusNotesFilePath=  DicTestPath. "data/Test.lift.ChorusNotes";
+		$sourceChorusNotesFilePath=  TEST_PATH. "data/Test.lift.ChorusNotes";
 		$desChorusNotesFilePath= $this->_path  . "/Test.lift.ChorusNotes";
 		//copy new file to test folder
 		copy($sourceChorusNotesFilePath,$desChorusNotesFilePath);
@@ -57,16 +54,16 @@ class TestOfSaveCommentsCommand extends UnitTestCase {
 		$commentMessage=$this->NEW_MESSAGE;
 		$userName=$this->NEW_MESSAGE_BY;
 
-		$command = new GetCommentsCommand($desChorusNotesFilePath, "","question", 0,1,false);	
+		$command = new \commands\GetCommentsCommand($desChorusNotesFilePath, "","question", 0,1,false);	
 		$result=json_encode($command->execute()->encode());
 		
 		$this->assertFalse(strstr($result, $this->NEW_MESSAGE));
 		$this->assertFalse(strstr($result, $this->NEW_MESSAGE_BY));
-		$command = new SaveCommentsCommand($desChorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userName,false);
+		$command = new \commands\SaveCommentsCommand($desChorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userName,false);
 		$command->execute();
 
 		
-		$command = new GetCommentsCommand($desChorusNotesFilePath, "","question", 0,1,false);
+		$command = new \commands\GetCommentsCommand($desChorusNotesFilePath, "","question", 0,1,false);
 		$result=json_encode($command->execute()->encode());	
 
 		$this->assertTrue(strstr($result, $this->NEW_MESSAGE));

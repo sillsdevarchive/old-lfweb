@@ -15,7 +15,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 
@@ -264,22 +263,17 @@ public class NavPresenter extends
 	public void onStart() {
 		resetSelection();
 		onTaskSettingChanged();		
-		if (!urlCommand())
-		{
-			//default Page!
-			view.getDashboardClickHandlers().fireEvent(new UrlCmdClickEvent());
-		}
+		urlCommand();
+		
+		
+		//default Page!
+		view.getDashboardClickHandlers().fireEvent(new UrlCmdClickEvent());
 	}
 
-	private boolean urlCommand() {
-		RootPanel rootPanel = RootPanel.get("GWTContent");
-		if (rootPanel==null)
-		{
-			return false;
-		}
-		String urlCmdName =rootPanel.getElement().getAttribute("targetpage");
+	private void urlCommand() {
+		String urlCmdName = Window.Location.getParameter("nav");
 		if (urlCmdName == null) {
-			return false;
+			return;
 		}
 		urlCmdName = urlCmdName.trim().toLowerCase();
 
@@ -317,11 +311,7 @@ public class NavPresenter extends
 			if (view.getConfigureMenuVisible()) {
 				view.getSettingsClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
-		}else
-		{
-			return false;
 		}
-		return true;
 
 	}
 

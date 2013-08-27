@@ -4,8 +4,8 @@ import org.palaso.languageforge.client.lex.model.FieldSettings;
 
 public final class Constants {
 
-	public static final String LEX_API = "lf_dictionary";
-	public static final String LEX_API_PATH = "/api/";
+	public static final String LEX_API = "lf_dictionary.php";
+	public static final String LEX_API_PATH = "/service/";
 	
 	public static final int PRE_LOAD_PAGES = 3;
 	

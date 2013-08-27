@@ -14,7 +14,7 @@ class ProjectList_UserModel extends \models\mapper\MapperListModel
 	{
 		parent::__construct(
 				ProjectModelMongoMapper::instance(),
-				array('users.' . $userId => array('$exists' => true)),
+				array('users' => array('$in' => array(MongoMapper::mongoID($userId)))),
 				array('projectname')
 		);
 	}

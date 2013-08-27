@@ -42,7 +42,7 @@ public abstract class JsonRpcAction<R> implements Action<R> {
 	protected JsonRpcAction(String servicePath, String service, String method,
 			int parameterCount) {
 		_servicePath = servicePath;
-		_service = service + "?p=" + CurrentEnvironmentDto.getCurrentProject().getProjectId();
+		_service = service + "?p=" + CurrentEnvironmentDto.getCurrentProject().getProjectId() +"&u=" + CurrentEnvironmentDto.getCurrentUser().getId();
 		_method = method;
 		_parameterCount = parameterCount;
 	}

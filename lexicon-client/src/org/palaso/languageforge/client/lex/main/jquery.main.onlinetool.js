@@ -521,7 +521,7 @@ function initSlider() {
 })(jQuery);
 
 var VSA_scrollAreas = new Array();
-var VSA_default_imagesPath = "/js/gwt/lifteditor/images";
+var VSA_default_imagesPath = "js/gwt/lifteditor/images";
 var VSA_default_btnUpImage = "button-up.gif";
 var VSA_default_btnDownImage = "button-down.gif";
 var VSA_default_scrollStep = 5;
