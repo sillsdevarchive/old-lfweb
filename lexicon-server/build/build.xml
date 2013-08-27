@@ -60,7 +60,7 @@
 
 	<target name="test-php" depends="prepare">
 		 <echo>##teamcity[importData type='junit' path='${build.output}/AllTests.xml']</echo>
-		 <exec executable="php" dir="test/php" output="${build.output}/AllTests.xml"  error="${build.output}/error.log" failonerror="true">
+		 <exec executable="php" dir="test" output="${build.output}/AllTests.xml"  error="${build.output}/error.log" failonerror="true">
 			 <arg line="AllTests_NoApi.php" />
 			 <arg value="-j" />
 		 </exec>
