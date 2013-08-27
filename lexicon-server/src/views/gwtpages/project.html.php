@@ -6,32 +6,41 @@
 				<div class="block block-system" id="block-system-main">
 					<div class="content">
 
-					<?php if (!$logged_in): ?>
+						<?php if (!$logged_in): ?>
 						<!--  user not loged in, show only view-->
 						<div id="ViewerContent" class="readonly-view-view-only">
-							
-						<?php include ("listview.html.php"); ?>
+							<?php include ("listview.html.php"); ?>
 						</div>
-						
-						
 
-<?php else: ?>
-<div id="ViewSwitch" class="dic-view-switch">
-	<aside id="sidebar-view-switch">
-		<nav class="accordion">
-			<ul id="view-switch" class ="view-switch">
-				<div style="text-align:center;">
-					<div style=" display:inline-block; width:107px; float: left;">
-						<li id="view_button" style=" border-radius: 10px 0px 0px 10px;"> <a class="view-switch-noarrow" href="#"><span class="ico-view-switch "> View </span></a> </li>
-					</div>
-					<div style=" display:inline-block; width:107px float: left;">
-						<li id="edit_button" class ="view-selected" style=" border-radius: 0px 10px 10px 0px;"> <a class="view-switch-noarrow" href="#"><span class="ico-edit-switch "> Edit </span></a> </li>
-					</div>
-				</div>
-			</ul>
-		</nav>
-	</aside>
-	<script type="text/javascript">
+
+
+						<?php else: ?>
+						<div id="ViewSwitch" class="dic-view-switch">
+							<aside id="sidebar-view-switch">
+								<nav class="accordion">
+									<ul id="view-switch" class="view-switch">
+										<div style="text-align: center;">
+											<div
+												style="display: inline-block; width: 107px; float: left;">
+												<li id="view_button"
+													style="border-radius: 10px 0px 0px 10px;"><a
+													class="view-switch-noarrow" href="#"><span
+														class="ico-view-switch "> View </span> </a>
+												</li>
+											</div>
+											<div
+												style="display: inline-block; width: 107px float:     left;">
+												<li id="edit_button" class="view-selected"
+													style="border-radius: 0px 10px 10px 0px;"><a
+													class="view-switch-noarrow" href="#"><span
+														class="ico-edit-switch "> Edit </span> </a>
+												</li>
+											</div>
+										</div>
+									</ul>
+								</nav>
+							</aside>
+							<script type="text/javascript">
 	function runToggle(iDuration ,domDiv) {
             $(domDiv).fadeToggle(iDuration,"linear",function() {
           });
@@ -72,31 +81,33 @@
 				});
 			})(jQuery);
 		</script>
-	</div>
-		<div id="ViewerContent" class="readonly-view-view-with-edit">
-			  <?php include ("listview.html.php"); ?>
-		</div>
-	<div id="GWTContent"
-		style="height: 710px; width: 100%; padding-top: 10px;">
+						</div>
+						<div id="ViewerContent" class="readonly-view-view-with-edit">
+							<?php include ("listview.html.php"); ?>
+						</div>
+						<div id="GWTContent"
+							style="height: 710px; width: 100%; padding-top: 10px;"
+							targetPage= "<?php echo $gwt_page; ?>">
 
-		<?php
-		//	error_reporting(E_ALL | E_STRICT);
-		require_once(APPPATH . '/libraries/lfdictionary/Config.php');
-		require_once(APPPATH . '/helpers/loader_helper.php');
+							<?php
+							//	error_reporting(E_ALL | E_STRICT);
+							require_once(APPPATH . '/libraries/lfdictionary/Config.php');
+							require_once(APPPATH . '/helpers/loader_helper.php');
 
-		//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
-		if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!="") {
+							//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
+							if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!="") {
 			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id->asString());
 			echo $lexClientEnvironment->getSettings();
 			?>
-			<script type="text/javascript" src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
-			<?php
+							<script type="text/javascript"
+								src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
+							<?php
 		}
 		?>
-	</div>
+						</div>
 
-	<?php endif; ?>
-	</div>
+						<?php endif; ?>
+					</div>
 				</div>
 			</div>
 		</div>
