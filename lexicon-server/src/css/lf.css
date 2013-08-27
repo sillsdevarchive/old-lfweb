@@ -150,11 +150,11 @@ div#account{
 	font-size: 0.85em; 
 	line-height: 24px;
 }
+
 div.sfcontainer {
 	position: relative;
 	width: 960px;
 	height: auto;
-	overflow: auto;
 	margin: 0 auto;
 }
 /* Bootstrap
@@ -186,7 +186,6 @@ div.darkTextLogo {
 
 div#promotion {
 	position: relative;
-	overflow: hidden;
 	width: 958px;
 	height: 400px;
 	margin-top: 12px;
@@ -789,4 +788,13 @@ div.new-item form {
 /* Table / Grid styles */
 table select {
 	margin-bottom: 0px;
+}
+
+li.typeahead-item {
+	height:1.8em;
+	min-width:170px;
+}
+
+.img-typeahead-item {
+	width:32px;
 }

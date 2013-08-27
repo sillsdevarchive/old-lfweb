@@ -2,6 +2,8 @@
 
 namespace models;
 
+use libraries\palaso\CodeGuard;
+use models\rights\Realm;
 use models\rights\Roles;
 use models\rights\ProjectRoleModel;
 use models\mapper\MapOf;
@@ -42,10 +44,10 @@ class ProjectModel extends \models\mapper\MapperModel
 	/**
 	 * Adds the $userId as a member of this project.
 	 * @param string $userId
-	 * @param string $role The role the user has in this project. Defaults to Roles::USER
+	 * @param string $role The role the user has in this project.
 	 * @see Roles;
 	 */
-	public function addUser($userId, $role = Roles::USER) {
+	public function addUser($userId, $role) {
 		$mapper = ProjectModelMongoMapper::instance();
 //		$ProjectModelMongoMapper::mongoID($userId)
 		$model = new ProjectRoleModel();
@@ -64,6 +66,15 @@ class ProjectModel extends \models\mapper\MapperModel
 	public function listUsers() {
 		$userList = new UserList_ProjectModel($this->id->asString());
 		$userList->read();
+		for ($i = 0, $l = count($userList->entries); $i < $l; $i++) {
+			$userId = $userList->entries[$i]['id'];
+			if (!key_exists($userId, $this->users->data)) {
+				$projectId = $this->id->asString();
+				error_log("User $userId is not a member of project $projectId");
+				continue;
+			}
+			$userList->entries[$i]['role'] = $this->users->data[$userId]->role;
+		}
 		return $userList;
 	}
 	
@@ -75,7 +86,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	 */
 	public function hasRight($userId, $right) {
 		$role = $this->users->data[$userId]->role;
-		$result = Roles::hasRight($role, $right);
+		$result = Roles::hasRight(Realm::PROJECT, $role, $right);
 		return $result;
 	}
 	
@@ -85,8 +96,13 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @return array
 	 */
 	public function getRightsArray($userId) {
-		$role = $this->users->data[$userId]->role;
-		$result = Roles::getRightsArray($role);
+		CodeGuard::checkTypeAndThrow($userId, 'string');
+		if (!key_exists($userId, $this->users->data)) {
+			$result = array();
+		} else {
+			$role = $this->users->data[$userId]->role;
+			$result = Roles::getRightsArray(Realm::PROJECT, $role);
+		}
 		return $result;
 	}
 	

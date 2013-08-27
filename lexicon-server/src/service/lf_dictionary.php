@@ -1,8 +1,7 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
-define('APPPATH', '/var/www/languageforge.org_dev/htdocs/');
 require_once(APPPATH  . 'helpers/loader_helper.php');
-
+require_once(APPPATH  . 'libraries/lfdictionary/Config.php');
 use \libraries\lfdictionary\store\LexStoreMissingInfo;
 use \libraries\lfdictionary\environment\ProjectState;
 use \libraries\lfdictionary\dto\ProjectStateDTO;
@@ -24,7 +23,7 @@ use \libraries\lfdictionary\environment\EnvironmentMapper;
  * Provides functions for enhancing and building a Lexicon; RapidWords, and WordPacks for gathering words; MissingInfo for adding
  * additional info to Lexical Entries.
  */
-class LFDictionaryAPI
+class LfDictionary
 {
 
 	/**
@@ -55,33 +54,36 @@ class LFDictionaryAPI
 	 */
 	private $_userModel;
 
-	function __construct($projectNodeId, $userId) {
-		$this->_logger = LoggerFactory::getLogger();
-		$this->_logger->logInfoMessage("LFDictionaryAPI p:$projectNodeId u:$userId");
-		$this->_userId = $userId;
-		$this->_projectNodeId = $projectNodeId;
 
-		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
-		$this->initialize($projectNodeId, $userId);
+	public function __construct($controller) {
+		$this->_userId = (string)$controller->session->userdata('user_id');
+
+		if (isset($_GET['p'])) {
+			$this->_projectNodeId = $_GET['p'];
+		}
+
+		$this->_logger = LoggerFactory::getLogger();
+		$this->_logger->logInfoMessage("LFDictionaryAPI p:$this->_projectNodeId u:$this->_userId");
+		$this->_userId = $this->_userId;
+		$this->initialize($this->_projectNodeId, $this->_userId);
 	}
 
 	protected function initialize($projectNodeId, $userId) {
 
 		LoggerFactory::getLogger()->logInfoMessage("Lexicon Project initialize...");
-		$this->_userId = $userId;
-		$this->_projectNodeId = $projectNodeId;
-		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		$this->_userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
-
-		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
-		$this->_projectModel->getName(),
-		$projectNodeId,
-		($this->_userModel->id()!=NULL && strlen(trim($this->_userModel->id()))>0) ? $this->_userModel->getUserName() : "-",
-		$userId
-		));
-		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
-		$this->_projectAccess = new \libraries\lfdictionary\environment\LFProjectAccess($this->_projectNodeId,$this->_userId);
-		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
+		if ($projectNodeId!==null && $projectNodeId!==''){
+			$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+			LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
+			$this->_projectModel->getName(),
+			$projectNodeId,
+			($this->_userModel->id()!=NULL && strlen(trim($this->_userModel->id()))>0) ? $this->_userModel->getUserName() : "-",
+			$userId
+			));
+			$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
+			$this->_projectAccess = new \libraries\lfdictionary\environment\LFProjectAccess($this->_projectNodeId,$this->_userId);
+			$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
+		}
 	}
 
 	/**
@@ -141,23 +143,23 @@ class LFDictionaryAPI
 		$store = $this->getLexStore();
 		$result = $store->readEntry($guid);
 
- 		//Sense Level
- 		foreach ($result->_senses as $sense)
- 		{
+		//Sense Level
+		foreach ($result->_senses as $sense)
+		{
 
- 			if (!(isset($sense->_id) && strlen(trim($sense->_id))>0))
- 			{
- 				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
- 			}
- 			//Example Level
- 			foreach ($sense->_examples as $example)
- 			{
- 				if (!(isset($example->_id) && strlen(trim($example->_id))>0))
- 				{
- 					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+			if (!(isset($sense->_id) && strlen(trim($sense->_id))>0))
+			{
+				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+			}
+			//Example Level
+			foreach ($sense->_examples as $example)
+			{
+				if (!(isset($example->_id) && strlen(trim($example->_id))>0))
+				{
+					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
 
- 				}
- 			}
+				}
+			}
 		}
 
 		return $result->encode();
@@ -596,7 +598,7 @@ class LFDictionaryAPI
 	function updateProjectName($projectNodeId, $name) {
 		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 		if ($projectModel->setTitle(urldecode($name))){
-				
+
 			//reload
 			$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 			$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
@@ -621,10 +623,11 @@ class LFDictionaryAPI
 	 *
 	 * @return Boolean value
 	 */
-	function isUser($userName) {
-	 $userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-	 $result = $userModel->isUser($userName);
-	 return $result;
+	public function usernameExists($userName) {
+	 $userModel = new \models\UserModel();
+	 $result = $userModel->usernameExists($userName);
+	 $resultDTO = new ResultDTO($userModel->usernameExists($userName));
+	 return $resultDTO->encode();
 	}
 
 	/**
@@ -849,33 +852,6 @@ class LFDictionaryAPI
 		$result = new \libraries\lfdictionary\dto\ResultDTO(true, strval($wordCount));
 		return $result->encode();
 	}
-
-}
-
-
-//Main Function
-function main() {
-
-	//\libraries\lfdictionary\common\LFDrupal::loadDrupal();
-	//error handler must register after drupal loaded!, otherwise will be replace by drupal's handler
-	\libraries\lfdictionary\common\ErrorHandler::register();
-	global $user;
-	$userId = isset($user) ? $user->uid : null;
-	$projectId = isset($_SESSION['projectid']) ? $_SESSION['projectid'] : null;
-
-	if ($userId == null && isset($_GET['u'])) {
-		$userId = $_GET['u'];
-	}
-	if ($projectId == null && isset($_GET['p'])) {
-		$projectId = $_GET['p'];
-	}
-
-	$api = new LFDictionaryAPI($projectId, $userId);
-	\libraries\lfdictionary\common\jsonRPCServer::handle($api);
-}
-
-if (!defined('TestMode')) {
-	main();
 }
 
 ?>

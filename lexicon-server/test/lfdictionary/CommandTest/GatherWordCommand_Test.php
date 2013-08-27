@@ -1,9 +1,12 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+use libraries\lfdictionary\commands\GatherWordCommand;
 
-require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
+require_once(SimpleTestPath . 'autorun.php');
+
+require_once(DicTestPath . 'CommandTest/LiftTestEnvironment.php');
+
+
 
 class TestOfGatherWordCommand extends UnitTestCase {
 
@@ -24,7 +27,7 @@ class TestOfGatherWordCommand extends UnitTestCase {
 			$existresult[] = $keyword;
 		}
 		
-		$command = new \commands\GatherWordCommand($e->getLiftFilePath(),"th",$existresult,$newwords);
+		$command = new GatherWordCommand($e->getLiftFilePath(),"th",$existresult,$newwords);
 		$command->execute();
 
 		$files = glob($e->getPath() . '/*.liftupdate');
