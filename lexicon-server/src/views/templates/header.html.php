@@ -22,9 +22,9 @@
 								<li><a href="#">Jamaica Project 2</a></li>
 								<li><a href="#">Jamaica Project 3</a></li>
 								<?php foreach($all_projects as $project): ?>
-											<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+											<li><a href="<?php echo "/gwt/main/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 								<?php endforeach;?>
-								<li><a href="/project?pid=51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
+								<li><a href="/gwt/main/51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
 							</ul>
 						</li>
 						<li><a href="/learn_language_forge">Learn</a>
@@ -45,7 +45,7 @@
 								<li><a href="/app/projects">My Projects</a>
 									<ul>
 									<?php foreach($projects as $project): ?>
-										<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+										<li><a href="<?php echo "/gwt/main/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 									<?php endforeach;?>
 									</ul>
 								</li>
