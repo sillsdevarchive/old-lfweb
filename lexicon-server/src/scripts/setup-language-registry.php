@@ -71,7 +71,7 @@
 		return $result;
 	}
 
-	function main() {
+	function main($argv) {
 		$cmd = array_shift($argv);
 		if (count($argv) == 0) {
 			usage($cmd);
@@ -96,6 +96,6 @@
 		echo "done.\n";
 	}
 
-	main();
+	main($argv);
 	exit(0);
 ?>
