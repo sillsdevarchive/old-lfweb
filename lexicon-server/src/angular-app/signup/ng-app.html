@@ -68,7 +68,6 @@
 			$.jsonRPC.request('usernameExists', {
 				params : new Array($('#username').val()),
 				success : function(result) {	
-					console.log(result.result.succeed);
 					if (!result.result.succeed){
 						$('#usernameLoading').hide();
 						$('#usernameOk').show();
