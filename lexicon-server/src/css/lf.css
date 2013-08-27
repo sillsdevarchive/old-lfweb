@@ -789,3 +789,12 @@ div.new-item form {
 table select {
 	margin-bottom: 0px;
 }
+
+li.typeahead-item {
+	height:1.8em;
+	min-width:170px;
+}
+
+.img-typeahead-item {
+	width:32px;
+}
