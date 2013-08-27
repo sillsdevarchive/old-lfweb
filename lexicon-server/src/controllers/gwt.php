@@ -8,7 +8,7 @@ use models\rights\Roles;
 
 require_once 'secure_base.php';
 
-class gwt extends Secure_base {
+class gwt extends base {
 	
 	public function view($page = 'main', $pid ='') {
 		
