@@ -36,11 +36,11 @@ class gwt extends Secure_base {
 		$data['all_projects'] = $projectList->entries;
 		
 		
-		if ( ! file_exists('views/pages/project.html.php'))
+		if ( ! file_exists('views/gwtpages/project.html.php'))
 		{
 			show_404();
 		} else {
-			$this->_render_page("pages/project", $data);
+			$this->_render_page("gwtpages/project", $data);
 		}
 	}
 }
