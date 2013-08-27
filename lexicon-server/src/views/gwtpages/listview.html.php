@@ -1,5 +1,3 @@
-<?php $project_id = $_GET['pid']; ?>
-
 <script type="text/javascript">
 	(function($) {
 		$(document).ready(function ()
@@ -13,7 +11,7 @@
 		    }    
 			});
 			// RPC server address
-			var endPointUrl = 'service/lf_dictionary.php?u=<?php echo isset($user_id) ? $user_id : '' ?>&p=<?php echo $project_id ?>' ;
+			var endPointUrl = '/api/lf_dictionary?p=<?php echo $project_id ?>' ;
 			$.jsonRPC.setup({
 				endPoint: endPointUrl,
 				namespace: ''

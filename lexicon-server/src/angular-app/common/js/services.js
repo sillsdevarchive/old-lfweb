@@ -11,6 +11,9 @@ angular.module('lf.services', ['jsonRpc'])
 		this.update = function(model, callback) {
 			jsonRpc.call('user_update', [model], callback);
 		};
+		this.create = function(model, callback) {
+			jsonRpc.call('user_create', [model], callback);
+		};
 		this.remove = function(userIds, callback) {
 			jsonRpc.call('user_delete', [userIds], callback);
 		};
