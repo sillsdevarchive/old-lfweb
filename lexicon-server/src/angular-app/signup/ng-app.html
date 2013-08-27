@@ -1,42 +1,89 @@
 <div class="container" ng-app="signup" ng-cloak>
 	<div ng-controller="UserCtrl">
 		<legend>Create an Account</legend>
-	
-		<div class="notification errorMessage" ng-show="!success.state && success.message">{{notify.error}}</div>
+
+		<div class="notification errorMessage"
+			ng-show="!success.state && success.message">{{notify.error}}</div>
 		<div ng-hide="success.state" class="span4">
 			<form ng-submit="createUser(record)" name="userForm">
-			<fieldset>
-				<legend>Sign Up Below</legend>
-				<div class="well">
-					<div>
-						<label>User Name</label>
-						<input required type="text" placeholder="(username)" ng-model="record.username"/>
+				<fieldset>
+					<legend>Sign Up Below</legend>
+					<div class="well">
+						<div>
+							<label>User Name</label> <input required type="text"
+								placeholder="(username)" ng-model="record.username"
+								name="username" id="username" /> <span id="usernameLoading"><img
+								src="/images/loading-small.gif" /></span> <span id="usernameOk"><img
+								src="/images/tick.png" title="User name is avaiable!" /></span> <span
+								id="usernameExist"><img src="/images/exclamation.png"
+								title="User name already exist!" /></span>
+						</div>
+						<div>
+							<label>Name</label> <input required type="text"
+								placeholder="(your name here)" ng-model="record.name" />
+						</div>
+						<div>
+							<label>Email</label> <input required type="text"
+								placeholder="(no email)" ng-model="record.email" />
+						</div>
+						<div>
+							<label>Password</label> <input required type="password"
+								ng-model="record.password" ng-focus="vars.inputfocus"
+								name="password" />
+						</div>
+						<div class="large-12">
+							<label>Confirm password</label> <input type="password"
+								ng-model="record.confirm_password"
+								require-equal="record.password" name="confirmPassword" /> <label
+								ng-show="passwordForm.confirmPassword.$error.match">Passwords
+								do not match</label>
+						</div>
 					</div>
-					<div>
-						<label>Name</label>
-						<input required type="text" placeholder="(your name here)" ng-model="record.name"/>
-					</div>
-					<div>
-						<label>Email</label>
-						<input required type="text" placeholder="(no email)" ng-model="record.email"/>
-					</div>
-					<div>
-						<label>Password</label>
-						<input required type="password" ng-model="record.password" ng-focus="vars.inputfocus" name="password"/>
-					</div>
-					<div class="large-12">
-						<label>Confirm password</label>
-						<input type="password" ng-model="record.confirm_password" require-equal="record.password" name="confirmPassword"/>
-						<label ng-show="passwordForm.confirmPassword.$error.match">Passwords do not match</label>
-					</div>
-				</div>
-						<button class="btn btn-primary" type="submit" ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
-							Sign Up <i style="margin-left:5px" class="icon-thumbs-up"></i></button>
-			</fieldset>
+					<button class="btn btn-primary" type="submit"
+						ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
+						Sign Up <i style="margin-left: 5px" class="icon-thumbs-up"></i>
+					</button>
+				</fieldset>
 			</form>
 		</div>
-		<div ng-show="success.state">
-			Thank you, {{record.name}}.  You are now signed up.  We will contact you when your account is active.
-		</div>
+		<div ng-show="success.state">Thank you, {{record.name}}. You are
+			now signed up. We will contact you when your account is active.</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function() {
+		$('#usernameLoading').hide();
+		$('#usernameOk').hide();
+		$('#usernameExist').hide();
+		$('#username').on("change paste keyup", function() {
+			$('#usernameOk').hide();
+			$('#usernameExist').hide();
+			$('#usernameLoading').show();
+			// RPC server address
+			var endPointUrl = '/api/lf_dictionary';
+			$.jsonRPC.setup({
+				endPoint : endPointUrl,
+				namespace : ''
+			});
+			$.jsonRPC.request('usernameExists', {
+				params : new Array($('#username').val()),
+				success : function(result) {	
+					console.log(result.result.succeed);
+					if (!result.result.succeed){
+						$('#usernameLoading').hide();
+						$('#usernameOk').show();
+						$('#usernameExist').hide();
+					}else
+					{
+						$('#usernameLoading').hide();
+						$('#usernameOk').hide();
+						$('#usernameExist').show();
+					}
+				},
+				error : function(result) {
+					alert("error when try to connect server: " + JSON.stringify(result));
+				}
+			});
+		});
+	});
+</script>
