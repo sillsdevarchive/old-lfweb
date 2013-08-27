@@ -1,8 +1,7 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
-define('APPPATH', '/var/www/languageforge.org_dev/htdocs/');
 require_once(APPPATH  . 'helpers/loader_helper.php');
-
+require_once(APPPATH  . 'libraries/lfdictionary/Config.php');
 use \libraries\lfdictionary\store\LexStoreMissingInfo;
 use \libraries\lfdictionary\environment\ProjectState;
 use \libraries\lfdictionary\dto\ProjectStateDTO;
@@ -24,7 +23,7 @@ use \libraries\lfdictionary\environment\EnvironmentMapper;
  * Provides functions for enhancing and building a Lexicon; RapidWords, and WordPacks for gathering words; MissingInfo for adding
  * additional info to Lexical Entries.
  */
-class LFDictionaryAPI
+class LfDictionary
 {
 
 	/**
@@ -55,14 +54,19 @@ class LFDictionaryAPI
 	 */
 	private $_userModel;
 
-	function __construct($projectNodeId, $userId) {
-		$this->_logger = LoggerFactory::getLogger();
-		$this->_logger->logInfoMessage("LFDictionaryAPI p:$projectNodeId u:$userId");
-		$this->_userId = $userId;
-		$this->_projectNodeId = $projectNodeId;
 
-		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
-		$this->initialize($projectNodeId, $userId);
+	public function __construct($controller) {
+		$this->_userId = (string)$controller->session->userdata('user_id');
+		
+		if (isset($_GET['p'])) {
+			$this->_projectNodeId = $_GET['p'];
+		}
+
+		$this->_logger = LoggerFactory::getLogger();
+		$this->_logger->logInfoMessage("LFDictionaryAPI p:$this->_projectNodeId u:$this->_userId");
+		$this->_userId = $this->_userId;
+		$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($this->_projectNodeId);
+		$this->initialize($this->_projectNodeId, $this->_userId);
 	}
 
 	protected function initialize($projectNodeId, $userId) {
@@ -849,33 +853,6 @@ class LFDictionaryAPI
 		$result = new \libraries\lfdictionary\dto\ResultDTO(true, strval($wordCount));
 		return $result->encode();
 	}
-
-}
-
-
-//Main Function
-function main() {
-
-	//\libraries\lfdictionary\common\LFDrupal::loadDrupal();
-	//error handler must register after drupal loaded!, otherwise will be replace by drupal's handler
-	\libraries\lfdictionary\common\ErrorHandler::register();
-	global $user;
-	$userId = isset($user) ? $user->uid : null;
-	$projectId = isset($_SESSION['projectid']) ? $_SESSION['projectid'] : null;
-
-	if ($userId == null && isset($_GET['u'])) {
-		$userId = $_GET['u'];
-	}
-	if ($projectId == null && isset($_GET['p'])) {
-		$projectId = $_GET['p'];
-	}
-
-	$api = new LFDictionaryAPI($projectId, $userId);
-	\libraries\lfdictionary\common\jsonRPCServer::handle($api);
-}
-
-if (!defined('TestMode')) {
-	main();
 }
 
 ?>
