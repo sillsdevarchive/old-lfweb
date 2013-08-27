@@ -37,7 +37,7 @@
 			$normalizedRecord = str_replace("\n ", "", $record);
 
 			$mongoRecord = array(
-				"Description" => array(),
+				"description" => array(),
 			);
 
 			$lines = explode("\n", $normalizedRecord);
@@ -49,10 +49,10 @@
 				}
 
 				$parts = explode(':', $line, 2);
-				$key = trim($parts[0]);
+				$key = strtolower(trim($parts[0]));
 				$val = trim($parts[1]);
 
-				if ($key == "Description") {
+				if ($key == "description") {
 					// Description fields may be, and often are, duplicated
 					$mongoRecord[$key][] = $val;
 				} else {
@@ -61,7 +61,7 @@
 			}
 
 			// We're only interested in language and extlang records
-			$type = $mongoRecord["Type"];
+			$type = $mongoRecord["type"];
 			if ($type == "language" || $type == "extlang") {
 				$result[] = $mongoRecord;
 			}
