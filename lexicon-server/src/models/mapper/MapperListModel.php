@@ -46,10 +46,15 @@ class MapperListModel extends MapperBase /*extends CI_Model*/
 		return $this->_mapper->readList($this, $this->_query, $this->_fields);
 	}
 	
+	function readAsModels() {
+		return $this->_mapper->readListAsModels($this, $this->_query, $this->_fields);
+	}
+	
 	function readByQuery($query, $fields = array(), $sortFields = array(), $limit = 0)
 	{
 		return $this->_mapper->readList($this,$query, $fields, $sortFields ,$limit);
 	}
+	
 }
 
 ?>

@@ -3,6 +3,7 @@ namespace models;
 
 use models\mapper\MongoStore;
 use models\mapper\ReferenceList;
+
 class ProjectModelMongoMapper extends \models\mapper\MongoMapper
 {
 	public static function instance()
@@ -22,4 +23,5 @@ class ProjectModelMongoMapper extends \models\mapper\MongoMapper
 		}
 	}
 }
+
 ?>

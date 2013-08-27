@@ -1,17 +1,10 @@
 		<div id="header" class="png_bg">
 			
 			<div class="sfcontainer">
-				
-				<?php if (isset($is_static_page)):?>
 				<div class="lf-logo">
 					<img src="/images/lf_logo.png" alt="Language Forge" width="96" height="117" class="png_bg" />
 				</div>
-				<?php endif;?>
-				
 				<div id="header-nav" class="left">
-				<?php if (!isset($is_static_page)):?>
-					<img align="left" style="margin: 2px 10px 0 0" src="/images/lf_logo_small.png" alt="Language Forge" width="27" height="36" />
-				<?php endif;?>
 					<ul class="sf-menu">
 						<li><a href="/">Home</a></li>
 						<li><a href="#">Explore</a>
@@ -29,9 +22,9 @@
 								<li><a href="#">Jamaica Project 2</a></li>
 								<li><a href="#">Jamaica Project 3</a></li>
 								<?php foreach($all_projects as $project): ?>
-											<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+											<li><a href="<?php echo "/gwt/main/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 								<?php endforeach;?>
-								<li><a href="/project?pid=51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
+								<li><a href="/gwt/main/51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
 							</ul>
 						</li>
 						<li><a href="/learn_language_forge">Learn</a>
@@ -49,20 +42,11 @@
 				<?php if ($logged_in):?>
 					<div class="right">
 							<ul class="sf-menu">
-								<li><a href="#">My Projects</a>
+								<li><a href="/app/projects">My Projects</a>
 									<ul>
 									<?php foreach($projects as $project): ?>
-										<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+										<li><a href="<?php echo "/gwt/main/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 									<?php endforeach;?>
-									<?php if ($is_admin): ?>
-										<?php if ($projects_count > 0): ?>
-										<li>---</li>
-										<?php endif; ?>
-										<?php foreach($all_projects as $project): ?>
-											<li><a href="<?php echo "/project?pid=" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
-										<?php endforeach;?>
-										
-									<?php endif; ?>
 									</ul>
 								</li>
 							</ul>

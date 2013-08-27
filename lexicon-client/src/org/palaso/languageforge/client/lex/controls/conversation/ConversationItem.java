@@ -20,8 +20,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.SimplePanel;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static gwtquery.plugins.ui.Ui.Ui;
 public class ConversationItem extends ComplexPanel {
 
 	private boolean isRootComment = false;

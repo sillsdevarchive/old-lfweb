@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('userProfile', ['jsonRpc', 'ui.bootstrap', 'sf.services'])
+angular.module('userProfile', ['jsonRpc', 'ui.bootstrap', 'lf.services'])
 .controller('userProfileCtrl', ['$scope', 'userService', 'sessionService',
 		function userProfileCtrl($scope, userService, ss) {
 	$scope.notify = {};

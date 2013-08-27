@@ -87,6 +87,7 @@ class MongoMapper extends MapperBase
 		MongoDecoder::decode($model, $data);
 	}
 	
+	
 	public function readList($model, $query, $fields = array(), $sortFields = array(), 
 							$limit = 0)
 	{
@@ -111,7 +112,7 @@ class MongoMapper extends MapperBase
 		}
 		$model->count= count($model->entries);
 	}
-
+	
 	
 
 	public function findOneByQuery($model, $query, $fields = array())
@@ -127,7 +128,8 @@ class MongoMapper extends MapperBase
 			throw new \Exception("Exception thrown while reading", $ex->getCode(), $ex);
 		}
 	}
-		/**
+
+	/**
 	 * 
 	 * @param string $id
 	 */
@@ -139,6 +141,7 @@ class MongoMapper extends MapperBase
 		}
 		return true;
 	}
+
 	/**
 	 * @param Object $model
 	 * @param string $id

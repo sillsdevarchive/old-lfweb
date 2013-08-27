@@ -150,11 +150,11 @@ div#account{
 	font-size: 0.85em; 
 	line-height: 24px;
 }
+
 div.sfcontainer {
 	position: relative;
 	width: 960px;
 	height: auto;
-	overflow: auto;
 	margin: 0 auto;
 }
 /* Bootstrap
@@ -186,7 +186,6 @@ div.darkTextLogo {
 
 div#promotion {
 	position: relative;
-	overflow: hidden;
 	width: 958px;
 	height: 400px;
 	margin-top: 12px;
@@ -612,4 +611,181 @@ button i {
 
 i.icon-remove {
 	color: #f66
+}
+
+div.hdrnav {
+	overflow: auto;
+	margin-left: 132px;
+}
+
+div.hdrnav ul {
+}
+
+div.hdrnav li {
+	background: #777777;
+	display: block;
+	float: left;
+	margin-top: 2px;
+	margin-right: 7px;
+}
+
+div.hdrnav li:hover, div.hdrnav li.here {
+	/*background: #469bc2;*/
+	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
+}
+
+div.hdrnav img {
+	margin-right: 12px;
+}
+
+div.hdrnav a {
+	color: #eeeff0;
+	display: block;
+	padding: 6px 12px 6px 12px;
+	text-decoration: none;
+}
+
+div.sf-breadcrumbs {
+	margin-top: 5px;
+	font-weight:bold;
+	color: gray;
+}
+
+div.sf-breadcrumbs a {
+	color: gray;
+	display: inline;
+	padding: 12px 3px 0 3px;
+	text-decoration: none;
+}
+div.sf-breadcrumbs a:hover {
+	text-decoration: underline;
+}
+
+div.sf-breadcrumbs .here {
+	color: #202020;
+}
+
+/* Question Page */
+table#answers tbody tr:hover, table tbody tr.altrow:hover {
+	background-color: #fff;
+}
+
+div#text {
+	overflow: auto;
+	min-height: 400px;
+	max-height: 600px;
+}
+
+div#comments {
+	width: 512px;
+	min-height: 400px;
+}
+
+div#comments table {
+	width: 100%;
+}
+
+div#comments table td {
+	border: 0;
+	padding: 0;
+	vertical-align: top;
+}
+
+div.vote {
+	text-align: center;
+	line-height: 1.0em;
+}
+
+div.vote a {
+	display: block;
+	font-size: 42px;
+	color: #999;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+div.vote span {
+	font-size: 24px;
+	font-weight: bold;
+	color: #999;
+}
+/*
+div.answer {
+	vertical-align: top;
+	margin: 12px 0 0 18px;
+}
+*/
+div.answer div.by {
+	background: #eee;
+	margin: 8px 0 0 0;
+	vertical-align: top;
+	width: 260px;
+}
+
+div.answer div.by img {
+	xdisplay: inline-block;
+	border: 2px solid white;
+	margin: 4px;
+	vertical-align: top;
+}
+
+div.answer div.by div {
+	display: inline-block;
+	margin: 6px 0 4px 4px;
+	vertical-align: middle;
+	line-height: 1.2em;
+	color: #666;
+}
+
+div#comments table.comments textarea {
+	width: 95%;
+}
+
+div#comments table.comments td {
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+/* New Item under ribbon bar */
+div.new-item form {
+	margin: 20px 0 0 0;
+}
+
+.activity-date {
+	font-size:12px;
+}
+
+.activity-icon {
+	text-align:center;
+}
+
+.activity-content i.icon-quote-left {
+	font-size: 12px;
+	margin-left:5px;
+	position:relative;
+	top: -5px;
+}
+
+ .activity-content i.icon-quote-right {
+	font-size: 12px;
+	position:relative;
+	margin-right: 5px;
+	top: -5px;
+}
+
+.activity-content p {
+	margin-top:10px;
+}
+
+.activity-content hr {
+	margin: 5px 0 5px 0;
+}
+
+.activity-content .indented {
+	margin-left:20px;
+}
+
+/* Table / Grid styles */
+table select {
+	margin-bottom: 0px;
 }

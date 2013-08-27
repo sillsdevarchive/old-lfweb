@@ -15,30 +15,9 @@ use models\mapper\Id;
 
 require_once(APPPATH . '/models/ProjectModel.php');
 
-class ProjectModelMongoMapper extends \models\mapper\MongoMapper
-{
-	public static function instance()
-	{
-		static $instance = null;
-		if (null === $instance)
-		{
-			$instance = new ProjectModelMongoMapper(LF_DATABASE, 'projects');
-		}
-		return $instance;
-	}
-	
-	public function drop($databaseName) {
-		if (MongoStore::hasDB($databaseName)) {
-			$db = MongoStore::connect($databaseName);
-			$db->drop();
-		}
-	}
-}
-
 class ProjectModel extends \models\mapper\MapperModel
 {
-	public function __construct($id = '')
-	{
+	public function __construct($id = '') {
 		$this->id = new Id();
 		$this->users = new MapOf(function($data) {
 			return new ProjectRoleModel();
@@ -63,11 +42,11 @@ class ProjectModel extends \models\mapper\MapperModel
 		ProjectModelMongoMapper::instance()->remove($this->id->asString());
 	}
 	
-	
 	/**
 	 * Adds the $userId as a member of this project.
-	 * You do NOT need to call write() as this method calls it for you
 	 * @param string $userId
+	 * @param string $role The role the user has in this project.
+	 * @see Roles;
 	 */
 	public function addUser($userId, $role) {
 		$mapper = ProjectModelMongoMapper::instance();
@@ -77,10 +56,8 @@ class ProjectModel extends \models\mapper\MapperModel
 		$this->users->data[$userId] = $model; 
 	}
 	
-	
 	/**
 	 * Removes the $userId from this project.
-	 * You do NOT need to call write() as this method calls it for you
 	 * @param string $userId
 	 */
 	public function removeUser($userId) {
@@ -99,7 +76,7 @@ class ProjectModel extends \models\mapper\MapperModel
 			}
 			$userList->entries[$i]['role'] = $this->users->data[$userId]->role;
 		}
- 		return $userList;
+		return $userList;
 	}
 	
 	/**
@@ -138,6 +115,11 @@ class ProjectModel extends \models\mapper\MapperModel
 	/**
 	 * @var string
 	 */
+	public $projectCode;
+	
+	/**
+	 * @var string
+	 */
 	public $projectname;
 	
 	/**
@@ -158,32 +140,6 @@ class ProjectModel extends \models\mapper\MapperModel
 	
 	// What else needs to be in the model?
 	
-}
-
-class ProjectListModel extends \models\mapper\MapperListModel
-{
-	public function __construct()
-	{
-		parent::__construct(
-			ProjectModelMongoMapper::instance(),
-			array(),
-			array('projectname', 'language')
-		);
-	}
-}
-
-class ProjectList_UserModel extends \models\mapper\MapperListModel
-{
-
-	public function __construct($userId)
-	{
-		parent::__construct(
-				ProjectModelMongoMapper::instance(),
-				array('users.' . $userId => array('$exists' => true)),
-				array('projectname')
-		);
-	}
-
 }
 
 

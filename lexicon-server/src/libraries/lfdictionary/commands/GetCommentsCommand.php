@@ -122,6 +122,9 @@ class GetCommentsCommand {
 				$childDto->setDate(strtotime($childNode->getAttributeNode ("date")->value));
 				$childDto->setComment($childNode->nodeValue);
 				$childDto->setStatus($childNode->getAttributeNode ("status")->value);
+				$childDto->setStatusResolved($childNode->getAttributeNode ("status.resolved")->value);
+				$childDto->setStatusReviewed($childNode->getAttributeNode ("status.reviewed")->value);
+				$childDto->setStatusTodo($childNode->getAttributeNode ("status.todo")->value);
 				$convDto->add($childDto);
 			}
 			//$this->_dto->addConversation($convDto);

@@ -16,6 +16,6 @@ function changePasswordCtrl($scope, userService, sessionService) {
 	}
 }
 
-angular.module('changePassword', ['jsonRpc', 'ui.bootstrap', 'sf.services', 'ui.validate']).
+angular.module('changePassword', ['jsonRpc', 'ui.bootstrap', 'lf.services', 'ui.validate']).
 controller('changePasswordCtrl', ['$scope', 'userService', 'sessionService', changePasswordCtrl])
 ;
