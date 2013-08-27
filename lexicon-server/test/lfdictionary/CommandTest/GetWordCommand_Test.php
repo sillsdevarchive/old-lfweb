@@ -1,12 +1,16 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
+require_once(SimpleTestPath . 'autorun.php');
 
-require_once(TEST_PATH . 'CommandTest/LiftTestEnvironment.php');
+require_once(DicTestPath . 'CommandTest/LiftTestEnvironment.php');
 
 class TestOfGetWordCommand extends UnitTestCase {
 
+	/*
+	 *  Note: 2013-08-27  These tests are testing GetWordCommand which no longer exists in the current codebase.
+	 *  My suspicion is that these tests were written before a significant refactor/rename, and the tests were never refactored
+	 *  cjh
+	 */
 	function testWordCommand_TwoEntries_OneGuidWordAndMeaningsAndAllSense() {
 		$e = new LiftTestEnvironment();
 		//2 entry, 2 word, 2sense, 1definition, 1 partofspeech, 2examples, 1exampleform
