@@ -37,13 +37,12 @@ class jsonRPCServer {
 	 */
 	public static function handle($object) {
 
-		// checks if a JSON-RPC request has been received
+			// checks if a JSON-RPC request has been received
 		if (
 			$_SERVER['REQUEST_METHOD'] != 'POST' ||
 			empty($_SERVER['CONTENT_TYPE']) ||
-			strrpos($_SERVER['CONTENT_TYPE'], "application/json") === false
-		) {
-			throw new \Exception("Not a JSON-RPC request: ct: '" . $_SERVER['CONTENT_TYPE'] . "'");
+			 (strrpos($_SERVER['CONTENT_TYPE'], "application/json") === false && strrpos($_SERVER['CONTENT_TYPE'], "application/xml") === false)) {
+			throw new \Exception("Not a JSON-RPC request: ct: '" . @$_SERVER['CONTENT_TYPE'] . "'");
 		}
 
 		// reads the input data

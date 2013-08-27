@@ -4,7 +4,7 @@
 
 angular.module(
 	'signup.controllers',
-	[ 'sf.services', 'ui.bootstrap' ]
+	[ 'lf.services', 'ui.bootstrap' ]
 )
 .controller('UserCtrl', ['$scope', 'userService', function UserCtrl($scope, userService) {
 
