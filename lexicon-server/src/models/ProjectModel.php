@@ -2,6 +2,9 @@
 
 namespace models;
 
+use libraries\palaso\CodeGuard;
+
+use models\rights\Realm;
 use models\rights\Roles;
 use models\rights\ProjectRoleModel;
 use models\mapper\MapOf;
@@ -84,7 +87,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	 */
 	public function hasRight($userId, $right) {
 		$role = $this->users->data[$userId]->role;
-		$result = Roles::hasRight($role, $right);
+		$result = Roles::hasRight(Realm::PROJECT, $role, $right);
 		return $result;
 	}
 	
@@ -94,8 +97,13 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @return array
 	 */
 	public function getRightsArray($userId) {
-		$role = $this->users->data[$userId]->role;
-		$result = Roles::getRightsArray($role);
+		CodeGuard::checkTypeAndThrow($userId, 'string');
+		if (!key_exists($userId, $this->users->data)) {
+			$result = array();
+		} else {
+			$role = $this->users->data[$userId]->role;
+			$result = Roles::getRightsArray(Realm::PROJECT, $role);
+		}
 		return $result;
 	}
 	
