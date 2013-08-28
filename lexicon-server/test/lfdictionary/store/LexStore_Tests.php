@@ -1,16 +1,22 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+use libraries\lfdictionary\environment\MissingInfoType;
+use libraries\lfdictionary\store\LexStoreController;
+use libraries\lfdictionary\store\LexStoreType;
+use libraries\lfdictionary\dto\EntryDTO;
+use libraries\lfdictionary\dto\Sense;
+use libraries\lfdictionary\dto\Example;
+use libraries\lfdictionary\dto\MultiText;
+
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 require_once(SOURCE_PATH . 'store/LexStoreController.php');
 require_once('MongoTestEnvironment.php');
 require_once('LiftTestEnvironment.php');
 require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 
-use environment\MissingInfoType;
-use store\LexStoreController;
-use store\LexStoreType;
+require_once(dirname(__FILE__) . '/../MockObject/LexProjectMockObject.php');
 
 
 /**
@@ -31,7 +37,7 @@ class TestOfLexStore extends UnitTestCase {
 	}
 	
 	function getStore($database) {
-		return new \store\LexStoreController(LexStoreType::STORE_MONGO, $database, new LexProjectMockObject());
+		return new LexStoreController(LexStoreType::STORE_MONGO, $database, new LexProjectMockObject());
 	}
 	
 	/**
@@ -40,14 +46,14 @@ class TestOfLexStore extends UnitTestCase {
 	 * @param StoreLiftTestEnvironment $liftEnvironment
 	 */
 	function getStoreFromEnvironment($mongoEnvironment, $liftEnvironment) {
-		return new \store\LexStoreController(LexStoreType::STORE_MONGO, $mongoEnvironment->database, new LexProjectMockObject($liftEnvironment));
+		return new LexStoreController(LexStoreType::STORE_MONGO, $mongoEnvironment->database, new LexProjectMockObject($liftEnvironment));
 	}
 	
 	function testWriteRead_SimpleEntry_ReadsBack() {
 		$e = MongoTestEnvironment::create();
 		$store = $this->getStore($e->database);
 		$guid = MongoTestEnvironment::guid();
-		$entry1 =  \dto\EntryDTO::create($guid);
+		$entry1 =  EntryDTO::create($guid);
 		
 		// Write the Entry
 		$store->writeEntry($entry1, '');
@@ -62,11 +68,11 @@ class TestOfLexStore extends UnitTestCase {
 		$e = MongoTestEnvironment::create();
 		$store = $this->getStore($e->database);
 		$guid = MongoTestEnvironment::guid();
-		$entry1 =  \dto\EntryDTO::create($guid);
-		$sense = \dto\Sense::create();
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('en', 'example'),
-			\libraries\lfdictionary\dto\MultiText::create('fr', 'example translation')
+		$entry1 =  EntryDTO::create($guid);
+		$sense = Sense::create();
+		$example = Example::create(
+			MultiText::create('en', 'example'),
+			MultiText::create('fr', 'example translation')
 		);
 		$sense->addExample($example);
 		$entry1->addSense($sense);
@@ -182,14 +188,14 @@ class TestOfLexStore extends UnitTestCase {
 		$e->ensureEntries(2);
 		
 		$guid = MongoTestEnvironment::guid();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'word'));
-		$sense = \dto\Sense::create();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('fr', 'word'));
+		$sense = Sense::create();
 		$sense->setPartOfSpeech('n');
-// 		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', "Definition"));
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('fr', "Example"),
-			\libraries\lfdictionary\dto\MultiText::create('en', "Example Translation")
+// 		$sense->setDefinition(MultiText::create('en', "Definition"));
+		$example = Example::create(
+			MultiText::create('fr', "Example"),
+			MultiText::create('en', "Example Translation")
 		);
 		$sense->addExample($example);
 		$entry->addSense($sense);
@@ -205,14 +211,14 @@ class TestOfLexStore extends UnitTestCase {
 		$e->ensureEntries(2);
 				
 		$guid = MongoTestEnvironment::guid();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'word'));
-		$sense = \dto\Sense::create();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('fr', 'word'));
+		$sense = Sense::create();
 // 		$sense->setPartOfSpeech('');
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', "Definition"));
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('fr', "Example"),
-			\libraries\lfdictionary\dto\MultiText::create('en', "Example Translation")
+		$sense->setDefinition(MultiText::create('en', "Definition"));
+		$example = Example::create(
+			MultiText::create('fr', "Example"),
+			MultiText::create('en', "Example Translation")
 		);
 		$sense->addExample($example);
 		$entry->addSense($sense);
@@ -228,14 +234,14 @@ class TestOfLexStore extends UnitTestCase {
 		$e->ensureEntries(2);
 				
 		$guid = MongoTestEnvironment::guid();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'word'));
-		$sense = \dto\Sense::create();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('fr', 'word'));
+		$sense = Sense::create();
 		$sense->setPartOfSpeech('n');
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', "Definition"));
-// 		$example = \dto\Example::create(
-// 			\libraries\lfdictionary\dto\MultiText::create('fr', "Example"),
-// 			\libraries\lfdictionary\dto\MultiText::create('en', "Example Translation")
+		$sense->setDefinition(MultiText::create('en', "Definition"));
+// 		$example = Example::create(
+// 			MultiText::create('fr', "Example"),
+// 			MultiText::create('en', "Example Translation")
 // 		);
 // 		$sense->addExample($example);
 		$entry->addSense($sense);

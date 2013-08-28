@@ -16,6 +16,8 @@ define('LF_TESTPROJECT', 'Test Project');
 // Fake some CodeIgniter path defines
 define('APPPATH', $rootPath . 'src/');
 define('BASEPATH', $rootPath . 'lib/CodeIgniter_2.1.3/system/');
+define('SIMPLETEST_PATH',$rootPath . 'test/lib/simpletest/');
+define('LF_BASE_PATH', $rootPath . 'lib/CodeIgniter_2.1.3/system/core/');
 
 require_once(APPPATH . 'helpers/loader_helper.php');
 require_once(APPPATH . 'libraries/lfdictionary/Config.php');
