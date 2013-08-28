@@ -14,7 +14,7 @@ angular.module(
 		'message':''
 	};
 	$scope.record.id = '';
-
+	$scope.record.password = '';
 	$scope.createUser = function(record) {
 		userService.create(record, function(result) {
 			if (result.ok) {
