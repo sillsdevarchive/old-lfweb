@@ -12,7 +12,7 @@ class MongoTestEnvironment
 	
 	public function __construct()
 	{
-		$this->_db = \models\mapper\MongoStore::connect(SF_DATABASE);
+		$this->_db = \models\mapper\MongoStore::connect(LF_DATABASE);
 	}
 
 	/**
