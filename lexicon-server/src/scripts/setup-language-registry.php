@@ -31,6 +31,11 @@
 		// new version of the language subtag registry is available, but it's
 		// just as simple to check the first line of the text file.
 
+		$fieldNameMapping = array(
+			"preferred-value" => "preferredValue",
+			"suppress-script" => "suppressScript",
+		);
+
 		$result = array();
 		foreach ($records as $record) {
 			// Join line-spanning fields (usually comments) onto one line
@@ -50,6 +55,9 @@
 
 				$parts = explode(':', $line, 2);
 				$key = strtolower(trim($parts[0]));
+				if (array_key_exists($key, $fieldNameMapping)) {
+					$key = $fieldNameMapping[$key];
+				}
 				$val = trim($parts[1]);
 
 				if ($key == "description") {
