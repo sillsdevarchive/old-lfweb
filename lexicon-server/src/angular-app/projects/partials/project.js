@@ -118,8 +118,8 @@ angular.module(
 		};
 
 	}])
-	.controller('ProjectSettingsCtrl', ['$scope', '$location', '$routeParams', 'breadcrumbService', 'userService', 'languageService', 'projectService', 'sessionService',
-	                                 function($scope, $location, $routeParams, bcs, userService, languageService, projectService, ss) {
+	.controller('ProjectSettingsCtrl', ['$scope', '$location', '$routeParams', 'breadcrumbService', 'userService', 'projectService', 'sessionService',
+	                                 function($scope, $location, $routeParams, bcs, userService, projectService, ss) {
 		var projectId = $routeParams.projectId;
 		$scope.project = {};
 		console.log("project id", projectId);
@@ -280,43 +280,5 @@ angular.module(
 			return avatarRef ? '/images/avatar/' + avatarRef : '/images/avatar/anonymous02.png';
 		};
 	
-		// ----------------------------------------------------------
-		// Typeahead for project selection
-		// ----------------------------------------------------------
-		$scope.languages = [];
-		$scope.language = '';
-		//$scope.typeahead has already been defined above
-		$scope.typeahead.langName = '';
-
-		$scope.queryLanguages = function(searchTerm) {
-			console.log('Searching for languages matching', searchTerm);
-			if (searchTerm.length < 3) {
-				return;
-			}
-			languageService.typeahead(searchTerm, function(result) {
-				console.log("languageService.typeahead(", searchTerm, ") returned:");
-				console.log(result);
-				if (result.ok) {
-					$scope.languages = result.data.entries;
-					console.log("$scope.languages is now:", $scope.languages);
-					//$scope.updateSomethingInTheForm(); // TODO: Figure out what, if anything, needs to be updated when the list comes back. 2013-08 RM
-				}
-			});
-		}
-
-		$scope.selectLanguage = function(item) {
-			console.log('selectLanguage called with args:');
-			console.log(arguments);
-			$scope.language = item;
-			$scope.typeahead.langName = item.description[0];
-		}
-
-		$scope.deprecationWarning = function(language) {
-			if (language.deprecated) {
-				return " (Deprecated)";
-			} else {
-				return "";
-			}
-		}
 	}])
 	;
