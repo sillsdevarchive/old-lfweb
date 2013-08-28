@@ -25,8 +25,12 @@ class ProjectModel extends \models\mapper\MapperModel
 	}
 	
 	public function databaseName() {
-		$name = strtolower($this->projectname);
-		$name = str_replace(' ', '_', $name);
+		if ($this->projectCode) {
+			$name = $this->projectCode;
+		} else {
+			$name = strtolower($this->projectname);
+			$name = str_replace(' ', '_', $name);
+		}
 
 		return 'lf_' . $name;
 
