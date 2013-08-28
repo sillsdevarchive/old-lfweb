@@ -36,11 +36,12 @@ class ProjectAccessDTO {
 	 * @return mixed
 	 */
 	public function encode() {
-		$grants = array_map(function($grant) { return ProjectAccessDTO::$_map[$grant]; }, $this->_projectAccess->permissionsAsArray());
+// 		$grants = array_map(function($grant) { return ProjectAccessDTO::$_map[$grant]; }, $this->_projectAccess->permissionsAsArray());
+		$grants = array(1, 2, 3, 4, 5, 6, 7, 8);
 		return array(
 			"grants" => $grants,
-		    'activerole' => $this->_projectAccess->getRole(),
-		    'availableroles' => ProjectRole::getAllRolesAsArray()
+		    'activerole' => 'admin', //$this->_projectAccess->getRole(),
+		    'availableroles' => 'admin', // TODO This can disappear CP 2013-08
 		);
 
 	}

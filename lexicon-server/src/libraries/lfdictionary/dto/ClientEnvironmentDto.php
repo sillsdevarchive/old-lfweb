@@ -35,7 +35,7 @@ class ClientEnvironmentDto {
 		$project = base64_encode(json_encode($projectDTO->encode()));
 		
 		$userDTO = new UserDTO($this->_userModel);
-		$userDTO->setUserRole($this->_projectAccess->getRole());
+		$userDTO->setUserRole('admin'); // TODO temporarily changed to force 'admin' until we put the new Roles / Rights code in. CP 2013-08
 		$user = base64_encode(json_encode($userDTO->encode()));
 		$projectAccessDTO = new ProjectAccessDTO($this->_projectAccess);
 		$projectAccess = base64_encode(json_encode($projectAccessDTO->encode()));
