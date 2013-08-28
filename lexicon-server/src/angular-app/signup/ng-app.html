@@ -62,12 +62,12 @@
 				$('#usernameExist').hide();
 				$('#usernameLoading').show();
 				// RPC server address
-				var endPointUrl = '/api/lf_dictionary';
+				var endPointUrl = '/api/lf';
 				$.jsonRPC.setup({
 					endPoint : endPointUrl,
 					namespace : ''
 				});
-				$.jsonRPC.request('usernameExists', {
+				$.jsonRPC.request('username_exists', {
 					params : new Array($.trim($('#username').val())),
 					success : function(result) {	
 						if (!result.result.succeed){

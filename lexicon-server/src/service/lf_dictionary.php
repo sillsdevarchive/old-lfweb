@@ -617,19 +617,6 @@ class LfDictionary
 		return mb_strtolower($strName, mb_detect_encoding($strName));
 	}
 
-
-	/**
-	 * Check User exists
-	 *
-	 * @return Boolean value
-	 */
-	public function usernameExists($userName) {
-	 $userModel = new \models\UserModel();
-	 $result = $userModel->usernameExists($userName);
-	 $resultDTO = new ResultDTO($userModel->usernameExists($userName));
-	 return $resultDTO->encode();
-	}
-
 	/**
 	 * Add New User
 	 */
