@@ -17,13 +17,13 @@ interface IEnvironmentMapper {
 	
 	/**
 	 * 
-	 * @param LFProjectModel $project
+	 * @param ProjectModel $project
 	 */
 	public function readProject($project);
 	
 	/**
 	 * 
-	 * @param LFProjectModel $project
+	 * @param ProjectModel $project
 	 */
 	public function writeProject($project);
 	

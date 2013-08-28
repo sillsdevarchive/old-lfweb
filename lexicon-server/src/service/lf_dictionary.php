@@ -18,7 +18,7 @@ use \libraries\lfdictionary\dto\UserDTO;
 use \libraries\lfdictionary\environment\EnvironmentMapper;
 
 use \models\UserModel;
-
+use \models\ProjectModel;
 /**
  * The main json-rpc Lexical API
  * Provides functions related to Lexicon management. Lexical Entries can be created, updated, deleted, and queried.
@@ -76,14 +76,14 @@ class LfDictionary
 		LoggerFactory::getLogger()->logInfoMessage("Lexicon Project initialize...");
 		$this->_userModel = new UserModel($userId);
 		if ($projectNodeId!==null && $projectNodeId!==''){
-			$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+			$this->_projectModel = new ProjectModel($projectNodeId);
 			LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
-			$this->_projectModel->getName(),
+			$this->_projectModel->projectname,
 			$projectNodeId,
 			($this->_userModel->id!=NULL && strlen(trim($this->_userModel->id))>0) ? $this->_userModel->username : "-",
 			$userId
 			));
-			$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
+			$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->projectname);
 			$this->_projectAccess = new \libraries\lfdictionary\environment\LFProjectAccess($this->_projectNodeId,$this->_userId);
 			$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
 		}
@@ -94,7 +94,7 @@ class LfDictionary
 	 * @return ProjectStateDTO
 	 */
 	function create() {
-		$this->_lexProject->createNewProject($this->_projectModel->getLanguageCode());
+		$this->_lexProject->createNewProject($this->_projectModel->language);
 		return $this->state();
 	}
 
@@ -179,7 +179,6 @@ class LfDictionary
 		$this->isReadyOrThrow();
 
 		//Error Validtion for User having access to Delete the project
-		$projectModel = $this->_projectModel;
 		if (!$this->_projectAccess->hasPermission(ProjectPermission::CAN_DELETE_ENTRY)) {
 			throw new \libraries\lfdictionary\common\UserActionDeniedException('Access Denied For Delete');
 		}
@@ -234,8 +233,7 @@ class LfDictionary
 	function getGatherWords($words,$filename) {
 		$this->isReadyOrThrow();
 
-		$projectModel = $this->_projectModel;
-		$languageCode = $projectModel->getLanguageCode();
+		$languageCode = $this->_projectModel->language;
 
 		// get all from lift file.
 		$existWordsList=$this->getList(1,PHP_INT_MAX);
@@ -452,7 +450,7 @@ class LfDictionary
 
 		//looking for ldml which has <exemplarCharacters type="index">
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
-		$languageCode = $this->_projectModel->getLanguageCode();
+		$languageCode = $this->_projectModel-projectCode;
 		$fileName = preg_replace('/-+/', '_', $languageCode);
 		while(true)
 		{
@@ -509,7 +507,7 @@ class LfDictionary
 	{
 		$this->isReadyOrThrow();
 		$store = $this->getLexStore();
-		$result = $store->searchEntriesAsWordList($this->_projectModel->getLanguageCode(),trim($letter), null, null);
+		$result = $store->searchEntriesAsWordList($this->_projectModel->language,trim($letter), null, null);
 		return $result->encode();
 	}
 
@@ -599,11 +597,11 @@ class LfDictionary
 	}
 
 	function updateProjectName($projectNodeId, $name) {
-		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+		$projectModel = new ProjectModel($projectNodeId);
 		if ($projectModel->setTitle(urldecode($name))){
 
 			//reload
-			$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
+			$projectModel = new ProjectModel($projectNodeId);
 			$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
 			return $getProjectDtO->encode();
 		}
@@ -627,7 +625,7 @@ class LfDictionary
 	 * List User
 	 */
 	function listUsersInProject($projectId) {
-		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
+		$projectModel = new ProjectModel($projectId);
 		$result = $projectModel->listUsersInProjectWithRole($projectId);
 		return $result->encode();
 	}

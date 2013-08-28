@@ -52,7 +52,7 @@ class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IE
 	
 	/**
 	 *
-	 * @param LFProjectModel $project
+	 * @param ProjectModel $project
 	 */
 	public function readProject($project) {
 		
@@ -67,14 +67,14 @@ class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IE
 	
 	/**
 	 *
-	 * @param LFProjectModel $project
+	 * @param ProjectModel $project
 	 */
 	public function writeProject($project) {
-		$projectModel = new ProjectModel($project->getId());
-		$projectModel->title=$project->getTitle();
-		$projectModel->language =$project->getLanguageCode();
-		$projectModel->projectname=$project->getName();
-		$projectModel->write();
+		$projectModel = new ProjectModel($project->id);
+		$projectModel->title=$project->title;
+		$projectModel->language =$project->language;
+		$projectModel->projectname=projectname;
+		$project->write();
 	}
 	
 	/**

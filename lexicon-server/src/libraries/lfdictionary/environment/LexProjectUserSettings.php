@@ -12,7 +12,8 @@ require_once(dirname(__FILE__) . '/../Config.php');
 
 // This class is lexicon specific
 
-use \libraries\lfdictionary\environment\UserModel;
+use models\UserModel;
+use models\ProjectModel;
 use \libraries\lfdictionary\environment\TaskSettingsModel;
 use \libraries\lfdictionary\common\LoggerFactory;
 class LexProjectUserSettings
@@ -27,9 +28,9 @@ class LexProjectUserSettings
 	const FOR_GATHER_WORD_FROM_SEMANTIC_DOMAIN = 5;
 
 	/**
-	 * @var LFProjectModel
+	 * @var ProjectModel
 	 */
-	private $_LFProjectModel;
+	private $_projectModel;
 
 	/**
 	 * @var UserModel
@@ -63,14 +64,14 @@ class LexProjectUserSettings
 	 */
 	var $_componentsDocFields;
 
-	function __construct($LFProjectModel, $userModel) {
+	function __construct($projectModel, $userModel) {
 		
-		if (!is_a($LFProjectModel, '\libraries\lfdictionary\environment\LFProjectModel')) {
-			throw new \Exception('Type error: LFProjectModel');
+		if (!is_a($projectModel, '\models\ProjectModel')) {
+			throw new \Exception('Type error: ProjectModel');
 		}
-		$this->_LFProjectModel = $LFProjectModel;
+		$this->_projectModel = $projectModel;
 		$this->_userModel = $userModel;
-		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_LFProjectModel);
+		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
 		$this->load();
 	}
 
