@@ -102,7 +102,7 @@ class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IE
 // 			}
 			
 			//TODO XZ listUsers always return 0, an I can not add new user into Project 
-			$userModel= new LFUserModel("51e604b1d4a66e7d19358eca");
+			$userModel= new UserModel("51e604b1d4a66e7d19358eca");
 			$userdto = new UserDTO($userModel);
 			$userlistdto->addListUser($userdto);
 			//Test code end

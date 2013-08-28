@@ -77,14 +77,14 @@ class LexProjectUserSettings
 	private function load() {
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
-		$userName = $this->_userModel->getUserName();
+		$userName = $this->_userModel->username;
 		$userName = mb_strtolower($userName, mb_detect_encoding($userName));
 
 		$filePath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $userName);
 
 		LoggerFactory::getLogger()->logInfoMessage(sprintf("LexProjectUserSettings: %s (%s) using settings '%s'",
-		$this->_userModel->getUserName(),
-		$this->_userModel->id(),
+		$this->_userModel->username,
+		$this->_userModel->id,
 		$filePath
 		));
 

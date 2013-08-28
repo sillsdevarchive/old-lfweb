@@ -1,7 +1,7 @@
 <?php
 namespace libraries\lfdictionary\dto;
 
-use libraries\lfdictionary\environment\LFUserModel;
+use models\UserModel;
 class ClientEnvironmentDto {
 	/**
 	 * @var LFProjectModel
@@ -9,7 +9,7 @@ class ClientEnvironmentDto {
 	private $_LFProjectModel;
 
 	/**
-	 * @var LFUserModel
+	 * @var UserModel
 	 */
 	private $_userModel;
 	
@@ -35,7 +35,6 @@ class ClientEnvironmentDto {
 		$project = base64_encode(json_encode($projectDTO->encode()));
 		
 		$userDTO = new UserDTO($this->_userModel);
-		$userDTO->setUserRole($this->_projectAccess->getRole());
 		$user = base64_encode(json_encode($userDTO->encode()));
 		$projectAccessDTO = new ProjectAccessDTO($this->_projectAccess);
 		$projectAccess = base64_encode(json_encode($projectAccessDTO->encode()));
