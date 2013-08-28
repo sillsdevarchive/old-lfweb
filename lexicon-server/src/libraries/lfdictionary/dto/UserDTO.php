@@ -33,7 +33,7 @@ class UserDTO {
 	 */
 	function encode() {
 		return array(
- 			'id' => $this->_userModel->id,
+ 			'id' => $this->_userModel->id->asString(),
  			'name' => $this->_userModel->username,
 			'role' => $this->_userModel->role
 		);

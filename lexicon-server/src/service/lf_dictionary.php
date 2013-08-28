@@ -17,6 +17,8 @@ use \libraries\lfdictionary\common\LoggerFactory;
 use \libraries\lfdictionary\dto\UserDTO;
 use \libraries\lfdictionary\environment\EnvironmentMapper;
 
+use \models\UserModel;
+
 /**
  * The main json-rpc Lexical API
  * Provides functions related to Lexicon management. Lexical Entries can be created, updated, deleted, and queried.
@@ -51,7 +53,7 @@ class LfDictionary
 
 
 	/**
-	 * @var LFUserModel
+	 * @var UserModel
 	 */
 	private $_userModel;
 
@@ -72,13 +74,13 @@ class LfDictionary
 	protected function initialize($projectNodeId, $userId) {
 
 		LoggerFactory::getLogger()->logInfoMessage("Lexicon Project initialize...");
-		$this->_userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
+		$this->_userModel = new UserModel($userId);
 		if ($projectNodeId!==null && $projectNodeId!==''){
 			$this->_projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
 			LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
 			$this->_projectModel->getName(),
 			$projectNodeId,
-			($this->_userModel->id()!=NULL && strlen(trim($this->_userModel->id()))>0) ? $this->_userModel->getUserName() : "-",
+			($this->_userModel->id!=NULL && strlen(trim($this->_userModel->id))>0) ? $this->_userModel->username : "-",
 			$userId
 			));
 			$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->getName());
@@ -201,7 +203,6 @@ class LfDictionary
 			throw new \libraries\lfdictionary\common\UserActionDeniedException('User must have joined the community in order to create/update projects');
 		}
 		// Check that user has edit privileges on the project
-		$userModel = $this->_userModel;
 		if (!$this->_projectAccess->hasPermission(ProjectPermission::CAN_EDIT_ENTRY)) {
 			throw new \libraries\lfdictionary\common\UserActionDeniedException('Access Denied For Update');
 		}
@@ -209,7 +210,7 @@ class LfDictionary
 		$rawEntry = json_decode($entry, true);
 		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray($rawEntry);
 		$store = $this->getLexStore();
-		$store->writeEntry($entryDto, $action, $this->_userModel->id(), $this->_userModel->getUserName());
+		$store->writeEntry($entryDto, $action, $this->_userModel->id, $this->_userModel->username);
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
 	}
@@ -333,9 +334,8 @@ class LfDictionary
 		$chorusNotesFilePath = $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
 		$now = new DateTime;
 		$w3cDateString = $now->format(DateTime::W3C);
-		$userModel = $this->_userModel;
 		$messageType=0;
-		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus, $isStatusReviewed, $isStatusTodo,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userModel->getUserName(),$isRootMessage);
+		$command = new \libraries\lfdictionary\commands\SaveCommentsCommand($chorusNotesFilePath, $messageStatus, $isStatusReviewed, $isStatusTodo,$messageType, $parentGuid,$commentMessage,$w3cDateString,$this->_userModel->username,$isRootMessage);
 		$result = $command->execute();
 		return $result->encode();
 	}
@@ -356,10 +356,10 @@ class LfDictionary
 
 
 	function getUserFieldsSetting($userId) {
-		$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
+		$userModel = new UserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
-		$strName = $userModel->getUserName();
+		$strName = $userModel->username;
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
 		$command = new \libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand($this->_projectPath,$strName);
 		$result = $command->execute();
@@ -367,10 +367,11 @@ class LfDictionary
 	}
 
 	function getUserTasksSetting($userId) {
-		$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
+		error_log("------------------- " .explode(" ", $userId));
+		$userModel = new UserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
-		$strName = $userModel->getUserName();
+		$strName = $userModel->username;
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
 		$command = new \libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand ($this->_projectPath,$strName);
 		$result = $command->execute();
@@ -379,6 +380,7 @@ class LfDictionary
 
 
 	function getUserSettings($userId) {
+		error_log("->: " . $userId);
 		$resultTask=$this->getUserTasksSetting($userId);
 		$resultFields=$this->getUserFieldsSetting($userId);
 		$result =  array(
@@ -611,39 +613,15 @@ class LfDictionary
 	}
 
 	protected function getUserNameById($userId) {
-		$userModel = new \libraries\lfdictionary\environment\LFUserModel($userId);
+		$userModel = new UserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
-		$strName = $userModel->getUserName();
+		$strName = $userModel->username;
 		return mb_strtolower($strName, mb_detect_encoding($strName));
 	}
 
-	/**
-	 * Add New User
-	 */
-	function addUser($newuser) {
-		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-		$result = $userModel->addUser($newuser);
-		return $result->encode();
-	}
 
-	/**
-	 * Search User
-	 */
-	function searchUser($search) {
-		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-		$result = $userModel->searchUser($search);
-		return $result->encode();
-	}
 
-	/**
-	 * Add User to Project
-	 */
-	function addUserToProject($projectId, $userName) {
-		$userModel = new \libraries\lfdictionary\environment\LFUserModel($this->_userId);
-		$result = $userModel->addUserToProject($projectId, $userName);
-		return $result;
-	}
 
 	/**
 	 * List User
@@ -651,36 +629,6 @@ class LfDictionary
 	function listUsersInProject($projectId) {
 		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectId);
 		$result = $projectModel->listUsersInProjectWithRole($projectId);
-		return $result->encode();
-	}
-
-	/**
-	 * Add new project
-	 */
-	function add($newProject) {
-		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
-		$result = $projectModel->add($newProject);
-		if (!$result) {
-			throw new Exception('Project already exists');
-		}
-	}
-
-	/**
-	 * List projects
-	 */
-	function listProjects($from, $to) {
-		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
-		$result = $projectModel->listProjects($from, $to);
-
-		return $result->encode();
-	}
-
-	/**
-	 * Search project
-	 */
-	function searchProject($string, $maxResultCount) {
-		$projectModel = new \libraries\lfdictionary\environment\LFProjectModel();
-		$result = $projectModel->searchProject($string, $maxResultCount);
 		return $result->encode();
 	}
 

@@ -96,7 +96,7 @@ class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IE
 // 			$projectModel = new ProjectModel($projectId);
 // 			$projectModel->listUsers()->read();
 // 			foreach ($projectModel->listUsers()->entries() as $user) {
-// 				$userModel= new LFUserModel($user->id);
+// 				$userModel= new UserModel($user->id);
 // 				$userdto = new UserDTO($userModel);
 // 				$userlistdto->addListUser($userdto);
 // 			}

@@ -156,7 +156,6 @@ class LFProjectModel {
 	 */
 	public function listUsersInProjectWithRole() {
 		$userlistdto = EnvironmentMapper::connect()->listUsersInProject($this->_projectId);
-		$userlistdto = $this->attachProjectRoleToUserListDto($userlistdto);
 		return $userlistdto;
 	}
 
@@ -197,26 +196,9 @@ class LFProjectModel {
 		if ($this->_projectId) {
 			$hostRole = ProjectRole::mapRoleToHost(ProjectRole::ADMIN);
 			$userlistdto = EnvironmentMapper::connect()->getUsersInProjectByRole($this->_projectId, $hostRole);
-			$userlistdto = $this->attachProjectRoleToUserListDto($userlistdto);
 		}
 		return $userlistdto;
 	}
-
-
-	/**
-	 * use for user list attach user role name into UserDto
-	 * @param UserListDTO $userlistdto
-	 */
-	private function attachProjectRoleToUserListDto($userlistdto)
-	{
-		foreach ($userlistdto->getUsers() as $value) {
-			$projectAccess = new LFProjectAccess($this->_projectId, $value->getUserId());
-			$value->setUserRole($projectAccess->getRole());
-		}
-		return $userlistdto;
-	}
-
-
 
 	/**
 	 * Used by a mapper to set properties
