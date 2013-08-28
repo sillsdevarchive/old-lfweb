@@ -1,5 +1,5 @@
 <?php
-use libraries\lfdictionary\environment\ProjectModel;
+use models\ProjectModel;
 use libraries\lfdictionary\environment\EnvironmentMapper;
 use libraries\lfdictionary\environment\ProjectRole;
 use libraries\lfdictionary\environment\ProjectPermission;
