@@ -46,6 +46,15 @@
 	<fieldset>
 		<label>Project Name</label>
 		<input type="text" placeholder="(project name)" ng-model="project.name"/>
+		<label>Project Language</label>
+		<typeahead class="typeahead" items="language" term="typeahead.langName" search="queryLanguages(typeahead.langName)" select="selectLanguage(item)">
+			<ul>
+				<li typeahead-item="language" ng-repeat="language in languages" class="typeahead-item">
+					<p class="name">{{language.description[0]}}</p>
+					<p class="email">{{language.subtag}}<span class="text-error">{{deprecationWarning(language)}}</span></p>
+				</li>
+			</ul>
+		</typeahead>
 	</fieldset>
 	<button type="submit" class="btn">Save</button>
 	</form>

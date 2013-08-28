@@ -25,6 +25,7 @@ require_once(APPPATH . 'models/ProjectModel.php');
 require_once(APPPATH . 'models/QuestionModel.php');
 require_once(APPPATH . 'models/TextModel.php');
 require_once(APPPATH . 'models/UserModel.php');
+require_once(APPPATH . 'models/LanguageModel.php');
 
 class Lf
 {
@@ -202,6 +203,17 @@ class Lf
 		$result = ProjectSettingsDto::encode($projectId, $this->_userId);
 		return $result;
 	}
+	
+	//---------------------------------------------------------------
+	// LANGUAGE API
+	//---------------------------------------------------------------
+	
+	public function language_typeahead($term) {
+		$list = new \models\LanguageTypeaheadModel($term);
+		$list->read();
+		return $list;
+	}
+	
 	
 	//---------------------------------------------------------------
 	// TEXT API

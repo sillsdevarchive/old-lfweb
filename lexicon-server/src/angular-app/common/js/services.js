@@ -31,6 +31,12 @@ angular.module('lf.services', ['jsonRpc'])
 			jsonRpc.call('change_password', [userId, newPassword], callback);
 		};
 	}])
+	.service('languageService', ['jsonRpc', function(jsonRpc) {
+		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
+		this.typeahead = function(term, callback) {
+			jsonRpc.call('language_typeahead', [term], callback);
+		};
+	}])
 	.service('projectService', ['jsonRpc', function(jsonRpc) {
 		jsonRpc.connect('/api/lf'); // Note this doesn't actually 'connect', it simply sets the connection url.
 		this.read = function(projectId, callback) {
