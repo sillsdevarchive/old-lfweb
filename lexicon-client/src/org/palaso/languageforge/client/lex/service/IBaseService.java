@@ -3,7 +3,6 @@ package org.palaso.languageforge.client.lex.service;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpc;
 import org.palaso.languageforge.client.lex.model.IanaDto;
 import org.palaso.languageforge.client.lex.model.ProjectDto;
-import org.palaso.languageforge.client.lex.model.UserDto;
 import org.palaso.languageforge.client.lex.model.UserListDto;
 import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDto;
@@ -24,16 +23,6 @@ public interface IBaseService {
 	 */
 	public JsonRpc getJsonRpc();
 
-	/**
-	 * TODO: DS 2012-11 add doc
-	 * 
-	 * @param searchString
-	 * @param indexFrom
-	 * @param indexTo
-	 * @param asyncCallback
-	 */
-	void getMembersForAutoSuggest(String searchString, int indexFrom,
-			int indexTo, AsyncCallback<UserListDto> asyncCallback);
 
 	/**
 	 * Gets a list of all users from current project.
@@ -125,60 +114,5 @@ public interface IBaseService {
 	void updateProjectName(String projectName, String projectId,
 			AsyncCallback<ProjectDto> asyncCallback);
 
-	/**
-	 * 
-	 * @param userId
-	 *            user Id which need to add to a project
-	 * @param projectId
-	 *            the project which the user will add in
-	 * @param asyncCallback
-	 */
-	void addUserToProject(String userId, String projectId,
-			AsyncCallback<UserListDto> asyncCallback);
 
-	/**
-	 * 
-	 * @param UserId
-	 *            user id which will remove.
-	 * @param projectId
-	 *            the project which the user will removed
-	 * @param asyncCallback
-	 */
-	void removeUserFromProjectAction(String userId, String projectId,
-			AsyncCallback<UserListDto> asyncCallback);
-
-	/**
-	 * 
-	 * @param userDto
-	 *            user Dto object contains new data
-	 * @param projectId
-	 *            related project id
-	 * @param asyncCallback
-	 */
-	void updateUserAccessGrant(UserDto userDto, String projectId,
-			AsyncCallback<UserDto> asyncCallback);
-
-	/**
-	 * 
-	 * @param projectId
-	 *            related project id
-	 * @param emailAddress
-	 *            email address who will be invited
-	 * @param msg
-	 *            a personal message from invitor
-	 * @param asyncCallback
-	 */
-	void inviteFriendByEmail(String projectId, String emailAddress, String msg,
-			AsyncCallback<String> asyncCallback);
-
-	/**
-	 * 
-	 * @param projectId
-	 *            related project id
-	 * @param newName
-	 *            user name will used for new user
-	 * @param asyncCallback
-	 */
-	void rapidUserCreationAction(String projectId, String newName,
-			AsyncCallback<UserListDto> asyncCallback);
 }
