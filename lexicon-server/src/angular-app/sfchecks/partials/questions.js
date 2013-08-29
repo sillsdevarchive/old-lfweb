@@ -2,7 +2,7 @@
 
 angular.module(
 		'sfchecks.questions',
-		[ 'sf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap' ]
+		[ 'lf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap' ]
 	)
 	.controller('QuestionsCtrl', ['$scope', 'questionsService', '$routeParams', 'sessionService', 'linkService', 'breadcrumbService',
 	                              function($scope, questionsService, $routeParams, ss, linkService, bcs) {
