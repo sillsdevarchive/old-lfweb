@@ -4,7 +4,7 @@ use models\rights\Operation;
 use models\rights\Domain;
 use models\rights\Realm;
 use models\rights\Roles;
-use models\ProjectModel;
+use models\ProjectListModel;
 
 
 require_once 'secure_base.php';
@@ -31,7 +31,7 @@ class gwt extends base {
 			$data['projects'] = $projects->entries;
 		}
 		
-		$projectList = new ProjectModel();
+		$projectList = new ProjectListModel();
 		$projectList->read();
 		$data['all_projects_count'] = $projectList->count;
 		$data['all_projects'] = $projectList->entries;

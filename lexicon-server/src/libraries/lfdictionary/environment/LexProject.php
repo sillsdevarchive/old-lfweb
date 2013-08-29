@@ -4,6 +4,7 @@ namespace libraries\lfdictionary\environment;
 use \libraries\lfdictionary\environment\ProjectRole;
 use \libraries\lfdictionary\environment\ProjectPermission;
 use \libraries\lfdictionary\common\LoggerFactory;
+
 class LexProject
 {
 	
@@ -42,30 +43,7 @@ class LexProject
 				$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 			}
 		}
-		$this->setupRoleAndPermissions();
 	}
-	
-	private function setupRoleAndPermissions()
-	{
-		// Setup the permissions and roles
-		
-		/**Admin Role**/
-		ProjectRole::add(ProjectRole::ADMIN, 
-						new ProjectPermission(ProjectPermission::CAN_ADMIN,
-											  ProjectPermission::CAN_CREATE_ENTRY,
-											  ProjectPermission::CAN_EDIT_ENTRY,
-											  ProjectPermission::CAN_DELETE_ENTRY,
-											  ProjectPermission::CAN_EDIT_REVIEW_ALL,
-											  ProjectPermission::CAN_EDIT_REVIEW_OWN,
-											  ProjectPermission::CAN_CREATE_REVIEW, 
-											  ProjectPermission::CAN_REPLY_REVIEW
-											  ), 1, 1);
-		
-		
-		/**User Role**/
-		ProjectRole::add(ProjectRole::USER, new ProjectPermission(ProjectPermission::CAN_EDIT_ENTRY), 2, 2);
-	}
-	
 	
 	/**
 	 * Creates a new Lexicon project
