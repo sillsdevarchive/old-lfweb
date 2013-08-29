@@ -50,68 +50,6 @@ class MongoDBEnvironmentMapper  extends \models\mapper\MongoMapper implements IE
 		$projectAccessModel->write();
 	}
 	
-	/**
-	 *
-	 * @param ProjectModel $project
-	 */
-	public function readProject($project) {
-		
-		$projectModel = new ProjectModel($project->getId());
-		//$projectModel->read($project->getId());
-		
- 		$typeTokens = explode("-", $projectModel->projectname);
- 		$type = $typeTokens[count($typeTokens) - 1];
- 		// set(title, language, name (slug), type);
- 		$project->set($projectModel->title, $projectModel->language, $projectModel->projectname, $type);
-	}
-	
-	/**
-	 *
-	 * @param ProjectModel $project
-	 */
-	public function writeProject($project) {
-		$projectModel = new ProjectModel($project->id);
-		$projectModel->title=$project->title;
-		$projectModel->language =$project->language;
-		$projectModel->projectname=projectname;
-		$project->write();
-	}
-	
-	/**
-	 * @param UserModel $user
-	 */
-	public function readUser($user) {
-		$userModel = new UserModel($user->id());
-		$user->set($userModel->name);
-		$user->setUserEmail($userModel->email);
-	}
-	
-	/**
-	* @param int $projectId
-	*/
-	public function listUsersInProject($projectId)
-	{
-		$userlistdto = new  UserListDTO();
-		if ($projectId) {
-// 			$projectModel = new ProjectModel($projectId);
-// 			$projectModel->listUsers()->read();
-// 			foreach ($projectModel->listUsers()->entries() as $user) {
-// 				$userModel= new UserModel($user->id);
-// 				$userdto = new UserDTO($userModel);
-// 				$userlistdto->addListUser($userdto);
-// 			}
-			
-			//TODO XZ listUsers always return 0, an I can not add new user into Project 
-			$userModel= new UserModel("51e604b1d4a66e7d19358eca");
-			$userdto = new UserDTO($userModel);
-			$userlistdto->addListUser($userdto);
-			//Test code end
-		}
-		return $userlistdto;
-	}
-	
-	
-
 }
 
 ?>

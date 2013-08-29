@@ -19,6 +19,7 @@ use \libraries\lfdictionary\environment\EnvironmentMapper;
 
 use \models\UserModel;
 use \models\ProjectModel;
+use libraries\lfdictionary\dto\UserListDTO;
 /**
  * The main json-rpc Lexical API
  * Provides functions related to Lexicon management. Lexical Entries can be created, updated, deleted, and queried.
@@ -618,15 +619,19 @@ class LfDictionary
 		return mb_strtolower($strName, mb_detect_encoding($strName));
 	}
 
-
-
-
 	/**
 	 * List User
 	 */
 	function listUsersInProject($projectId) {
 		$projectModel = new ProjectModel($projectId);
-		$result = $projectModel->listUsersInProjectWithRole($projectId);
+		$userList = $projectModel->listUsers();
+		$result = new UserListDTO();
+		error_log(count($userList->entries));
+		for ($i = 0; $i < count($userList->entries); $i++) {
+			$userId = $userList->entries[$i]['id'];
+			$userDto = new UserDTO(new UserModel($userId));
+			$result->addListUser($userDto);
+		}	
 		return $result->encode();
 	}
 

@@ -14,6 +14,26 @@ use models\mapper\Id;
 
 require_once(APPPATH . '/models/ProjectModel.php');
 
+class ProjectModelMongoMapper extends \models\mapper\MongoMapper
+{
+	public static function instance()
+	{
+		static $instance = null;
+		if (null === $instance)
+		{
+			$instance = new ProjectModelMongoMapper(LF_DATABASE, 'projects');
+		}
+		return $instance;
+	}
+	
+	public function drop($databaseName) {
+		if (MongoStore::hasDB($databaseName)) {
+			$db = MongoStore::connect($databaseName);
+			$db->drop();
+		}
+	}
+}
+
 class ProjectModel extends \models\mapper\MapperModel
 {
 	public function __construct($id = '') {
@@ -139,6 +159,32 @@ class ProjectModel extends \models\mapper\MapperModel
 	
 	// What else needs to be in the model?
 	
+}
+
+class ProjectListModel extends \models\mapper\MapperListModel
+{
+	public function __construct()
+	{
+		parent::__construct(
+			ProjectModelMongoMapper::instance(),
+			array(),
+			array('projectname', 'language')
+		);
+	}
+}
+
+class ProjectList_UserModel extends \models\mapper\MapperListModel
+{
+
+	public function __construct($userId)
+	{
+		parent::__construct(
+				ProjectModelMongoMapper::instance(),
+				array('users.' . $userId => array('$exists' => true)),
+				array('projectname')
+		);
+	}
+
 }
 
 

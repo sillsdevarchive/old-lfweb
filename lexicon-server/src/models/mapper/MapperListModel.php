@@ -2,7 +2,7 @@
 
 namespace models\mapper;
 
-class MapperListModel extends MapperBase /*extends CI_Model*/
+class MapperListModel /*extends CI_Model*/
 {
 	/**
 	 * @var int
