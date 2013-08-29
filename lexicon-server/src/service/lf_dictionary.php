@@ -436,15 +436,15 @@ class LfDictionary
 	 */
 	function getTitleLetterList()
 	{
-		if ($this->_projectNodeId === null || strlen($this->_projectNodeId) <= 0) {
-			throw new \Exception("Invalid project node ID $projectNodeId");
+		if (!isset($this->_projectModel) || $this->_projectModel === null) {
+			throw new \Exception("Invalid project");
 		}
 
 		// get project language : FieldSettings.fromWindow().value("Word").getAbbreviations().get(0);
 
 		//looking for ldml which has <exemplarCharacters type="index">
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
-		$languageCode = $this->_projectModel-projectCode;
+		$languageCode = $this->_projectModel->language;
 		$fileName = preg_replace('/-+/', '_', $languageCode);
 		while(true)
 		{

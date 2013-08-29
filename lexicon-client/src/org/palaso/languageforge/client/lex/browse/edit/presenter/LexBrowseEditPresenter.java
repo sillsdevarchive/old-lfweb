@@ -1,7 +1,8 @@
 package org.palaso.languageforge.client.lex.browse.edit.presenter;
 
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.common.Tools;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
@@ -124,7 +125,7 @@ public class LexBrowseEditPresenter extends
 				renderWord(result);
 				eventBus.setUpdateButtonEnable(true);
 				boolean allowDelete=false;
-				if (PermissionManager.getPermission(ProjectPermissionType.CAN_DELETE_ENTRY)) {
+				if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_DELETE_OWN)) {
 					allowDelete=true;
 				}
 				eventBus.setDeleteButtonVisible(allowDelete);
@@ -189,7 +190,7 @@ public class LexBrowseEditPresenter extends
 	 */
 	private void renderWord(LexiconEntryDto result) {
 		boolean allowEdit=false;
-		if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
 			allowEdit=true;
 		}
 		entryPresenter = new EntryPresenter(

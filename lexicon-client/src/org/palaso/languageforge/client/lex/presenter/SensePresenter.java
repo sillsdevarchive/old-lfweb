@@ -9,8 +9,9 @@ package org.palaso.languageforge.client.lex.presenter;
 import java.util.ArrayList;
 
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.model.Example;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
@@ -121,7 +122,7 @@ public class SensePresenter extends
 			ConsoleLog.log("POS->Visible: True");
 			view.setPartOfSpeechPanelVisible(true);
 			boolean isPartOsSpeechEnabled = true;
-			if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
 				isPartOsSpeechEnabled = true;
 			} else {
 				isPartOsSpeechEnabled = false;
@@ -144,7 +145,7 @@ public class SensePresenter extends
 		}
 
 		if (fieldSettings.value("NewExample").getEnabled()) {
-			if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
 				if (!singleNewMeaning) {
 					showNewExampleBlock();
 				} else {

@@ -3,31 +3,29 @@ package org.palaso.languageforge.client.lex.common;
 import java.util.EnumMap;
 import java.util.Map;
 
-public enum ProjectPermissionType  implements IEnum  {
+public enum OperationPermissionType  implements IEnum  {
 
 	// DO not change name definition here!!! used for JSON mapping
 	// must match definitions in ProjectAccessDTO.php!!
 	UNDEFINED			("0"),		// this is used in UI side only, so this key is not exist in server side.
-	CAN_ADMIN			("1"),
-	CAN_CREATE_ENTRY	("2"),
-	CAN_EDIT_ENTRY		("3"),
-	CAN_DELETE_ENTRY 	("4"),
-	CAN_EDIT_REVIEW_ALL	("5"),
-	CAN_EDIT_REVIEW_OWN	("6"),
-	CAN_CREATE_REVIEW	("7"),
-	CAN_REPLY_REVIEW 	("8");
+	CAN_CREATE			("1"),
+	CAN_EDIT_OWN		("2"),
+	CAN_EDIT_OTHER		("3"),
+	CAN_DELETE_OWN 		("4"),
+	CAN_DELETE_OTHER	("5"),
+	CAN_LOCK			("6");
 	
     private String value;
-	private static Map<ProjectPermissionType, String> table = new EnumMap<ProjectPermissionType, String>(
-			ProjectPermissionType.class);
+	private static Map<OperationPermissionType, String> table = new EnumMap<OperationPermissionType, String>(
+			OperationPermissionType.class);
 	
 	// Initialize
 	static {
-		for (ProjectPermissionType value : ProjectPermissionType.values())
+		for (OperationPermissionType value : OperationPermissionType.values())
 			table.put(value, value.getValue());
 	}
 	
-    ProjectPermissionType(String value) {
+    OperationPermissionType(String value) {
         this.value = value;
     }
 
@@ -37,9 +35,9 @@ public enum ProjectPermissionType  implements IEnum  {
 		return this.value;
 	}
 
-	public static ProjectPermissionType getFromValue(String value) {
+	public static OperationPermissionType getFromValue(String value) {
 		if (table.containsValue(value)) {
-			for (ProjectPermissionType key : ProjectPermissionType.values()) {
+			for (OperationPermissionType key : OperationPermissionType.values()) {
 				if (key.getValue().equals(value)) {
 					return key;
 				}

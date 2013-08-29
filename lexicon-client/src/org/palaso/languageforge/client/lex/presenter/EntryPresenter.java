@@ -8,8 +8,9 @@ package org.palaso.languageforge.client.lex.presenter;
 
 import java.util.ArrayList;
 
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.MultiText;
@@ -87,7 +88,7 @@ public class EntryPresenter extends
 			}
 		}
 		
-		if ((PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY))) {
+		if ((PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN))) {
 			if (!singleNewMeaning) {
 				showNewSenseBlock();
 			} else {

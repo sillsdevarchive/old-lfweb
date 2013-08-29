@@ -11,50 +11,31 @@ public final class PermissionManager {
 	 * @param type
 	 * @return
 	 */
-	public static boolean getPermission(ProjectPermissionType type) {
-		return getPermission(type, false);
-	}
-
-	/**
-	 * get permission by type
-	 * 
-	 * @param type
-	 * @param if set to TRUE, admin right will not overwrite others
-	 * @return
-	 */
-	public static boolean getPermission(ProjectPermissionType type, boolean IgnoreAdminTakeover) {
-
-		// ADMIN has all right.
-		if (!IgnoreAdminTakeover && hasAdminPermission()) {
-			return true;
-		} else {
-			return (getPermissionInternal(type));
-		}
-	}
-
-	private static boolean hasAdminPermission() {
-		return getPermissionInternal(ProjectPermissionType.CAN_ADMIN);
-	}
-
-	private static boolean getPermissionInternal(ProjectPermissionType type) {
+	public static boolean getPermission(DomainPermissionType domain,
+			OperationPermissionType operation) {
+		ConsoleLog.log("Rights Check asked for: " +  domain.getValue() + "/" + operation.getValue());
 		if (CurrentEnvironmentDto.getCurrentProjectAccess() == null) {
-			return false;
-		}
-		if (CurrentEnvironmentDto.getCurrentProjectAccess().getActiveRole() == null
-				|| CurrentEnvironmentDto.getCurrentProjectAccess().getActiveRole() == "") {
+			ConsoleLog.log("Denied! No permission");
 			return false;
 		}
 		if (CurrentEnvironmentDto.getCurrentProjectAccess().getPermissions() == null
-				|| CurrentEnvironmentDto.getCurrentProjectAccess().getPermissions().length() == 0) {
+				|| CurrentEnvironmentDto.getCurrentProjectAccess()
+						.getPermissions().length() == 0) {
+			ConsoleLog.log("Denied! No permission");
 			return false;
 		}
-		JsArrayNumber permissionArray = CurrentEnvironmentDto.getCurrentProjectAccess().getPermissions();
+		JsArrayNumber permissionArray = CurrentEnvironmentDto
+				.getCurrentProjectAccess().getPermissions();
 		for (int i = 0; i < permissionArray.length(); i++) {
 			int permission = (int) permissionArray.get(i);
-			if (type.getValue() == String.valueOf(permission)) {
+			if (Integer.parseInt(domain.getValue())
+					+ Integer.parseInt(operation.getValue()) == permission) {
+				ConsoleLog.log("Accpet!");
 				return true;
 			}
 		}
+		ConsoleLog.log("No permission matchs");
 		return false;
 	}
+
 }
