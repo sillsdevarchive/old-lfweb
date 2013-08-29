@@ -1,21 +1,26 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+
+use \libraries\lfdictionary\dto\Example;
+use \libraries\lfdictionary\dto\EntryDTO;
+use \libraries\lfdictionary\dto\MultiText;
+use \libraries\lfdictionary\dto\Sense;
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfEntryDTO extends UnitTestCase {
 
 	function testEncode_EntryAndSense_JsonCorrect() {
-		$entry = \dto\EntryDTO::create("guid0");
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'form1'));
+		$entry = EntryDTO::create("guid0");
+		$entry->setEntry(MultiText::create('fr', 'form1'));
 		
-		$sense = new \dto\Sense();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
+		$sense = new Sense();
+		$sense->setDefinition(MultiText::create('en', 'definition1'));
 		$sense->setSemanticDomainName('semantic-domain-ddp4');
 		$sense->setSemanticDomainValue('2.1 Body');
-		$sense->addExample(\dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('en', 'example1'),
-			\libraries\lfdictionary\dto\MultiText::create('fr', 'translation1')
+		$sense->addExample(Example::create(
+			MultiText::create('en', 'example1'),
+			MultiText::create('fr', 'translation1')
 		));
 		
 		$entry->addSense($sense);
@@ -26,24 +31,24 @@ class TestOfEntryDTO extends UnitTestCase {
 	}
 	
 	function testCreateFromArray_Sample_Correct() {
-		$entry = \dto\EntryDTO::create("guid0");
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('fr', 'form1'));
+		$entry = EntryDTO::create("guid0");
+		$entry->setEntry(MultiText::create('fr', 'form1'));
 		
-		$sense = new \dto\Sense();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
+		$sense = new Sense();
+		$sense->setDefinition(MultiText::create('en', 'definition1'));
 		$sense->setPartOfSpeech('Noun');
 		$sense->setSemanticDomainName('semantic-domain-ddp4');
 		$sense->setSemanticDomainValue('2.1 Body');
-		$sense->addExample(\dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('en', 'example1'),
-			\libraries\lfdictionary\dto\MultiText::create('fr', 'translation1')
+		$sense->addExample(Example::create(
+			MultiText::create('en', 'example1'),
+			MultiText::create('fr', 'translation1')
 		));
 		
 		$entry->addSense($sense);
 				
 		$value = $entry->encode();
 		
-		$v = \dto\EntryDTO::createFromArray($value);
+		$v = EntryDTO::createFromArray($value);
 		
 		$this->assertEqual('guid0', $v->_guid);
 		$this->assertEqual(array('fr' => 'form1'), $v->_entry->getAll());

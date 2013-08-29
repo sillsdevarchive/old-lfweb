@@ -1,12 +1,15 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+
+use \libraries\lfdictionary\dto\DomainQuestionDTO;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfDomainQuestionDTO extends UnitTestCase {
 
 	function testDomainQuestionDTO_Encode_JsonCorrect() {
-		$dto = new \dto\DomainQuestionDTO();
+		$dto = new DomainQuestionDTO();
 		$dto->addExampleSentences("Description");
 		$dto->addExampleWords("Description");
 		$dto->addQuestions("Description");

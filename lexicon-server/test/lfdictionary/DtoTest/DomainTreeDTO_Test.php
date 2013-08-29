@@ -1,14 +1,16 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+use \libraries\lfdictionary\dto\DomainTreeDTO;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfDomainTreeDTO extends UnitTestCase {
 
 	function testDomainTreeDTO_Encode_JsonCorrect() {
-		$dtoParent = new \dto\DomainTreeDTO();
-		$dtoChildA = new \dto\DomainTreeDTO();
-		$dtoChildB = new \dto\DomainTreeDTO();
+		$dtoParent = new DomainTreeDTO();
+		$dtoChildA = new DomainTreeDTO();
+		$dtoChildB = new DomainTreeDTO();
 		
 		$dtoChildA->setKey("ChildKeyA");
 		$dtoChildA->setGuid("ChildGuidB");

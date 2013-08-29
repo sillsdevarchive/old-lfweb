@@ -1,12 +1,15 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+use \libraries\lfdictionary\dto\ConversationDTO;
+use \libraries\lfdictionary\dto\ConversationListDTO;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfConversationDTO extends UnitTestCase {
 
 	function testConversationDTOEncode_ReturnsCorrectJson() {
-		$rootDto = new \libraries\lfdictionary\dto\ConversationDTO();
+		$rootDto = new ConversationDTO();
 		$rootDto->setClass("TestClassRoot");
 		$rootDto->setReference("TestRef");
 		$rootDto->setGuid("00000000-1111-2222-3333-444444444444");
@@ -15,7 +18,7 @@ class TestOfConversationDTO extends UnitTestCase {
 		$rootDto->setComment("This is a test question");
 		$rootDto->setStatus("");
 		
-		$childDto = new \libraries\lfdictionary\dto\ConversationDTO();
+		$childDto = new ConversationDTO();
 		$childDto->setClass("TestClass");
 		$childDto->setReference("");
 		$childDto->setGuid("88888888-1111-2222-3333-444444444444");
@@ -33,10 +36,10 @@ class TestOfConversationDTO extends UnitTestCase {
 
 	function testConversationListDTOEncode_ReturnsCorrectJson() {
 
-		$conversationListDTO = new \libraries\lfdictionary\dto\ConversationListDTO();
+		$conversationListDTO = new ConversationListDTO();
 		
 		
-		$rootDto = new \libraries\lfdictionary\dto\ConversationDTO();
+		$rootDto = new ConversationDTO();
 		$rootDto->setClass("TestClassRoot");
 		$rootDto->setReference("TestRef");
 		$rootDto->setGuid("00000000-1111-2222-3333-444444444444");
@@ -45,7 +48,7 @@ class TestOfConversationDTO extends UnitTestCase {
 		$rootDto->setComment("This is a test question");
 		$rootDto->setStatus("");
 		
-		$childDto = new \libraries\lfdictionary\dto\ConversationDTO();
+		$childDto = new ConversationDTO();
 		$childDto->setClass("TestClass");
 		$childDto->setReference("");
 		$childDto->setGuid("88888888-1111-2222-3333-444444444444");
