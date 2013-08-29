@@ -13,6 +13,9 @@ angular.module(
 		'state':false,
 		'message':''
 	};
+	$scope.usernameok = true;
+	$scope.usernameexist = false;
+	$scope.usernameloading = false;
 	$scope.record.id = '';
 	$scope.record.password = '';
 	$scope.createUser = function(record) {

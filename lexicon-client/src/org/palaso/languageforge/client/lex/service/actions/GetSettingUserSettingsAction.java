@@ -16,10 +16,6 @@ public class GetSettingUserSettingsAction extends
 
 	@Override
 	public String encodeParam(int i) {
-		switch (i) {
-		case 0:
 			return  value;
-		}
-		return null;
 	}
 }

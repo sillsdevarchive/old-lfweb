@@ -4,7 +4,6 @@ import org.palaso.languageforge.client.lex.jsonrpc.JsonRpc;
 import org.palaso.languageforge.client.lex.model.IanaDto;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ProjectDto;
-import org.palaso.languageforge.client.lex.model.UserDto;
 import org.palaso.languageforge.client.lex.model.UserListDto;
 import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDto;
@@ -91,48 +90,6 @@ public class BaseServiceTest implements IBaseService {
 			AsyncCallback<ProjectDto> asyncCallback) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void getMembersForAutoSuggest(String searchString, int indexFrom,
-			int indexTo, AsyncCallback<UserListDto> asyncCallback) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addUserToProject(String userId, String projectId,
-			AsyncCallback<UserListDto> asyncCallback) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeUserFromProjectAction(String userId, String projectId,
-			AsyncCallback<UserListDto> asyncCallback) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateUserAccessGrant(UserDto userDto, String projectId,
-			AsyncCallback<UserDto> asyncCallback) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void inviteFriendByEmail(String projectId, String emailAddress,
-			String msg, AsyncCallback<String> asyncCallback) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void rapidUserCreationAction(String projectId, String newName,
-			AsyncCallback<UserListDto> asyncCallback) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

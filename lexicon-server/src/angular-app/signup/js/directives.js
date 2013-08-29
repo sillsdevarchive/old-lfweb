@@ -2,7 +2,7 @@
 
 /* Directives */
 
-angular.module('signup.directives', []).
+angular.module('signup.directives', ['lf.services']).
 
 // This directive's code is from http://stackoverflow.com/q/16016570/
   directive("requireEqual", function() {
@@ -14,7 +14,8 @@ angular.module('signup.directives', []).
 		},
 		// Basic idea is it's a directive to do validation, used like this:
 		// <input type="password" ng-model="record.password"/>
-		// <input type="password" ng-model="record.confirmPassword" require-equal="record.password"/>
+		// <input type="password" ng-model="record.confirmPassword"
+		// require-equal="record.password"/>
 		link: function(scope, elem, attrs, ngModelCtrl) {
 			// If for some reason we're getting called early, when ngModelCtrl
 			// is not yet available, then do nothing.
@@ -29,9 +30,9 @@ angular.module('signup.directives', []).
 		},
 	};
 })
-//from : http://blog.brunoscopelliti.com/angularjs-directive-to-test-the-strength-of-a-password
+// from :
+// http://blog.brunoscopelliti.com/angularjs-directive-to-test-the-strength-of-a-password
 .directive("checkStrength", function () {
-
     return {
         replace: false,
         restrict: 'EACM',
@@ -97,4 +98,43 @@ angular.module('signup.directives', []).
         template: '<li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li>'
     };
 
-});
+})
+.directive("uniqueUser",  ['userService', function UserCtrl(userService) {
+    return {
+        replace: false,
+        require: "ngModel",
+        restrict: 'A',
+        link: function (scope, element, iAttrs, ngModelCtrl) {    	
+            scope.$watch(iAttrs.uniqueUser, function () {
+                if (scope.record.username=== undefined || scope.record.username === '') {
+                	scope.usernameok=false;
+                	scope.usernameexist=false;
+                	scope.usernameloading=false;
+                } else {          
+    				scope.usernameok=false;
+                	scope.usernameexist=false;
+                	scope.usernameloading=true;
+                	userService.usernameexists(scope.record.username, function(result) {
+                		if (result.ok==true && result.data.succeed==true)
+                			{
+                        	scope.usernameok=false;
+                        	scope.usernameexist=true;
+                        	scope.usernameloading=false;
+                        	if (!ngModelCtrl) return;			
+                			ngModelCtrl.$setValidity("userexist", false);
+
+                			}else
+                				{
+                				scope.usernameok=true;
+                            	scope.usernameexist=false;
+                            	scope.usernameloading=false;
+                            	if (!ngModelCtrl) return;			
+                    			ngModelCtrl.$setValidity("userexist", true);
+                				}
+            		});
+                }
+            });
+        }
+    };
+}]);
+

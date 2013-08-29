@@ -8,6 +8,7 @@ use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\dashboardtool\DashboardDbType;
 use libraries\lfdictionary\dashboardtool\HistoricalHgDataFetcher;
 use libraries\lfdictionary\common\LoggerFactory;
+use models\ProjectModel;
 class UpdateDashboardCommand
 {
 	
@@ -28,18 +29,18 @@ class UpdateDashboardCommand
 	private $_projectNodeId;
 
 	/**
-	 * @var LFProjectModel
+	 * @var ProjectModel
 	 */
-	private $_LFProjectModel;
+	private $_projectModel;
 
 	/**
 	 * @var LexProject
 	 */
 	private $_lexProject;
 
-	function __construct($projectID, $LFProjectModel,$lexProject) {
+	function __construct($projectID, $projectModel,$lexProject) {
 		
-		$this->_LFProjectModel=$LFProjectModel;
+		$this->_projectModel=$projectModel;
 		$this->_projectNodeId=$projectID;
 		$this->_lexProject=$lexProject;
 	}
@@ -59,7 +60,7 @@ class UpdateDashboardCommand
 				return UpdateDashboardCommand::RUNNING;
 			}
 		}
-		$projectRepoPath = PROJECTS_HG_ROOT_FOLDER. $this->_LFProjectModel->getName();
+		$projectRepoPath = PROJECTS_HG_ROOT_FOLDER. $this->_projectModel->projectname;
 		$dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
 		$historicalHgDataFetcher = new HistoricalHgDataFetcher($projectRepoPath);
 		$asyncRunner =  $this->createAsyncRunner();

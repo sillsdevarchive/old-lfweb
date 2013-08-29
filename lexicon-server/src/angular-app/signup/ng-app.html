@@ -13,10 +13,10 @@
 						<div>
 							<label>User Name</label> <input required type="text"
 								placeholder="(username)" ng-model="record.username"
-								name="username" id="username" /> 
-								<span id="usernameLoading"><img src="/images/loading-small.gif" style="position: absolute; padding-left: 5px; padding-top: 8px;" /></span>
-								<span id="usernameOk"><img src="/images/tick.png" title="User name is avaiable!" style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
-								<span id="usernameExist"><img src="/images/exclamation.png" title="User name already exist!" style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
+								name="username" id="username" unique-user = "record.username" /> 
+								<span  ng-show="usernameloading" id="usernameLoading"><img src="/images/loading-small.gif" style="position: absolute; padding-left: 5px; padding-top: 8px;" /></span>
+								<span  ng-show="usernameok" id="usernameOk"><img src="/images/tick.png" title="User name is avaiable!" style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
+								<span  ng-show="usernameexist" id="usernameExist"><img src="/images/exclamation.png" title="User name already exist!" style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
 						</div>
 						<div>
 							<label>Name</label> <input required type="text"
@@ -51,46 +51,7 @@
 			now signed up. We will contact you when your account is active.</div>
 	</div>
 </div>
+
 <script>
-	$(document).ready(function() {
-		$('#usernameLoading').hide();
-		$('#usernameOk').hide();
-		$('#usernameExist').hide();
-		$('#username').on("change paste keyup", function() {
-			if ($.trim($('#username').val()) !== '') {
-				$('#usernameOk').hide();
-				$('#usernameExist').hide();
-				$('#usernameLoading').show();
-				// RPC server address
-				var endPointUrl = '/api/lf';
-				$.jsonRPC.setup({
-					endPoint : endPointUrl,
-					namespace : ''
-				});
-				$.jsonRPC.request('username_exists', {
-					params : new Array($.trim($('#username').val())),
-					success : function(result) {	
-						if (!result.result.succeed){
-							$('#usernameLoading').hide();
-							$('#usernameOk').show();
-							$('#usernameExist').hide();
-						}else
-						{
-							$('#usernameLoading').hide();
-							$('#usernameOk').hide();
-							$('#usernameExist').show();
-						}
-					},
-					error : function(result) {
-						alert("error when try to connect server: " + JSON.stringify(result));
-					}
-				});
-			}else
-				{
-				$('#usernameOk').hide();
-				$('#usernameExist').hide();
-				$('#usernameLoading').hide();
-				}
-		});
-	});
+
 </script>

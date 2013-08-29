@@ -4,7 +4,7 @@ namespace models\mapper;
 
 use libraries\palaso\CodeGuard;
 
-class MongoMapper extends MapperBase
+class MongoMapper
 {
 	
 	const ID_IN_KEY = 0;

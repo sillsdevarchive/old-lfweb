@@ -22,16 +22,6 @@ class EnvironmentMapper {
 			return self::$_environment;
 		}
 		switch ($environment) {
-			case 'drupal':
-			case 'drupal7':
-				self::$_environment = new Drupal7EnvironmentMapper();
-				break;
-			case 'drupal6':
-				self::$_environment = new DrupalEnvironmentMapper();
-				break;
-			case 'languagedepot':
-				self::$_environment = new LanguageDepotEnvironmentMapper();
-				break;
 			case 'languageforge':
 				self::$_environment = new MongoDBEnvironmentMapper();
 				break;

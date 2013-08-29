@@ -2,14 +2,14 @@
 namespace libraries\lfdictionary\environment;
 require_once(dirname(__FILE__) . '/../Config.php');
 use libraries\lfdictionary\common\LoggerFactory;
-
+use \models\ProjectModel;
 /**
  * @see LexProject
  */
 class LexiconProjectEnvironment {
 
 	/**
-	 * @var LFProjectModel
+	 * @var String
 	 */
 	private $_projectName;
 
@@ -101,11 +101,11 @@ class LexiconProjectEnvironment {
 	/**
 	 * Returns the path to the project working folder.
 	 * 		e.g. /var/lib/languageforge/work/someProjectName
-	 * @param LFProjectModel $LFProjectModel
+	 * @param ProjectModel $projectModel
 	 * @return string
 	 */
-	static public function projectPath($LFProjectModel) {
-		return LANGUAGEFORGE_VAR_PATH . 'work/' . $LFProjectModel->getName();
+	static public function projectPath($projectModel) {
+		return LANGUAGEFORGE_VAR_PATH . 'work/' . $projectModel->projectname;
 	}
 
 	/**

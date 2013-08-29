@@ -9,7 +9,7 @@ namespace libraries\lfdictionary\environment;
 class PartOfSpeechSettingsModel
 {
 
-	function __construct($LFProjectModel) {
+	function __construct() {
 	}
 
 	function __destruct() {
