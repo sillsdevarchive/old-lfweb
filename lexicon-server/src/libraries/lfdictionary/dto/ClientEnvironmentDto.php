@@ -19,7 +19,6 @@ class ClientEnvironmentDto {
 	/**
 	 * @param ProjectModel $projectModel
 	 * @param UserModel $userModel
-	 * @param LFProjectAccess $projectAccess
 	 */
 	function __construct($projectModel, $userModel) {
 		$this->_projectModel = $projectModel;

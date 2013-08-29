@@ -1,8 +1,6 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
-use \libraries\lfdictionary\environment\ProjectRole;
-use \libraries\lfdictionary\environment\ProjectPermission;
 use \libraries\lfdictionary\common\LoggerFactory;
 
 class LexProject
