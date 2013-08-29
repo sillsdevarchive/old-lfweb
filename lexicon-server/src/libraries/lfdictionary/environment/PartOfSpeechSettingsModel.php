@@ -9,12 +9,6 @@ namespace libraries\lfdictionary\environment;
 class PartOfSpeechSettingsModel
 {
 
-	function __construct() {
-	}
-
-	function __destruct() {
-	}
-
 	function encode() {
 		return array(
 			array("value" => "Select", "id" => "0"),
