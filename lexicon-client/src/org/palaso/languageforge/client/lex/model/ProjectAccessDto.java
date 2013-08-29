@@ -17,16 +17,10 @@ public class ProjectAccessDto extends BaseDto<ProjectAccessDto> {
 		return entry;
 	}
 
-	public final native String getActiveRole() /*-{
-		return this.activerole;
-	}-*/;
 	
 	public final native JsArrayNumber getPermissions() /*-{
 		return this.grants;
 	}-*/;	
 
-	public final native JsDictionaryString<String> getAllAvailableRoles() /*-{
-		return this.availableroles;
-	}-*/;
 	
 }

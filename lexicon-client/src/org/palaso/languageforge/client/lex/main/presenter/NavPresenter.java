@@ -1,8 +1,9 @@
 package org.palaso.languageforge.client.lex.main.presenter;
 
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.main.MainEventBus;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.UserDto;
@@ -412,7 +413,8 @@ public class NavPresenter extends
 			view.setContributeMenuVisible(true);
 			view.setConfigureMenuVisible(false);
 		} else {
-			if (PermissionManager.getPermission(ProjectPermissionType.CAN_ADMIN)) {
+			//TODO admin promission!
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_LOCK)) {
 				view.setConfigureMenuVisible(true);
 			}
 		}

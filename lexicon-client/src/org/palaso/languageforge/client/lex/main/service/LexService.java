@@ -12,9 +12,10 @@ import org.palaso.languageforge.client.lex.common.AutoSuggestPresenterOption;
 import org.palaso.languageforge.client.lex.common.AutoSuggestPresenterOptionResultSet;
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.common.Tools;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.AutoSuggestOptions;
@@ -287,7 +288,7 @@ public class LexService extends BaseService implements ILexService {
 	public void saveEntry(final LexiconEntryDto entry,
 			final AsyncCallback<ResultDto> asyncCallback) {
 		boolean allowEdit=false;
-		if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
 			allowEdit=true;
 		}
 		
@@ -330,7 +331,7 @@ public class LexService extends BaseService implements ILexService {
 	public void deleteEntry(final String key, final String mercurialSHA,
 			final AsyncCallback<ResultDto> asyncCallback) {
 		boolean allowDelete=false;
-		if (PermissionManager.getPermission(ProjectPermissionType.CAN_DELETE_ENTRY)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_DELETE_OWN)) {
 			allowDelete=true;
 		}
 		if (!allowDelete) {

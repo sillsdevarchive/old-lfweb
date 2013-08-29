@@ -1,5 +1,7 @@
 package org.palaso.languageforge.client.lex.model;
 
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Base64;
 
@@ -23,11 +25,11 @@ public class CurrentEnvironmentDto extends JavaScriptObject {
 	}-*/;
 
 	protected final native static String getCurrentProjectAccessBase64() /*-{
-		return $wnd.clientEnvironment.access;
+		return $wnd.clientEnvironment.rights;
 	}-*/;
 	
 	protected final native static String setCurrentProjectAccessBase64(String accessBase64) /*-{
-		$wnd.clientEnvironment.access=accessBase64;
+		$wnd.clientEnvironment.rights=accessBase64;
 	}-*/;
 	
 	public final static UserDto getCurrentUser() {
@@ -54,6 +56,7 @@ public class CurrentEnvironmentDto extends JavaScriptObject {
 		}
 		byte[] decodedJson= Base64.decode(getCurrentProjectAccessBase64());
 		String decodedJsonString = new String(decodedJson);
+		ConsoleLog.log(decodedJsonString);
 		return ProjectAccessDto.decode(decodedJsonString);
 	}
 

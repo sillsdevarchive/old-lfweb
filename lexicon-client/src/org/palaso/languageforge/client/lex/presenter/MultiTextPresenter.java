@@ -2,8 +2,9 @@ package org.palaso.languageforge.client.lex.presenter;
 
 import java.util.HashMap;
 
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.model.MultiText;
 
 import com.google.gwt.core.client.JsArrayString;
@@ -91,7 +92,7 @@ public class MultiTextPresenter extends ModelPairBase<MultiTextPresenter.IMultiT
 	}
 
 	private void addTextRow(String language, String value) {
-		if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
 			if (labels != null && labels.value(language) != null) {
 				view.addNewTextPanel(language, value, labels.value(language), isTextboxEditable);
 			} else {
