@@ -1,10 +1,9 @@
 <?php
 
-use libraries\lfdictionary\environment\ProjectState;
 require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
-require_once(SOURCE_PATH . 'environment/ProjectState.php');
+require_once(SOURCE_PATH . 'libraries/\lfdictionary/environment/ProjectState.php');
 
 class ProjectStateTestEnvironment {
 	

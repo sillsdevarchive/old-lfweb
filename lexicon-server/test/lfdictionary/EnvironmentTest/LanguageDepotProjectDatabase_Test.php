@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
 require_once(SOURCE_PATH . 'environment/LanguageDepotImporter.php');
