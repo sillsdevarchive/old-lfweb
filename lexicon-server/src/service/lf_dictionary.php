@@ -316,7 +316,7 @@ class LfDictionary
 	function getComments($messageStatus,$messageType, $startIndex,$limits, $isRecentChanges) {
 		$this->isReadyOrThrow();
 
-		$chorusNotesFilePath= $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
+		$chorusNotesFilePath= $this->_lexProject->getChorusNotesFilePath();
 		$command = new \libraries\lfdictionary\commands\GetCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $startIndex,$limits,$isRecentChanges);
 		$result = $command->execute();
 		return $result->encode();
@@ -325,7 +325,7 @@ class LfDictionary
 	function saveNewComment($messageStatus, $isStatusReviewed, $isStatusTodo, $parentGuid, $commentMessage, $isRootMessage) {
 		$this->isReadyOrThrow();
 
-		$chorusNotesFilePath = $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
+		$chorusNotesFilePath = $this->_lexProject->getChorusNotesFilePath();
 		$now = new DateTime;
 		$w3cDateString = $now->format(DateTime::W3C);
 		$messageType=0;

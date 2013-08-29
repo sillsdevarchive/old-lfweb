@@ -34,7 +34,7 @@ class LexProject
 		$this->projectName = $projectName;
 		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		$this->projectPath = rtrim($projectBasePath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectState = new \libraries\lfdictionary\environment\ProjectState($this->projectName);
+		$this->projectState = new ProjectState($this->projectName);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
 			if (file_exists($this->projectPath)) {
@@ -218,12 +218,17 @@ class LexProject
 		}
 		return $currentHash;
 	}
+
+	public function getChorusNotesFilePath() {
+		$liftFilePath = $this->getLiftFilePath();
+		return $liftFilePath . '.ChorusNotes';
+	}
 	
 	public function getLiftFilePath() {
 		if ($this->_liftFilePath) {
 			return $this->_liftFilePath;
 		}
-		if ($this->projectState->getState() != \libraries\lfdictionary\environment\ProjectStates::Ready) {
+		if ($this->projectState->getState() != ProjectStates::Ready) {
 			return null;
 		}
 		
