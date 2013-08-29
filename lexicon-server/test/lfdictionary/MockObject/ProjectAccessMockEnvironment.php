@@ -4,8 +4,8 @@ use libraries\lfdictionary\environment\IEnvironmentMapper;
 use libraries\lfdictionary\environment\ProjectPermission;
 use libraries\lfdictionary\environment\LFProjectAccess;
 
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 
-//require_once(dirname(__FILE__) . '/../../testconfig.php');
 
 class ProjectAccessMockEnvironment implements IEnvironmentMapper {
 

@@ -1,7 +1,10 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+use libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand;
+
+use libraries\lfdictionary\commands\UpdateSettingUserTasksSettingCommand;
+
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
+require_once(SimpleTestPath . 'autorun.php');
 
 class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 
@@ -36,7 +39,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}else
 		{
-			UpdateSettingUserFieldsSettingCommand_Test::recursiveDelete($this->_path);
+			self::recursiveDelete($this->_path);
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
@@ -48,10 +51,10 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 		$userName=array();
 		$userName[]="user1";
 
-		$command = new \commands\UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -70,7 +73,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}else
 		{
-			UpdateSettingUserFieldsSettingCommand_Test::recursiveDelete($this->_path);
+			self::recursiveDelete($this->_path);
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
@@ -97,10 +100,10 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 		$userName=array();
 		$userName[]="user1";
 
-		$command = new \commands\UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -122,7 +125,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}else
 		{
-			UpdateSettingUserFieldsSettingCommand_Test::recursiveDelete($this->_path);
+			self::recursiveDelete($this->_path);
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
@@ -141,21 +144,21 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 		$userName[]="user2";
 		$userName[]="user3";
 
-		$command = new \commands\UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user2");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user2");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user3");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user3");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -191,7 +194,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}else
 		{
-			UpdateSettingUserFieldsSettingCommand_Test::recursiveDelete($this->_path);
+			self::recursiveDelete($this->_path);
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
@@ -218,21 +221,21 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 		$userName[]="user2";
 		$userName[]="user3";
 
-		$command = new \commands\UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserTasksSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user2");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user2");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
 
-		$command = new \commands\GetSettingUserTasksSettingCommand($this->_path ,"user3");
+		$command = new GetSettingUserTasksSettingCommand($this->_path ,"user3");
 		$result = $command->execute();
 		$this->assertEqual(count($result["tasks"]["task"]), 11);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -252,7 +255,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 		}
 
 
-		UpdateSettingUserTasksSettingCommand_Test::recursiveDelete($this->_path);
+		self::recursiveDelete($this->_path);
 	}
 
 	private function endsWith($haystack, $needle)

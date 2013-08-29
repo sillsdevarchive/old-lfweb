@@ -1,7 +1,10 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+use libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand;
+
+use libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand;
+
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
+require_once(SimpleTestPath . 'autorun.php');
 
 class UpdateSettingUserFieldsSettingCommand_Test extends UnitTestCase {
 
@@ -48,10 +51,10 @@ class UpdateSettingUserFieldsSettingCommand_Test extends UnitTestCase {
 		$userName=array();
 		$userName[]="user1";
 
-		$command = new \commands\UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -86,10 +89,10 @@ class UpdateSettingUserFieldsSettingCommand_Test extends UnitTestCase {
 		$userName=array();
 		$userName[]="user1";
 
-		$command = new \commands\UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -130,21 +133,21 @@ class UpdateSettingUserFieldsSettingCommand_Test extends UnitTestCase {
 		$userName[]="user2";
 		$userName[]="user3";
 
-		$command = new \commands\UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user2");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user2");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user3");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user3");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
@@ -184,21 +187,21 @@ class UpdateSettingUserFieldsSettingCommand_Test extends UnitTestCase {
 		$userName[]="user2";
 		$userName[]="user3";
 
-		$command = new \commands\UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
+		$command = new UpdateSettingUserFieldsSettingCommand($this->_path ,$userName, $this->NEW_DATA);
 		$command->execute();
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user1");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user1");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user2");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user2");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
 
 
-		$command = new \commands\GetSettingUserFieldsSettingCommand($this->_path ,"user3");
+		$command = new GetSettingUserFieldsSettingCommand($this->_path ,"user3");
 		$result = $command->execute();
 		$this->assertEqual(count($result["fields"]["field"]), 13);
 		$this->assertEqual(json_encode($result), $this->NEW_DATA);
