@@ -1,49 +1,42 @@
 <?php
 namespace libraries\lfdictionary\dto;
 
-use libraries\lfdictionary\environment\LFUserModel;
+use models\UserModel;
+use models\ProjectModel;
+
 class ClientEnvironmentDto {
-	/**
-	 * @var LFProjectModel
-	 */
-	private $_LFProjectModel;
 
 	/**
-	 * @var LFUserModel
+	 * @var ProjectModel
+	 */
+	private $_projectModel;
+
+	/**
+	 * @var UserModel
 	 */
 	private $_userModel;
 	
 	/**
-	 * @var LFProjectAccess
-	 */
-	private $_projectAccess;
-	
-	/**
-	 * @param LFProjectModel $LFProjectModel
+	 * @param ProjectModel $projectModel
 	 * @param UserModel $userModel
-	 * @param LFProjectAccess $projectAccess
 	 */
-	function __construct($LFProjectModel, $userModel, $projectAccess) {
-		$this->_LFProjectModel = $LFProjectModel;
+	function __construct($projectModel, $userModel) {
+		$this->_projectModel = $projectModel;
 		$this->_userModel = $userModel;
-		$this->_projectAccess = $projectAccess;
 	}
 
 	function encode() {
 		// TODO Don't think we really need projectDTO and userDTO, we can just use projectAccessDTO maybe CP 2012-11
-		$projectDTO = new ProjectDTO($this->_LFProjectModel);
+		$projectDTO = new ProjectDTO($this->_projectModel);
 		$project = base64_encode(json_encode($projectDTO->encode()));
 		
 		$userDTO = new UserDTO($this->_userModel);
-		$userDTO->setUserRole($this->_projectAccess->getRole());
 		$user = base64_encode(json_encode($userDTO->encode()));
-		$projectAccessDTO = new ProjectAccessDTO($this->_projectAccess);
-		$projectAccess = base64_encode(json_encode($projectAccessDTO->encode()));
 		
 		return array(
 			'currentProject' => $project,
 			'currentUser' => $user,
-			'access' => $projectAccess
+			'rights' => $this->_projectModel->getRightsArray($this->_userModel->id->asString()),
 		);
 		
 	}

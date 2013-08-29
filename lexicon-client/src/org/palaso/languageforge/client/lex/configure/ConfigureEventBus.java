@@ -8,11 +8,9 @@ import org.palaso.languageforge.client.lex.common.IPersistable;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureMainPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingFieldsPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingInputSystemsPresenter;
-import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingMembersPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingPropertiesPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingTasksPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingsPresenter;
-import org.palaso.languageforge.client.lex.configure.presenter.InviteFriendByEmailPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.LanguageCodeLookupPresenter;
 import org.palaso.languageforge.client.lex.configure.view.ConfigureMainView;
 import org.palaso.languageforge.client.lex.main.LexGinModule;
@@ -65,9 +63,6 @@ public interface ConfigureEventBus extends EventBus {
 	@Event(handlers = ConfigureSettingPropertiesPresenter.class)
 	void attachPropertiesView(SimplePanel tasksPanel);
 
-	@Event(handlers = ConfigureSettingMembersPresenter.class)
-	void attachMembersView(SimplePanel tasksPanel);
-
 	@Event(handlers = ConfigureSettingTasksPresenter.class)
 	void attachTasksView(SimplePanel tasksPanel);
 
@@ -115,10 +110,7 @@ public interface ConfigureEventBus extends EventBus {
 	
 	@Event(handlers = ConfigureSettingsPresenter.class)
 	void addSubControl(SimplePanel panel, IPersistable control);
-	
-	@Event(handlers = InviteFriendByEmailPresenter.class)
-	void attachInviteFriendByEmailView(PopupPanel panel, String emailAddress);
-	
+		
 	@Event(handlers = ConfigureSettingsPresenter.class)
 	void reloadIana();
 	

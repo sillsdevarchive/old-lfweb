@@ -22,14 +22,9 @@ class UserDTO {
 		$this->_userModel = $userModel;
 	}
 
-	public function setUserRole($role)
-	{
-		$this->_userRole=$role;
-	}
-	
 	public function getUserId()
 	{
-		return $this->_userModel->id();
+		return $this->_userModel->id;
 	}
 	
 	/**
@@ -38,9 +33,9 @@ class UserDTO {
 	 */
 	function encode() {
 		return array(
- 			'id' => $this->_userModel->id(),
- 			'name' => $this->_userModel->getUserName(),
-			'role' => $this->_userRole
+ 			'id' => $this->_userModel->id->asString(),
+ 			'name' => $this->_userModel->username,
+			'role' => $this->_userModel->role
 		);
 
 	}

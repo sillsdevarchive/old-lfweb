@@ -12,8 +12,6 @@ use models\mapper\MongoStore;
 use models\mapper\ReferenceList;
 use models\mapper\Id;
 
-require_once(APPPATH . '/models/ProjectModel.php');
-
 class ProjectModel extends \models\mapper\MapperModel
 {
 	public function __construct($id = '') {
@@ -140,6 +138,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	// What else needs to be in the model?
 	
 }
+
 
 
 ?>

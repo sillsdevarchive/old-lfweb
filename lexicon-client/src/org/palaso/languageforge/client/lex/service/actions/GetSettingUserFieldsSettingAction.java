@@ -16,11 +16,7 @@ public class GetSettingUserFieldsSettingAction extends
 
 	@Override
 	public String encodeParam(int i) {
-		switch (i) {
-		case 0:
 			return value;
-		}
-		return null;
 	}
 
 }
