@@ -366,7 +366,6 @@ class LfDictionary
 	}
 
 	function getUserTasksSetting($userId) {
-		error_log("------------------- " .explode(" ", $userId));
 		$userModel = new UserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
 		// so all user name will save in lowercase
@@ -379,7 +378,6 @@ class LfDictionary
 
 
 	function getUserSettings($userId) {
-		error_log("->: " . $userId);
 		$resultTask=$this->getUserTasksSetting($userId);
 		$resultFields=$this->getUserFieldsSetting($userId);
 		$result =  array(
@@ -626,7 +624,6 @@ class LfDictionary
 		$projectModel = new ProjectModel($projectId);
 		$userList = $projectModel->listUsers();
 		$result = new UserListDTO();
-		error_log(count($userList->entries));
 		for ($i = 0; $i < count($userList->entries); $i++) {
 			$userId = $userList->entries[$i]['id'];
 			$userDto = new UserDTO(new UserModel($userId));
