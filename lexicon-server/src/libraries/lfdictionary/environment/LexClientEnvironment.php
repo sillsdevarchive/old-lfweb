@@ -75,7 +75,7 @@ class LexClientEnvironment
 	private function isReady() {
 		if (!$this->_lexProject->isReady()) {
 			LoggerFactory::getLogger()->logInfoMessage(sprintf("Project %s not ready, creating new project...", $this->_projectModel->projectname));
-			$this->_lexProject->createNewProject($this->_projectModel->$projectCode);
+			$this->_lexProject->createNewProject($this->_projectModel->projectCode);
 		}
 	}
 	

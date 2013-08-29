@@ -10,10 +10,9 @@ use models\ProjectListModel;
 require_once 'secure_base.php'; 
 class gwt extends base {
 	
-	public function view($page = 'main', $pid ='') {
+	public function view($pid ='') {
 		
 		$data = array();
-		$data['gwt_page'] = $page;
 		$data['project_id'] = $pid;
 		$data['title'] = "Language Forge";
 		$data['is_static_page'] = true;
