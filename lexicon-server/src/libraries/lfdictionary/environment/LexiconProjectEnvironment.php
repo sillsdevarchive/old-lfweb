@@ -1,8 +1,11 @@
 <?php
 namespace libraries\lfdictionary\environment;
+
 require_once(dirname(__FILE__) . '/../Config.php');
+
 use libraries\lfdictionary\common\LoggerFactory;
 use \models\ProjectModel;
+
 /**
  * @see LexProject
  */
