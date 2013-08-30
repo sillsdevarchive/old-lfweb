@@ -137,18 +137,7 @@ class Lf
 	 * @return string Id of written object
 	 */
 	public function project_update($object) {
-		$project = new \models\ProjectModel();
-		$id = $object['id'];
-		$isNewProject = ($id == '');
-		if (!$isNewProject) {
-			$project->read($id);
-		}
-		JsonDecoder::decode($project, $object);
-		$result = $project->write();
-		if ($isNewProject) {
-			//ActivityCommands::addProject($project); // TODO: Determine if any other params are needed. RM 2013-08
-		}
-		return $result;
+		return ProjectCommands::createProject($object);
 	}
 
 	/**
