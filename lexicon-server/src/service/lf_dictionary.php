@@ -86,7 +86,7 @@ class LfDictionary
 	 * @return ProjectStateDTO
 	 */
 	function create() {
-		$this->_lexProject->createNewProject($this->_projectModel->language);
+		$this->_lexProject->createNewProject($this->_projectModel->languageCode);
 		return $this->state();
 	}
 
@@ -441,7 +441,7 @@ class LfDictionary
 
 		//looking for ldml which has <exemplarCharacters type="index">
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
-		$languageCode = $this->_projectModel->language;
+		$languageCode = $this->_projectModel->languageCode;
 		$fileName = preg_replace('/-+/', '_', $languageCode);
 		while(true)
 		{
@@ -498,7 +498,7 @@ class LfDictionary
 	{
 		$this->isReadyOrThrow();
 		$store = $this->getLexStore();
-		$result = $store->searchEntriesAsWordList($this->_projectModel->language,trim($letter), null, null);
+		$result = $store->searchEntriesAsWordList($this->_projectModel->languageCode,trim($letter), null, null);
 		return $result->encode();
 	}
 

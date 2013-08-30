@@ -28,7 +28,7 @@ class ProjectDTO {
 			'name' => $this->_projectModel->projectname,
 			'title' => $this->_projectModel->title,
 			'type' => "dictionary",
-			'lang' => $this->_projectModel->language
+			'lang' => $this->_projectModel->languageCode
 		);
 	}
 }

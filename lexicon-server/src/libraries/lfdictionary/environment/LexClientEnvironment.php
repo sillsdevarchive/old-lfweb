@@ -34,7 +34,7 @@ class LexClientEnvironment
 		$this->_projectModel = new ProjectModel($projectId);
 		$this->_userModel = new UserModel($userId);
 		$this->_projectModel->projectCode = 'changeme';
-		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel->projectCode); // TODO Pretty sure this should be ->projectCode CP 2013-08
+		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel);
 		
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%s) U=%s (%s)',
 			$this->_projectModel->projectname,

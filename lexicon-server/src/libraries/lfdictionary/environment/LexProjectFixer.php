@@ -85,7 +85,7 @@ class LexProjectFixer extends LexProject
 	
 	function ensureWeSayConfigExists() {
 		$this->ensureProjectFolderExists();
-		$configFilePath = LexProject::projectDefaultSettingsFilePath($projectPath);
+		$configFilePath = LexProject::projectDefaultSettingsFilePath($this->projectPath);
 		if (!file_exists($configFilePath)) {
 			copy($this::templatePath() . 'default.WeSayConfig', $configFilePath);
 			$this->findReplace($configFilePath, "qaa", $this->_projectModel->languageCode);
@@ -106,7 +106,7 @@ class LexProjectFixer extends LexProject
 	}
 	
 	static function checkTemplatesExist() {
-		$templatePath = $this::templatePath();
+		$templatePath = self::templatePath();
 		if (!file_exists($templatePath)) {
 			return false;
 		}
@@ -114,7 +114,7 @@ class LexProjectFixer extends LexProject
 		if (!file_exists($templateFilePath)) {
 			return false;
 		}
-		$templateFilePath = $templatePath . 'default.WeSayConfig';
+		$templateFilePath = $templatePath . LANGUAGE_FORGE_SETTINGS . 'default.WeSayConfig';
 		if (!file_exists($templateFilePath)) {
 			return false;
 		}

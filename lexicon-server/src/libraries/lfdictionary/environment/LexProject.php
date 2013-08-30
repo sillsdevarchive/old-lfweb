@@ -1,11 +1,18 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
+use libraries\palaso\CodeGuard;
+
 use libraries\lfdictionary\common\LoggerFactory;
 use models\ProjectModel;
 
 class LexProject
 {
+	
+	/**
+	 * @var ProjectModel
+	 */
+	public $projectModel;
 	
 	/**
 	 * @var string
@@ -30,11 +37,13 @@ class LexProject
 	/**
 	 * @param string $projectPath
 	 */
-	public function __construct($projectName, $projectBasePath = LANGUAGE_FORGE_WORK_PATH) {
+	public function __construct($projectModel, $projectBasePath = LANGUAGE_FORGE_WORK_PATH) {
+		CodeGuard::checkTypeAndThrow($projectModel, 'models\ProjectModel');
 		
+		$this->projectModel = $projectModel;
 		$this->projectName = $projectName;
 		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectPath = rtrim($projectBasePath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		$this->projectPath = rtrim($projectBasePath . $this->projectModel->projectCode, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		$this->projectState = new ProjectState($this->projectName);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
