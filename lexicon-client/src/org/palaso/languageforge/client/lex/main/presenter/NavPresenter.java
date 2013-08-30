@@ -4,6 +4,7 @@ import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.OperationPermissionType;
+import org.palaso.languageforge.client.lex.common.UserRoleType;
 import org.palaso.languageforge.client.lex.main.MainEventBus;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.UserDto;
@@ -412,9 +413,7 @@ public class NavPresenter extends
 			// user not logged in!
 			view.setContributeMenuVisible(true);
 			view.setConfigureMenuVisible(false);
-		} else {
-			//TODO admin promission!
-			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_LOCK)) {
+			if (PermissionManager.isProjectAdmin()) {
 				view.setConfigureMenuVisible(true);
 			}
 		}
