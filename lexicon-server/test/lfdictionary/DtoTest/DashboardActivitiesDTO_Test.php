@@ -1,12 +1,15 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+
+use \libraries\lfdictionary\dto\DashboardActivitiesDTO;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfDashboardActivitiesDTO extends UnitTestCase {
 
 	function testDashboardActivitiesDTO_Encode_JsonCorrect() {
-		$dto= new \dto\DashboardActivitiesDTO();
+		$dto= new DashboardActivitiesDTO();
 		
 		$dto->setActivityDate('9999-9-9');
 		$dto->setDefinitionActivities(12);

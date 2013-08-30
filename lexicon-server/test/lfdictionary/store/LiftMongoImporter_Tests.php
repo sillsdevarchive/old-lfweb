@@ -1,16 +1,19 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+
+
+use libraries\lfdictionary\store\LiftImporterUpdatePolicy;
+use libraries\lfdictionary\store\mongo\LiftMongoImporter;
+
+
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 require_once('MongoTestEnvironment.php');
 require_once('LiftTestEnvironment.php');
 
-use store\LiftImporterUpdatePolicy;
-use store\mongo\LiftMongoImporter;
-
 class TestOfLiftMongoImporter extends UnitTestCase {
-
+ 
 	function setUp() {
 		$me = MongoTestEnvironment::create();
 		$me->removeAll();

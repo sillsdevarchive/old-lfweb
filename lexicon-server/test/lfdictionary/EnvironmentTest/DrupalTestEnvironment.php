@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 
 // TODO this class is way out of date. CP 2013-03
 class DrupalTestEnvironment {

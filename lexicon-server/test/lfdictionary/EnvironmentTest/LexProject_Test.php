@@ -1,10 +1,10 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 use \libraries\lfdictionary\common\HgWrapper;
-
+use libraries\lfdictionary\environment\LexProject;
 class LexProjectTestEnvironment {
 	
 	/**
@@ -83,7 +83,7 @@ class LexProjectTestEnvironment {
 class TestOfLexProject extends UnitTestCase {
 
 	function testConstructor_SetsAndNormalizeProjectPath() {
-		$project = new \environment\LexProject('SomeProject', '/tmp');
+		$project = new LexProject('SomeProject', '/tmp');
 		$this->assertEqual('/tmp/SomeProject/', $project->projectPath);
 	}
 	
@@ -91,14 +91,14 @@ class TestOfLexProject extends UnitTestCase {
 		$e = new LexProjectTestEnvironment();
 		$e->addFile("File1.txt", "Contents");
 		
-		$project = new \environment\LexProject($e->projectName, $e->projectWorkPath);
+		$project = new LexProject($e->projectName, $e->projectWorkPath);
 		$result = $project->getCurrentHash();
 		$this->assertEqual(12, strlen($result));
 	}
 	
 	function testGetLiftFilePath_NoLiftFile_Throws() {
 		$e = new LexProjectTestEnvironment();
-		$project = new \environment\LexProject($e->projectName, $e->projectWorkPath);
+		$project = new LexProject($e->projectName, $e->projectWorkPath);
 		$this->expectException('Exception');
 		$result = $project->getLiftFilePath();
 	}
@@ -107,14 +107,14 @@ class TestOfLexProject extends UnitTestCase {
 		$expected = 'Test.lift';
 		$e = new LexProjectTestEnvironment();
 		$e->addFile($expected, '<lift />');
-		$project = new \environment\LexProject($e->projectName, $e->projectWorkPath);
+		$project = new LexProject($e->projectName, $e->projectWorkPath);
 		$result = $project->getLiftFilePath();
 		$this->assertEqual($e->getProjectPath() . $expected, $result);
 	}
 	
 	function testCreateNewProject_HasRequiredFiles() {
 		$e = new LexProjectTestEnvironment(LexProjectTestEnvironment::PROJECT_NAME, null, false);
-		$project = new \environment\LexProject($e->projectName, $e->projectWorkPath);
+		$project = new LexProject($e->projectName, $e->projectWorkPath);
 		$project->createNewProject('de');
 		
 		$this->assertFileExists($e->getProjectPath() . $e->projectName . '.lift');

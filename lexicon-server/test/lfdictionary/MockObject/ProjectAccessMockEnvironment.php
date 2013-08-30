@@ -1,12 +1,13 @@
 <?php
-use lfbase\environment\ProjectRole;
-use lfbase\environment\IEnvironmentMapper;
-use lfbase\environment\ProjectPermission;
-use lfbase\environment\LFProjectAccess;
+use libraries\lfdictionary\environment\ProjectRole;
+use libraries\lfdictionary\environment\IEnvironmentMapper;
+use libraries\lfdictionary\environment\ProjectPermission;
+use libraries\lfdictionary\environment\LFProjectAccess;
 
-require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 
-class LFProjectAccessMockEnvironment implements IEnvironmentMapper {
+
+class ProjectAccessMockEnvironment implements IEnvironmentMapper {
 
 	public function __construct() {
 		ProjectRole::add('admin', new ProjectPermission(ProjectPermission::CAN_ADMIN), 1, 1);

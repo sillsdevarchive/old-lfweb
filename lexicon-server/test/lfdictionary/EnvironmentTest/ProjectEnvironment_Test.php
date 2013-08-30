@@ -1,7 +1,8 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+use libraries\lfdictionary\environment\LexiconProjectEnvironment;
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 // require_once(TEST_PATH . 'EnvironmentTest/DrupalTestEnvironment.php');
 
@@ -27,18 +28,18 @@ class TestLexiconProjectEnvironment extends UnitTestCase {
 	}
 	
 	function testProjectPath_correct() {
-		$result = \environment\LexiconProjectEnvironment::projectPath(new ProjectModelMockObject());
+		$result = LexiconProjectEnvironment::projectPath(new ProjectModelMockObject());
 		$this->assertEqual('/var/lib/languageforge/work/someproject', $result);
 	}
 	
 	function testTemplatePath_correct() {
-		$result = \environment\LexiconProjectEnvironment::templatePath();
+		$result = LexiconProjectEnvironment::templatePath();
 		$this->assertEqual('/var/lib/languageforge/lexicon/template/', $result);
 	}
 	
 	function testProjectDefaultSettingsFilePath_correct() {
-		$projectPath = \environment\LexiconProjectEnvironment::projectPath(new ProjectModelMockObject());
-		$result = \environment\LexiconProjectEnvironment::projectDefaultSettingsFilePath($projectPath);
+		$projectPath = LexiconProjectEnvironment::projectPath(new ProjectModelMockObject());
+		$result = LexiconProjectEnvironment::projectDefaultSettingsFilePath($projectPath);
 		$this->assertEqual('/var/lib/languageforge/work/someproject/LanguageForgeSettings/default.WeSayConfig', $result);
 	}
 }
