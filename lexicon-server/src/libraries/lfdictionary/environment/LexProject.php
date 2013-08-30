@@ -2,6 +2,7 @@
 namespace libraries\lfdictionary\environment;
 
 use \libraries\lfdictionary\common\LoggerFactory;
+use models\ProjectModel;
 
 class LexProject
 {
@@ -45,56 +46,17 @@ class LexProject
 	
 	/**
 	 * Creates a new Lexicon project
-	 * @param string $languageCode
+	 * @param ProjectModel $projectModel
 	 * @throws \Exception
 	 */
-	public function createNewProject($languageCode) {
-		$projectPath = $this->projectPath;
-		$templatePath = LexiconProjectEnvironment::templatePath();
-	
-		if (!is_dir($templatePath)) {
-			throw new \Exception(sprintf("Cannot create new project '%s': template '%s' does not exist.", $this->projectName, $templatePath));
+	public function createNewProject($projectModel) {
+		if (is_dir($this->projectPath)) {
+			throw new \Exception(sprintf("Cannot create new project '%s' already exists", $this->projectPath));
 		}
-	
-		if (is_dir($projectPath)) {
-			throw new \Exception(sprintf("Cannot create new project '%s' already exists", $projectPath));
-		}
-
-		mkdir($projectPath);
+		$fixer = new LexProjectFixer($this->projectName, $projectModel);
+		$fixer->fixProjectV01();
 		
-		// Copy from default file/folder
-		$this->fileCopy($templatePath, $projectPath);
-	
-		// Rename default lift in to project name lift file
-		$liftFileName = $this->projectName . ".lift";
-		rename($projectPath . "default.lift", "$projectPath/$liftFileName");
-	
-		// Rename default WeSay config in to project wysay config
-		$configFilePath = LexiconProjectEnvironment::projectDefaultSettingsFilePath($projectPath);
-		// 		rename($projectPath . "default.WeSayConfig", $configFilePath);
-	
-		// Rename default ldml to project *.ldml
-		$ldmlFileName = $languageCode.".ldml";
-		rename($projectPath . "WritingSystems/qaa.ldml", $projectPath . "WritingSystems/$ldmlFileName");
-
-		// Language Code Format Changing into WeSay Config File
-		$file = $configFilePath;
-		$this->findReplace($file, $languageCode);
-	
-		// Language Code Format Changing into Langcode.idml File
-		$file = $projectPath . "WritingSystems/$ldmlFileName";
-		$this->findReplace($file, $languageCode);
-	
-		// Language Code Format Changing into idChangelog File
-		$file =  $projectPath . "WritingSystems/idchangelog.xml";
-		$this->findReplace($file, $languageCode);
-
 		$this->makeLanguageForgeSettingsFolderReady();
-		
-		// Init the hg repository
-		$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
-		$hg->init();
-	
 		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 	}
 	
@@ -219,21 +181,16 @@ class LexProject
 		return $currentHash;
 	}
 	
-	public function getLiftFilePath() {
+	protected function locateLiftFilePath() {
 		if ($this->_liftFilePath) {
 			return $this->_liftFilePath;
 		}
-		if ($this->projectState->getState() != \libraries\lfdictionary\environment\ProjectStates::Ready) {
-			return null;
-		}
 		
-		// Try any lift file
-
 		$filePaths = glob($this->projectPath . '*.lift');
 
 		$c = count($filePaths);
 		if ($c == 0) {
-			throw new \Exception("No lift file found in: " . $this->projectPath);
+			return null;
 		}
 		
 		//try a lift file almost matching <projectName>.lift in the first instance
@@ -261,6 +218,17 @@ class LexProject
 		return $this->_liftFilePath;
 	}
 	
+	public function getLiftFilePath() {
+		$this->isReadyOrThrow();
+		$liftFilePath = $this->locateLiftFilePath();
+		if ($liftFilePath == null) {
+			$fixer = new LexProjectFixer($lexProject, $projectModel);
+			$fixer->fixProjectVLatest();
+			return $fixer->getLiftFilePath();
+		}
+		return $liftFilePath;
+	}
+	
 	/**
 	 * @return bool
 	 */
@@ -285,37 +253,6 @@ class LexProject
 		}
 		return $result;
 	}
-	
-	
-	private function fileCopy($source, $target ) {
-		if (is_dir($source)) {
-			if (!is_dir($target)) {
-				mkdir($target);
-			}
-			$d = dir($source);
-			while (FALSE !== ($entry = $d->read())) {
-				if ($entry == '.' || $entry == '..') {
-					continue;
-				}
-				$entryFilePath = $source . '/' . $entry;
-				if (is_dir($entryFilePath)) {
-					$this->fileCopy($entryFilePath, $target . '/' . $entry);
-					continue;
-				}
-				copy($entryFilePath, $target . '/' . $entry);
-			}
-			$d->close();
-		} else {
-			copy($source, $target);
-		}
-	}
-	
-	private function findReplace($filePath, $languageCode) {
-		$content = file_get_contents($filePath);
-		$newContent = str_replace("qaa", $languageCode, $content);
-		file_put_contents($filePath, $newContent);
-	}
-	
 }
 
 
