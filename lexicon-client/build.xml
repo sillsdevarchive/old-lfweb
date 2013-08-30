@@ -203,4 +203,19 @@
 			compression="gzip" />
 	</target>
 
+	<property name="build.webpath" value="./../lexicon-server/src/js/gwt" />
+	
+	<target name="clean-webpath" description="Cleans Target folder">
+		<delete dir="${build.webpath}/lifteditor" failonerror="false" />
+	</target>
+
+	<target name="deploy" depends="clean-webpath,gwtcc">
+		<mkdir dir="${build.webpath}/lifteditor" />
+		<copy todir="${build.webpath}/lifteditor">
+			<fileset dir="./war/lifteditor/">
+				<include name="**" />
+			</fileset>
+		</copy>
+	</target>
+
 </project>
