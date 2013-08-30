@@ -1,5 +1,14 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+
+use \libraries\lfdictionary\dto\MultiText;
+use \libraries\lfdictionary\dto\Example;
+use \libraries\lfdictionary\dto\Sense;
+use \libraries\lfdictionary\dto\EntryDTO;
+
+use \libraries\lfdictionary\mapper\LiftUpdater;
+use \libraries\lfdictionary\common\UUIDGenerate;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
 class TestOfLiftUpdater extends UnitTestCase {
@@ -13,9 +22,9 @@ class TestOfLiftUpdater extends UnitTestCase {
 </definition>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$multitext = \libraries\lfdictionary\dto\MultiText::create('th', 'new text');
+		$multitext = MultiText::create('th', 'new text');
 		
-		\mapper\LiftUpdater::addMultiText($srcXml, $multitext);
+		LiftUpdater::addMultiText($srcXml, $multitext);
 	
 		$this->assertEqual(2, count($srcXml->{'form'}));
 		$xpath = $srcXml->xpath("/definition/form[@lang='th']/text");
@@ -33,9 +42,9 @@ XML;
 </definition>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$multitext = \libraries\lfdictionary\dto\MultiText::create('en', 'updated text');
+		$multitext = MultiText::create('en', 'updated text');
 		
-		\mapper\LiftUpdater::mergeMultiText($srcXml, $multitext);
+		LiftUpdater::mergeMultiText($srcXml, $multitext);
 	
 		$this->assertEqual(1, count($srcXml->{'form'}));
 		$xpath = $srcXml->xpath("/definition/form[@lang='en']/text");
@@ -51,10 +60,10 @@ XML;
 </definition>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$multitext = \libraries\lfdictionary\dto\MultiText::create('en', 'updated text');
+		$multitext = MultiText::create('en', 'updated text');
 		$multitext->addForm('th', 'new text');
 		
-		\mapper\LiftUpdater::mergeMultiText($srcXml, $multitext);
+		LiftUpdater::mergeMultiText($srcXml, $multitext);
 	
 		$this->assertEqual(2, count($srcXml->{'form'}));
 		$xpath = $srcXml->xpath("/definition/form[@lang='en']/text");
@@ -72,12 +81,12 @@ XML;
 </sense>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('th', 'example text'),
-			\libraries\lfdictionary\dto\MultiText::create('en', 'translation text')
+		$example = Example::create(
+			MultiText::create('th', 'example text'),
+			MultiText::create('en', 'translation text')
 		);
 		
-		\mapper\LiftUpdater::addExampleToSense($srcXml, $example);
+		LiftUpdater::addExampleToSense($srcXml, $example);
 	
 		$this->assertEqual(1, count($srcXml->{'example'}));
 		$xpath = $srcXml->xpath("/sense/example/form[@lang='th']/text");
@@ -100,12 +109,12 @@ XML;
 </example>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('th', 'updated example'),
-			\libraries\lfdictionary\dto\MultiText::create('en', 'updated translation')
+		$example = Example::create(
+			MultiText::create('th', 'updated example'),
+			MultiText::create('en', 'updated translation')
 		);
 		
-		\mapper\LiftUpdater::mergeExample($srcXml, $example);
+		LiftUpdater::mergeExample($srcXml, $example);
 	
 		$this->assertEqual(1, count($srcXml->{'form'}));
 		$this->assertEqual(1, count($srcXml->{'translation'}->{'form'}));
@@ -140,16 +149,16 @@ XML;
 </sense>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$sense = \dto\Sense::create();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
+		$sense = Sense::create();
+		$sense->setDefinition(MultiText::create('en', 'updated definition'));
 		$sense->setPartOfSpeech('updated PartOfSpeech');
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('th', 'updated example'),
-			\libraries\lfdictionary\dto\MultiText::create('en', 'updated translation')
+		$example = Example::create(
+			MultiText::create('th', 'updated example'),
+			MultiText::create('en', 'updated translation')
 		);
 		$sense->addExample($example);
 		
-		\mapper\LiftUpdater::mergeSense($srcXml, $sense);
+		LiftUpdater::mergeSense($srcXml, $sense);
 	
 		$this->assertEqual(1, count($srcXml->{'definition'}->{'form'}));
 		$this->assertEqual(1, count($srcXml->{'grammatical-info'}));
@@ -186,19 +195,19 @@ XML;
 </sense>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$sense = \dto\Sense::create();
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('th', 'updated example'),
-			\libraries\lfdictionary\dto\MultiText::create('en', 'updated translation')
+		$sense = Sense::create();
+		$example = Example::create(
+			MultiText::create('th', 'updated example'),
+			MultiText::create('en', 'updated translation')
 		);
 		$sense->addExample($example);
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('th', 'new example'),
-			\libraries\lfdictionary\dto\MultiText::create('en', 'new translation')
+		$example = Example::create(
+			MultiText::create('th', 'new example'),
+			MultiText::create('en', 'new translation')
 		);
 		$sense->addExample($example);
 		
-		\mapper\LiftUpdater::mergeSense($srcXml, $sense);
+		LiftUpdater::mergeSense($srcXml, $sense);
 	
 		$this->assertEqual(2, count($srcXml->{'example'}));
 
@@ -228,10 +237,10 @@ XML;
 </sense>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$sense = \dto\Sense::create();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
+		$sense = Sense::create();
+		$sense->setDefinition(MultiText::create('en', 'updated definition'));
 		
-		\mapper\LiftUpdater::mergeSense($srcXml, $sense);
+		LiftUpdater::mergeSense($srcXml, $sense);
 	
 		$xpath = $srcXml->xpath("/sense/field");
 		$this->assertEqual('some field', $xpath[0]);
@@ -248,10 +257,10 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$sense = \dto\Sense::create();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'new definition'));
+		$sense = Sense::create();
+		$sense->setDefinition(MultiText::create('en', 'new definition'));
 		
-		\mapper\LiftUpdater::addSenseToEntry($srcXml, $sense);
+		LiftUpdater::addSenseToEntry($srcXml, $sense);
 	
 		$this->assertEqual(1, count($srcXml->{'sense'}));
 		$xpath = $srcXml->xpath("/entry/sense/definition/form[@lang='en']/text");
@@ -276,14 +285,14 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'updated form'));
-		$sense = \dto\Sense::create();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
+		$guid = UUIDGenerate::uuid_generate_php();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('th', 'updated form'));
+		$sense = Sense::create();
+		$sense->setDefinition(MultiText::create('en', 'updated definition'));
 		$entry->addSense($sense);
 		
-		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
+		LiftUpdater::mergeEntry($srcXml, $entry);
 	
 		$this->assertEqual(1, count($srcXml->{'lexical-unit'}->{'form'}));
 		$this->assertEqual(1, count($srcXml->{'sense'}));
@@ -316,17 +325,17 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'updated form'));
-		$sense = \dto\Sense::create();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'updated definition'));
+		$guid = UUIDGenerate::uuid_generate_php();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('th', 'updated form'));
+		$sense = Sense::create();
+		$sense->setDefinition(MultiText::create('en', 'updated definition'));
 		$entry->addSense($sense);
-		$sense = \dto\Sense::create();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'new definition'));
+		$sense = Sense::create();
+		$sense->setDefinition(MultiText::create('en', 'new definition'));
 		$entry->addSense($sense);
 		
-		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
+		LiftUpdater::mergeEntry($srcXml, $entry);
 	
 		$this->assertEqual(2, count($srcXml->{'sense'}));
 
@@ -352,11 +361,11 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'updated form'));
+		$guid = UUIDGenerate::uuid_generate_php();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('th', 'updated form'));
 		
-		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
+		LiftUpdater::mergeEntry($srcXml, $entry);
 	
 		$this->assertEqual(1, count($srcXml->{'lexical-unit'}->{'form'}));
 
@@ -376,11 +385,11 @@ XML;
 </entry>
 XML;
 		$srcXml = simplexml_load_string($src);
-		$guid = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
-		$entry = \dto\EntryDTO::create($guid);
-		$entry->setEntry(\libraries\lfdictionary\dto\MultiText::create('th', 'new form'));
+		$guid = UUIDGenerate::uuid_generate_php();
+		$entry = EntryDTO::create($guid);
+		$entry->setEntry(MultiText::create('th', 'new form'));
 		
-		\mapper\LiftUpdater::mergeEntry($srcXml, $entry);
+		LiftUpdater::mergeEntry($srcXml, $entry);
 	
 		$this->assertEqual(1, count($srcXml->{'lexical-unit'}->{'form'}));
 

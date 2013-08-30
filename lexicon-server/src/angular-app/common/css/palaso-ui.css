@@ -91,3 +91,31 @@ span.larger-text {
 form.control-bar {
 	margin-bottom: 0px;
 }
+
+/* use for user signup password strength meter */
+input.ng-pristine + ul#strength {
+    display:none;
+}
+ul#strength {
+    display:inline;
+    list-style:none;
+    margin:0;
+    margin-left:15px;
+    padding:0;
+    vertical-align:6px;
+}
+.point:last {
+    margin:0 !important;
+}
+.point {
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:5px;
+    margin-right:1px;
+    width:10px;
+}
+#footer {
+    position:fixed;
+    bottom:5px;
+}

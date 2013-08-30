@@ -4,28 +4,21 @@ import org.palaso.languageforge.client.lex.jsonrpc.DispatchAsync;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpc;
 import org.palaso.languageforge.client.lex.model.IanaDto;
 import org.palaso.languageforge.client.lex.model.ProjectDto;
-import org.palaso.languageforge.client.lex.model.UserDto;
 import org.palaso.languageforge.client.lex.model.UserListDto;
 import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemsDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
-import org.palaso.languageforge.client.lex.service.actions.AddUserToProjectAction;
 import org.palaso.languageforge.client.lex.service.actions.GetIanaDataAction;
 import org.palaso.languageforge.client.lex.service.actions.GetSettingInputSystemsAction;
 import org.palaso.languageforge.client.lex.service.actions.GetSettingUserFieldsSettingAction;
 import org.palaso.languageforge.client.lex.service.actions.GetSettingUserSettingsAction;
 import org.palaso.languageforge.client.lex.service.actions.GetSettingUserTasksSettingAction;
 import org.palaso.languageforge.client.lex.service.actions.GetUsersListAction;
-import org.palaso.languageforge.client.lex.service.actions.InviteFriendByEmailAction;
-import org.palaso.languageforge.client.lex.service.actions.MemberAutoSuggestAction;
-import org.palaso.languageforge.client.lex.service.actions.RapidUserCreationAction;
-import org.palaso.languageforge.client.lex.service.actions.RemoveUserFromProjectAction;
 import org.palaso.languageforge.client.lex.service.actions.UpdateProjectNameAction;
 import org.palaso.languageforge.client.lex.service.actions.UpdateSettingInputSystemsAction;
 import org.palaso.languageforge.client.lex.service.actions.UpdateSettingUserFieldsSettingAction;
 import org.palaso.languageforge.client.lex.service.actions.UpdateSettingUserTasksSettingAction;
-import org.palaso.languageforge.client.lex.service.actions.UpdateUserAccessRoleAction;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Singleton;
@@ -131,52 +124,4 @@ public class BaseService implements IBaseService {
 		remoteAsync.execute(action, asyncCallback);
 	}
 
-	@Override
-	public void getMembersForAutoSuggest(String searchString, int indexFrom,
-			int indexTo, AsyncCallback<UserListDto> asyncCallback) {
-
-		MemberAutoSuggestAction action = new MemberAutoSuggestAction(
-				searchString, indexFrom, indexTo);
-		remoteAsync.execute(action, asyncCallback);
-	}
-
-	@Override
-	public void addUserToProject(String userId, String projectId,
-			AsyncCallback<UserListDto> asyncCallback) {
-		AddUserToProjectAction action = new AddUserToProjectAction(userId,
-				projectId);
-		remoteAsync.execute(action, asyncCallback);
-	}
-
-	@Override
-	public void removeUserFromProjectAction(String userId, String projectId,
-			AsyncCallback<UserListDto> asyncCallback) {
-		RemoveUserFromProjectAction action = new RemoveUserFromProjectAction(
-				userId, projectId);
-		remoteAsync.execute(action, asyncCallback);
-	}
-
-	@Override
-	public void updateUserAccessGrant(UserDto userDto, String projectId,
-			AsyncCallback<UserDto> asyncCallback) {
-		UpdateUserAccessRoleAction action = new UpdateUserAccessRoleAction(
-				userDto, projectId);
-		remoteAsync.execute(action, asyncCallback);
-	}
-
-	@Override
-	public void inviteFriendByEmail(String projectId, String emailAddress,
-			String msg, AsyncCallback<String> asyncCallback) {
-		InviteFriendByEmailAction action = new InviteFriendByEmailAction(
-				projectId, emailAddress, msg);
-		remoteAsync.execute(action, asyncCallback);
-	}
-
-	@Override
-	public void rapidUserCreationAction(String projectId, String newName,
-			AsyncCallback<UserListDto> asyncCallback) {
-		RapidUserCreationAction action = new RapidUserCreationAction(newName,
-				projectId);
-		remoteAsync.execute(action, asyncCallback);
-	}
 }

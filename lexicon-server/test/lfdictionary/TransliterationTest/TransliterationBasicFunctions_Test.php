@@ -1,7 +1,8 @@
 <?php
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
-use Transliteration\WordTransliterationFilter;
+use libraries\lfdictionary\Transliteration\WordTransliterationFilter;
 
 class TestOfTransliteration extends UnitTestCase {
 

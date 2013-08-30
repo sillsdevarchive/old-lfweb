@@ -8,6 +8,7 @@ use models\dto\ActivityListDto;
 use models\commands\ActivityCommands;
 use models\AnswerModel;
 use models\QuestionModel;
+use models\UserModel;
 use libraries\palaso\CodeGuard;
 use libraries\palaso\JsonRpcServer;
 use models\commands\ProjectCommands;
@@ -106,6 +107,15 @@ class Lf
 		$list->read();
 		return $list;
 	}
+
+	public function username_exists($userName) {
+		$userModel = new UserModel();
+		$result = $userModel->usernameExists($userName);
+		$resultDTO = new ResultDTO($userModel->usernameExists($userName));
+		return $resultDTO->encode();
+	}
+	
+	
 	
 	public function change_password($userId, $newPassword) {
 		if (!is_string($userId) && !is_string($newPassword)) {

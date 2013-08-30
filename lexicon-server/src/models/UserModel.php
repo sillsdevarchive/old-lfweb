@@ -15,8 +15,7 @@ require_once(APPPATH . '/models/ProjectModel.php');
 
 class UserModelMongoMapper extends \models\mapper\MongoMapper
 {
-	public static function instance()
-	{
+	public static function instance() {
 		static $instance = null;
 		if (null === $instance) {
 			$instance = new UserModelMongoMapper(LF_DATABASE, 'users');

@@ -1,19 +1,24 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+
+use \libraries\lfdictionary\dto\MultiText;
+use \libraries\lfdictionary\dto\Example;
+use \libraries\lfdictionary\dto\Sense;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfSense extends UnitTestCase {
 
 	function testEncode_DefinitionPOSAndExample_JsonCorrect() {
-		$sense = new \dto\Sense();
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
+		$sense = new Sense();
+		$sense->setDefinition(MultiText::create('en', 'definition1'));
 		$sense->setPartOfSpeech('Noun');
 		$sense->setSemanticDomainName('semantic-domain-ddp4');
 		$sense->setSemanticDomainValue('2.1 Body');
-		$example = \dto\Example::create(
-			\libraries\lfdictionary\dto\MultiText::create('en', 'example1'), 
-			\libraries\lfdictionary\dto\MultiText::create('fr', 'translation1')
+		$example = Example::create(
+			MultiText::create('en', 'example1'), 
+			MultiText::create('fr', 'translation1')
 		);
 		$sense->addExample($example);
 		
@@ -23,15 +28,15 @@ class TestOfSense extends UnitTestCase {
 	}
 	
 	function testSetDefinition_SetsOk() {
-		$sense = new \dto\Sense();
+		$sense = new Sense();
 		
-		$sense->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'definition1'));
+		$sense->setDefinition(MultiText::create('en', 'definition1'));
 				
 		$this->assertEqual(array('en' => 'definition1'), $sense->_definition->getAll());
 	}
 
 	function testSetPartOfSpeech_SetsOk() {
-		$sense = new \dto\Sense();
+		$sense = new Sense();
 		
 		$sense->setPartOfSpeech('Noun');
 		
@@ -39,7 +44,7 @@ class TestOfSense extends UnitTestCase {
 	}
 	
 	function testSetSemanticDomainName_SetsOk() {
-		$sense = new \dto\Sense();
+		$sense = new Sense();
 	
 		$sense->setSemanticDomainName('semantic-domain-ddp4');
 	
@@ -47,7 +52,7 @@ class TestOfSense extends UnitTestCase {
 	}
 	
 	function testSetSemanticDomainValue_SetsOk() {
-		$sense = new \dto\Sense();
+		$sense = new Sense();
 	
 		$sense->setSemanticDomainValue('2.1 Body');
 	
@@ -55,16 +60,16 @@ class TestOfSense extends UnitTestCase {
 	}
 	
 	function testCreateFromArray_DefinitionPOSOneExample_Correct() {
-		$src = new \dto\Sense();
-		$src->setDefinition(\libraries\lfdictionary\dto\MultiText::create('en', 'text1'));
+		$src = new Sense();
+		$src->setDefinition(MultiText::create('en', 'text1'));
 		$src->setPartOfSpeech('Noun');
 		$src->setSemanticDomainName('semantic-domain-ddp4');
 		$src->setSemanticDomainValue('2.1 Body');
-		$example = \dto\Example::create(\libraries\lfdictionary\dto\MultiText::create('en', 'example1'), \libraries\lfdictionary\dto\MultiText::create('fr', 'translation1'));
+		$example = Example::create(MultiText::create('en', 'example1'), MultiText::create('fr', 'translation1'));
 		$src->addExample($example);
 		$value = $src->encode();
 		
-		$v = \dto\Sense::createFromArray($value);
+		$v = Sense::createFromArray($value);
 		$this->assertEqual(array('en' => 'text1'), $v->_definition->getAll());
 		$this->assertEqual('Noun', $v->_partOfSpeech);
 		$this->assertEqual(1, count($v->_examples));

@@ -1,9 +1,10 @@
 package org.palaso.languageforge.client.lex.addinfo.presenter;
 
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
+import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.ProjectPermissionType;
+import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.common.Tools;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
@@ -184,7 +185,7 @@ public class IncompleteWordEditPresenter extends
 			fieldSettings = FieldSettings.fromWindowForAddExample();
 
 		boolean allowEdit=false;
-		if (PermissionManager.getPermission(ProjectPermissionType.CAN_EDIT_ENTRY)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
 			allowEdit=true;
 		}
 		

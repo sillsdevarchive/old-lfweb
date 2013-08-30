@@ -12,6 +12,7 @@ if (!defined('APPPATH'))
 
 use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\dashboardtool\DashboardDbType;
+use models\ProjectModel;
 
 class DashboardCounterExtracter
 {
@@ -65,16 +66,15 @@ class DashboardCounterExtracter
 			
 			
 			try {
-				$this->LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($this->projectNodeId);
-				$this->projectPath = PROJECTS_HG_ROOT_FOLDER. $this->LFProjectModel->getName();
-				//echo" Projece model".$this->LFProjectModel->getName(), PHP_EOL;
-				$liftFilePath = glob(PROJECTS_HG_ROOT_FOLDER. $this->LFProjectModel->getName()."/*.lift");
+				$this->projectModel = new ProjectModel($this->projectNodeId);
+				$this->projectPath = PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectname;
+				$liftFilePath = glob(PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectname."/*.lift");
 					
 				if (count($liftFilePath) >= 1) {
 					$this->liftFilePath = $liftFilePath[0];
 			
 				} else {
-					throw new \Exception("No lift file found in: ".PROJECTS_HG_ROOT_FOLDER . $this->LFProjectModel->getName());
+					throw new \Exception("No lift file found in: ".PROJECTS_HG_ROOT_FOLDER . $this->projectModel->projectname);
 				}
 					
 			} catch (Exception $e) {
@@ -158,10 +158,10 @@ class DashboardCounterExtracter
 		
 		
 		try {
-			$this->LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($this->projectNodeId);
-			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->LFProjectModel->getName();
+			$this->projectModel = new ProjectModel($this->projectNodeId);
+			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname
 		
-			$filePath = glob(LANGUAGE_FORGE_WORK_PATH . $this->LFProjectModel->getName()."/*.lift");
+			$filePath = glob(LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname."/*.lift");
 			
 			if (count($filePath) >= 1) {
 				
@@ -186,7 +186,7 @@ class DashboardCounterExtracter
 				
 				$this->readAndInsertCounters($this->liftFilePath, $timestamp, null);
 			} else {
-				throw new \Exception("No lift file found in: " . LANGUAGE_FORGE_WORK_PATH . $this->LFProjectModel->getName());
+				throw new \Exception("No lift file found in: " . LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname);
 			}
 		
 		} catch (Exception $e) {

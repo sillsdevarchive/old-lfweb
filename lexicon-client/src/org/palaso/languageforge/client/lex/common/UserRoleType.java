@@ -4,25 +4,12 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public enum UserRoleType  implements IEnum {
-//	  	1 	anonymous user
-//		2 	authenticated user
-//		3 	siteuser
-//		6 	project admin
-//		7 	community admin
-//		8 	contributor
-//		9 	editor
 
-	// DO not change name AND order definition here!!! used for JSON mapping AND DB->ROLE
-	UNDEFINED("Undefined"),  //0
-	ANONYMOUS_USER("Anonymous User"),//1
-	AUTHENTICATED_USER("Authenticated User"), //2
-	SITE_USER("Site User"), //3
-	RESERVED_4("reserved4"),//4
-	RESERVED_5("reserved5"),//5
-	PROJECT_ADMIN("Project Admin"), //6
-	COMMUNITY_ADMIN("Community Admin"),//7
-	CONTRIBUTOR("Contributor"),//8
-	EDITOR("Editor");//9
+	// DO not change name AND order definition here!!! used for JSON mapping to server : models\rights\Roles.php
+	UNDEFINED("UNDEFINED"),  //0
+	SYSTEM_ADMIN("system_admin"),//1
+	PROJECT_ADMIN("project_admin"), //2
+	USER("user"); //3
 
 
 	private String value;
@@ -52,7 +39,7 @@ public enum UserRoleType  implements IEnum {
 	public static UserRoleType getFromValue(String value) {
 		if (table.containsValue(value)) {
 			for (UserRoleType key : UserRoleType.values()) {
-				if (key.getValue().equals(value)) {
+				if (key.getValue().equalsIgnoreCase(value)) {
 					return key;
 				}
 			}

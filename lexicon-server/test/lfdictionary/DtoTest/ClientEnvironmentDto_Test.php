@@ -1,22 +1,22 @@
 <?php
-use lfbase\environment\EnvironmentMapper;
-use lfbase\environment\LFProjectAccess;
-use lfbase\environment\UserModel;
-use lfbase\environment\ProjectModel;
-use lfbase\environment\ProjectRole;
-use lfbase\environment\ProjectPermission;
-use lfbase\dto\ClientEnvironmentDto;
+use libraries\lfdictionary\environment\EnvironmentMapper;
+use libraries\lfdictionary\environment\LFProjectAccess;
+use models\UserModel;
+use models\ProjectModel;
+use libraries\lfdictionary\environment\ProjectRole;
+use libraries\lfdictionary\environment\ProjectPermission;
+use \libraries\lfdictionary\dto\ClientEnvironmentDto;
 
-require_once(dirname(__FILE__) . '/../testconfig.php');
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 require_once(dirname(__FILE__) . '/../MockObject/AllMockObjects.php');
 
 
 class TestOfClientEnvironment extends UnitTestCase {
 
 	function __construct() {
-		EnvironmentMapper::connect(new LFProjectAccessMockEnvironment());
+		EnvironmentMapper::connect(new ProjectAccessMockEnvironment());
 	}
 
 	function testEncode_NoThrow() {

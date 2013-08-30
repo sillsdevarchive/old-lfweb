@@ -43,22 +43,6 @@ public interface I18nInterface extends Constants {
 
 	String ActivityTimeRangeType_Up_to_year();
 
-	String ConfigureSettingMembersPresenter_User_added_to_project_successfully();
-
-	String ConfigureSettingMembersPresenter_Error_User_cannot_be_added_to_project();
-	
-	String ConfigureSettingMembersPresenter_A_new_member_named_X_will_be_created_and_added_to_the_project_continue();
-
-	String ConfigureSettingMembersPresenter_You_will_remove_X_from_this_project_all_related_setting_will_be_deleted_continue();
-
-	String ConfigureSettingMembersPresenter_Error_You_cannot_remove_this_user_from_the_project();
-
-	String ConfigureSettingMembersPresenter_Invite();
-
-	String ConfigureSettingMembersPresenter_Create_member();
-
-	String ConfigureSettingMembersPresenter_Add_to_project();
-
 	String ConfigureSettingPropertiesPresenter_Project_name_can_not_be_empty();
 
 	String ConfigureSettingPropertiesPresenter_Name_changed_you_may_need_to_reload_page_to_see_changes();
@@ -126,9 +110,7 @@ public interface I18nInterface extends Constants {
 	String ConfigureSettingInputSystemsView_Variant();
 	
 	String ConfigureSettingInputSystemsView_In_applications_which_support_this_option_fields_with_this_input_system_will_able_to_play_and_record_voice();
-	
-	String ConfigureSettingMembersView_Add_to_project();
-	
+		
 	String ButtonControlView_Project_Name();
 	
 	String ButtonControlView_Project_Type();
@@ -140,8 +122,6 @@ public interface I18nInterface extends Constants {
 	String ConfigureSettingsView_Fields();
 	
 	String ConfigureSettingsView_Tasks();
-	
-	String ConfigureSettingsView_Members();
 	
 	String ConfigureSettingsView_Properties();
 	
@@ -275,12 +255,6 @@ public interface I18nInterface extends Constants {
 
 	String ConfigureSettingInputSystemsPresenter_Delete();
 
-	String ConfigureSettingMembersPresenter_Remove();
-
-	String ConfigureSettingMembersPresenter_Next();
-
-	String ConfigureSettingMembersPresenter_Previous();
-
 	String TopPresenter_About_clicked();
 
 	String TopPresenter_Home_clicked();
@@ -336,10 +310,6 @@ public interface I18nInterface extends Constants {
 	String TopPanel_About_Us();
 	
 	String TopPanel_Sign_Out();
-
-	String ConfigureSettingMembersView_Name();
-
-	String ConfigureSettingMembersView_Role();
 
 	String AutoSuggestPresenter_Start_your_search_here();
 }

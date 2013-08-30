@@ -129,7 +129,7 @@ class TestProjectModel extends UnitTestCase {
 		$um1 = new UserModel($userId1);
 		$userId2 = $e->createUser('user2', 'User Two', 'user2@example.com');
 		$um2 = new UserModel($userId2);
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		
 		// Check the list users is empty

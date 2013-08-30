@@ -1,17 +1,20 @@
 <?php
-require_once(dirname(__FILE__) . '/../testconfig.php');
+use libraries\lfdictionary\dto\AutoListDTO;
+use libraries\lfdictionary\dto\AutoListEntry;
+
+require_once(dirname(__FILE__) . '/../../testconfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfAutoListDTO extends UnitTestCase {
 
 	function testAutoListDTO_Encode_JsonCorrect() {
-		$dtoList = new \dto\AutoListDTO();
+		$dtoList = new AutoListDTO();
 
-		$dtoA = new \dto\AutoListEntry("guid1", "word1");
+		$dtoA = new AutoListEntry("guid1", "word1");
 		$dtoList->addListEntry($dtoA);
 
-		$dtoB = new \dto\AutoListEntry("guid2", "word2");
+		$dtoB = new AutoListEntry("guid2", "word2");
 		$dtoList->addListEntry($dtoB);
 
 		$result = json_encode($dtoList->encode());

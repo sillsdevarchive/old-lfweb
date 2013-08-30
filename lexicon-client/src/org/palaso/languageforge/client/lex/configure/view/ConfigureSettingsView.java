@@ -36,8 +36,6 @@ public class ConfigureSettingsView extends Composite implements
 	@UiField
 	SimplePanel propertiesPanel;
 	@UiField
-	SimplePanel membersPanel;
-	@UiField
 	TabLayoutPanel tabPanel;
 	@UiField
 	SimplePanel userNameListBoxPanel;
@@ -70,11 +68,6 @@ public class ConfigureSettingsView extends Composite implements
 		return propertiesPanel;
 	}
 
-	@Override
-	public SimplePanel getMembersPanel() {
-		return membersPanel;
-	}
-	
 	@Override
 	public HasClickHandlers getApplyClickedHandlers() {
 		return btnApply;

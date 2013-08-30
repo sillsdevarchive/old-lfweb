@@ -7,15 +7,15 @@ namespace libraries\lfdictionary\dto;
 class ProjectDTO {
 	
 	/**
-	 * @var LFProjectModel
+	 * @var ProjectModel
 	 */
-	private $_LFProjectModel;
+	private $_projectModel;
 	
 	/**
-	 * @param LFProjectModel $LFProjectModel
+	 * @param ProjectModel $projectModel
 	 */
-	public function __construct($LFProjectModel) {
-		$this->_LFProjectModel = $LFProjectModel;
+	public function __construct($projectModel) {
+		$this->_projectModel = $projectModel;
 	}
 	
 	/**
@@ -24,13 +24,12 @@ class ProjectDTO {
 	 */
 	function encode() {
 		return array(
-			'id' => $this->_LFProjectModel->getId(),
-			'name' => $this->_LFProjectModel->getName(),
-			'title' => $this->_LFProjectModel->getTitle(),
-			'type' => $this->_LFProjectModel->getType(),
-			'lang' => $this->_LFProjectModel->getLanguageCode()
+			'id' => $this->_projectModel->id->asString(),
+			'name' => $this->_projectModel->projectname,
+			'title' => $this->_projectModel->title,
+			'type' => "dictionary",
+			'lang' => $this->_projectModel->language
 		);
-		
 	}
 }
 

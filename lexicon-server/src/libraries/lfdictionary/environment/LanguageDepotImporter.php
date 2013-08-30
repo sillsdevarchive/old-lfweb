@@ -1,8 +1,8 @@
 <?php
-namespace libraries\lfdictionary\environment;
+namespace environment;
 
 require_once(dirname(__FILE__) . '/../Config.php');
-require_once(LF_LIBRARY_PATH . "/lfbase/Loader.php");
+require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
 class LanguageDepotImportEnvironment {	
 	public $WorkRootPath;
@@ -52,7 +52,7 @@ class LanguageDepotProjectDatabase {
 		}
 		}
 	
-		$LFProjectModel = new LFProjectModel($nid);
+		$ProjectModel = new ProjectModel($nid);
 	
 		$hgWrapper = new HgWrapper($destination);
 		$hgWrapper->cloneRepository($source);
@@ -86,8 +86,8 @@ class LanguageDepotImporter {
 		$result = new LanguageDepotImportEnvironment();
 		$result->WorkRootPath = LexiconProjectEnvironment::languageforgeWorkRootPath();
 		$result->StateRootPath = LexiconProjectEnvironment::languageforgeStateRootPath();
-		$LFProjectModel = new \libraries\lfdictionary\environment\LFProjectModel($projectNodeId);
-		$result->ProjectPathName = $LFProjectModel->getName();
+		$projectModel = new \lfbase\environment\ProjectModel($projectNodeId);
+		$result->ProjectPathName = $projectModel->getName();
 		return $result;
 	}
 	
@@ -118,7 +118,7 @@ class LanguageDepotImporter {
 			}
 		}
 		$url = "http://$user:$password@hg-public.languagedepot.org/$projectId";
-		$hg = new \libraries\lfdictionary\common\HgWrapper($this->destinationPath());
+		$hg = new \lfbase\common\HgWrapper($this->destinationPath());
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;
 	}
@@ -158,7 +158,7 @@ class LanguageDepotImporter {
 	public function error() {
 		$asyncRunner = $this->createAsyncRunner();
 		$output = $asyncRunner->getOutput();
-		$errors = \libraries\lfdictionary\common\HgWrapper::errorMessageFilter($output);
+		$errors = \lfbase\common\HgWrapper::errorMessageFilter($output);
 		return $errors;
 	}
 	
@@ -171,7 +171,7 @@ class LanguageDepotImporter {
 	}
 	
 	private function createAsyncRunner() {
-		return new \libraries\lfdictionary\common\AsyncRunner($this->stateFilePath());
+		return new \lfbase\common\AsyncRunner($this->stateFilePath());
 	}
 	
 	/**
@@ -186,10 +186,10 @@ class LanguageDepotImporter {
 			if ($this->isComplete()) {
 				$error = $this->error();
 				if ($error) {
-					$projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Error, $error);
+					$projectState->setState(\environment\ProjectStates::Error, $error);
 					break;
 				} else {
-					$projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
+					$projectState->setState(\environment\ProjectStates::Ready);
 					break;
 				}
 			}

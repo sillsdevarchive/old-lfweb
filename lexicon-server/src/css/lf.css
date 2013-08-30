@@ -618,20 +618,20 @@ div.hdrnav {
 	margin-left: 132px;
 }
 
-div.hdrnav ul {
-}
-
 div.hdrnav li {
-	background: #777777;
+	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
 	display: block;
 	float: left;
 	margin-top: 2px;
 	margin-right: 7px;
 }
 
-div.hdrnav li:hover, div.hdrnav li.here {
-	/*background: #469bc2;*/
-	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
+div.hdrnav li.here {
+	background: #777777;
+}
+
+div.hdrnav li:hover {
+	background: #F08030;
 }
 
 div.hdrnav img {

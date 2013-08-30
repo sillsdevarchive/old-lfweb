@@ -462,17 +462,6 @@ div-no-hide {
 	max-width: auto;
 }
 
-#memberTable table {
-	margin: 0px !important;
-}
-
-#memberTablePager table {
-	margin: 0px !important;
-}
-
-#memberTablePager table td {
-	border-width: 0px !important;
-}
 
 .case {
 	padding: 20px 0 0;
