@@ -38,20 +38,5 @@ public final class PermissionManager {
 		return false;
 	}
 
-	public static UserRoleType getCurrentUserRole()
-	{
-		if (CurrentEnvironmentDto.getCurrentProjectAccess() == null) {
-			return UserRoleType.UNDEFINED;
-		}
-		return CurrentEnvironmentDto.getCurrentProjectAccess().getRole();
-	}
-
-	public static boolean isProjectAdmin() {
-		if (getCurrentUserRole()==UserRoleType.PROJECT_ADMIN)
-		{
-			return true;
-		}
-		return false;
-	}
 	
 }

@@ -36,7 +36,7 @@ class ClientEnvironmentDto {
 		return array(
 			'currentProject' => $project,
 			'currentUser' => $user,
-			'rights' => base64_encode(json_encode(array ("grants"=> $this->_projectModel->getRightsArray($this->_userModel->id->asString()), "role"=> $this->_userModel->role))),
+			'rights' => base64_encode(json_encode(array ("grants"=> $this->_projectModel->getRightsArray($this->_userModel->id->asString())))),
 		);
 		
 	}
