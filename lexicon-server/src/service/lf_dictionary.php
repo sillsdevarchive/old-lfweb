@@ -1,4 +1,8 @@
 <?php
+use libraries\lfdictionary\store\LexStoreType;
+
+use libraries\lfdictionary\store\LexStoreController;
+
 use models\ProjectModelFixer;
 
 use libraries\lfdictionary\environment\ProjectStates;
@@ -560,7 +564,7 @@ class LfDictionary
 	private $_lexStore;
 	private function getLexStore() {
 		if (!isset($this->_lexStore)) {
-			$this->_lexStore = new \libraries\lfdictionary\store\LexStoreController(\libraries\lfdictionary\store\LexStoreType::STORE_MONGO, $this->_lexProject->projectName, $this->_lexProject);
+			$this->_lexStore = new LexStoreController(LexStoreType::STORE_MONGO, $this->_projectModel->databaseName(), $this->_lexProject);
 		}
 		return $this->_lexStore;
 	}

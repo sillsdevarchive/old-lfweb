@@ -1,6 +1,8 @@
 <?php
 namespace libraries\lfdictionary\store\mongo;
 
+use libraries\palaso\CodeGuard;
+
 use libraries\lfdictionary\dto\EntryDTO;
 use libraries\lfdictionary\store\ILexStore;
 use libraries\lfdictionary\environment\MissingInfoType;
@@ -34,12 +36,17 @@ class MongoLexStore implements ILexStore
 	 * @param string $databaseName
 	 */
 	private function __construct($databaseName) {
+		CodeGuard::checkEmptyAndThrow($databaseName, 'databaseName');
 		if (self::$_mongo == null) {
 			self::$_mongo = new \Mongo();
 		}
 		LoggerFactory::getLogger()->logInfoMessage("MongoLexStore: Connect to " . $databaseName);
 		$this->_databaseName = $databaseName;
-		$this->_mongoDB = self::$_mongo->selectDB($databaseName);
+		try {
+			$this->_mongoDB = self::$_mongo->selectDB($databaseName);
+		} catch (\Exception $e) {
+			throw new \Exception("Could not open database '$databaseName'");
+		}
 	}
 
 	/**

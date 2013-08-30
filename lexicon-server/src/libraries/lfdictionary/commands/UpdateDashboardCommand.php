@@ -38,8 +38,12 @@ class UpdateDashboardCommand
 	 */
 	private $_lexProject;
 
+	/**
+	 * @param string $projectID
+	 * @param ProjectModel $projectModel
+	 * @param LexProject $lexProject
+	 */
 	function __construct($projectID, $projectModel,$lexProject) {
-		
 		$this->_projectModel=$projectModel;
 		$this->_projectNodeId=$projectID;
 		$this->_lexProject=$lexProject;
@@ -60,7 +64,7 @@ class UpdateDashboardCommand
 				return UpdateDashboardCommand::RUNNING;
 			}
 		}
-		$projectRepoPath = PROJECTS_HG_ROOT_FOLDER. $this->_projectModel->projectname;
+		$projectRepoPath = $this->_lexProject->projectPath;
 		$dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
 		$historicalHgDataFetcher = new HistoricalHgDataFetcher($projectRepoPath);
 		$asyncRunner =  $this->createAsyncRunner();

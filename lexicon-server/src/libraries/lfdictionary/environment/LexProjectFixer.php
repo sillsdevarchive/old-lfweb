@@ -149,7 +149,7 @@ class LexProjectFixer extends LexProject
 		}
 		
 		// try to get it from the project folder projectname.WeSayConfig
-		$weSayProjectConfig = $this->projectPath . $this->projectName . self::SETTINGS_EXTENSION;
+		$weSayProjectConfig = $this->projectPath . $this->projectModel->projectCode . self::SETTINGS_EXTENSION;
 		if (file_exists($weSayProjectConfig)) {
 			copy($weSayProjectConfig, $userSettingsFilePath);
 			return $userSettingsFilePath;
