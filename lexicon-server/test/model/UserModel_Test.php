@@ -91,8 +91,8 @@ class TestUserModel extends UnitTestCase {
 		$this->assertEqual(array(), $result->entries);
 				
 		// Add our two projects
-		//LinkCommands::LinkUserAndProject($p1m, $userModel, Roles::USER);
-		//LinkCommands::LinkUserAndProject($p2m, $userModel, Roles::USER);
+		LinkCommands::LinkUserAndProject($p1m, $userModel, Roles::USER);
+		LinkCommands::LinkUserAndProject($p2m, $userModel, Roles::USER);
 		
 		$result = $userModel->listProjects();
 		$this->assertEqual(2, $result->count);
