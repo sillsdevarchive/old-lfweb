@@ -88,7 +88,7 @@ public class EntryPresenter extends
 			}
 		}
 		
-		if ((PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN))) {
+		if ((PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER))) {
 			if (!singleNewMeaning) {
 				showNewSenseBlock();
 			} else {

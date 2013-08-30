@@ -185,7 +185,7 @@ public class IncompleteWordEditPresenter extends
 			fieldSettings = FieldSettings.fromWindowForAddExample();
 
 		boolean allowEdit=false;
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
 			allowEdit=true;
 		}
 		

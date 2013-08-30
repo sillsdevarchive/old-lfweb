@@ -125,7 +125,7 @@ public class LexBrowseEditPresenter extends
 				renderWord(result);
 				eventBus.setUpdateButtonEnable(true);
 				boolean allowDelete=false;
-				if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_DELETE_OWN)) {
+				if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_DELETE_OTHER)) {
 					allowDelete=true;
 				}
 				eventBus.setDeleteButtonVisible(allowDelete);
@@ -190,7 +190,7 @@ public class LexBrowseEditPresenter extends
 	 */
 	private void renderWord(LexiconEntryDto result) {
 		boolean allowEdit=false;
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OWN)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
 			allowEdit=true;
 		}
 		entryPresenter = new EntryPresenter(
