@@ -95,8 +95,13 @@ class LexProject
 	 * @return string
 	 * 		Example: /var/lib/languageforge/work/<some project>/LanguageForge/<username>.WeSayConfig
 	 */
-	 public function userSettingsFilePath($userName) {
-		return $this->projectPath . self::SETTINGS_DIR . $userName . self::SETTINGS_EXTENSION;
+	 public function getUserSettingsFilePath($userName) {
+	 	$configFile = $this->projectPath . self::SETTINGS_DIR . $userName . self::SETTINGS_EXTENSION;
+		if (!file_exists($configFile)) {
+			$fixer = new LexProjectFixer($this->projectModel);
+			$fixer->ensureUserSettingsFileExists($userName);
+		}
+		return $configFile;
 	}
 	
 	/**
@@ -116,6 +121,10 @@ class LexProject
 		return LANGUAGEFORGE_VAR_PATH . "work/";
 	}
 	
+	static public function stateFolderPath() {
+		return LANGUAGEFORGE_VAR_PATH . 'state/';
+	}
+	
 	/**
 	 * Returns the path to the template folder
 	 * @return string
@@ -133,15 +142,6 @@ class LexProject
 	 */
 	static public function resourcePath() {
 		return LANGUAGEFORGE_VAR_PATH . "lexicon/resources/";
-	}
-	
-	public function getUserConfigFilePath($userName) {
-		$configFile = $this->userSettingsFilePath($userName);
-		if (!file_exists($configFile)) {
-			$fixer = new LexProjectFixer($this->projectModel);
-			$fixer->ensureUserSettingsFileExists($userName);
-			return $fixer->userSettingsFilePath($userName);
-		}
 	}
 	
 	

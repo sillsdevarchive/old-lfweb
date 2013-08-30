@@ -14,7 +14,6 @@ use libraries\lfdictionary\dto\UserDTO;
 use libraries\lfdictionary\dto\UserListDTO;
 use libraries\lfdictionary\environment\EnvironmentMapper;
 use libraries\lfdictionary\environment\LexProject;
-use libraries\lfdictionary\environment\LexiconProjectEnvironment;
 use libraries\lfdictionary\environment\ProjectState;
 use libraries\lfdictionary\store\LexStoreMissingInfo;
 use libraries\lfdictionary\store\LexStore;
@@ -82,6 +81,7 @@ class LfDictionary
 			$this->_userId
 		));
 		$this->_lexProject = new LexProject($this->_projectModel);
+		$this->_projectPath = $this->_lexProject->projectPath;
 	}
 
 	/**
@@ -354,7 +354,7 @@ class LfDictionary
 		// so all user name will save in lowercase
 		$strName = $userModel->username;
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
-		$command = new \libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand($this->_lexProject->projectPath,$strName);
+		$command = new \libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand($this->_lexProject,$strName);
 		$result = $command->execute();
 		return $result;
 	}
@@ -365,7 +365,7 @@ class LfDictionary
 		// so all user name will save in lowercase
 		$strName = $userModel->username;
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
-		$command = new \libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand ($this->_lexProject->projectPath,$strName);
+		$command = new \libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand ($this->_lexProject,$strName);
 		$result = $command->execute();
 		return $result;
 	}
@@ -401,7 +401,7 @@ class LfDictionary
 			//apply to special user
 			$userNames[]  = $this->getUserNameById($userIds);
 		}
-		$command = new \libraries\lfdictionary\commands\UpdateSettingUserTasksSettingCommand($this->_lexProject->projectPath,$userNames,$tasks);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingUserTasksSettingCommand($this->_lexProject,$userNames,$tasks);
 		$result = $command->execute();
 		return $result;
 	}
@@ -423,7 +423,7 @@ class LfDictionary
 		}
 		else {
 			// apply to special user
-			$userNames[]  = $this->getUserNameById($userIds);
+			$userNames[] = $this->getUserNameById($userIds);
 		}
 		$command = new \libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand($this->_lexProject->projectPath,$userNames,$fields);
 		$result = $command->execute();

@@ -1,10 +1,11 @@
 <?php
 namespace libraries\lfdictionary\commands;
+use libraries\lfdictionary\environment\LexProject;
+
 use \libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use \libraries\lfdictionary\environment\LexiconProjectEnvironment;
 use \libraries\lfdictionary\environment\LexProjectUserSettings;
 
 class GetSettingUserTasksSettingCommand
@@ -13,20 +14,22 @@ class GetSettingUserTasksSettingCommand
 	/**
 	 * @var JSON
 	 */
-	var $_result;
+	private $_result;
 
-	/**
-	 * @param string $projectPath
-	 */
-	var $_projectPath;
 
 	/**
 	 * @param string
 	 */
-	var $_userName;
+	private $_userName;
+	
+	/**
+	 * 
+	 * @var LexProject
+	 */
+	private $_lexProject;
 
-	function __construct($projectPath, $userName) {
-		$this->_projectPath = $projectPath; // Path to the selected project
+	function __construct($lexProject, $userName) {
+		$this->_lexProject = $lexProject; // lexProject
 		$this->_userName = $userName;
 	}
 
@@ -36,7 +39,8 @@ class GetSettingUserTasksSettingCommand
 	}
 
 	function processFile() {
-		$configFilePath = LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $this->_userName);
+		
+		$configFilePath = $this->_lexProject->getUserSettingsFilePath($this->_userName);
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
