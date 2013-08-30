@@ -10,7 +10,7 @@ use models\ProjectModel;
 require_once(dirname(__FILE__) . '/../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
 
-require_once(TestPath . 'common/MongoTestEnvironment.php');
+require_once(TEST_PATH . 'common/MongoTestEnvironment.php');
 
 require_once(SourcePath . "models/UserModel.php");
 require_once(SourcePath . "models/ProjectModel.php");

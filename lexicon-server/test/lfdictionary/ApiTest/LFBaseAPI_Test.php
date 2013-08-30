@@ -10,14 +10,9 @@ use lfbase\common\DataConnector;
 
 use lfbase\common\DataConnection;
 
-require_once(dirname(__FILE__) . '/../testconfig.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
-\libraries\lfdictionary\common\LFDrupal::loadDrupal();
-
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
+require_once(LF_BASE_PATH . "Loader.php");
 require_once(SIMPLETEST_PATH . 'autorun.php');
-
-// Connect to the database
-$db = DataConnector::connect('lftest');
 
 // random user id (the user must exist)
 //define('GENERAL_UID', 59);

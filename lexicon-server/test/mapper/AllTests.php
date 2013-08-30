@@ -6,8 +6,8 @@ class AllMapperTests extends TestSuite {
 	
     function __construct() {
         parent::__construct();
- 		$this->addFile(TestPath . 'mapper/json/AllTests.php');
- 		$this->addFile(TestPath . 'mapper/mongo/AllTests.php');
+ 		$this->addFile(TEST_PATH . 'mapper/json/AllTests.php');
+ 		$this->addFile(TEST_PATH . 'mapper/mongo/AllTests.php');
     }
 
 }

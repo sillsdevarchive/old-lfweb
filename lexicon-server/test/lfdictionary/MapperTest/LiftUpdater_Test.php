@@ -8,7 +8,7 @@ use \libraries\lfdictionary\dto\EntryDTO;
 use \libraries\lfdictionary\mapper\LiftUpdater;
 use \libraries\lfdictionary\common\UUIDGenerate;
 
-require_once(dirname(__FILE__) . '/../../testconfig.php');
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
 class TestOfLiftUpdater extends UnitTestCase {

@@ -1,6 +1,6 @@
 <?php
 
-require_once(TestPath . 'common/MockProjectModel.php');
+require_once(TEST_PATH . 'common/MockProjectModel.php');
 
 class MongoTestEnvironment
 {

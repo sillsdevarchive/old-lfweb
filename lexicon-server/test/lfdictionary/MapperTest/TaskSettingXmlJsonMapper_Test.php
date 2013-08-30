@@ -2,7 +2,7 @@
 use libraries\lfdictionary\environment\LexiconProjectEnvironment;
 use libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
-require_once(dirname(__FILE__) . '/../../testconfig.php');
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
 class TestOfTaskSettingXmlJsonMapper extends UnitTestCase {

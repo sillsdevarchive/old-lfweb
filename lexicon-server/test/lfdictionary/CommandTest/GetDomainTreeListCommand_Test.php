@@ -1,7 +1,7 @@
 <?php
 use libraries\lfdictionary\commands\GetDomainTreeListCommand;
 
-require_once(dirname(__FILE__) . '/../../testconfig.php');
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
 
 class TestOfGetDomainListCommand extends UnitTestCase {
