@@ -108,7 +108,7 @@ class LexiconProjectEnvironment {
 	 * @return string
 	 */
 	static public function projectPath($projectModel) {
-		return LANGUAGEFORGE_VAR_PATH . 'work/' . $projectModel->projectname;
+		return LANGUAGEFORGE_VAR_PATH . 'work/' . $projectModel->projectCode;
 	}
 
 	/**
@@ -164,46 +164,6 @@ class LexiconProjectEnvironment {
 
 
 
-	/**
-	 * Locates and returns the full path to the *.WeSayConfig file to use for this user / project.
-	 * A .WeSayConfig file is created if needs be.
-	 * @return string
-	 * @throws \Exception
-	 */
-	static public function locateConfigFilePath($projectPath, $userName) {
-		// 1) See if we can find a user specific settings file
-		$filePath = self::userSettingsFilePath($projectPath, $userName);
-		if (!file_exists($filePath)) {
-			LoggerFactory::getLogger()->logDebugMessage(sprintf("Project settings file '%s' not found for user '%s' loading defaults.",
-			 					$filePath,
-			 					$userName
-			 			));
-			// 2) If not, look for a project wide settings file under LanguageForgeSettings
-			$filePath = self::projectDefaultSettingsFilePath($projectPath);
-			if (!file_exists($filePath)) {
-				// Check and create the LanguageForgeSettings folder if needs be.
-				if (!file_exists(LexiconProjectEnvironment::projectSettingsFolderPath($projectPath))) {
-					mkdir(LexiconProjectEnvironment::projectSettingsFolderPath($projectPath));
-				}
-				// 3) If not, see if we can copy a *.WeSayConfig file from the root folder of the project
-				$filesFound = glob($projectPath . '*' . LANGUAGE_FORGE_SETTINGS_EXTENSION);
-				if (count($filesFound) > 0) {
-					$source = $filesFound[0];
-				} else {
-					// 4) Failing everything we get a default config file from the template folder
-					// TODO This will of course need to be fixed for the vernacular language CP 2010-10
-					$source =self::projectDefaultSettingsFilePath(self::templatePath());
-					if (!file_exists($source)) {
-						throw new \Exception(sprintf(
-									"Cannot access default user profile from file '%s'",
-						$source
-						));
-					}
-				}
-				copy($source, $filePath);
-			}
-		}
-		return $filePath;
-	}
+
 }
 ?>

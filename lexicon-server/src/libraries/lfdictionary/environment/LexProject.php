@@ -5,9 +5,22 @@ use libraries\palaso\CodeGuard;
 
 use libraries\lfdictionary\common\LoggerFactory;
 use models\ProjectModel;
+use libraries\lfdictionary\environment\ProjectState;
 
 class LexProject
 {
+	// the follow constants seem to fit well in this class
+	const SETTINGS_EXTENSION = '.WeSayConfig';
+	const DEFAULT_SETTINGS_FILE = 'default.WeSayConfig';
+	const WRITING_SYSTEMS_DIR = '/WritingSystems/';
+	const SETTINGS_DIR = '/LanguageForgeSettings/';
+	const DEFAULT_SETTINGS_FILE_LEX = 'WeSayConfig.Lex.Default';
+	
+	// these constants may fit better in a different class	
+	const DEFAULT_SETTINGS_FILE_RWC = 'WeSayConfig.Rwc.Default'; // TODO Move this to the LFRapidWords project CP 2012-09
+	const LEXICON_WORD_PACK_FILE_NAME = 'SILCawl.lift';
+	const LEXICON_WORD_LIST_SOURCE = '/var/lib/languageforge/lexicon/wordpacks/';
+
 	
 	/**
 	 * @var ProjectModel
@@ -30,41 +43,45 @@ class LexProject
 	private $_liftFilePath;
 	
 	/**
-	 * @param string $projectPath
+	 * 
+	 * @param ProjectModel $projectModel
+	 * @param string $projectBasePath
 	 */
-	public function __construct($projectModel, $projectBasePath = LANGUAGE_FORGE_WORK_PATH) {
-		CodeGuard::checkTypeAndThrow($projectModel, 'models\ProjectModel');
-		
+	public function __construct($projectModel, $projectBasePath = '') {
+		if (empty($projectBasePath)) {
+			$projectBasePath = self::workFolderPath();
+		}
 		$this->projectModel = $projectModel;
+		
+		$projectName = $this->projectModel->projectCode;
 		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectPath = rtrim($projectBasePath . $this->projectModel->projectCode, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectState = new ProjectState($this->projectModel->projectCode);
+		$this->projectPath = rtrim($projectBasePath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		$this->projectState = new ProjectState($projectName);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
 			if (file_exists($this->projectPath)) {
-				$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
+				$this->projectState->setState(ProjectStates::Ready);
 			}
 		}
 	}
 	
 	/**
 	 * Creates a new Lexicon project
-	 * @param ProjectModel $projectModel
 	 * @throws \Exception
 	 */
-	public function createNewProject($projectModel) {
+	public function createNewProject() {
 		if (is_dir($this->projectPath)) {
 			throw new \Exception(sprintf("Cannot create new project '%s' already exists", $this->projectPath));
 		}
-		$fixer = new LexProjectFixer($this->projectName, $projectModel);
-		$fixer->fixProjectV01();
+		$fixer = new LexProjectFixer($this->projectModel);
+		$fixer->fixProjectVLatest();
 		
 		$this->makeLanguageForgeSettingsFolderReady();
 		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 	}
 	
 	private function makeLanguageForgeSettingsFolderReady() {
-		$languageForgeSettingsPath = $this->projectPath . LANGUAGE_FORGE_SETTINGS;
+		$languageForgeSettingsPath = $this-projectPath . self::SETTINGS_DIR;
 		if (!is_dir($languageForgeSettingsPath)) {
 			if (!mkdir($languageForgeSettingsPath)){
 				throw new \Exception(sprintf("Cannot create user setting folder '%s'", $languageForgeSettingsPath));
@@ -74,23 +91,29 @@ class LexProject
 	
 	/**
 	 * Returns the full path to the user (dictionary) settings file.
-	 * @param string $projectPath
 	 * @param string $userName
 	 * @return string
 	 * 		Example: /var/lib/languageforge/work/<some project>/LanguageForge/<username>.WeSayConfig
 	 */
-	static public function userSettingsFilePath($projectPath, $userName) {
-		return $projectPath . LANGUAGE_FORGE_SETTINGS . $userName . LANGUAGE_FORGE_SETTINGS_EXTENSION;
+	 public function userSettingsFilePath($userName) {
+		return $this->projectPath . self::SETTINGS_DIR . $userName . self::SETTINGS_EXTENSION;
 	}
 	
 	/**
 	 * Returns the full path to the project default settings file.
-	 * @param string $projectPath
 	 * @return string
 	 * 		Example: /var/lib/languageforge/work/<some project>/LanguageForge/default.WeSayConfig
 	 */
-	static public function projectDefaultSettingsFilePath($projectPath) {
-		return $projectPath . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
+	public function projectDefaultSettingsFilePath() {
+		return $this->projectPath . self::SETTINGS_DIR . self::DEFAULT_SETTINGS_FILE;
+	}
+	
+	public function projectSettingsFolderPath() {
+		return $this->projectPath . LANGUAGE_FORGE_SETTINGS ;
+	}
+	
+	static public function workFolderPath() {
+		return LANGUAGEFORGE_VAR_PATH . "work/";
 	}
 	
 	/**
@@ -112,47 +135,15 @@ class LexProject
 		return LANGUAGEFORGE_VAR_PATH . "lexicon/resources/";
 	}
 	
-	/**
-	 * Locates and returns the full path to the *.WeSayConfig file to use for this user / project.
-	 * A .WeSayConfig file is created if needs be.
-	 * @return string
-	 * @throws \Exception
-	 */
-	static public function locateConfigFilePath($projectPath, $userName) {
-		// 1) See if we can find a user specific settings file
-		$filePath = LexiconProjectEnvironment::userSettingsFilePath($projectPath, $userName);
-		if (!file_exists($filePath)) {
-					LoggerFactory::getLogger()->logDebugMessage(sprintf("Project settings file '%s' not found for user '%s' loading defaults.",
-			 					$filePath,
-		 					$userName
-			 			));
-			// 2) If not, look for a project wide settings file under LanguageForgeSettings
-			$filePath = LexiconProjectEnvironment::projectDefaultSettingsFilePath($projectPath);
-			if (!file_exists($filePath)) {
-				// Check and create the LanguageForgeSettings folder if needs be.
-				if (!file_exists($projectPath . LANGUAGE_FORGE_SETTINGS)) {
-					mkdir($projectPath . LANGUAGE_FORGE_SETTINGS);
-				}
-				// 3) If not, see if we can copy a *.WeSayConfig file from the root folder of the project
-				$filesFound = glob($projectPath . '*' . LANGUAGE_FORGE_SETTINGS_EXTENSION);
-				if (count($filesFound) > 0) {
-					$source = $filesFound[0];
-				} else {
-					// 4) Failing everything we get a default config file from the template folder
-					// TODO This will of course need to be fixed for the vernacular language CP 2010-10
-					$source = LexiconProjectEnvironment::getTemplateDefaultSettingsPath();
-					if (!file_exists($source)) {
-						throw new \Exception(sprintf(
-								"Cannot access default user profile from file '%s'",
-								$source
-						));
-					}
-				}
-				copy($source, $filePath);
-			}
+	public function getUserConfigFilePath($userName) {
+		$configFile = $this->userSettingsFilePath($userName);
+		if (!file_exists($configFile)) {
+			$fixer = new LexProjectFixer($this->projectModel);
+			$fixer->ensureUserSettingsFileExists($userName);
+			return $fixer->userSettingsFilePath($userName);
 		}
-		return $filePath;
 	}
+	
 	
 	/**
 	 * Locates and returns the full path to the *.WeSayConfig file to use for this user / project.

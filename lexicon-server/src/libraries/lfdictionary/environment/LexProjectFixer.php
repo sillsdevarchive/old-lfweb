@@ -1,14 +1,18 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
+use libraries\lfdictionary\common\LoggerFactory;
+use libraries\lfdictionary\common\HgWrapper;
 use libraries\palaso\CodeGuard;
-
 use models\ProjectModel;
 
-use libraries\lfdictionary\common\LoggerFactory;
 class LexProjectFixer extends LexProject
 {
 	
+	/**
+	 * 
+	 * @var bool
+	 */
 	private $_shouldLog;
 	
 	
@@ -23,13 +27,14 @@ class LexProjectFixer extends LexProject
 		$this->_shouldLog = $logMessages;
 	}
 	
-	function fixProjectV01() {
+	private function fixProjectV01() {
 		if (!$this->checkTemplatesExist()) {
 			$message = "LexProject templates do not exist on this system.  Please put the appropriate files in the template folder to continue";
 			LoggerFactory::getLogger()->logInfoMessage($message);
 			throw new \Exception($message);
 		}
 		$this->ensureProjectFolderExists();
+		$this->ensureSettingsFolderExists();
 		$this->ensureIsHgRepository();
 		$this->ensureLiftFileExists();
 		$this->ensureWeSayConfigExists();
@@ -44,7 +49,17 @@ class LexProjectFixer extends LexProject
 		$fixer->fixProjectV01();
 	}
 	
-	function ensureProjectFolderExists() {
+	private function ensureSettingsFolderExists() {
+		$settingsPath = $this->projectPath . self::SETTINGS_DIR;
+		if (!file_exists($settingsPath)) {
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("settings path does not exist.  fixed %s",$settingsPath));
+			}
+			mkdir($settingsPath);
+		}
+	}
+	
+	private function ensureProjectFolderExists() {
 		$projectPath = $this->projectPath;
 		if (!file_exists($projectPath)) {
 			if ($this->_shouldLog) {
@@ -54,7 +69,7 @@ class LexProjectFixer extends LexProject
 		}
 	}
 	
-	function ensureLiftFileExists() {
+	private function ensureLiftFileExists() {
 		$this->ensureProjectFolderExists();
 		$projectPath = $this->projectPath;
 		if ($this->locateLiftFilePath() == null) {
@@ -68,7 +83,7 @@ class LexProjectFixer extends LexProject
 		}
 	}
 		
-	function ensureWritingSystemsExists() {
+	private function ensureWritingSystemsExists() {
 		$this->ensureProjectFolderExists();
 		$writingSystemsFolder = $this->projectPath . "WritingSystems";
 		$templatePath = self::templatePath();
@@ -80,16 +95,17 @@ class LexProjectFixer extends LexProject
 		}
 		$languageCode = $this->projectModel->languageCode;
 		$ldmlFile = $writingSystemsFolder . "/$languageCode.ldml";
-		rename($writingSystemsFolder . "qaa.ldml", $ldmlFile);
+		rename($writingSystemsFolder . "/qaa.ldml", $ldmlFile);
 		$this->findReplace($ldmlFile, "qaa", $languageCode);
 	}
 	
-	function ensureWeSayConfigExists() {
+	public function ensureWeSayConfigExists() {
 		$this->ensureProjectFolderExists();
-		self::checkTemplatesExist();
-		$configFilePath = LexProject::projectDefaultSettingsFilePath($this->projectPath);
+		$this->ensureSettingsFolderExists();
+		$configFilePath = $this->projectDefaultSettingsFilePath();
 		if (!file_exists($configFilePath)) {
-			$srcFilePath = self::templatePath() . LANGUAGE_FORGE_SETTINGS . 'default.WeSayConfig';
+			$srcFilePath = $this::templatePath() . self::SETTINGS_DIR . 'default.WeSayConfig';
+			// This check should be unnecessary, but seems necessary for now CP 2013-08
 			if (!file_exists($srcFilePath)) {
 				throw new \Exception("Expected template file '$srcFilePath' not found.");
 			} 
@@ -106,10 +122,34 @@ class LexProjectFixer extends LexProject
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("project path is not an hg repository.  fixed %s",$this->projectPath));
 			}
-			$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
+			$hg = new HgWrapper($this->projectPath);
 			$hg->init();
 		}
 	}
+	
+	/**
+	 * @param string $userName
+	 * @return string - the user settings file path
+	 */
+	function ensureUserSettingsFileExists($userName) {
+		$userSettingsFilePath = $this->projectSettingsFolderPath() . $userName . self::SETTINGS_EXTENSION;
+		if (file_exists($userSettingsFilePath)) {
+			return $userSettingsFilePath;
+		}
+		
+		// try to get it from the project folder projectname.WeSayConfig
+		$weSayProjectConfig = $this->projectPath . $this->projectName . self::SETTINGS_EXTENSION;
+		if (file_exists($weSayProjectConfig)) {
+			copy($weSayProjectConfig, $userSettingsFilePath);
+			return $userSettingsFilePath;
+		}
+		
+		// fall back to languageforgesettings/default.WeSayConfig
+		$this->ensureWeSayConfigExists();
+		copy($this->projectDefaultSettingsFilePath(), $userSettingsFilePath);
+		return $userSettingsFilePath;
+	}
+	
 	
 	static function checkTemplatesExist() {
 		$templatePath = self::templatePath();

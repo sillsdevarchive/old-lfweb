@@ -42,7 +42,7 @@ class LexClientEnvironment
 			$this->_projectModel->projectname,
 			$projectId,
 			$this->_userModel->username,
-			$userId
+			$this->_userModel->id->asString()
 		));
 		
 	}
