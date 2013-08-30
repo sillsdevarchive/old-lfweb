@@ -53,6 +53,8 @@ class TestOfSaveCommentsCommand extends UnitTestCase {
 		$w3cDateString = $now->format(DateTime::W3C);
 		$messageType=0;
 		$messageStatus=0;
+		$messageStatusReviewed = false;
+		$messageStatusTodo = false;
 		$parentGuid= "dca37623-3f8a-45f3-8d53-5728205ad37c";
 		$commentMessage=$this->NEW_MESSAGE;
 		$userName=$this->NEW_MESSAGE_BY;
@@ -62,7 +64,7 @@ class TestOfSaveCommentsCommand extends UnitTestCase {
 		
 		$this->assertFalse(strstr($result, $this->NEW_MESSAGE));
 		$this->assertFalse(strstr($result, $this->NEW_MESSAGE_BY));
-		$command = new SaveCommentsCommand($desChorusNotesFilePath, $messageStatus,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userName,false);
+		$command = new SaveCommentsCommand($desChorusNotesFilePath, $messageStatus, $messageStatusReviewed, $messageStatusTodo,$messageType, $parentGuid,$commentMessage,$w3cDateString,$userName,false);
 		$command->execute();
 
 		

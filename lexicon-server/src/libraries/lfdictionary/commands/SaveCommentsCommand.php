@@ -119,8 +119,8 @@ class SaveCommentsCommand {
 		$this->_dto->setGuid($newNodeGuid);
 		$this->_dto->setReference("");
 		$this->_dto->setStatus($this->_status);
-		$this->_dto->setStatusReviewed($this->_reviewed);
-		$this->_dto->setStatusTodo($this->_todo);
+		$this->_dto->setStatusReviewed($this->_isStatusReviewed);
+		$this->_dto->setStatusTodo($this->_isStatusTodo);
 	}
 
 

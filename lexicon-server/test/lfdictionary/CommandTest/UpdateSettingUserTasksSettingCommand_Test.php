@@ -43,7 +43,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
-		$sourceConfigFile = TEST_PATH. "data/template" . LANGUAGE_FORGE_SETTINGS . "user1.WeSayConfig";
+		$sourceConfigFile = TEST_PATH. "/lfdictionary/data/template" . LANGUAGE_FORGE_SETTINGS . "user1.WeSayConfig";
 		$TargetConfigFile = $this->_path . LANGUAGE_FORGE_SETTINGS . "/user1.WeSayConfig";
 
 		$this->assertEqual(copy($sourceConfigFile, $TargetConfigFile),true);
@@ -77,7 +77,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
-		$sourceConfigFile = TEST_PATH. "data/template" . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
+		$sourceConfigFile = TEST_PATH. "/lfdictionary/data/template" . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
 		$TargetConfigFile = $this->_path . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
 
 		$this->assertEqual(copy($sourceConfigFile, $TargetConfigFile),true);
@@ -129,7 +129,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
-		$sourceConfigFile = TEST_PATH. "data/template" . LANGUAGE_FORGE_SETTINGS . "user1.WeSayConfig";
+		$sourceConfigFile = TEST_PATH. "/lfdictionary/data/template" . LANGUAGE_FORGE_SETTINGS . "user1.WeSayConfig";
 
 		// create 3 user profile
 		$TargetConfigFile = $this->_path . LANGUAGE_FORGE_SETTINGS . "/user1.WeSayConfig";
@@ -198,7 +198,7 @@ class UpdateSettingUserTasksSettingCommand_Test extends UnitTestCase {
 			mkdir($this->_path);
 			mkdir($this->_path . LANGUAGE_FORGE_SETTINGS );
 		}
-		$sourceConfigFile = TEST_PATH. "data/template" . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
+		$sourceConfigFile = TEST_PATH. "/lfdictionary/data/template" . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
 
 		// copy default profile
 		$TargetConfigFile = $this->_path . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;

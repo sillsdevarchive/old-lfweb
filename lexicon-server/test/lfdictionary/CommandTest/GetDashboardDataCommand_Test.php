@@ -16,7 +16,8 @@ class TestOfGetDashboardDataCommand extends UnitTestCase {
 		$e = new LiftTestEnvironment();
 		//2 entry, 2 word, 2sense, 1definition, 1 partofspeech, 2examples, 1exampleform
 		$e->createLiftWith(2, 2, 2, 1, 1, 2, 1);
-		$command = new GetDashboardDataCommand(284,$e->getLiftFilePath(),30);
+		
+		$command = new GetDashboardDataCommand(null,284, $e->getLiftFilePath(),30);
 		$result = $command->execute();
 		//$this->assertEqual(30,count($result->_entryActivities));
 		$this->assertEqual(count($result->_entryActivities),count($result->_activityDate));
@@ -32,7 +33,7 @@ class TestOfGetDashboardDataCommand extends UnitTestCase {
 		//2 entry, 2 word, 2sense, 1definition, 1 partofspeech, 2examples, 1exampleform
 		$e->createLiftWith(2, 2, 2, 1, 1, 2, 1);
 
-		$command = new GetDashboardDataCommand(284,$e->getLiftFilePath(),365);
+		$command = new GetDashboardDataCommand(null,284,$e->getLiftFilePath(),365);
 		$result = $command->execute();
 		//$this->assertEqual(365,count($result->_entryActivities));
 		$this->assertEqual(count($result->_entryActivities),count($result->_activityDate));
@@ -49,7 +50,7 @@ class TestOfGetDashboardDataCommand extends UnitTestCase {
 		//2 entry, 2 word, 2sense, 1definition, 1 partofspeech, 2examples, 1exampleform
 		$e->createLiftWith(2, 2, 2, 1, 1, 2, 1);
 
-		$command = new GetDashboardDataCommand(284,$e->getLiftFilePath(),0);
+		$command = new GetDashboardDataCommand(null,284,$e->getLiftFilePath(),0);
 		$result = $command->execute();
 		//$this->assertEqual(365,count($result->_activities));
 		$this->assertEqual(count($result->_entryActivities),count($result->_activityDate));
