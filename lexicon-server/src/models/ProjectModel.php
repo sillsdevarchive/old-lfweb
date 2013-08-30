@@ -14,6 +14,9 @@ use models\mapper\Id;
 
 class ProjectModel extends \models\mapper\MapperModel
 {
+	const PROJECT_LIFT = 'dictionary';
+	const PROJECT_FLEX = 'flex';
+	
 	public function __construct($id = '') {
 		$this->id = new Id();
 		$this->users = new MapOf(function($data) {
@@ -32,6 +35,20 @@ class ProjectModel extends \models\mapper\MapperModel
 
 		return 'lf_' . $name;
 
+	}
+	
+	public static function createNewProject($languageCode, $projectName, $projectType = ProjectModel::PROJECT_LIFT) {
+		$projectModel = new ProjectModel();
+		$projectModel->languageCode = $languageCode;
+		$projectModel->projectname = $projectName;
+		$projectModel->projectType = $projectType;
+		$projectCode = self::makeProjectCode($languageCode, $projectName, $projectType);
+		return $projectModel;
+	}
+	
+	public static function makeProjectCode($languageCode, $projectName, $projectType) {
+		$projectCode = $languageCode . '-' . strtolower(str_replace(' ', '_', $projectName)) . '-' . $projectType;
+		return $projectCode;
 	}
 
 	/**
@@ -112,6 +129,11 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @var Id
 	 */
 	public $id;
+	
+	/**
+	 * @var string
+	 */
+	public $projectType;
 	
 	/**
 	 * @var string

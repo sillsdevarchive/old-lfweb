@@ -27,7 +27,7 @@ class gwt extends Base {
 		$data['canShowEditor'] = $pid != '' && $this->_isLoggedIn;
 		if ($data['canShowEditor']) {
 			require_once(APPPATH . '/libraries/lfdictionary/Config.php');
-			$lexClientEnvironment = new LexClientEnvironment($pid, $this->_user->id->asString());
+			$lexClientEnvironment = new LexClientEnvironment($pid, $this->_user);
 			$data['lexSettings'] = $lexClientEnvironment->getSettings();
 		}
 		$this->_render_page("gwtpages/container", $data);

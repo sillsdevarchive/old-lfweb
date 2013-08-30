@@ -27,11 +27,6 @@ class LexProject
 	/**
 	 * @var string
 	 */
-	public $projectName;
-	
-	/**
-	 * @var string
-	 */
 	private $_liftFilePath;
 	
 	/**
@@ -41,10 +36,9 @@ class LexProject
 		CodeGuard::checkTypeAndThrow($projectModel, 'models\ProjectModel');
 		
 		$this->projectModel = $projectModel;
-		$this->projectName = $projectName;
 		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		$this->projectPath = rtrim($projectBasePath . $this->projectModel->projectCode, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectState = new ProjectState($this->projectName);
+		$this->projectState = new ProjectState($this->projectModel->projectCode);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
 			if (file_exists($this->projectPath)) {
@@ -185,7 +179,7 @@ class LexProject
 			$currentHash = $hg->getCurrentHash();
 		} catch (\Exception $exception) {
 			$currentHash = 'unknown';
-			LoggerFactory::getLogger()->logInfoMessage(sprintf("WARNING: getCurrentHash failed for '%s'", $this->projectName));
+			LoggerFactory::getLogger()->logInfoMessage(sprintf("WARNING: getCurrentHash failed for '%s'", $this->projectModel->projectCode));
 		}
 		return $currentHash;
 	}
@@ -211,7 +205,7 @@ class LexProject
 		$prePercent = 0;
 		$bestMatchName = "";
 		foreach ($filePaths as $filePath) {			
-			similar_text(basename($filePath, ".lift"), $this->projectName, $percent);
+			similar_text(basename($filePath, ".lift"), $this->projectModel->projectCode, $percent);
 			if ($prePercent <= $percent)
 			{
 				$prePercent = $percent;
@@ -261,8 +255,8 @@ class LexProject
 		$result = $this->isReady();
 		if (!$result) {
 			throw new \Exception(sprintf(
-					"The project '%s' is not yet ready for use.",
-					$this->projectName
+					"The project '%s' (%s) is not yet ready for use.",
+					$this->projectModel->projectname, $this->projectModel->projectCode
 			));
 		}
 		return $result;

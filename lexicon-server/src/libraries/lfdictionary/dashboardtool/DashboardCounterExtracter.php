@@ -18,7 +18,7 @@ class DashboardCounterExtracter
 {
 	private $args = array();
 	
-	private $projectNodeId;
+	private $projectId;
 	
 	private $projectPath;
 	
@@ -36,7 +36,7 @@ class DashboardCounterExtracter
 	function process() {
 		
 		
-		if ($this->projectNodeId == null) {
+		if ($this->projectId == null) {
 			
 			echo "Error project node ID not found", PHP_EOL;
 			return;
@@ -66,7 +66,7 @@ class DashboardCounterExtracter
 			
 			
 			try {
-				$this->projectModel = new ProjectModel($this->projectNodeId);
+				$this->projectModel = new ProjectModel($this->projectId);
 				$this->projectPath = PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectname;
 				$liftFilePath = glob(PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectname."/*.lift");
 					
@@ -150,7 +150,7 @@ class DashboardCounterExtracter
 			echo "argument --pid=xx missing", PHP_EOL;
 			return;
 		} else {
-			$this->projectNodeId = $this->args['pid'];
+			$this->projectId = $this->args['pid'];
 		}
 	}
 	
@@ -158,8 +158,8 @@ class DashboardCounterExtracter
 		
 		
 		try {
-			$this->projectModel = new ProjectModel($this->projectNodeId);
-			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname
+			$this->projectModel = new ProjectModel($this->projectId);
+			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectCode;
 		
 			$filePath = glob(LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname."/*.lift");
 			
@@ -227,10 +227,10 @@ class DashboardCounterExtracter
 		
 		$DashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
 		
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_ENTRY, $entries, $timestamp, $hg_version, $hg_hash);
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_MEANING, $meaning, $timestamp, $hg_version, $hg_hash);
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_PARTOFSPEECH, $speech, $timestamp, $hg_version, $hg_hash);
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectNodeId, ActivityFieldType::COUNT_EXAMPLE, $example, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_ENTRY, $entries, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_MEANING, $meaning, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_PARTOFSPEECH, $speech, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_EXAMPLE, $example, $timestamp, $hg_version, $hg_hash);
 	}
 	
 	

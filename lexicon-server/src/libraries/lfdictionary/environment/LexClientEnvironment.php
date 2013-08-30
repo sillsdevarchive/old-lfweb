@@ -2,11 +2,11 @@
 namespace libraries\lfdictionary\environment;
 
 use libraries\lfdictionary\dto\ClientEnvironmentDto;
-
 use libraries\lfdictionary\environment\LexProjectUserSettings;
 use libraries\lfdictionary\common\LoggerFactory;
-use \models\UserModel;
-use \models\ProjectModel;
+use models\UserModel;
+use models\ProjectModel;
+use models\ProjectModelFixer;
 
 class LexClientEnvironment
 {
@@ -28,13 +28,15 @@ class LexClientEnvironment
 	
 	/**
 	 * @param string $projectId
-	 * @param strign $userId
+	 * @param UserModel $userModel
 	 */
-	public function __construct($projectId, $userId) {
+	public function __construct($projectId, $userModel) {
 		$this->_projectModel = new ProjectModel($projectId);
-		$this->_userModel = new UserModel($userId);
-		$this->_projectModel->projectCode = 'changeme';
-		$this->_lexProject = new \libraries\lfdictionary\environment\LexProject($this->_projectModel);
+		ProjectModelFixer::ensureVLatest($this->_projectModel);
+		
+		$this->_userModel = $userModel;
+		$this->_lexProject = new LexProject($this->_projectModel);
+		LexProjectFixer::fixProjectVLatest($this->_lexProject);
 		
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%s) U=%s (%s)',
 			$this->_projectModel->projectname,
@@ -50,8 +52,6 @@ class LexClientEnvironment
 	 * @return string
 	 */
 	public function getSettings() {
-		$this->isReady();
-
 		$userModel = $this->_userModel;
 		$projectModel = $this->_projectModel;
 		$clientEnvironmentDto = new ClientEnvironmentDto($this->_projectModel, $this->_userModel);
@@ -73,13 +73,6 @@ class LexClientEnvironment
 		return $settingsString;
 	}
 
-	private function isReady() {
-		if (!$this->_lexProject->isReady()) {
-			LoggerFactory::getLogger()->logInfoMessage(sprintf("Project %s not ready, creating new project...", $this->_projectModel->projectname));
-			$this->_lexProject->createNewProject($this->_projectModel);
-		}
-	}
-	
 }
 
 ?>

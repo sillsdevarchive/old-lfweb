@@ -1,4 +1,6 @@
 <?php
+use models\ProjectModelFixer;
+
 use libraries\lfdictionary\environment\ProjectStates;
 
 use libraries\lfdictionary\common\AsyncRunner;
@@ -65,6 +67,7 @@ class LfDictionary
 		$this->_userModel = new UserModel($this->_userId);
 		if (!empty($this->_projectId)) {
 			$this->_projectModel = new ProjectModel($this->_projectId);
+			ProjectModelFixer::ensureVLatest($this->_projectModel);
 		}
 
 		$this->_logger = LoggerFactory::getLogger();

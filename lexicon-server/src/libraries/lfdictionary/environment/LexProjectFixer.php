@@ -1,16 +1,13 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
+use libraries\palaso\CodeGuard;
+
 use models\ProjectModel;
 
 use libraries\lfdictionary\common\LoggerFactory;
 class LexProjectFixer extends LexProject
 {
-	/**
-	 * 
-	 * @var ProjectModel
-	 */
-	private $_projectModel;
 	
 	private $_shouldLog;
 	
@@ -20,9 +17,9 @@ class LexProjectFixer extends LexProject
 	 * @param ProjectModel $projectModel
 	 * @param bool $logMessages
 	 */
-	function __construct($projectName, $projectModel, $logMessages = true) {
-		parent::__construct($projectName);
-		$this->_projectModel = $projectModel;
+	function __construct($projectModel, $logMessages = true) {
+		CodeGuard::checkTypeAndThrow($projectModel, 'models\ProjectModel');
+		parent::__construct($projectModel);
 		$this->_shouldLog = $logMessages;
 	}
 	
@@ -39,8 +36,12 @@ class LexProjectFixer extends LexProject
 		$this->ensureWritingSystemsExists();
 	}
 	
-	function fixProjectVLatest() {
-		$this->fixProjectV01();
+	/**
+	 * @param LexProject $lexProject
+	 */
+	public static function fixProjectVLatest($lexProject) {
+		$fixer = new LexProjectFixer($lexProject->projectModel);
+		$fixer->fixProjectV01();
 	}
 	
 	function ensureProjectFolderExists() {
@@ -57,9 +58,9 @@ class LexProjectFixer extends LexProject
 		$this->ensureProjectFolderExists();
 		$projectPath = $this->projectPath;
 		if ($this->locateLiftFilePath() == null) {
-			$templatePath = $this::templatePath();
+			$templatePath = self::templatePath();
 			$sourceFile = $templatePath . "default.lift";
-			$liftFile = $this->projectPath . $this->projectName . ".lift";
+			$liftFile = $this->projectPath . $this->projectModel->projectCode . ".lift";
 			copy($sourceFile, $liftFile);
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("lift file does not exist.  fixed %s",$liftFile));
@@ -70,14 +71,14 @@ class LexProjectFixer extends LexProject
 	function ensureWritingSystemsExists() {
 		$this->ensureProjectFolderExists();
 		$writingSystemsFolder = $this->projectPath . "WritingSystems";
-		$templatePath = $this::templatePath();
+		$templatePath = self::templatePath();
 		if (!file_exists($writingSystemsFolder)) {
 			$this->fileCopy($templatePath . "WritingSystems", $writingSystemsFolder);
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("writing system files do not exist.  fixed %s",$writingSystemsFolder));
 			}
 		}
-		$languageCode = $this->_projectModel->languageCode;
+		$languageCode = $this->projectModel->languageCode;
 		$ldmlFile = $writingSystemsFolder . "/$languageCode.ldml";
 		rename($writingSystemsFolder . "qaa.ldml", $ldmlFile);
 		$this->findReplace($ldmlFile, "qaa", $languageCode);
@@ -85,10 +86,15 @@ class LexProjectFixer extends LexProject
 	
 	function ensureWeSayConfigExists() {
 		$this->ensureProjectFolderExists();
+		self::checkTemplatesExist();
 		$configFilePath = LexProject::projectDefaultSettingsFilePath($this->projectPath);
 		if (!file_exists($configFilePath)) {
-			copy($this::templatePath() . 'default.WeSayConfig', $configFilePath);
-			$this->findReplace($configFilePath, "qaa", $this->_projectModel->languageCode);
+			$srcFilePath = self::templatePath() . LANGUAGE_FORGE_SETTINGS . 'default.WeSayConfig';
+			if (!file_exists($srcFilePath)) {
+				throw new \Exception("Expected template file '$srcFilePath' not found.");
+			} 
+			copy($srcFilePath, $configFilePath);
+			$this->findReplace($configFilePath, "qaa", $this->projectModel->languageCode);
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("wesay config file does not exist.  fixed %s",$configFilePath));
 			}
