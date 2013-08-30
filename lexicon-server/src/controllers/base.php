@@ -45,7 +45,7 @@ class Base extends CI_Controller {
 			$isAdmin = Roles::hasRight(Realm::SITE, $this->_user->role, Domain::USERS + Operation::CREATE);
 			$this->viewdata['is_admin'] = $isAdmin;
 			$this->viewdata['user_name'] = $this->viewdata['user_name'] = $this->_user->username;
-			$this->viewdata['user_id'] = $this->_user->id;
+			$this->viewdata['user_id'] = $this->_user->id->asString();
 			$this->viewdata['small_gravatar_url'] = $this->ion_auth->get_gravatar("30");
 			$this->viewdata['small_avatar_url'] = $this->_user->avatar_ref;
 			$projects = $this->_user->listProjects();

@@ -1,57 +1,124 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
+use models\ProjectModel;
+
 use libraries\lfdictionary\common\LoggerFactory;
-class LexProjectFixer
+class LexProjectFixer extends LexProject
 {
 	/**
-	 * @var LexProject
+	 * 
+	 * @var ProjectModel
 	 */
-	private $_lexProject;
+	private $_projectModel;
+	
+	private $_shouldLog;
 	
 	
-	function __construct($lexProject) {
-		
-		$this->_lexProject = $lexProject;
+	/**
+	 * @param string $projectName
+	 * @param ProjectModel $projectModel
+	 * @param bool $logMessages
+	 */
+	function __construct($projectName, $projectModel, $logMessages = true) {
+		parent::__construct($projectName);
+		$this->_projectModel = $projectModel;
+		$this->_shouldLog = $logMessages;
 	}
 	
-	function checkProjectFolderExists() {
-		$projectPath = $this->_lexProject->projectPath;
-		return file_exists($projectPath); 		
-	}
-	
-	function createProjectFolder() {
-		$projectPath = $this->_lexProject->projectPath;
-		mkdir($projectPath);
-	}
-	
-	function checkLiftFileExists() {
-		if (!$this->checkProjectFolderExists()) {
-			return false;
+	function fixProjectV01() {
+		if (!$this->checkTemplatesExist()) {
+			$message = "LexProject templates do not exist on this system.  Please put the appropriate files in the template folder to continue";
+			LoggerFactory::getLogger()->logInfoMessage($message);
+			throw new \Exception($message);
 		}
-		$projectPath = $this->_lexProject->projectPath;
-		
-		// TODO Might like to try a lift file matching <projectName>.lift in the first instance. CP 2012-11
-		
-		// Try any lift file
-		$filePath = glob($projectPath . '*.lift');
-		$c = count($filePath);
-		if ($c == 0) {
-			LoggerFactory::getLogger()->logInfoMessage(sprintf("no lift file find in '%s'",$this->projectPath));
-			return false;
-		}
-		if ($c > 1) {
-			LoggerFactory::getLogger()->logDebugMessage(sprintf("%d lift files found in '%s' using '%s'", $c, $this->projectPath, $this->_liftFilePath));
-		}
-		return true;
+		$this->ensureProjectFolderExists();
+		$this->ensureIsHgRepository();
+		$this->ensureLiftFileExists();
+		$this->ensureWeSayConfigExists();
+		$this->ensureWritingSystemsExists();
 	}
 	
-	function checkTemplatesExist() {
-		$templatePath = LexProject::templatePath();
+	function fixProjectVLatest() {
+		$this->fixProjectV01();
+	}
+	
+	function ensureProjectFolderExists() {
+		$projectPath = $this->projectPath;
+		if (!file_exists($projectPath)) {
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("project path does not exist.  fixed %s",$this->projectPath));
+			}
+			mkdir($projectPath);
+		}
+	}
+	
+	function ensureLiftFileExists() {
+		$this->ensureProjectFolderExists();
+		$projectPath = $this->projectPath;
+		if ($this->locateLiftFilePath() == null) {
+			$templatePath = $this::templatePath();
+			$sourceFile = $templatePath . "default.lift";
+			$liftFile = $this->projectPath . $this->projectName . ".lift";
+			copy($sourceFile, $liftFile);
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("lift file does not exist.  fixed %s",$liftFile));
+			}
+		}
+	}
+		
+	function ensureWritingSystemsExists() {
+		$this->ensureProjectFolderExists();
+		$writingSystemsFolder = $this->projectPath . "WritingSystems";
+		$templatePath = $this::templatePath();
+		if (!file_exists($writingSystemsFolder)) {
+			$this->fileCopy($templatePath . "WritingSystems", $writingSystemsFolder);
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("writing system files do not exist.  fixed %s",$writingSystemsFolder));
+			}
+		}
+		$languageCode = $this->_projectModel->languageCode;
+		$ldmlFile = $writingSystemsFolder . "/$languageCode.ldml";
+		rename($writingSystemsFolder . "qaa.ldml", $ldmlFile);
+		$this->findReplace($ldmlFile, "qaa", $languageCode);
+	}
+	
+	function ensureWeSayConfigExists() {
+		$this->ensureProjectFolderExists();
+		$configFilePath = LexProject::projectDefaultSettingsFilePath($projectPath);
+		if (!file_exists($configFilePath)) {
+			copy($this::templatePath() . 'default.WeSayConfig', $configFilePath);
+			$this->findReplace($configFilePath, "qaa", $this->_projectModel->languageCode);
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("wesay config file does not exist.  fixed %s",$configFilePath));
+			}
+		}
+	}
+	
+	function ensureIsHgRepository() {
+		if (!file_exists($this->projectPath . ".hg")) {
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("project path is not an hg repository.  fixed %s",$this->projectPath));
+			}
+			$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
+			$hg->init();
+		}
+	}
+	
+	static function checkTemplatesExist() {
+		$templatePath = $this::templatePath();
 		if (!file_exists($templatePath)) {
 			return false;
 		}
 		$templateFilePath = $templatePath . 'default.lift';
+		if (!file_exists($templateFilePath)) {
+			return false;
+		}
+		$templateFilePath = $templatePath . 'default.WeSayConfig';
+		if (!file_exists($templateFilePath)) {
+			return false;
+		}
+		$templateFilePath = $templatePath . 'WritingSystems';
 		if (!file_exists($templateFilePath)) {
 			return false;
 		}
@@ -68,68 +135,6 @@ class LexProjectFixer
 			return false;
 		}
 		return true;
-	}
-	
-	function createLiftFile() {
-		if (!$this->checkProjectFolderExists()) {
-			$this->createProjectFolder();
-		}
-		if ($this->checkLiftFileExists()) {
-			throw new \Exception(sprintf("Lift file '%s' already exists in '%s'",$this->_lexProject->projectName . ".lift", $this->_lexProject->projectPath));
-		}
-		
-		// TODO working on the below :-)
-		$templatePath = LexProject::templatePath();
-		$projectPath = $this->_lexProject->projectPath;
-		
-		// Copy from default file/folder
-		$this->fileCopy($templatePath, $projectPath);
-		
-		// Rename default lift in to project name lift file
-		$liftFileName = $this->_lexProject->projectName . ".lift";
-		rename($projectPath . 'default.lift', $projectPath . $liftFileName);
-		
-		// Rename default WeSay config in to project wysay config
-		$configFilePath = LexProject::projectDefaultSettingsFilePath($projectPath);
-		// 		rename($projectPath . "default.WeSayConfig", $configFilePath);
-		
-		// Rename default ldml to project *.ldml
-		$ldmlFileName = $languageCode.".ldml";
-		rename($projectPath . "WritingSystems/qaa.ldml", $projectPath . "WritingSystems/$ldmlFileName");
-		
-		// Language Code Format Changing into WeSay Config File
-		$file = $configFilePath;
-		$this->findReplace($file, $languageCode);
-		
-		// Language Code Format Changing into Langcode.idml File
-		$file = $projectPath . "WritingSystems/$ldmlFileName";
-		$this->findReplace($file, $languageCode);
-		
-		// Language Code Format Changing into idChangelog File
-		$file =  $projectPath . "WritingSystems/idchangelog.xml";
-		$this->findReplace($file, $languageCode);
-		
-		
-		
-		
-	}
-	
-	function checkSettingsFileExists() {
-		if (!$this->checkLiftFileExists()) {
-			return false;
-		}
-	}
-	
-	function createSettingsFiles() {
-		
-	}
-	
-	function checkHasHg() {
-		
-	}
-	
-	function createHg() {
-		
 	}
 	
 	private function fileCopy($source, $target ) {
@@ -155,9 +160,15 @@ class LexProjectFixer
 		}
 	}
 	
-	private function findReplace($filePath, $languageCode) {
+	/**
+	 * 
+	 * @param string $filePath - text file in which to do the search/replace
+	 * @param string $from - string to search for
+	 * @param string $to - replacement string
+	 */
+	private function findReplace($filePath, $from, $to) {
 		$content = file_get_contents($filePath);
-		$newContent = str_replace("qaa", $languageCode, $content);
+		$newContent = str_replace($from, $to, $content);
 		file_put_contents($filePath, $newContent);
 	}
 	

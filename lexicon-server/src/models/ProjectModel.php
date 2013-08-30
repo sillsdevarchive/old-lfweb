@@ -122,7 +122,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	/**
 	 * @var string
 	 */
-	public $language;
+	public $languageCode;
 	
 	/**
 	 * @var MapOf<ProjectRoleModel>
