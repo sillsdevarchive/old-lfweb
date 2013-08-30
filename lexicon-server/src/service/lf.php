@@ -26,6 +26,7 @@ require_once(APPPATH . 'models/ProjectModel.php');
 require_once(APPPATH . 'models/QuestionModel.php');
 require_once(APPPATH . 'models/TextModel.php');
 require_once(APPPATH . 'models/UserModel.php');
+require_once(APPPATH . 'models/LanguageModel.php');
 
 class Lf
 {
@@ -136,28 +137,7 @@ class Lf
 	 * @return string Id of written object
 	 */
 	public function project_update($object) {
-		$project = new \models\ProjectModel();
-		$id = $object['id'];
-		$isNewProject = ($id == '');
-		$oldDBName = '';
-		if (!$isNewProject) {
-			$project->read($id);
-			// This is getting complex; it probably belongs in ProjectCommands. TODO: Rewrite it to put it there. RM 2013-08
-			$oldDBName = $project->databaseName();
-		}
-		JsonDecoder::decode($project, $object);
-		$newDBName = $project->databaseName();
-		if (($oldDBName != '') && ($oldDBName != $newDBName)) {
-			if (MongoStore::hasDB($newDBName)) {
-				throw new \Exception("New project name " . $object->projectname . " already exists. Not renaming.");
-			}
-			MongoStore::renameDB($oldDBName, $newDBName);
-		}
-		$result = $project->write();
-		if ($isNewProject) {
-			//ActivityCommands::addProject($project); // TODO: Determine if any other params are needed. RM 2013-08
-		}
-		return $result;
+		return ProjectCommands::createProject($object);
 	}
 
 	/**
@@ -212,6 +192,17 @@ class Lf
 		$result = ProjectSettingsDto::encode($projectId, $this->_userId);
 		return $result;
 	}
+	
+	//---------------------------------------------------------------
+	// LANGUAGE API
+	//---------------------------------------------------------------
+	
+	public function language_typeahead($term) {
+		$list = new \models\LanguageTypeaheadModel($term);
+		$list->read();
+		return $list;
+	}
+	
 	
 	//---------------------------------------------------------------
 	// TEXT API

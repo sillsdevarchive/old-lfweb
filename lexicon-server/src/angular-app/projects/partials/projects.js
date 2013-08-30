@@ -4,7 +4,7 @@ angular.module(
 		'lfprojects.projects',
 		[ 'lf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap' ]
 	)
-	.controller('ProjectsCtrl', ['$scope', 'projectService', 'sessionService', 'linkService', function($scope, projectService, ss, linkService) {
+	.controller('ProjectsCtrl', ['$scope', 'projectService', 'languageService', 'sessionService', 'linkService', function($scope, projectService, languageService, ss, linkService) {
 		// Rights
 		$scope.rights = {};
 		$scope.rights.deleteOther = ss.hasRight(ss.realm.SITE(), ss.domain.PROJECTS, ss.operation.DELETE_OTHER); 
@@ -60,6 +60,8 @@ angular.module(
 			var model = {};
 			model.id = '';
 			model.projectname = $scope.projectName;
+			model.language = $scope.language.subtag;
+			model.projectCode = model.language + '-' + model.projectname.replace(/ /g, '_').toLowerCase();
 			projectService.update(model, function(result) {
 				if (result.ok) {
 					$scope.queryProjectsForUser();
@@ -96,6 +98,60 @@ angular.module(
 		$scope.enhanceDto = function(items) {
 			for (var i in items) {
 				items[i].url = linkService.project(items[i].id);
+			}
+		}
+
+		// ----------------------------------------------------------
+		// Typeahead for project selection
+		// ----------------------------------------------------------
+		$scope.languages = [];
+		$scope.language = {};
+		$scope.typeahead = {};
+		$scope.typeahead.langName = '';
+
+		$scope.queryLanguages = function(searchTerm) {
+			console.log('Searching for languages matching', searchTerm);
+			if (searchTerm.length < 3) {
+				return;
+			}
+			languageService.typeahead(searchTerm, function(result) {
+				console.log("languageService.typeahead(", searchTerm, ") returned:");
+				console.log(result);
+				if (result.ok) {
+					$scope.languages = result.data.entries;
+					console.log("$scope.languages is now:", $scope.languages);
+					//$scope.updateSomethingInTheForm(); // TODO: Figure out what, if anything, needs to be updated when the list comes back. 2013-08 RM
+				}
+			});
+		}
+
+		$scope.selectLanguage = function(item) {
+			console.log('selectLanguage called with args:');
+			console.log(arguments);
+			$scope.language = item;
+			$scope.typeahead.langName = item.description[0];
+		}
+
+		$scope.languageDescription = function(language) {
+			// Format a language description for display
+			// Language with just one name (most common case): English
+			// Language with two names: Dutch (Flemish)
+			// Language with 3+ names: Romanian (Moldavian, Moldovan)
+			var desc = language.description;
+			var first = desc[0];
+			var rest = desc.slice(1).join(', ');
+			if (rest) {
+				return first + " (" + rest + ")";
+			} else {
+				return first;
+			}
+		}
+
+		$scope.deprecationWarning = function(language) {
+			if (language.deprecated) {
+				return " (Deprecated)";
+			} else {
+				return "";
 			}
 		}
 	}])
