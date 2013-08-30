@@ -1,7 +1,6 @@
 <?php
 namespace libraries\lfdictionary\commands;
-use \libraries\lfdictionary\environment\LexiconProjectEnvironment;
-
+use libraries\lfdictionary\environment\LexProject;
 use \libraries\lfdictionary\mapper\FieldSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
@@ -11,25 +10,32 @@ class UpdateSettingUserFieldsSettingCommand
 	/**
 	 * @var array
 	 */
-	var $_result;
+	private $_result;
 
 	/**
-	 * @param string
+	 * @param LexProject
 	 *
-	 var $_projectPath;
+	 */
+	 private $_lexProject;
 
 	 /**
 	 * @param string
 	 */
-	var $_json;
+	private $_json;
 
 	/**
 	 * @param string
 	 */
-	var $_userNames;
+	private $_userNames;
 
-	function __construct($projectPath, $userNames, $fields) {
-		$this->_projectPath = $projectPath; // Path to the selected project
+	/**
+	 * 
+	 * @param LexProject $lexProject
+	 * @param array $userNames
+	 * @param string $fields - json data
+	 */
+	function __construct($lexProject, $userNames, $fields) {
+		$this->_lexProject = $lexProject;
 		$this->_json=$fields;
 		$this->_userNames=$userNames;
 	}
@@ -54,15 +60,7 @@ class UpdateSettingUserFieldsSettingCommand
 	private function persistTasks($strName,$newSetting)
 	{
 		$targetFile="";
-		$filePath = LexiconProjectEnvironment::userSettingsFilePath($this->_projectPath, $strName);
-		$targetFile=$filePath;
-		if(!file_exists($filePath)){
-			$filePath = LexiconProjectEnvironment::projectDefaultSettingsFilePath($this->_projectPath);
-			if(!file_exists($filePath)){
-				throw new \Exception("Can not access default user profile! " .$filePath);
-					
-			}
-		}
+		$filePath = $this->_lexProject->getUserSettingsFilePath($strName);
 		$xml_str = file_get_contents($filePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;

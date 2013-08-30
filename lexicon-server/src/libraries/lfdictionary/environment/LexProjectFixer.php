@@ -32,6 +32,7 @@ class LexProjectFixer extends LexProject
 			LoggerFactory::getLogger()->logInfoMessage($message);
 			throw new \Exception($message);
 		}
+		$this->ensureWorkFolderExists();
 		$this->ensureProjectFolderExists();
 		$this->ensureSettingsFolderExists();
 		$this->ensureIsHgRepository();
@@ -54,7 +55,17 @@ class LexProjectFixer extends LexProject
 		}
 	}
 	
+	private function ensureWorkFolderExists() {
+		if (!file_exists(self::workFolderPath())) {
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("project path does not exist.  fixed %s",$this->projectPath));
+			}
+			mkdir(self::workFolderPath());
+		}
+	}
+	
 	private function ensureProjectFolderExists() {
+		$this->ensureWorkFolderExists();
 		$projectPath = $this->projectPath;
 		if (!file_exists($projectPath)) {
 			if ($this->_shouldLog) {

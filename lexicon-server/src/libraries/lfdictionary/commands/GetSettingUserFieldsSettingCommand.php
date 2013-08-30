@@ -1,10 +1,11 @@
 <?php
 namespace libraries\lfdictionary\commands;
+use libraries\lfdictionary\environment\LexProject;
+
 use \libraries\lfdictionary\mapper\FieldSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use \libraries\lfdictionary\environment\LexiconProjectEnvironment;
 class GetSettingUserFieldsSettingCommand {
 
 	/**
@@ -13,17 +14,21 @@ class GetSettingUserFieldsSettingCommand {
 	var $_result;
 
 	/**
-	 * @param string $projectPath
+	 * @param LexProject $_lexProject
 	 */
-	var $_projectPath;
-
+	private $_lexProject;
 	/**
 	 * @param string
 	 */
 	var $_userName;
 
-	function __construct($projectPath, $userName) {
-		$this->_projectPath = $projectPath; // Path to the selected project
+	/**
+	 * 
+	 * @param LexProject $lexProject
+	 * @param string $userName
+	 */
+	function __construct($lexProject, $userName) {
+		$this->_lexProject = $lexProject;
 		$this->_userName = $userName;
 	}
 
@@ -33,7 +38,7 @@ class GetSettingUserFieldsSettingCommand {
 	}
 
 	function processFile() {
-		$configFilePath = LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $this->_userName);
+		$configFilePath = $this->_lexProject->getUserSettingsFilePath($this->_userName);
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;

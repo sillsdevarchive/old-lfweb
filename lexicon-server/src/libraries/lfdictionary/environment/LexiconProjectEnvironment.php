@@ -138,9 +138,6 @@ class LexiconProjectEnvironment {
 		return LANGUAGEFORGE_VAR_PATH . 'work/';
 	}
 
-	static public function languageforgeStateRootPath() {
-		return LANGUAGEFORGE_VAR_PATH . 'state/';
-	}
 
 	function getPath() {
 		return LANGUAGE_FORGE_WORK_PATH . $this->_projectName;
