@@ -10,7 +10,7 @@ ol, ul {
 	margin-left: auto;
 	margin-right: auto;
 	width: 1024px;
-	border: 1px solid #E4E4E4;
+	/*border: 1px solid #E4E4E4;*/
 }
 
 .flexible #main {
