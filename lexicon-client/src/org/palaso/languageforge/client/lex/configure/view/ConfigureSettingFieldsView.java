@@ -1,9 +1,9 @@
 package org.palaso.languageforge.client.lex.configure.view;
 
+import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingFieldsPresenter.IConfigureSettingFieldsView;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
 import org.palaso.languageforge.client.lex.controls.FastTree;
-import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingFieldsPresenter.IConfigureSettingFieldsView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -11,9 +11,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Singleton;
 
