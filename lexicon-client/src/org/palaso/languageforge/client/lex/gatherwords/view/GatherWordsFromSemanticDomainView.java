@@ -1,8 +1,8 @@
 package org.palaso.languageforge.client.lex.gatherwords.view;
 
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
-import org.palaso.languageforge.client.lex.presenter.EntryPresenter.IEntryView;
-import org.palaso.languageforge.client.lex.view.EntryView;
+import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter.IEntryView;
+import org.palaso.languageforge.client.lex.controls.view.EntryView;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.gatherwords.presenter.GatherWordsFromSemanticDomainPresenter.IGatherWordsFromSemanticDomainView;
 

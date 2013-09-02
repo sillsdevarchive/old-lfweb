@@ -1,6 +1,6 @@
 package org.palaso.social.client;
 
-import org.palaso.languageforge.client.lex.presenter.ModelPairBase;
+import org.palaso.languageforge.client.lex.controls.presenter.ModelPairBase;
 import org.palaso.social.model.SocialData;
 
 import com.google.gwt.core.client.JsArrayString;

@@ -1,7 +1,17 @@
-package org.palaso.languageforge.client.lex.service;
+package org.palaso.languageforge.client.lex.main.service;
 
 import org.palaso.languageforge.client.lex.jsonrpc.DispatchAsync;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpc;
+import org.palaso.languageforge.client.lex.main.service.actions.GetIanaDataAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetSettingInputSystemsAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetSettingUserFieldsSettingAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetSettingUserSettingsAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetSettingUserTasksSettingAction;
+import org.palaso.languageforge.client.lex.main.service.actions.GetUsersListAction;
+import org.palaso.languageforge.client.lex.main.service.actions.UpdateProjectNameAction;
+import org.palaso.languageforge.client.lex.main.service.actions.UpdateSettingInputSystemsAction;
+import org.palaso.languageforge.client.lex.main.service.actions.UpdateSettingUserFieldsSettingAction;
+import org.palaso.languageforge.client.lex.main.service.actions.UpdateSettingUserTasksSettingAction;
 import org.palaso.languageforge.client.lex.model.IanaDto;
 import org.palaso.languageforge.client.lex.model.ProjectDto;
 import org.palaso.languageforge.client.lex.model.UserListDto;
@@ -9,16 +19,6 @@ import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemsDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
-import org.palaso.languageforge.client.lex.service.actions.GetIanaDataAction;
-import org.palaso.languageforge.client.lex.service.actions.GetSettingInputSystemsAction;
-import org.palaso.languageforge.client.lex.service.actions.GetSettingUserFieldsSettingAction;
-import org.palaso.languageforge.client.lex.service.actions.GetSettingUserSettingsAction;
-import org.palaso.languageforge.client.lex.service.actions.GetSettingUserTasksSettingAction;
-import org.palaso.languageforge.client.lex.service.actions.GetUsersListAction;
-import org.palaso.languageforge.client.lex.service.actions.UpdateProjectNameAction;
-import org.palaso.languageforge.client.lex.service.actions.UpdateSettingInputSystemsAction;
-import org.palaso.languageforge.client.lex.service.actions.UpdateSettingUserFieldsSettingAction;
-import org.palaso.languageforge.client.lex.service.actions.UpdateSettingUserTasksSettingAction;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Singleton;

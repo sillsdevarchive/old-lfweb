@@ -1,8 +1,8 @@
-package org.palaso.languageforge.client.lex.view;
+package org.palaso.languageforge.client.lex.controls.view;
 
 import java.util.HashMap;
 
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter;
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter;
 
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.shared.HandlerRegistration;

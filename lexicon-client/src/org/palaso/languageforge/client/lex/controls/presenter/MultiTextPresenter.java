@@ -1,4 +1,4 @@
-package org.palaso.languageforge.client.lex.presenter;
+package org.palaso.languageforge.client.lex.controls.presenter;
 
 import java.util.HashMap;
 

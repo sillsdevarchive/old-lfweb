@@ -1,7 +1,7 @@
 package org.palaso.languageforge.client.lex.addinfo.view;
 
-import org.palaso.languageforge.client.lex.presenter.EntryPresenter;
-import org.palaso.languageforge.client.lex.view.EntryView;
+import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
+import org.palaso.languageforge.client.lex.controls.view.EntryView;
 import org.palaso.languageforge.client.lex.addinfo.presenter.IncompleteWordEditPresenter;
 
 import com.google.gwt.core.client.GWT;

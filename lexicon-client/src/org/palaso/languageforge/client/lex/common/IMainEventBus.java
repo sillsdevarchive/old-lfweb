@@ -1,6 +1,6 @@
 package org.palaso.languageforge.client.lex.common;
 
-import org.palaso.languageforge.client.lex.presenter.LoadingProgressIndicatorWindowPresenter;
+import org.palaso.languageforge.client.lex.controls.presenter.LoadingProgressIndicatorWindowPresenter;
 
 import com.mvp4g.client.annotation.Event;
 import com.mvp4g.client.annotation.module.AfterLoadChildModule;

@@ -1,7 +1,7 @@
-package org.palaso.languageforge.client.lex.view;
+package org.palaso.languageforge.client.lex.controls.view;
 
-import org.palaso.languageforge.client.lex.presenter.ExamplePresenter.IExampleView;
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter.IMultiTextView;
+import org.palaso.languageforge.client.lex.controls.presenter.ExamplePresenter.IExampleView;
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -10,7 +10,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLPanel;
 

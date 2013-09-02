@@ -1,9 +1,9 @@
-package org.palaso.languageforge.client.lex.view;
+package org.palaso.languageforge.client.lex.controls.view;
 
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
-import org.palaso.languageforge.client.lex.presenter.ExamplePresenter.IExampleView;
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter.IMultiTextView;
-import org.palaso.languageforge.client.lex.presenter.SensePresenter.ISenseView;
+import org.palaso.languageforge.client.lex.controls.presenter.ExamplePresenter.IExampleView;
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
+import org.palaso.languageforge.client.lex.controls.presenter.SensePresenter.ISenseView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;

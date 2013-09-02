@@ -4,19 +4,19 @@
  * @version 0.1
  * @since June 2011
  */
-package org.palaso.languageforge.client.lex.presenter;
+package org.palaso.languageforge.client.lex.controls.presenter;
 
 import java.util.ArrayList;
 
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
+import org.palaso.languageforge.client.lex.controls.presenter.SensePresenter.ISenseView;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.MultiText;
 import org.palaso.languageforge.client.lex.model.Sense;
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter.IMultiTextView;
-import org.palaso.languageforge.client.lex.presenter.SensePresenter.ISenseView;
 
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.ClickEvent;

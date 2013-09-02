@@ -13,10 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.palaso.languageforge.client.lex.view;
+package org.palaso.languageforge.client.lex.controls.view;
 
 import org.palaso.languageforge.client.lex.controls.HasWidgetsDialogBox;
-import org.palaso.languageforge.client.lex.presenter.LoadingProgressIndicatorWindowPresenter;
+import org.palaso.languageforge.client.lex.controls.presenter.LoadingProgressIndicatorWindowPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

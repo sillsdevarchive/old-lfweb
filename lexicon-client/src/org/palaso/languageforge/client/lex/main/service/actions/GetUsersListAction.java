@@ -1,4 +1,4 @@
-package org.palaso.languageforge.client.lex.service.actions;
+package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;

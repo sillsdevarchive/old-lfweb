@@ -1,8 +1,8 @@
 package org.palaso.languageforge.client.lex.main.presenter;
 
-import org.palaso.languageforge.client.lex.service.BaseService;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcRequestStateListener;
 import org.palaso.languageforge.client.lex.main.MainEventBus;
+import org.palaso.languageforge.client.lex.main.service.BaseService;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.main.view.MainView;
 

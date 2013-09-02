@@ -5,12 +5,12 @@
  * @since June 2011
  */
 
-package org.palaso.languageforge.client.lex.presenter;
+package org.palaso.languageforge.client.lex.controls.presenter;
 
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
 import org.palaso.languageforge.client.lex.model.Example;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.MultiText;
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter.IMultiTextView;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Label;

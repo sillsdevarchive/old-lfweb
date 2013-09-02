@@ -1,4 +1,4 @@
-package org.palaso.languageforge.client.lex.service;
+package org.palaso.languageforge.client.lex.main.service;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpc;
 import org.palaso.languageforge.client.lex.model.IanaDto;

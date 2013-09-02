@@ -4,7 +4,7 @@
  * @version 0.1
  * @since June 2011
  */
-package org.palaso.languageforge.client.lex.presenter;
+package org.palaso.languageforge.client.lex.controls.presenter;
 
 import java.util.ArrayList;
 
@@ -13,13 +13,13 @@ import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
+import org.palaso.languageforge.client.lex.controls.presenter.ExamplePresenter.IExampleView;
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
 import org.palaso.languageforge.client.lex.model.Example;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconPosition;
 import org.palaso.languageforge.client.lex.model.MultiText;
 import org.palaso.languageforge.client.lex.model.Sense;
-import org.palaso.languageforge.client.lex.presenter.ExamplePresenter.IExampleView;
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter.IMultiTextView;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;

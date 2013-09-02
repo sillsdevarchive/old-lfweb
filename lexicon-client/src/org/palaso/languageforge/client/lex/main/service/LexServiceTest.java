@@ -11,7 +11,6 @@ import org.palaso.languageforge.client.lex.model.LexiconEntryListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
 import org.palaso.languageforge.client.lex.model.ResultDto;
-import org.palaso.languageforge.client.lex.service.BaseServiceTest;
 import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.enums.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;

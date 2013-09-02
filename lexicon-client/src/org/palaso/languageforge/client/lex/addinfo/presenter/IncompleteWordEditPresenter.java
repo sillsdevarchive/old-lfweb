@@ -12,7 +12,7 @@ import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
-import org.palaso.languageforge.client.lex.presenter.EntryPresenter;
+import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;

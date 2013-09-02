@@ -1,11 +1,11 @@
 package org.palaso.languageforge.client.lex.gatherwords.view;
 
+import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
+import org.palaso.languageforge.client.lex.controls.view.MultiTextView;
 import org.palaso.languageforge.client.lex.gatherwords.presenter.GatherWordsFromWordListPresenter.IGatherWordsFromWordListView;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
-import org.palaso.languageforge.client.lex.presenter.EntryPresenter.IEntryView;
-import org.palaso.languageforge.client.lex.presenter.MultiTextPresenter.IMultiTextView;
-import org.palaso.languageforge.client.lex.view.EntryView;
-import org.palaso.languageforge.client.lex.view.MultiTextView;
+import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter.IEntryView;
+import org.palaso.languageforge.client.lex.controls.view.EntryView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;

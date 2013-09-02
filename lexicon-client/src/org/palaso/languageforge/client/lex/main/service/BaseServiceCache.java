@@ -1,4 +1,4 @@
-package org.palaso.languageforge.client.lex.service;
+package org.palaso.languageforge.client.lex.main.service;
 
 import java.util.Collection;
 import java.util.HashMap;

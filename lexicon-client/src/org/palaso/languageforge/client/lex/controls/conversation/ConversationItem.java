@@ -3,16 +3,12 @@ package org.palaso.languageforge.client.lex.controls.conversation;
 import java.util.Date;
 
 import org.palaso.languageforge.client.lex.common.MessageFormat;
-import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
-import org.palaso.languageforge.client.lex.util.UUID;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -45,12 +41,10 @@ public class ConversationItem extends ComplexPanel {
 	private ExtendedCheckBox chkResolved = null;
 	private Button btnAddComment = null;
 	private static String imgGreenChecked;
-	private static String CONTROL_UUID;
 	private ConversationControl conversationControl = null;
 
 	static {
 		imgGreenChecked = GWT.getModuleBaseURL() + "/images/ConversationControlGreenChecked.png";
-		CONTROL_UUID = UUID.uuid();
 	}
 
 	protected ConversationItem() {
