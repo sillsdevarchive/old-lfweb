@@ -2,8 +2,8 @@ package org.palaso.languageforge.client.lex.controls.conversation;
 
 import java.util.Date;
 
-import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.MessageFormat;
+import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 import org.palaso.languageforge.client.lex.util.UUID;
 

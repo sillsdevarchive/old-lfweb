@@ -1,9 +1,7 @@
-package org.palaso.languageforge.client.lex.common;
+package org.palaso.languageforge.client.lex.common.enums;
 
 import java.util.EnumMap;
 import java.util.Map;
-
-import org.palaso.languageforge.client.lex.common.IEnum;
 
 public enum DashboardUpdateResultType implements IEnum {
 

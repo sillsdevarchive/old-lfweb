@@ -1,7 +1,7 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
-import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
-import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
+import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
+import org.palaso.languageforge.client.lex.common.enums.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.ConversationListDto;
 

@@ -1,4 +1,5 @@
-package org.palaso.languageforge.client.lex.common;
+package org.palaso.languageforge.client.lex.common.enums;
+
 
 
 public enum InputSystemIdSpecialType implements IEnum  {

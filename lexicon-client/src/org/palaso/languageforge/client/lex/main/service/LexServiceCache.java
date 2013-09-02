@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
 

@@ -1,9 +1,9 @@
 package org.palaso.languageforge.client.lex.main.presenter;
 
-import org.palaso.languageforge.client.lex.common.DomainPermissionType;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.OperationPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.main.MainEventBus;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.UserDto;

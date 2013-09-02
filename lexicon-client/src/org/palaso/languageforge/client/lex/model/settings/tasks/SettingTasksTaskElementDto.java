@@ -1,6 +1,6 @@
 package org.palaso.languageforge.client.lex.model.settings.tasks;
 
-import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
+import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.model.BaseDto;
 public class SettingTasksTaskElementDto extends BaseDto<SettingTasksTaskElementDto> {
 

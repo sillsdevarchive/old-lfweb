@@ -8,10 +8,10 @@ import java.util.TreeMap;
 
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.common.MessageFormat;
-import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
 import org.palaso.languageforge.client.lex.common.IPersistable;
+import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingsView;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.IanaBaseDataDto;

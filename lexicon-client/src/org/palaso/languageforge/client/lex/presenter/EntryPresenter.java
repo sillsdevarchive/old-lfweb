@@ -8,9 +8,9 @@ package org.palaso.languageforge.client.lex.presenter;
 
 import java.util.ArrayList;
 
-import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
-import org.palaso.languageforge.client.lex.common.OperationPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.MultiText;

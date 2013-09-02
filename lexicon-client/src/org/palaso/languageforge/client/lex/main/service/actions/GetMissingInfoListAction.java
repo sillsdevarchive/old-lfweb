@@ -1,6 +1,6 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
-import org.palaso.languageforge.client.lex.common.MissinginfoType;
+import org.palaso.languageforge.client.lex.common.enums.MissinginfoType;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
 

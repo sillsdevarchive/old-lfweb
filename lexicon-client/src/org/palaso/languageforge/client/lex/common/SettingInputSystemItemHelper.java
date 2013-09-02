@@ -3,6 +3,8 @@ package org.palaso.languageforge.client.lex.common;
 import java.util.Date;
 import java.util.SortedMap;
 
+import org.palaso.languageforge.client.lex.common.enums.InputSystemIdSpecialPurposeType;
+import org.palaso.languageforge.client.lex.common.enums.InputSystemIdSpecialType;
 import org.palaso.languageforge.client.lex.model.IanaBaseDataDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemElementCollationsDto;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemElementDto;

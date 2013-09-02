@@ -1,5 +1,7 @@
 package org.palaso.languageforge.client.lex.common;
 
+import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 
 import com.google.gwt.core.client.JsArrayNumber;

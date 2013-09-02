@@ -2,10 +2,10 @@ package org.palaso.languageforge.client.lex.browse.edit.presenter;
 
 import org.palaso.languageforge.client.lex.browse.edit.BrowseAndEditEventBus;
 import org.palaso.languageforge.client.lex.browse.edit.view.LexBrowseEditView;
-import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
-import org.palaso.languageforge.client.lex.common.OperationPermissionType;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
+import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;

@@ -1,6 +1,5 @@
-package org.palaso.languageforge.client.lex.common;
+package org.palaso.languageforge.client.lex.common.enums;
 
-import org.palaso.languageforge.client.lex.common.IEnum;
 /**
  * An enum for the missing info type
  * This enum should alway match with MissingInfoType.php

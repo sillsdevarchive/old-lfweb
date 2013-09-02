@@ -1,6 +1,6 @@
 package org.palaso.languageforge.client.lex.addinfo.presenter;
 
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.addinfo.AddInfoEventBus;
 import org.palaso.languageforge.client.lex.addinfo.view.AddInfoMainView;
 

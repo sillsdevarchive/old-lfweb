@@ -1,9 +1,9 @@
 package org.palaso.languageforge.client.lex.model.settings.fields;
 
-import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
-import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
-import org.palaso.languageforge.client.lex.common.SettingFieldMultiplicityType;
-import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldClassNameType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldDataType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldMultiplicityType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldVisibilityType;
 import org.palaso.languageforge.client.lex.model.BaseDto;
 
 import com.google.gwt.core.client.JsArray;

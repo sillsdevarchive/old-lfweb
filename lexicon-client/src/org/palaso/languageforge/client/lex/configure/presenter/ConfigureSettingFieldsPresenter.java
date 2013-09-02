@@ -11,13 +11,13 @@ import java.util.TreeMap;
 
 import org.palaso.languageforge.client.lex.common.CheckableItem;
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.IPersistable;
-import org.palaso.languageforge.client.lex.common.SettingFieldClassNameType;
-import org.palaso.languageforge.client.lex.common.SettingFieldDataType;
-import org.palaso.languageforge.client.lex.common.SettingFieldVisibilityType;
 import org.palaso.languageforge.client.lex.common.SettingInputSystemItem;
 import org.palaso.languageforge.client.lex.common.SettingInputSystemItemHelper;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldClassNameType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldDataType;
+import org.palaso.languageforge.client.lex.common.enums.SettingFieldVisibilityType;
 import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
 import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingFieldsView;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;

@@ -12,16 +12,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-
 import com.google.inject.Inject;
-
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 
 import org.palaso.languageforge.client.lex.common.CheckableItem;
 import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.IPersistable;
-import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
@@ -37,8 +34,9 @@ import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDash
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 import org.palaso.languageforge.client.lex.common.ActivityTimeRangeType;
-import org.palaso.languageforge.client.lex.common.DomainLanguagesType;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
+import org.palaso.languageforge.client.lex.common.enums.DomainLanguagesType;
+import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.configure.ConfigureEventBus;
 import org.palaso.languageforge.client.lex.configure.view.ConfigureSettingTasksView;
 import org.palaso.languageforge.client.lex.main.service.ILexService;

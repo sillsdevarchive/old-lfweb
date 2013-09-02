@@ -3,11 +3,11 @@ package org.palaso.languageforge.client.lex.main;
 
 import org.palaso.languageforge.client.lex.addinfo.AddInfoModule;
 import org.palaso.languageforge.client.lex.browse.edit.BrowseAndEditModule;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.CustomLogger;
 import org.palaso.languageforge.client.lex.common.IMainEventBus;
 import org.palaso.languageforge.client.lex.gatherwords.GatherWordsModule;
 import org.palaso.languageforge.client.lex.common.WindowResizeBroadcastInterface;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.configure.ConfigureModule;
 import org.palaso.languageforge.client.lex.dashboard.DashboardModule;
 import org.palaso.languageforge.client.lex.main.presenter.LexMainPresenter;

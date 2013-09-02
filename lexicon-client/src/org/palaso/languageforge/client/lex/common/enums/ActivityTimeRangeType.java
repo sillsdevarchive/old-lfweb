@@ -1,6 +1,6 @@
-package org.palaso.languageforge.client.lex.common;
+package org.palaso.languageforge.client.lex.common.enums;
 
-import org.palaso.languageforge.client.lex.common.IEnum;
+import org.palaso.languageforge.client.lex.common.I18nConstants;;
 
 public enum ActivityTimeRangeType implements IEnum {
 

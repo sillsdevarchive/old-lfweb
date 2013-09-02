@@ -4,15 +4,15 @@ import java.util.Date;
 
 import org.palaso.languageforge.client.lex.model.ConversationDto;
 import org.palaso.languageforge.client.lex.model.ConversationListDto;
-import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
-import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationControl;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationItem;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationListControl;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationPostClickHandler;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationPostEvent;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
+import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
+import org.palaso.languageforge.client.lex.common.enums.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.review.ReviewEventBus;
 import org.palaso.languageforge.client.lex.review.view.ReviewMainView;

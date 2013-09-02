@@ -1,7 +1,7 @@
 package org.palaso.languageforge.client.lex.dashboard;
 
 
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.dashboard.presenter.DashboardMainPresenter;
 import org.palaso.languageforge.client.lex.dashboard.view.DashboardMainView;
 import org.palaso.languageforge.client.lex.main.LexGinModule;

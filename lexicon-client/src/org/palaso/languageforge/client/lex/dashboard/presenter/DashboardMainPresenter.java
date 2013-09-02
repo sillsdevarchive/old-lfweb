@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.palaso.languageforge.client.lex.common.ActivityTimeRangeType;
-import org.palaso.languageforge.client.lex.common.DashboardUpdateResultType;
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
-import org.palaso.languageforge.client.lex.common.SettingTaskNameType;
+import org.palaso.languageforge.client.lex.common.enums.DashboardUpdateResultType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.controls.ActivityChartDataSource;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.controls.LineChart;

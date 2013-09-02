@@ -1,6 +1,5 @@
-package org.palaso.languageforge.client.lex.common;
+package org.palaso.languageforge.client.lex.common.enums;
 
-import org.palaso.languageforge.client.lex.common.IEnum;
 
 public enum DomainLanguagesType  implements IEnum  {
 

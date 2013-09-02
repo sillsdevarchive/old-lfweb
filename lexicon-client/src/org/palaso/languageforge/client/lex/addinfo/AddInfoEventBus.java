@@ -1,6 +1,6 @@
 package org.palaso.languageforge.client.lex.addinfo;
 
-import org.palaso.languageforge.client.lex.common.EntryFieldType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.addinfo.presenter.AddInfoMainPresenter;
 import org.palaso.languageforge.client.lex.addinfo.presenter.ButtonBarControlPresenter;
 import org.palaso.languageforge.client.lex.addinfo.presenter.IncompleteWordEditPresenter;
