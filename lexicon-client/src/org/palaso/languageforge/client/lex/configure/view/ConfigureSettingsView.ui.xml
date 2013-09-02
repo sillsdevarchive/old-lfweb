@@ -54,13 +54,6 @@
 				<g:SimplePanel width="auto" height="auto" ui:field="tasksPanel"
 					styleName="content-block content-block-tab"></g:SimplePanel>
 			</g:tab>
-			<g:tab>
-				<g:header>
-					<ui:text from="{string.ConfigureSettingsView_Properties}"/>
-				</g:header>
-				<g:SimplePanel width="auto" height="auto" ui:field="propertiesPanel"
-					styleName="content-block content-block-tab"></g:SimplePanel>
-			</g:tab>
 		</g:TabLayoutPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

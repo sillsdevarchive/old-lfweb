@@ -8,12 +8,10 @@ import org.palaso.languageforge.client.lex.main.service.actions.GetSettingUserFi
 import org.palaso.languageforge.client.lex.main.service.actions.GetSettingUserSettingsAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetSettingUserTasksSettingAction;
 import org.palaso.languageforge.client.lex.main.service.actions.GetUsersListAction;
-import org.palaso.languageforge.client.lex.main.service.actions.UpdateProjectNameAction;
 import org.palaso.languageforge.client.lex.main.service.actions.UpdateSettingInputSystemsAction;
 import org.palaso.languageforge.client.lex.main.service.actions.UpdateSettingUserFieldsSettingAction;
 import org.palaso.languageforge.client.lex.main.service.actions.UpdateSettingUserTasksSettingAction;
 import org.palaso.languageforge.client.lex.model.IanaDto;
-import org.palaso.languageforge.client.lex.model.ProjectDto;
 import org.palaso.languageforge.client.lex.model.UserListDto;
 import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDto;
@@ -114,14 +112,6 @@ public class BaseService implements IBaseService {
 
 		remoteAsync.execute(action, asyncCallback);
 
-	}
-
-	@Override
-	public void updateProjectName(String projectName, String projectId,
-			AsyncCallback<ProjectDto> asyncCallback) {
-		UpdateProjectNameAction action = new UpdateProjectNameAction(projectId,
-				projectName);
-		remoteAsync.execute(action, asyncCallback);
 	}
 
 }

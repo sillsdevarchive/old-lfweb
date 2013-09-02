@@ -34,8 +34,6 @@ public class ConfigureSettingsView extends Composite implements
 	@UiField
 	SimplePanel tasksPanel;
 	@UiField
-	SimplePanel propertiesPanel;
-	@UiField
 	TabLayoutPanel tabPanel;
 	@UiField
 	SimplePanel userNameListBoxPanel;
@@ -61,11 +59,6 @@ public class ConfigureSettingsView extends Composite implements
 	@Override
 	public SimplePanel getTasksPanel() {
 		return tasksPanel;
-	}
-
-	@Override
-	public SimplePanel getPropertiesPanel() {
-		return propertiesPanel;
 	}
 
 	@Override

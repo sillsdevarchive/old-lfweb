@@ -2,7 +2,6 @@ package org.palaso.languageforge.client.lex.main.service;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpc;
 import org.palaso.languageforge.client.lex.model.IanaDto;
-import org.palaso.languageforge.client.lex.model.ProjectDto;
 import org.palaso.languageforge.client.lex.model.UserListDto;
 import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 import org.palaso.languageforge.client.lex.model.settings.fields.SettingFieldsDto;
@@ -102,17 +101,5 @@ public interface IBaseService {
 	void updateSettingUserFieldsSetting(String userId,
 			SettingFieldsDto fieldsDto,
 			AsyncCallback<SettingFieldsDto> asyncCallback);
-
-	/**
-	 * 
-	 * @param projectName
-	 *            new project name which will send to server
-	 * @param projectId
-	 *            the project which need to update name
-	 * @param asyncCallback
-	 */
-	void updateProjectName(String projectName, String projectId,
-			AsyncCallback<ProjectDto> asyncCallback);
-
 
 }

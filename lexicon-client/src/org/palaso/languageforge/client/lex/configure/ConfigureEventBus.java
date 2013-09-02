@@ -8,7 +8,6 @@ import org.palaso.languageforge.client.lex.common.IPersistable;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureMainPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingFieldsPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingInputSystemsPresenter;
-import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingPropertiesPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingTasksPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingsPresenter;
 import org.palaso.languageforge.client.lex.configure.presenter.LanguageCodeLookupPresenter;
@@ -59,9 +58,6 @@ public interface ConfigureEventBus extends EventBus {
 
 	@Event(forwardToParent = true)
 	void reloadLex();
-
-	@Event(handlers = ConfigureSettingPropertiesPresenter.class)
-	void attachPropertiesView(SimplePanel tasksPanel);
 
 	@Event(handlers = ConfigureSettingTasksPresenter.class)
 	void attachTasksView(SimplePanel tasksPanel);

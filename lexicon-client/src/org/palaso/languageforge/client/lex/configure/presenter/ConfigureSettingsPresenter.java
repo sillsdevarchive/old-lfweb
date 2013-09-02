@@ -235,10 +235,7 @@ public class ConfigureSettingsPresenter
 		} else if (index == 2) {
 			// "tasks Tab
 			return view.getTasksPanel();
-		} else if (index == 3) {
-			// "tasks Tab
-			return view.getPropertiesPanel();
-		}
+		} 
 		return null;
 	}
 
@@ -288,8 +285,6 @@ public class ConfigureSettingsPresenter
 			eventBus.attachInputSystemsView(view.getInputSystemsPanel());
 			eventBus.attachFieldsView(view.getFieldsPanel());
 			eventBus.attachTasksView(view.getTasksPanel());
-
-			eventBus.attachPropertiesView(view.getPropertiesPanel());
 			selectCurrentUser();
 		}
 	}
@@ -391,8 +386,6 @@ public class ConfigureSettingsPresenter
 		public SimplePanel getFieldsPanel();
 
 		public SimplePanel getTasksPanel();
-
-		public SimplePanel getPropertiesPanel();
 
 		public HasClickHandlers getApplyClickedHandlers();
 
