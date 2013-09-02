@@ -104,11 +104,11 @@ class LexProjectFixer extends LexProject
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("writing system files do not exist.  fixed %s",$writingSystemsFolder));
 			}
+			$languageCode = $this->projectModel->languageCode;
+			$ldmlFile = $writingSystemsFolder . "/$languageCode.ldml";
+			rename($writingSystemsFolder . "/qaa.ldml", $ldmlFile);
+			$this->findReplace($ldmlFile, "qaa", $languageCode);
 		}
-		$languageCode = $this->projectModel->languageCode;
-		$ldmlFile = $writingSystemsFolder . "/$languageCode.ldml";
-		rename($writingSystemsFolder . "/qaa.ldml", $ldmlFile);
-		$this->findReplace($ldmlFile, "qaa", $languageCode);
 	}
 	
 	private function ensureWeSayConfigExists() {
