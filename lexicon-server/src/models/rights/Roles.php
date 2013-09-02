@@ -45,6 +45,7 @@ class Roles {
 		// Project Admin
 		$rights = self::$_rights[Realm::PROJECT][Roles::USER];
 		$rights[] = Domain::PROJECTS + Operation::EDIT_OWN;
+		$rights[] = Domain::PROJECTS + Operation::EDIT_OTHER; // TODO This can be removed when gwt app actually checks for ownership. CP 2013-08
 		$rights[] = Domain::QUESTIONS + Operation::CREATE;
 		$rights[] = Domain::QUESTIONS + Operation::EDIT_OTHER;
 		$rights[] = Domain::USERS + Operation::CREATE;
