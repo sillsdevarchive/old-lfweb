@@ -3,7 +3,6 @@ package org.palaso.languageforge.client.lex.main.service.actions;
 import org.palaso.languageforge.client.lex.model.ConversationDto;
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
-import org.palaso.languageforge.client.lex.common.Constants;
 
 public class SaveNewCommentAction extends JsonRpcAction<ConversationDto> {
 
@@ -16,7 +15,7 @@ public class SaveNewCommentAction extends JsonRpcAction<ConversationDto> {
 	
 	public SaveNewCommentAction(AnnotationMessageStatusType messageStatus, boolean isStatusReviewed, boolean isStatusTodo, String parentGuid,
 			String commentMessage, boolean isRootMessage) {
-		super(Constants.LEX_API_PATH, Constants.LEX_API, "saveNewComment", 6);
+		super("saveNewComment", 6);
 		
 		this.messageStatus = messageStatus;
 		this.parentGuid = parentGuid;

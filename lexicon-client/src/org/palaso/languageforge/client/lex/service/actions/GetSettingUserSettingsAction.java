@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.service.actions;
 
-import org.palaso.languageforge.client.lex.common.BaseConfiguration;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.UserSettingsDto;
 
@@ -10,7 +9,7 @@ public class GetSettingUserSettingsAction extends
 	String value;
 
 	public GetSettingUserSettingsAction(String userId) {
-		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "getUserSettings", 1);
+		super("getUserSettings", 1);
 		value = userId;
 	}
 

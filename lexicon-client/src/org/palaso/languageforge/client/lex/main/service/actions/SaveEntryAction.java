@@ -2,7 +2,6 @@ package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 
-import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
 
@@ -12,7 +11,7 @@ public class SaveEntryAction extends JsonRpcAction<ResultDto> {
 	String entryGuid;
 	String isNewEntry;
 	public SaveEntryAction(LexiconEntryDto value, String isNew) {
-		super(Constants.LEX_API_PATH, Constants.LEX_API, "saveEntry", 2);
+		super("saveEntry", 2);
 		this.value = value;
 		this.isNewEntry = isNew;
 	}

@@ -1,7 +1,6 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
-import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.model.AutoSuggestOptions;
 
 public class AutoSuggestAction extends JsonRpcAction<AutoSuggestOptions> {
@@ -17,7 +16,7 @@ public class AutoSuggestAction extends JsonRpcAction<AutoSuggestOptions> {
 		int indexFrom,
 		int limit
 	) {
-		super(Constants.LEX_API_PATH, Constants.LEX_API, "getWordsForAutoSuggest", 4);
+		super("getWordsForAutoSuggest", 4);
 		this.searchString = searchString;
 		this.fieldToSearch = fieldToSearch;
 		this.indexFrom = indexFrom;

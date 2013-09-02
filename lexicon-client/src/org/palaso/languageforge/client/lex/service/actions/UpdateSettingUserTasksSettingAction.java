@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.service.actions;
 
-import org.palaso.languageforge.client.lex.common.BaseConfiguration;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 
@@ -12,7 +11,7 @@ public class UpdateSettingUserTasksSettingAction extends
 
 	public UpdateSettingUserTasksSettingAction(String userId,
 			SettingTasksDto value) {
-		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "updateSettingTasks", 2);
+		super("updateSettingTasks", 2);
 		this.value = value;
 		this.userId = userId;
 	}

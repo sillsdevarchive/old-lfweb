@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.service.actions;
 
-import org.palaso.languageforge.client.lex.common.BaseConfiguration;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.settings.inputsystems.SettingInputSystemsDto;
 
@@ -9,7 +8,7 @@ public class UpdateSettingInputSystemsAction extends JsonRpcAction<SettingInputS
 	SettingInputSystemsDto value;
 	
 	public UpdateSettingInputSystemsAction(SettingInputSystemsDto value) {
-		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "updateSettingInputSystems",1);
+		super("updateSettingInputSystems",1);
 		this.value = value;
 	}
 

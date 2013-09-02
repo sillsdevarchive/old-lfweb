@@ -1,19 +1,18 @@
 package org.palaso.languageforge.client.lex.addinfo.presenter;
 
+import org.palaso.languageforge.client.lex.addinfo.AddInfoEventBus;
+import org.palaso.languageforge.client.lex.addinfo.view.IncompleteWordEditView;
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.EntryFieldType;
-import org.palaso.languageforge.client.lex.common.PermissionManager;
+import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.common.OperationPermissionType;
-import org.palaso.languageforge.client.lex.common.Tools;
+import org.palaso.languageforge.client.lex.common.PermissionManager;
+import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.presenter.EntryPresenter;
-import org.palaso.languageforge.client.lex.addinfo.AddInfoEventBus;
-import org.palaso.languageforge.client.lex.addinfo.view.IncompleteWordEditView;
-import org.palaso.languageforge.client.lex.common.I18nConstants;
-import org.palaso.languageforge.client.lex.main.service.ILexService;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;

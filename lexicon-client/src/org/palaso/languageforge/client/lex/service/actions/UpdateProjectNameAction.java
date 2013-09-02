@@ -1,6 +1,5 @@
 package org.palaso.languageforge.client.lex.service.actions;
 
-import org.palaso.languageforge.client.lex.common.BaseConfiguration;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.ProjectDto;
 
@@ -10,7 +9,7 @@ public class UpdateProjectNameAction extends JsonRpcAction<ProjectDto> {
 	String projecName;
 
 	public UpdateProjectNameAction(String projectId, String projecName) {
-		super(BaseConfiguration.getInstance().getLFApiPath(), BaseConfiguration.getInstance().getApiFileName(), "updateProjectName", 2);
+		super("updateProjectName", 2);
 		this.projectId = projectId;
 		this.projecName = projecName;
 	}

@@ -2,14 +2,13 @@ package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.ResultDto;
-import org.palaso.languageforge.client.lex.common.Constants;
 
 public class GatherWordsFromTextAction extends JsonRpcAction<ResultDto> {
 
 	private String words = "";
 	private String uploadedFileName = "";
 	public GatherWordsFromTextAction(String words,String uploadedFileName) {
-		super(Constants.LEX_API_PATH, Constants.LEX_API, "getGatherWords",2);
+		super("getGatherWords",2);
 		this.words = words;
 		this.uploadedFileName = uploadedFileName;
 	}

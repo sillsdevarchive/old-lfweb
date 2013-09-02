@@ -1,7 +1,6 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.common.AnnotationMessageStatusType;
-import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
 import org.palaso.languageforge.client.lex.model.ConversationListDto;
@@ -16,7 +15,7 @@ public class GetCommentsAction extends JsonRpcAction<ConversationListDto> {
 	
 	public GetCommentsAction(AnnotationMessageStatusType messageStatus,
 			ConversationAnnotationType type, int startIndex, int limitation, boolean isRecentChanges) {
-		super(Constants.LEX_API_PATH, Constants.LEX_API, "getComments", 5);
+		super("getComments", 5);
 		this.messageStatus = messageStatus;
 		this.annotationType = type;
 		this.startIndex = startIndex;
