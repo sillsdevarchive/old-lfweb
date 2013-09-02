@@ -34,14 +34,14 @@ class TestMultipleModel extends UnitTestCase {
 		$this->assertEqual('SomeUser', $otherModel->username);
 
 		$model = new ProjectModel();
-		$model->language = "SomeLanguage";
+		$model->languageCode = "SomeLanguage";
 		$model->projectname = "SomeProject";
 		$id = $model->write();
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
-		$this->assertEqual('SomeLanguage', $otherModel->language);
+		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
 		$this->assertEqual('SomeProject', $otherModel->projectname);
 	}
 

@@ -26,7 +26,7 @@ class TestProjectModel extends UnitTestCase {
 	
 	function testWrite_ReadBackSame() {
 		$model = new ProjectModel();
-		$model->language = "SomeLanguage";
+		$model->languageCode = "SomeLanguage";
 		$model->projectname = "SomeProject";
 		//$model->users->refs = array('1234');
 		$id = $model->write();
@@ -35,7 +35,7 @@ class TestProjectModel extends UnitTestCase {
 		$this->assertEqual($id, $model->id->asString());
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
-		$this->assertEqual('SomeLanguage', $otherModel->language);
+		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
 		$this->assertEqual('SomeProject', $otherModel->projectname);
 		//$this->assertEqual(array('1234'), $otherModel->users->refs);
 		
