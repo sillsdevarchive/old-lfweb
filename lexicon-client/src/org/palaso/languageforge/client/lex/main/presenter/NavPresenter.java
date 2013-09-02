@@ -416,7 +416,7 @@ public class NavPresenter extends
 		}else
 		{
 			ConsoleLog.log("Work with user!");
-			view.setConfigureMenuVisible(true);
+			view.setConfigureMenuVisible(false);
 			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
 				view.setConfigureMenuVisible(true);
 			}
