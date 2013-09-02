@@ -21,6 +21,7 @@ use libraries\lfdictionary\environment\LexProject;
 use libraries\lfdictionary\environment\ProjectState;
 use libraries\lfdictionary\store\LexStoreMissingInfo;
 use libraries\lfdictionary\store\LexStore;
+use libraries\palaso\CodeGuard;
 use models\UserModel;
 use models\ProjectModel;
 use models\rights\Operation;
@@ -439,10 +440,7 @@ class LfDictionary
 	 */
 	function getTitleLetterList()
 	{
-		// TODO Use CodeGuard for this CP 2013-08
-		if (!isset($this->_projectModel) || $this->_projectModel === null) {
-			throw new \Exception("Invalid project");
-		}
+		CodeGuard::checkTypeAndThrow($this->_projectModel, 'models\ProjectModel');
 
 		// get project language : FieldSettings.fromWindow().value("Word").getAbbreviations().get(0);
 
@@ -450,6 +448,7 @@ class LfDictionary
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
 		$languageCode = $this->_projectModel->languageCode;
 		$fileName = preg_replace('/-+/', '_', $languageCode);
+		error_log($fileName);
 		while(true)
 		{
 			$fileFullPath = LF_LIBRARY_PATH . "/data/ldml-core-common-main/" . $fileName.".xml";
