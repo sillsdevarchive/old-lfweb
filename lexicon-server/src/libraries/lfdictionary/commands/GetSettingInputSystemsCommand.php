@@ -1,5 +1,9 @@
 <?php
 namespace libraries\lfdictionary\commands;
+use libraries\lfdictionary\environment\LexProjectFixer;
+
+use libraries\lfdictionary\environment\LexProject;
+
 use libraries\lfdictionary\mapper\InputSystemXmlJsonMapper;
 
 
@@ -12,12 +16,16 @@ class GetSettingInputSystemsCommand
 	var $_result;
 
 	/**
-	 * @param string $projectPath
+	 * @param LexProject
 	 */
-	var $_projectPath;
+	var $_lexProject;
 
-	function __construct($projectPath) {
-		$this->_projectPath = $projectPath; // Path to the selected project
+	/**
+	 * 
+	 * @param LexProject $lexProject
+	 */
+	function __construct($lexProject) {
+		$this->_lexProject = $lexProject; // Path to the selected project
 	}
 
 	function execute() {
@@ -27,20 +35,22 @@ class GetSettingInputSystemsCommand
 
 	function processFile() {
 		$ldmls = array();
-		$writingSystemsPath = $this->_projectPath. WRITING_SYSTEMS_DIR;
-		if ((file_exists($writingSystemsPath) && is_dir($writingSystemsPath)))
+		$writingSystemsPath = $this->_lexProject->writingSystemsFolderPath();
+		if (!file_exists($writingSystemsPath))
 		{
-			$filesPath = glob($writingSystemsPath ."*.ldml");
-			foreach ($filesPath as &$filePath) {
-				$xml_str = file_get_contents($filePath);
-				$doc = new \DOMDocument;
-				$doc->preserveWhiteSpace = FALSE;
-				$doc->loadXML($xml_str);
-				$ldmls[] = InputSystemXmlJsonMapper::encodeInputSystemXmlToJson($doc);
-			}
-		} else {
-			throw new \Exception(sprintf("Cannot access writing systems in '%s'", $writingSystemsPath));
+			$fixer = new LexProjectFixer($this->_lexProject->projectModel);
+			$fixer->fixProjectVLatest($this->_lexProject);
 		}
+		
+		$filesPath = glob($writingSystemsPath ."*.ldml");
+		foreach ($filesPath as &$filePath) {
+			$xml_str = file_get_contents($filePath);
+			$doc = new \DOMDocument;
+			$doc->preserveWhiteSpace = FALSE;
+			$doc->loadXML($xml_str);
+			$ldmls[] = InputSystemXmlJsonMapper::encodeInputSystemXmlToJson($doc);
+		}
+		
 		$this->_result = array(
 			"list" => $ldmls
 		);

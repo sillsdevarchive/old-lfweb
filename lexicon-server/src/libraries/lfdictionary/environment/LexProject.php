@@ -1,10 +1,31 @@
 <?php
 namespace libraries\lfdictionary\environment;
 
-use \libraries\lfdictionary\common\LoggerFactory;
+use libraries\palaso\CodeGuard;
+
+use libraries\lfdictionary\common\LoggerFactory;
+use models\ProjectModel;
+use libraries\lfdictionary\environment\ProjectState;
 
 class LexProject
 {
+	// the follow constants seem to fit well in this class
+	const SETTINGS_EXTENSION = '.WeSayConfig';
+	const DEFAULT_SETTINGS_FILE = 'default.WeSayConfig';
+	const WRITING_SYSTEMS_DIR = '/WritingSystems/';
+	const SETTINGS_DIR = '/LanguageForgeSettings/';
+	const DEFAULT_SETTINGS_FILE_LEX = 'WeSayConfig.Lex.Default';
+	
+	// these constants may fit better in a different class	
+	const DEFAULT_SETTINGS_FILE_RWC = 'WeSayConfig.Rwc.Default'; // TODO Move this to the LFRapidWords project CP 2012-09
+	const LEXICON_WORD_PACK_FILE_NAME = 'SILCawl.lift';
+	const LEXICON_WORD_LIST_SOURCE = '/var/lib/languageforge/lexicon/wordpacks/';
+
+	
+	/**
+	 * @var ProjectModel
+	 */
+	public $projectModel;
 	
 	/**
 	 * @var string
@@ -19,87 +40,48 @@ class LexProject
 	/**
 	 * @var string
 	 */
-	public $projectName;
-	
-	/**
-	 * @var string
-	 */
 	private $_liftFilePath;
 	
 	/**
-	 * @param string $projectPath
+	 * 
+	 * @param ProjectModel $projectModel
+	 * @param string $projectBasePath
 	 */
-	public function __construct($projectName, $projectBasePath = LANGUAGE_FORGE_WORK_PATH) {
+	public function __construct($projectModel, $projectBasePath = '') {
+		if (empty($projectBasePath)) {
+			$projectBasePath = self::workFolderPath();
+		}
+		$this->projectModel = $projectModel;
 		
-		$this->projectName = $projectName;
+		$projectName = $this->projectModel->projectCode;
 		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		$this->projectPath = rtrim($projectBasePath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectState = new \libraries\lfdictionary\environment\ProjectState($this->projectName);
+		$this->projectState = new ProjectState($projectName);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
 			if (file_exists($this->projectPath)) {
-				$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
+				$this->projectState->setState(ProjectStates::Ready);
 			}
 		}
 	}
 	
 	/**
 	 * Creates a new Lexicon project
-	 * @param string $languageCode
 	 * @throws \Exception
 	 */
-	public function createNewProject($languageCode) {
-		$projectPath = $this->projectPath;
-		$templatePath = LexiconProjectEnvironment::templatePath();
-	
-		if (!is_dir($templatePath)) {
-			throw new \Exception(sprintf("Cannot create new project '%s': template '%s' does not exist.", $this->projectName, $templatePath));
+	public function createNewProject() {
+		if (is_dir($this->projectPath)) {
+			throw new \Exception(sprintf("Cannot create new project '%s' already exists", $this->projectPath));
 		}
-	
-		if (is_dir($projectPath)) {
-			throw new \Exception(sprintf("Cannot create new project '%s' already exists", $projectPath));
-		}
-
-		mkdir($projectPath);
+		$fixer = new LexProjectFixer($this->projectModel);
+		$fixer->fixProjectVLatest();
 		
-		// Copy from default file/folder
-		$this->fileCopy($templatePath, $projectPath);
-	
-		// Rename default lift in to project name lift file
-		$liftFileName = $this->projectName . ".lift";
-		rename($projectPath . "default.lift", "$projectPath/$liftFileName");
-	
-		// Rename default WeSay config in to project wysay config
-		$configFilePath = LexiconProjectEnvironment::projectDefaultSettingsFilePath($projectPath);
-		// 		rename($projectPath . "default.WeSayConfig", $configFilePath);
-	
-		// Rename default ldml to project *.ldml
-		$ldmlFileName = $languageCode.".ldml";
-		rename($projectPath . "WritingSystems/qaa.ldml", $projectPath . "WritingSystems/$ldmlFileName");
-
-		// Language Code Format Changing into WeSay Config File
-		$file = $configFilePath;
-		$this->findReplace($file, $languageCode);
-	
-		// Language Code Format Changing into Langcode.idml File
-		$file = $projectPath . "WritingSystems/$ldmlFileName";
-		$this->findReplace($file, $languageCode);
-	
-		// Language Code Format Changing into idChangelog File
-		$file =  $projectPath . "WritingSystems/idchangelog.xml";
-		$this->findReplace($file, $languageCode);
-
 		$this->makeLanguageForgeSettingsFolderReady();
-		
-		// Init the hg repository
-		$hg = new \libraries\lfdictionary\common\HgWrapper($this->projectPath);
-		$hg->init();
-	
 		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 	}
 	
 	private function makeLanguageForgeSettingsFolderReady() {
-		$languageForgeSettingsPath = $this->projectPath . LANGUAGE_FORGE_SETTINGS;
+		$languageForgeSettingsPath = $this-projectPath . self::SETTINGS_DIR;
 		if (!is_dir($languageForgeSettingsPath)) {
 			if (!mkdir($languageForgeSettingsPath)){
 				throw new \Exception(sprintf("Cannot create user setting folder '%s'", $languageForgeSettingsPath));
@@ -109,23 +91,42 @@ class LexProject
 	
 	/**
 	 * Returns the full path to the user (dictionary) settings file.
-	 * @param string $projectPath
 	 * @param string $userName
 	 * @return string
 	 * 		Example: /var/lib/languageforge/work/<some project>/LanguageForge/<username>.WeSayConfig
 	 */
-	static public function userSettingsFilePath($projectPath, $userName) {
-		return $projectPath . LANGUAGE_FORGE_SETTINGS . $userName . LANGUAGE_FORGE_SETTINGS_EXTENSION;
+	 public function getUserSettingsFilePath($userName) {
+	 	$configFile = $this->projectPath . self::SETTINGS_DIR . $userName . self::SETTINGS_EXTENSION;
+		if (!file_exists($configFile)) {
+			$fixer = new LexProjectFixer($this->projectModel);
+			$fixer->ensureUserSettingsFileExists($userName);
+		}
+		return $configFile;
 	}
 	
 	/**
 	 * Returns the full path to the project default settings file.
-	 * @param string $projectPath
 	 * @return string
 	 * 		Example: /var/lib/languageforge/work/<some project>/LanguageForge/default.WeSayConfig
 	 */
-	static public function projectDefaultSettingsFilePath($projectPath) {
-		return $projectPath . LANGUAGE_FORGE_SETTINGS . LANGUAGE_FORGE_DEFAULT_SETTINGS;
+	public function projectDefaultSettingsFilePath() {
+		return $this->projectPath . self::SETTINGS_DIR . self::DEFAULT_SETTINGS_FILE;
+	}
+	
+	public function projectSettingsFolderPath() {
+		return $this->projectPath . LANGUAGE_FORGE_SETTINGS ;
+	}
+	
+	public function writingSystemsFolderPath() {
+		return $this->projectPath . self::WRITING_SYSTEMS_DIR;
+	}
+	
+	static public function workFolderPath() {
+		return LANGUAGEFORGE_VAR_PATH . "work/";
+	}
+	
+	static public function stateFolderPath() {
+		return LANGUAGEFORGE_VAR_PATH . 'state/';
 	}
 	
 	/**
@@ -147,47 +148,6 @@ class LexProject
 		return LANGUAGEFORGE_VAR_PATH . "lexicon/resources/";
 	}
 	
-	/**
-	 * Locates and returns the full path to the *.WeSayConfig file to use for this user / project.
-	 * A .WeSayConfig file is created if needs be.
-	 * @return string
-	 * @throws \Exception
-	 */
-	static public function locateConfigFilePath($projectPath, $userName) {
-		// 1) See if we can find a user specific settings file
-		$filePath = LexiconProjectEnvironment::userSettingsFilePath($projectPath, $userName);
-		if (!file_exists($filePath)) {
-					LoggerFactory::getLogger()->logDebugMessage(sprintf("Project settings file '%s' not found for user '%s' loading defaults.",
-			 					$filePath,
-		 					$userName
-			 			));
-			// 2) If not, look for a project wide settings file under LanguageForgeSettings
-			$filePath = LexiconProjectEnvironment::projectDefaultSettingsFilePath($projectPath);
-			if (!file_exists($filePath)) {
-				// Check and create the LanguageForgeSettings folder if needs be.
-				if (!file_exists($projectPath . LANGUAGE_FORGE_SETTINGS)) {
-					mkdir($projectPath . LANGUAGE_FORGE_SETTINGS);
-				}
-				// 3) If not, see if we can copy a *.WeSayConfig file from the root folder of the project
-				$filesFound = glob($projectPath . '*' . LANGUAGE_FORGE_SETTINGS_EXTENSION);
-				if (count($filesFound) > 0) {
-					$source = $filesFound[0];
-				} else {
-					// 4) Failing everything we get a default config file from the template folder
-					// TODO This will of course need to be fixed for the vernacular language CP 2010-10
-					$source = LexiconProjectEnvironment::getTemplateDefaultSettingsPath();
-					if (!file_exists($source)) {
-						throw new \Exception(sprintf(
-								"Cannot access default user profile from file '%s'",
-								$source
-						));
-					}
-				}
-				copy($source, $filePath);
-			}
-		}
-		return $filePath;
-	}
 	
 	/**
 	 * Locates and returns the full path to the *.WeSayConfig file to use for this user / project.
@@ -214,33 +174,33 @@ class LexProject
 			$currentHash = $hg->getCurrentHash();
 		} catch (\Exception $exception) {
 			$currentHash = 'unknown';
-			LoggerFactory::getLogger()->logInfoMessage(sprintf("WARNING: getCurrentHash failed for '%s'", $this->projectName));
+			LoggerFactory::getLogger()->logInfoMessage(sprintf("WARNING: getCurrentHash failed for '%s'", $this->projectModel->projectCode));
 		}
 		return $currentHash;
 	}
+
+	public function getChorusNotesFilePath() {
+		$liftFilePath = $this->getLiftFilePath();
+		return $liftFilePath . '.ChorusNotes';
+	}
 	
-	public function getLiftFilePath() {
+	protected function locateLiftFilePath() {
 		if ($this->_liftFilePath) {
 			return $this->_liftFilePath;
 		}
-		if ($this->projectState->getState() != \libraries\lfdictionary\environment\ProjectStates::Ready) {
-			return null;
-		}
 		
-		// Try any lift file
-
 		$filePaths = glob($this->projectPath . '*.lift');
 
 		$c = count($filePaths);
 		if ($c == 0) {
-			throw new \Exception("No lift file found in: " . $this->projectPath);
+			return null;
 		}
 		
 		//try a lift file almost matching <projectName>.lift in the first instance
 		$prePercent = 0;
 		$bestMatchName = "";
 		foreach ($filePaths as $filePath) {			
-			similar_text(basename($filePath, ".lift"), $this->projectName, $percent);
+			similar_text(basename($filePath, ".lift"), $this->projectModel->projectCode, $percent);
 			if ($prePercent <= $percent)
 			{
 				$prePercent = $percent;
@@ -261,6 +221,17 @@ class LexProject
 		return $this->_liftFilePath;
 	}
 	
+	public function getLiftFilePath() {
+		$this->isReadyOrThrow();
+		$liftFilePath = $this->locateLiftFilePath();
+		if ($liftFilePath == null) {
+			$fixer = new LexProjectFixer($lexProject, $projectModel);
+			$fixer->fixProjectVLatest();
+			return $fixer->getLiftFilePath();
+		}
+		return $liftFilePath;
+	}
+	
 	/**
 	 * @return bool
 	 */
@@ -279,43 +250,12 @@ class LexProject
 		$result = $this->isReady();
 		if (!$result) {
 			throw new \Exception(sprintf(
-					"The project '%s' is not yet ready for use.",
-					$this->projectName
+					"The project '%s' (%s) is not yet ready for use.",
+					$this->projectModel->projectname, $this->projectModel->projectCode
 			));
 		}
 		return $result;
 	}
-	
-	
-	private function fileCopy($source, $target ) {
-		if (is_dir($source)) {
-			if (!is_dir($target)) {
-				mkdir($target);
-			}
-			$d = dir($source);
-			while (FALSE !== ($entry = $d->read())) {
-				if ($entry == '.' || $entry == '..') {
-					continue;
-				}
-				$entryFilePath = $source . '/' . $entry;
-				if (is_dir($entryFilePath)) {
-					$this->fileCopy($entryFilePath, $target . '/' . $entry);
-					continue;
-				}
-				copy($entryFilePath, $target . '/' . $entry);
-			}
-			$d->close();
-		} else {
-			copy($source, $target);
-		}
-	}
-	
-	private function findReplace($filePath, $languageCode) {
-		$content = file_get_contents($filePath);
-		$newContent = str_replace("qaa", $languageCode, $content);
-		file_put_contents($filePath, $newContent);
-	}
-	
 }
 
 

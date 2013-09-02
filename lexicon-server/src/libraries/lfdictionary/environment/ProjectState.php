@@ -55,7 +55,7 @@ class ProjectState
 	 * @return string
 	 */
 	public function filePath() {
-		return LexiconProjectEnvironment::languageforgeStateRootPath() . $this->_projectName . '.state';
+		return LexProject::stateFolderPath() . $this->_projectName . '.state';
 	}
 	
 	private function writeState() {

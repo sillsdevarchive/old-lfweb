@@ -6,6 +6,7 @@
  */
 namespace libraries\lfdictionary\environment;
 use \libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
+use libraries\lfdictionary\environment\LexProject;
 
 error_reporting(E_ALL | E_STRICT);
 require_once(dirname(__FILE__) . '/../Config.php');
@@ -32,6 +33,12 @@ class LexProjectUserSettings
 	 */
 	private $_projectModel;
 
+	/**
+	 * 
+	 * @var LexProject
+	 */
+	private $_lexProject;
+	
 	/**
 	 * @var UserModel
 	 */
@@ -71,7 +78,8 @@ class LexProjectUserSettings
 		}
 		$this->_projectModel = $projectModel;
 		$this->_userModel = $userModel;
-		$this->_projectPath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::projectPath($this->_projectModel);
+		$this->_lexProject = new LexProject($projectModel);	
+		$this->_projectPath = $this->_lexProject->projectPath;
 		$this->load();
 	}
 
@@ -81,7 +89,7 @@ class LexProjectUserSettings
 		$userName = $this->_userModel->username;
 		$userName = mb_strtolower($userName, mb_detect_encoding($userName));
 
-		$filePath = \libraries\lfdictionary\environment\LexiconProjectEnvironment::locateConfigFilePath($this->_projectPath, $userName);
+		$filePath = $this->_lexProject->getUserSettingsFilePath($userName);
 
 		LoggerFactory::getLogger()->logInfoMessage(sprintf("LexProjectUserSettings: %s (%s) using settings '%s'",
 		$this->_userModel->username,
@@ -200,7 +208,7 @@ class LexProjectUserSettings
 		//get abbreviations in the same sequnce of languages
 		$fieldSetting["Abbreviations"]= array();
 		foreach ($writingSystemsList as $writingSystem) {
-			$writingSystemFile=$this->_projectPath . WRITING_SYSTEMS_DIR . $writingSystem->nodeValue . ".ldml";
+			$writingSystemFile=$this->_lexProject->writingSystemsFolderPath() . $writingSystem->nodeValue . ".ldml";
 			if (file_exists($writingSystemFile)) {
 				// we have it, load.
 				$doc = new \DOMDocument;

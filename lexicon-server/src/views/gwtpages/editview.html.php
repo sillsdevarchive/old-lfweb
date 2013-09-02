@@ -1,20 +1,3 @@
-<div id="main">
-	<div class="main-holder">
-		<div class="clear-block">
-			<div class="tabs"></div>
-			<div class="region region-content">
-				<div class="block block-system" id="block-system-main">
-					<div class="content">
-
-						<?php if (!$logged_in): ?>
-						<!--  user not loged in, show only view-->
-						<div id="ViewerContent" class="readonly-view-view-only">
-							<?php include ("listview.html.php"); ?>
-						</div>
-
-
-
-						<?php else: ?>
 						<div id="ViewSwitch" class="dic-view-switch">
 							<aside id="sidebar-view-switch">
 								<nav class="accordion">
@@ -89,27 +72,8 @@
 							style="height: 710px; width: 100%; padding-top: 10px;"
 							targetPage= "<?php echo $gwt_page; ?>">
 
-							<?php
-							//	error_reporting(E_ALL | E_STRICT);
-							require_once(APPPATH . '/libraries/lfdictionary/Config.php');
-							require_once(APPPATH . '/helpers/loader_helper.php');
-
-							//	$errorHandler = new \libraries\lfdictionary\common\ErrorHandler();
-							if ($project_id!=null && $project_id!="" && $user_id!=null && $user_id!="") {
-			$lexClientEnvironment = new libraries\lfdictionary\environment\LexClientEnvironment($project_id, $user_id->asString());
-			echo $lexClientEnvironment->getSettings();
-			?>
-							<script type="text/javascript"
-								src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
-							<?php
-		}
-		?>
+							<?php if ($canShowEditor): ?>
+								<?php echo $lexSettings; ?>
+								<script type="text/javascript" src="/../js/gwt/lifteditor/lifteditor.nocache.js"></script>
+							<?php endif; ?>
 						</div>
-
-						<?php endif; ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>

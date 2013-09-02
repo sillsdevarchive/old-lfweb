@@ -1,6 +1,8 @@
 <?php
 namespace environment;
 
+use libraries\lfdictionary\environment\LexProject;
+
 require_once(dirname(__FILE__) . '/../Config.php');
 require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
@@ -84,8 +86,8 @@ class LanguageDepotImporter {
 	
 	private static function createEnvironment($projectNodeId) {
 		$result = new LanguageDepotImportEnvironment();
-		$result->WorkRootPath = LexiconProjectEnvironment::languageforgeWorkRootPath();
-		$result->StateRootPath = LexiconProjectEnvironment::languageforgeStateRootPath();
+		$result->WorkRootPath = LexProject::workFolderPath();
+		$result->StateRootPath = LexProject::stateFolderPath();
 		$projectModel = new \lfbase\environment\ProjectModel($projectNodeId);
 		$result->ProjectPathName = $projectModel->getName();
 		return $result;

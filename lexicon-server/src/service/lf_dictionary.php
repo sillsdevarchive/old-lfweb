@@ -1,4 +1,12 @@
 <?php
+use libraries\lfdictionary\store\LexStoreType;
+
+use libraries\lfdictionary\store\LexStoreController;
+
+use models\ProjectModelFixer;
+
+use libraries\lfdictionary\environment\ProjectStates;
+
 use libraries\lfdictionary\common\AsyncRunner;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\common\UserActionDeniedException;
@@ -10,7 +18,6 @@ use libraries\lfdictionary\dto\UserDTO;
 use libraries\lfdictionary\dto\UserListDTO;
 use libraries\lfdictionary\environment\EnvironmentMapper;
 use libraries\lfdictionary\environment\LexProject;
-use libraries\lfdictionary\environment\LexiconProjectEnvironment;
 use libraries\lfdictionary\environment\ProjectState;
 use libraries\lfdictionary\store\LexStoreMissingInfo;
 use libraries\lfdictionary\store\LexStore;
@@ -42,11 +49,6 @@ class LfDictionary
 	private $_lexProject;
 
 	/**
-	 * @var string
-	 */
-	private $_projectPath;
-
-	/**
 	 * @var ProjectModel
 	 */
 	protected $_projectModel;
@@ -58,31 +60,32 @@ class LfDictionary
 
 
 	public function __construct($controller) {
-		$userId = (string)$controller->session->userdata('user_id');
-		$projectId = '';
+		$this->_userId = (string)$controller->session->userdata('user_id');
+		$this->_projectId = null;
 
 		if (isset($_GET['p'])) {
-			$projectId = $_GET['p'];
+			$this->_projectId = $_GET['p'];
 		}
 		
-		$this->_userModel = new UserModel($userId);
-		if (!empty($projectId)) {
-			$this->_projectModel = new ProjectModel($projectId);
+		$this->_userModel = new UserModel($this->_userId);
+		if (!empty($this->_projectId)) {
+			$this->_projectModel = new ProjectModel($this->_projectId);
+			ProjectModelFixer::ensureVLatest($this->_projectModel);
 		}
 
 		$this->_logger = LoggerFactory::getLogger();
-		$this->_logger->logInfoMessage("LFDictionaryAPI p:$projectId u:$userId");
+		$this->_logger->logInfoMessage("LFDictionaryAPI p:$this->_projectId u:$this->_userId");
 
 		$userName = empty($userId) ? 'anon' : $this->_userModel->username;
-		$projectName = empty($projectId) ? 'no project' : $this->_projectModel->projectname;
+		$projectName = empty($this->_projectId) ? 'no project' : $this->_projectModel->projectname;
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexAPI P=%s (%s) U=%s (%s)',
 			$projectName,
-			$projectId,
+			$this->_projectId,
 			$userName,
-			$userId
+			$this->_userId
 		));
-		$this->_lexProject = new LexProject($this->_projectModel->projectname); // TODO REVIEW: Pretty sure this should be project code CP 2013-08
-		$this->_projectPath = LexiconProjectEnvironment::projectPath($this->_projectModel);
+		$this->_lexProject = new LexProject($this->_projectModel);
+		$this->_projectPath = $this->_lexProject->projectPath;
 	}
 
 	/**
@@ -90,7 +93,7 @@ class LfDictionary
 	 * @return ProjectStateDTO
 	 */
 	function create() {
-		$this->_lexProject->createNewProject($this->_projectModel->language);
+		$this->_lexProject->createNewProject($this->_projectModel->languageCode);
 		return $this->state();
 	}
 
@@ -316,7 +319,7 @@ class LfDictionary
 	function getComments($messageStatus,$messageType, $startIndex,$limits, $isRecentChanges) {
 		$this->isReadyOrThrow();
 
-		$chorusNotesFilePath= $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
+		$chorusNotesFilePath= $this->_lexProject->getChorusNotesFilePath();
 		$command = new \libraries\lfdictionary\commands\GetCommentsCommand($chorusNotesFilePath, $messageStatus,$messageType, $startIndex,$limits,$isRecentChanges);
 		$result = $command->execute();
 		return $result->encode();
@@ -325,7 +328,7 @@ class LfDictionary
 	function saveNewComment($messageStatus, $isStatusReviewed, $isStatusTodo, $parentGuid, $commentMessage, $isRootMessage) {
 		$this->isReadyOrThrow();
 
-		$chorusNotesFilePath = $this->_lexProject->getLiftFilePath() . ".ChorusNotes";
+		$chorusNotesFilePath = $this->_lexProject->getChorusNotesFilePath();
 		$now = new DateTime;
 		$w3cDateString = $now->format(DateTime::W3C);
 		$messageType=0;
@@ -337,13 +340,13 @@ class LfDictionary
 	function getDashboardData($actRange) {
 		$this->isReadyOrThrow();
 
-		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->getLexStore(), $this->_projectNodeId, $this->_lexProject->getLiftFilePath(), $actRange);
+		$command = new \libraries\lfdictionary\commands\GetDashboardDataCommand($this->getLexStore(), $this->_projectId, $this->_lexProject->getLiftFilePath(), $actRange);
 		$result = $command->execute();
 		return $result->encode();
 	}
 
 	function getDashboardUpdateRunning() {
-		$command = new \libraries\lfdictionary\commands\UpdateDashboardCommand($this->_projectNodeId, $this->_projectModel, $this->_lexProject);
+		$command = new \libraries\lfdictionary\commands\UpdateDashboardCommand($this->_projectId, $this->_projectModel, $this->_lexProject);
 		$result = new ResultDTO(true, strval($command->execute()));
 		return $result->encode();
 	}
@@ -355,7 +358,7 @@ class LfDictionary
 		// so all user name will save in lowercase
 		$strName = $userModel->username;
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
-		$command = new \libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand($this->_projectPath,$strName);
+		$command = new \libraries\lfdictionary\commands\GetSettingUserFieldsSettingCommand($this->_lexProject,$strName);
 		$result = $command->execute();
 		return $result;
 	}
@@ -366,7 +369,7 @@ class LfDictionary
 		// so all user name will save in lowercase
 		$strName = $userModel->username;
 		$strName = mb_strtolower($strName, mb_detect_encoding($strName));
-		$command = new \libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand ($this->_projectPath,$strName);
+		$command = new \libraries\lfdictionary\commands\GetSettingUserTasksSettingCommand ($this->_lexProject,$strName);
 		$result = $command->execute();
 		return $result;
 	}
@@ -402,7 +405,7 @@ class LfDictionary
 			//apply to special user
 			$userNames[]  = $this->getUserNameById($userIds);
 		}
-		$command = new \libraries\lfdictionary\commands\UpdateSettingUserTasksSettingCommand($this->_projectPath,$userNames,$tasks);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingUserTasksSettingCommand($this->_lexProject,$userNames,$tasks);
 		$result = $command->execute();
 		return $result;
 	}
@@ -424,9 +427,9 @@ class LfDictionary
 		}
 		else {
 			// apply to special user
-			$userNames[]  = $this->getUserNameById($userIds);
+			$userNames[] = $this->getUserNameById($userIds);
 		}
-		$command = new \libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand($this->_projectPath,$userNames,$fields);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand($this->_lexProject->projectPath,$userNames,$fields);
 		$result = $command->execute();
 		return $result;
 	}
@@ -436,6 +439,7 @@ class LfDictionary
 	 */
 	function getTitleLetterList()
 	{
+		// TODO Use CodeGuard for this CP 2013-08
 		if (!isset($this->_projectModel) || $this->_projectModel === null) {
 			throw new \Exception("Invalid project");
 		}
@@ -444,7 +448,7 @@ class LfDictionary
 
 		//looking for ldml which has <exemplarCharacters type="index">
 		//example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
-		$languageCode = $this->_projectModel->language;
+		$languageCode = $this->_projectModel->languageCode;
 		$fileName = preg_replace('/-+/', '_', $languageCode);
 		while(true)
 		{
@@ -501,7 +505,7 @@ class LfDictionary
 	{
 		$this->isReadyOrThrow();
 		$store = $this->getLexStore();
-		$result = $store->searchEntriesAsWordList($this->_projectModel->language,trim($letter), null, null);
+		$result = $store->searchEntriesAsWordList($this->_projectModel->languageCode,trim($letter), null, null);
 		return $result->encode();
 	}
 
@@ -517,7 +521,7 @@ class LfDictionary
 
 		$currentState = $this->_lexProject->projectState->getState();
 		switch ($currentState) {
-			case \libraries\lfdictionary\environment\ProjectStates::Error:
+			case ProjectStates::Error:
 			case '':
 				// Have another go at importing
 				break;
@@ -525,9 +529,9 @@ class LfDictionary
 				return $this->state();
 		}
 
-		$this->_lexProject->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Importing, "Importing from LanguageDepot");
+		$this->_lexProject->projectState->setState(ProjectStates::Importing, "Importing from LanguageDepot");
 
-		$importer = new \libraries\lfdictionary\environment\LanguageDepotImporter($this->_projectNodeId);
+		$importer = new \libraries\lfdictionary\environment\LanguageDepotImporter($this->_projectId);
 		$importer->cloneRepository($user, $password, $soruceURI);
 		$importer->importContinue($this->_lexProject->projectState);
 		return $this->state();
@@ -542,7 +546,7 @@ class LfDictionary
 		$progress = 0;
 		switch ($currentState) {
 			case \libraries\lfdictionary\environment\ProjectStates::Importing:
-				$importer = new \environment\LanguageDepotImporter($this->_projectNodeId);
+				$importer = new \environment\LanguageDepotImporter($this->_projectId);
 				$importer->importContinue($this->_lexProject->projectState);
 				$progress = $importer->progress();
 				break;
@@ -560,7 +564,7 @@ class LfDictionary
 	private $_lexStore;
 	private function getLexStore() {
 		if (!isset($this->_lexStore)) {
-			$this->_lexStore = new \libraries\lfdictionary\store\LexStoreController(\libraries\lfdictionary\store\LexStoreType::STORE_MONGO, $this->_lexProject->projectName, $this->_lexProject);
+			$this->_lexStore = new LexStoreController(LexStoreType::STORE_MONGO, $this->_projectModel->databaseName(), $this->_lexProject);
 		}
 		return $this->_lexStore;
 	}
@@ -576,7 +580,7 @@ class LfDictionary
 
 	// Reviewed This can stay here
 	function getSettingInputSystems() {
-		$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_projectPath);
+		$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_lexProject);
 		$result = $command->execute();
 		return $result;
 	}
@@ -585,7 +589,7 @@ class LfDictionary
 	function updateSettingInputSystems($inputSystems) {
 		// don't use rawurldecode here, because it does not decode "+" -> " "
 		$inputSystems = urldecode($inputSystems);
-		$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_projectPath,$inputSystems);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_lexProject,$inputSystems);
 		$command->execute();
 		return $this->getSettingInputSystems();
 	}

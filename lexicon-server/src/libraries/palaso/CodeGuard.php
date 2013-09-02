@@ -30,6 +30,12 @@ class CodeGuard {
 		}
 	}
 	
+	public static function checkEmptyAndThrow($var, $name) {
+		if (empty($var)) {
+			throw new \Exception("'$name' should not be empty");
+		}
+	}
+	
 }
 
 ?>

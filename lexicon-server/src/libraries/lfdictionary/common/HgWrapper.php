@@ -90,6 +90,8 @@ class HgWrapper {
 	private static function execute($command) {
 		$output = '';
 		exec($command, $output);
+// 		error_log('exec ' . $command);
+// 		error_log('exec output ' . var_export($output, true));
 // 		echo $command . '<br/>';
 		return $output;
 	}
