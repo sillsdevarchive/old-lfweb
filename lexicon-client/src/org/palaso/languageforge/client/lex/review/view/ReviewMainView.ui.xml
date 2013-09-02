@@ -25,7 +25,8 @@
 						</div>
 					</div>
 				</g:HTMLPanel>
-				<g:Frame url="./../../gwtangular/review/51e3b48b9cde7fef33e7aef7"></g:Frame>
+				<g:Frame url="./../../gwtangular/sfchecks/review/51e3b48b9cde7fef33e7aef7" width="100%" height="500px"></g:Frame>
+				
 				<com:ConversationListControl width="auto"
 					height="10px" ui:field="conversationListControl" />
 				<g:HTMLPanel width="100%">

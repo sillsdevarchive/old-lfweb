@@ -2,13 +2,13 @@
 <html lang="en-GB">
 <head>
 <?php
-$this->load->view('./../templates/meta.html.php');
+$this->load->view('/templates/meta.html.php');
 ?>
 </head>
 <body>
 <?php
 $this->load->view($page); 
-$this->load->view('./../templates/script.html.php');
+$this->load->view('/templates/script.html.php');
 ?>
 </body>
 </html>
