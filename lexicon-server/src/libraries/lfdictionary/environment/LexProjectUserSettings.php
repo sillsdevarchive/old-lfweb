@@ -208,7 +208,7 @@ class LexProjectUserSettings
 		//get abbreviations in the same sequnce of languages
 		$fieldSetting["Abbreviations"]= array();
 		foreach ($writingSystemsList as $writingSystem) {
-			$writingSystemFile=$this->_projectPath . WRITING_SYSTEMS_DIR . $writingSystem->nodeValue . ".ldml";
+			$writingSystemFile=$this->_lexProject->writingSystemsFolderPath() . $writingSystem->nodeValue . ".ldml";
 			if (file_exists($writingSystemFile)) {
 				// we have it, load.
 				$doc = new \DOMDocument;

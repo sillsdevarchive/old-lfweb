@@ -1,5 +1,7 @@
 <?php
 namespace libraries\lfdictionary\commands;
+use libraries\lfdictionary\environment\LexProject;
+
 require_once(dirname(__FILE__) . '/../Config.php');
 
 use libraries\lfdictionary\mapper\InputSystemXmlJsonMapper;
@@ -12,17 +14,22 @@ class UpdateSettingInputSystemsCommand
 	var $_result;
 
 	/**
-	 * @param string $projectPath
+	 * @param LexProject 
 	 */
-	var $_projectPath;
+	var $_lexProject;
 
 	/**
 	 * @param string $projectPath
 	 */
 	var $_json;
 
-	function __construct($projectPath,$inputSystems) {
-		$this->_projectPath = $projectPath; // Path to the selected project
+	/**
+	 * 
+	 * @param LexProject $lexProject
+	 * @param string $inputSystems - json data
+	 */
+	function __construct($lexProject,$inputSystems) {
+		$this->_lexProject = $lexProject; // Path to the selected project
 		$this->_json=$inputSystems;
 	}
 
@@ -32,7 +39,7 @@ class UpdateSettingInputSystemsCommand
 	}
 
 	function processFile() {
-		$folderPath = $this->_projectPath . WRITING_SYSTEMS_DIR;
+		$folderPath = $this->_lexProject->writingSystemsFolderPath();
 
 		$json = json_decode($this->_json);
 		//after json decode, shold no problem to create xml file.

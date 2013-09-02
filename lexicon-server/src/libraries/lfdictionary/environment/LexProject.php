@@ -117,6 +117,10 @@ class LexProject
 		return $this->projectPath . LANGUAGE_FORGE_SETTINGS ;
 	}
 	
+	public function writingSystemsFolderPath() {
+		return $this->projectPath . self::WRITING_SYSTEMS_DIR;
+	}
+	
 	static public function workFolderPath() {
 		return LANGUAGEFORGE_VAR_PATH . "work/";
 	}

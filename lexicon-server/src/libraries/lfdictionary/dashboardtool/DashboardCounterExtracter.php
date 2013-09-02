@@ -2,6 +2,8 @@
 
 namespace libraries\lfdictionary\dashboardtool;
 
+use libraries\lfdictionary\environment\LexProject;
+
 require_once(dirname(__FILE__)   . '/../../../helpers/loader_helper.php');
 require_once(dirname(__FILE__) . '/ActivityFieldType.php');
 if (!defined('APPPATH'))
@@ -159,9 +161,9 @@ class DashboardCounterExtracter
 		
 		try {
 			$this->projectModel = new ProjectModel($this->projectId);
-			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectCode;
+			$projectPath = LexProject::workFolderPath() . $this->projectModel->projectCode;
 		
-			$filePath = glob(LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname."/*.lift");
+			$filePath = glob(LexProject::workFolderPath() . $this->projectModel->projectname."/*.lift");
 			
 			if (count($filePath) >= 1) {
 				
@@ -186,7 +188,7 @@ class DashboardCounterExtracter
 				
 				$this->readAndInsertCounters($this->liftFilePath, $timestamp, null);
 			} else {
-				throw new \Exception("No lift file found in: " . LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname);
+				throw new \Exception("No lift file found in: " . LexProject::workFolderPath() . $this->projectModel->projectname);
 			}
 		
 		} catch (Exception $e) {

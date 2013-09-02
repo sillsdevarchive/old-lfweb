@@ -31,17 +31,8 @@ define('LANGUAGEFORGE_LOG_PATH', '/tmp/');
 //Language Depot Database name
 define('LANG_DEPOT_DB_NAME', 'languagedepot');
 
-// the per use setting file extenstion.
-define('LANGUAGE_FORGE_SETTINGS_EXTENSION', '.WeSayConfig');
-
-// the default setting file for user
-// Do not use a file name with extension as LANGUAGE_FORGE_SETTINGS_EXTENSION for default setting
-// Update to All function will delete all with extension as LANGUAGE_FORGE_SETTINGS_EXTENSION!!
 define('LANGUAGE_FORGE_DEFAULT_SETTINGS_RWC', 'WeSayConfig.Rwc.Default'); // TODO Move this to the LFRapidWords project CP 2012-09
 define('LANGUAGE_FORGE_DEFAULT_SETTINGS', 'default.WeSayConfig');	// TODO name need to be changed, if a user named "default" will make problem!
-
-// the folder to keep input systems setting in a project // TODO Move to lexicon-server CP 2012-08
-define('WRITING_SYSTEMS_DIR', '/WritingSystems/');
 
 define('VCS_MASTER_PATH', '/var/vcs/languageforge/');
 define('LANGUAGE_FORGE_WORK_PATH', '/var/lib/languageforge/work/'); // TODO This doesn't need to be configurable. Should be in a static method somewhere CP 2012-10

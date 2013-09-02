@@ -580,7 +580,7 @@ class LfDictionary
 
 	// Reviewed This can stay here
 	function getSettingInputSystems() {
-		$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_lexProject->projectPath);
+		$command = new \libraries\lfdictionary\commands\GetSettingInputSystemsCommand($this->_lexProject);
 		$result = $command->execute();
 		return $result;
 	}
@@ -589,7 +589,7 @@ class LfDictionary
 	function updateSettingInputSystems($inputSystems) {
 		// don't use rawurldecode here, because it does not decode "+" -> " "
 		$inputSystems = urldecode($inputSystems);
-		$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_lexProject->projectPath,$inputSystems);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand($this->_lexProject,$inputSystems);
 		$command->execute();
 		return $this->getSettingInputSystems();
 	}
