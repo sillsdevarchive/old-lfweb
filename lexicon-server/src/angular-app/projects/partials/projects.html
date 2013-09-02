@@ -7,7 +7,7 @@
 	<form class="well ">
 	<input type="text" ng-model="projectName" placeholder="Project Name"/>
 	<label>Project Language</label>
-	<typeahead class="typeahead" items="language" term="typeahead.langName" search="queryLanguages(term)" select="selectLanguage(item)">
+	<typeahead class="typeahead" items="language" term="typeahead.langName" search="queryLanguages" select="selectLanguage">
 		<ul>
 			<li typeahead-item="language" ng-repeat="language in languages" class="typeahead-item">
 				<p class="name">{{languageDescription(language)}}</p>
