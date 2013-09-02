@@ -197,10 +197,6 @@ class LfDictionary
 	 */
 	function saveEntry($entry, $action) {
 		$this->isReadyOrThrow();
-		// Check that user is a member of the project.
-		if (!$this->_projectModel->isUserInProject($this->_userId)) {
-			throw new \libraries\lfdictionary\common\UserActionDeniedException('User must have joined the community in order to create/update projects');
-		}
 		// Check that user has edit privileges on the project
 		if (!$this->_projectModel->hasRight($this->_userId, Domain::LEX_ENTRY + Operation::EDIT_OTHER)) {
 			throw new UserActionDeniedException('Access Denied For Update');
