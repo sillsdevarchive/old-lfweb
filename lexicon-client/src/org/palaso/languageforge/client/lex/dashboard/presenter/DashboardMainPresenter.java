@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.palaso.languageforge.client.lex.common.ActivityTimeRangeType;
+import org.palaso.languageforge.client.lex.common.enums.ActivityTimeRangeType;
 import org.palaso.languageforge.client.lex.common.enums.DashboardUpdateResultType;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;

@@ -33,7 +33,7 @@ import org.palaso.languageforge.client.lex.model.UserDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDashboardSettings;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
-import org.palaso.languageforge.client.lex.common.ActivityTimeRangeType;
+import org.palaso.languageforge.client.lex.common.enums.ActivityTimeRangeType;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.common.enums.DomainLanguagesType;
 import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
