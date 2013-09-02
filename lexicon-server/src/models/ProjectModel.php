@@ -47,6 +47,9 @@ class ProjectModel extends \models\mapper\MapperModel
 	}
 	
 	public static function makeProjectCode($languageCode, $projectName, $projectType) {
+		CodeGuard::checkEmptyAndThrow($languageCode, 'languageCode');
+		CodeGuard::checkEmptyAndThrow($projectName, 'projectName');
+		CodeGuard::checkEmptyAndThrow($projectType, 'projectType');
 		$projectCode = $languageCode . '-' . strtolower(str_replace(' ', '_', $projectName)) . '-' . $projectType;
 		return $projectCode;
 	}

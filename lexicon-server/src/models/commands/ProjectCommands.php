@@ -2,6 +2,8 @@
 
 namespace models\commands;
 
+use models\ProjectModel;
+
 use libraries\palaso\CodeGuard;
 use models\mapper\JsonEncoder;
 use models\mapper\JsonDecoder;
@@ -22,15 +24,9 @@ class ProjectCommands
 		}
 		JsonDecoder::decode($project, $jsonModel);
 
-		// Calculate project code from name and language (and eventually type)
-		$lang = strtolower($project->language);
-		$name = strtolower($project->projectname);
-		$code = str_replace(' ', '_', $name);
-		$code = sprintf('%s-%s', $lang, $code);
-		// Eventually this will become:
-		// $type = strtolower($project->projecttype); // Should be 'LIFT' or 'FLEX'
-		// $code = sprintf('%s-%s-%s', $lang, $code, $type);
-		$project->projectCode = $code;
+		if ($isNewProject) {
+			$project->projectCode = ProjectModel::makeProjectCode($project->languageCode, $project->projectname, ProjectModel::PROJECT_LIFT);
+		}
 
 		$result = $project->write();
 		if ($isNewProject) {

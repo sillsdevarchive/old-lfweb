@@ -60,8 +60,7 @@ angular.module(
 			var model = {};
 			model.id = '';
 			model.projectname = $scope.projectName;
-			model.language = $scope.language.subtag;
-			model.projectCode = model.language + '-' + model.projectname.replace(/ /g, '_').toLowerCase();
+			model.languageCode = $scope.language.subtag;
 			projectService.update(model, function(result) {
 				if (result.ok) {
 					$scope.queryProjectsForUser();
