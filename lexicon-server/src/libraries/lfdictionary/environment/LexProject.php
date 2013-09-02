@@ -33,6 +33,12 @@ class LexProject
 	public $projectPath;
 	
 	/**
+	 * 
+	 * @var string
+	 */
+	public $workFolderPath;
+	
+	/**
 	 * @var ProjectState
 	 */
 	public $projectState;
@@ -47,15 +53,16 @@ class LexProject
 	 * @param ProjectModel $projectModel
 	 * @param string $projectBasePath
 	 */
-	public function __construct($projectModel, $projectBasePath = '') {
-		if (empty($projectBasePath)) {
-			$projectBasePath = self::workFolderPath();
+	public function __construct($projectModel, $workPath = '') {
+		if (empty($workPath)) {
+			$workPath = self::defaultWorkFolderPath();
 		}
 		$this->projectModel = $projectModel;
 		
 		$projectName = $this->projectModel->projectCode;
-		$projectBasePath = rtrim($projectBasePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->projectPath = rtrim($projectBasePath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		$workPath = rtrim($workPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		$this->workFolderPath = $workPath;
+		$this->projectPath = rtrim($workPath . $projectName, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		$this->projectState = new ProjectState($projectName);
 		// If not ready, check for existence and mark ready if we can. This copes with Legacy project created before ProjectState
 		if ($this->projectState->getState() == '') {
@@ -73,9 +80,7 @@ class LexProject
 		if (is_dir($this->projectPath)) {
 			throw new \Exception(sprintf("Cannot create new project '%s' already exists", $this->projectPath));
 		}
-		$fixer = new LexProjectFixer($this->projectModel);
-		$fixer->fixProjectVLatest();
-		
+		LexProjectFixer::fixProjectVLatest($this, false);
 		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 	}
 	
@@ -88,8 +93,7 @@ class LexProject
 	 public function getUserSettingsFilePath($userName) {
 	 	$configFile = $this->projectPath . self::SETTINGS_DIR . $userName . self::SETTINGS_EXTENSION;
 		if (!file_exists($configFile)) {
-			$fixer = new LexProjectFixer($this->projectModel);
-			$fixer->ensureUserSettingsFileExists($userName);
+			LexProjectFixer::fixProjectVLatest($this);
 		}
 		return $configFile;
 	}
@@ -111,7 +115,7 @@ class LexProject
 		return $this->projectPath . self::WRITING_SYSTEMS_DIR;
 	}
 	
-	static public function workFolderPath() {
+	static public function defaultWorkFolderPath() {
 		return LANGUAGEFORGE_VAR_PATH . "work/";
 	}
 	
@@ -215,9 +219,8 @@ class LexProject
 		$this->isReadyOrThrow();
 		$liftFilePath = $this->locateLiftFilePath();
 		if ($liftFilePath == null) {
-			$fixer = new LexProjectFixer($lexProject, $projectModel);
-			$fixer->fixProjectVLatest();
-			return $fixer->getLiftFilePath();
+			LexProjectFixer::fixProjectVLatest($this);
+			return $this->getLiftFilePath();
 		}
 		return $liftFilePath;
 	}
