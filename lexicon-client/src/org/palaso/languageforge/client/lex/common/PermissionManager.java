@@ -9,8 +9,6 @@ import com.google.gwt.core.client.JsArrayNumber;
 public final class PermissionManager {
 	/**
 	 * get permission by type
-	 * 
-	 * @param type
 	 * @return
 	 */
 	public static boolean getPermission(DomainPermissionType domain,

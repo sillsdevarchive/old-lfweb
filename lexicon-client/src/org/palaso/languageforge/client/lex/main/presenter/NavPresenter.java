@@ -1,5 +1,6 @@
 package org.palaso.languageforge.client.lex.main.presenter;
 
+import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
@@ -409,9 +410,13 @@ public class NavPresenter extends
 	
 		UserDto user = CurrentEnvironmentDto.getCurrentUser();
 		if (user == null) {
-			// user not logged in!
+			ConsoleLog.log("Work with out user logged in!");
 			view.setContributeMenuVisible(true);
 			view.setConfigureMenuVisible(false);
+		}else
+		{
+			ConsoleLog.log("Work with user!");
+			view.setConfigureMenuVisible(true);
 			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
 				view.setConfigureMenuVisible(true);
 			}
