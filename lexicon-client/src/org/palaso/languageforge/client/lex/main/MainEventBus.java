@@ -4,11 +4,11 @@ package org.palaso.languageforge.client.lex.main;
 import org.palaso.languageforge.client.lex.addinfo.AddInfoModule;
 import org.palaso.languageforge.client.lex.browse.edit.BrowseAndEditModule;
 import org.palaso.languageforge.client.lex.common.CustomLogger;
-import org.palaso.languageforge.client.lex.common.IMainEventBus;
 import org.palaso.languageforge.client.lex.gatherwords.GatherWordsModule;
 import org.palaso.languageforge.client.lex.common.WindowResizeBroadcastInterface;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.configure.ConfigureModule;
+import org.palaso.languageforge.client.lex.controls.presenter.LoadingProgressIndicatorWindowPresenter;
 import org.palaso.languageforge.client.lex.dashboard.DashboardModule;
 import org.palaso.languageforge.client.lex.main.presenter.LexMainPresenter;
 import org.palaso.languageforge.client.lex.main.presenter.MainPresenter;
@@ -24,10 +24,13 @@ import com.mvp4g.client.annotation.Debug.LogLevel;
 import com.mvp4g.client.annotation.Event;
 import com.mvp4g.client.annotation.Events;
 import com.mvp4g.client.annotation.Start;
+import com.mvp4g.client.annotation.module.AfterLoadChildModule;
+import com.mvp4g.client.annotation.module.BeforeLoadChildModule;
 import com.mvp4g.client.annotation.module.ChildModule;
 import com.mvp4g.client.annotation.module.ChildModules;
 import com.mvp4g.client.annotation.module.DisplayChildModuleView;
 import com.mvp4g.client.annotation.module.LoadChildModuleError;
+import com.mvp4g.client.event.EventBus;
 
 @Events(startView = MainView.class, ginModules = LexGinModule.class)
 @Debug(logLevel = LogLevel.DETAILED, logger = CustomLogger.class)
@@ -40,7 +43,7 @@ import com.mvp4g.client.annotation.module.LoadChildModuleError;
 		@ChildModule(moduleClass = DashboardModule.class, async = false, autoDisplay = true)})
 // @Filters( filterClasses = {}, forceFilters = true )
 // @PlaceService( CustomPlaceService.class )
-public interface MainEventBus extends IMainEventBus{
+public interface MainEventBus extends EventBus{
 
 	// @InitHistory
 	// @Event
@@ -120,4 +123,12 @@ public interface MainEventBus extends IMainEventBus{
 	
 	@Event(broadcastTo = WindowResizeBroadcastInterface.class, passive = true)
 	void  mainWindowResize(ResizeEvent event);
+	
+	@BeforeLoadChildModule
+	@Event(handlers = LoadingProgressIndicatorWindowPresenter.class)
+	void showLoadingIndicator();
+	
+	@AfterLoadChildModule
+	@Event(handlers = LoadingProgressIndicatorWindowPresenter.class)
+	void hideLoadingIndicator();
 }
