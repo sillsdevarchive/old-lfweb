@@ -36,10 +36,10 @@ class LexProjectFixer extends LexProject
 		$this->ensureWorkFolderExists();
 		$this->ensureProjectFolderExists();
 		$this->ensureSettingsFolderExists();
-		$this->ensureIsHgRepository();
 		$this->ensureLiftFileExists();
 		$this->ensureWeSayConfigExists();
 		$this->ensureWritingSystemsExists();
+		$this->ensureIsHgRepository();
 	}
 	
 	/**
@@ -51,6 +51,7 @@ class LexProjectFixer extends LexProject
 	}
 	
 	private function ensureSettingsFolderExists() {
+		$this->ensureProjectFolderExists();
 		$settingsPath = $this->projectPath . self::SETTINGS_DIR;
 		if (!file_exists($settingsPath)) {
 			if ($this->_shouldLog) {
@@ -110,8 +111,7 @@ class LexProjectFixer extends LexProject
 		$this->findReplace($ldmlFile, "qaa", $languageCode);
 	}
 	
-	public function ensureWeSayConfigExists() {
-		$this->ensureProjectFolderExists();
+	private function ensureWeSayConfigExists() {
 		$this->ensureSettingsFolderExists();
 		$configFilePath = $this->projectDefaultSettingsFilePath();
 		if (!file_exists($configFilePath)) {
@@ -128,7 +128,7 @@ class LexProjectFixer extends LexProject
 		}
 	}
 	
-	function ensureIsHgRepository() {
+	private function ensureIsHgRepository() {
 		if (!file_exists($this->projectPath . ".hg")) {
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("project path is not an hg repository.  fixed %s",$this->projectPath));

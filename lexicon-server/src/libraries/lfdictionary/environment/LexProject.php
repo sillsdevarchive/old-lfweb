@@ -76,17 +76,7 @@ class LexProject
 		$fixer = new LexProjectFixer($this->projectModel);
 		$fixer->fixProjectVLatest();
 		
-		$this->makeLanguageForgeSettingsFolderReady();
 		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
-	}
-	
-	private function makeLanguageForgeSettingsFolderReady() {
-		$languageForgeSettingsPath = $this-projectPath . self::SETTINGS_DIR;
-		if (!is_dir($languageForgeSettingsPath)) {
-			if (!mkdir($languageForgeSettingsPath)){
-				throw new \Exception(sprintf("Cannot create user setting folder '%s'", $languageForgeSettingsPath));
-			}
-		}
 	}
 	
 	/**
