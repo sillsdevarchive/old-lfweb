@@ -159,7 +159,7 @@ class DashboardCounterExtracter
 		
 		try {
 			$this->projectModel = new ProjectModel($this->projectNodeId);
-			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname
+			$projectPath = LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname;
 		
 			$filePath = glob(LANGUAGE_FORGE_WORK_PATH . $this->projectModel->projectname."/*.lift");
 			
