@@ -287,7 +287,7 @@ public class LexService extends BaseService implements ILexService {
 	public void saveEntry(final LexiconEntryDto entry,
 			final AsyncCallback<ResultDto> asyncCallback) {
 		boolean allowEdit=false;
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
 			allowEdit=true;
 		}
 		
@@ -330,7 +330,7 @@ public class LexService extends BaseService implements ILexService {
 	public void deleteEntry(final String key, final String mercurialSHA,
 			final AsyncCallback<ResultDto> asyncCallback) {
 		boolean allowDelete=false;
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_DELETE_OTHER)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_DELETE_OTHER)) {
 			allowDelete=true;
 		}
 		if (!allowDelete) {

@@ -122,7 +122,7 @@ public class SensePresenter extends
 			ConsoleLog.log("POS->Visible: True");
 			view.setPartOfSpeechPanelVisible(true);
 			boolean isPartOsSpeechEnabled = true;
-			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
 				isPartOsSpeechEnabled = true;
 			} else {
 				isPartOsSpeechEnabled = false;
@@ -145,7 +145,7 @@ public class SensePresenter extends
 		}
 
 		if (fieldSettings.value("NewExample").getEnabled()) {
-			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
 				if (!singleNewMeaning) {
 					showNewExampleBlock();
 				} else {

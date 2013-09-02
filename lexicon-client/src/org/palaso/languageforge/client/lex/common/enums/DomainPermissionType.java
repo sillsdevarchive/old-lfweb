@@ -11,10 +11,10 @@ public enum DomainPermissionType  implements IEnum  {
 	DOMAIN_ANY			("100"),
 	DOMAIN_USERS		("110"),
 	DOMAIN_PROJECTS		("120"),
-	DOMAIN_TEXTS 		("130"),
-	DOMAIN_QUESTIONS	("140"),
-	DOMAIN_ANSWERS		("150"),
-	DOMAIN_COMMENTS		("160");
+	DOMAIN_QUESTIONS	("130"),
+	DOMAIN_ANSWERS		("140"),
+	DOMAIN_COMMENTS		("150"),
+	DOMAIN_LEX_ENTRY	("160");
 	
     private String value;
 	private static Map<DomainPermissionType, String> table = new EnumMap<DomainPermissionType, String>(

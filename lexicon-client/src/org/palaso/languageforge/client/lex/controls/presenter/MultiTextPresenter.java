@@ -92,7 +92,7 @@ public class MultiTextPresenter extends ModelPairBase<MultiTextPresenter.IMultiT
 	}
 
 	private void addTextRow(String language, String value) {
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_PROJECTS, OperationPermissionType.CAN_EDIT_OTHER)) {
+		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
 			if (labels != null && labels.value(language) != null) {
 				view.addNewTextPanel(language, value, labels.value(language), isTextboxEditable);
 			} else {
