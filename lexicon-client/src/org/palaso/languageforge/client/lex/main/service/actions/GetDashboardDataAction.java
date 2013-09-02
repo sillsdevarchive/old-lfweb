@@ -1,7 +1,7 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
-import org.palaso.languageforge.client.lex.main.model.DashboardActivitiesDto;
+import org.palaso.languageforge.client.lex.model.DashboardActivitiesDto;
 
 public class GetDashboardDataAction extends
 		JsonRpcAction<DashboardActivitiesDto> {

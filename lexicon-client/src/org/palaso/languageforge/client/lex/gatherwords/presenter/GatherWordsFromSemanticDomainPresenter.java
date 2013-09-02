@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.palaso.languageforge.client.lex.common.MessageFormat;
+import org.palaso.languageforge.client.lex.common.UUID;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
+import org.palaso.languageforge.client.lex.model.DomainQuestionDto;
+import org.palaso.languageforge.client.lex.model.DomainTreeDto;
 import org.palaso.languageforge.client.lex.model.Example;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
@@ -14,12 +17,9 @@ import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.model.Sense;
 import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter.IEntryView;
-import org.palaso.languageforge.client.lex.util.UUID;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.gatherwords.GatherWordsEventBus;
 import org.palaso.languageforge.client.lex.gatherwords.view.GatherWordsFromSemanticDomainView;
-import org.palaso.languageforge.client.lex.main.model.DomainQuestionDto;
-import org.palaso.languageforge.client.lex.main.model.DomainTreeDto;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 
 import com.google.gwt.core.client.JsArray;

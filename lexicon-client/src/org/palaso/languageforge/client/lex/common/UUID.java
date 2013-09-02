@@ -1,4 +1,4 @@
-package org.palaso.languageforge.client.lex.util;
+package org.palaso.languageforge.client.lex.common;
 
 /*
 File: Math.uuid.js

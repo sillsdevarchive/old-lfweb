@@ -1,7 +1,7 @@
 package org.palaso.languageforge.client.lex.main.service.actions;
 
 import org.palaso.languageforge.client.lex.jsonrpc.JsonRpcAction;
-import org.palaso.languageforge.client.lex.main.model.DomainQuestionDto;
+import org.palaso.languageforge.client.lex.model.DomainQuestionDto;
 
 public class GetDomainQuestionAction extends JsonRpcAction<DomainQuestionDto> {
 	

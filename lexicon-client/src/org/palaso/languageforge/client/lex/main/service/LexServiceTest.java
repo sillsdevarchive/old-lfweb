@@ -6,6 +6,9 @@ import java.util.SortedMap;
 
 import org.palaso.languageforge.client.lex.model.ConversationDto;
 import org.palaso.languageforge.client.lex.model.ConversationListDto;
+import org.palaso.languageforge.client.lex.model.DashboardActivitiesDto;
+import org.palaso.languageforge.client.lex.model.DomainQuestionDto;
+import org.palaso.languageforge.client.lex.model.DomainTreeDto;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.LexiconEntryListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
@@ -14,9 +17,6 @@ import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.enums.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
-import org.palaso.languageforge.client.lex.main.model.DashboardActivitiesDto;
-import org.palaso.languageforge.client.lex.main.model.DomainQuestionDto;
-import org.palaso.languageforge.client.lex.main.model.DomainTreeDto;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.rpc.AsyncCallback;

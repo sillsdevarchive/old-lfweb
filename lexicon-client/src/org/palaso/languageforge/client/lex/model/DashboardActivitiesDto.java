@@ -1,6 +1,4 @@
-package org.palaso.languageforge.client.lex.main.model;
-
-import org.palaso.languageforge.client.lex.model.BaseDto;
+package org.palaso.languageforge.client.lex.model;
 
 import com.google.gwt.core.client.JsArrayInteger;
 

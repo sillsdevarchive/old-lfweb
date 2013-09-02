@@ -11,6 +11,7 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -106,7 +107,7 @@ public class LexMainView extends Composite implements LexMainPresenter.ILexMainV
 			// close message box in 5 seconds.
 			t.schedule(5000);
 		}
-		widgetPanel.add(new Label(text));
+		widgetPanel.add(new HTMLPanel(text));
 		btnPanel.add(btnClose);
 
 		rowCon.add(btnPanel);
