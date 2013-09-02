@@ -39,6 +39,9 @@ class Roles {
 		$rights[] = Domain::ANSWERS + Operation::EDIT_OWN;
 		$rights[] = Domain::COMMENTS + Operation::CREATE;
 		$rights[] = Domain::COMMENTS + Operation::EDIT_OWN;
+		$rights[] = Domain::LEX_ENTRY + Operation::EDIT_OTHER;
+		$rights[] = Domain::LEX_ENTRY + Operation::CREATE;
+		$rights[] = Domain::LEX_ENTRY + Operation::DELETE_OTHER;
 		
 		self::$_rights[Realm::PROJECT][Roles::USER] = $rights;
 		
