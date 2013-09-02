@@ -13,7 +13,7 @@
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
 	cursor: hand;
 	min-width: 80px;
-	min-height: 40px;
+	min-height: 20px;
 	background: none repeat scroll 0 0 #DDECF4;
 	text-align: center;
 	settingsTopUserBox vertical-align: middle;
@@ -25,6 +25,7 @@
 	text-shadow: 1px 1px 0 #FFFFFF;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	line-height: 10px;
 }
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
