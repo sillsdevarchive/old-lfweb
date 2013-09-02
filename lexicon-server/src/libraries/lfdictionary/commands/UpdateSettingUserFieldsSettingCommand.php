@@ -59,14 +59,13 @@ class UpdateSettingUserFieldsSettingCommand
 
 	private function persistTasks($strName,$newSetting)
 	{
-		$targetFile="";
 		$filePath = $this->_lexProject->getUserSettingsFilePath($strName);
 		$xml_str = file_get_contents($filePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
 		$doc->loadXML($xml_str);
 		FieldSettingXmlJsonMapper::updateFieldXmlFromJson($newSetting,$doc);
-		$doc->save($targetFile);
+		$doc->save($filePath);
 	}
 
 

@@ -63,14 +63,13 @@ class UpdateSettingUserTasksSettingCommand
 
 	private function persistTasks($strName,$newSetting)
 	{
-		$targetFile="";
 		$filePath = $this->_lexProject->getUserSettingsFilePath($strName);
 		$xml_str = file_get_contents($filePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
 		$doc->loadXML($xml_str);
 		TaskSettingXmlJsonMapper::updateTaskXmlFromJson($newSetting,$doc);
-		$doc->save($targetFile);
+		$doc->save($filePath);
 	}
 
 };
