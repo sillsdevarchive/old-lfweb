@@ -135,7 +135,7 @@ class LexProjectFixer extends LexProject
 			}
 			$hg = new HgWrapper($this->projectPath);
 			$hg->init();
-			$hg->addFile("*");
+			$hg->addFile($this->projectPath);
 			$hg->commit("initial project commit");
 		}
 	}
