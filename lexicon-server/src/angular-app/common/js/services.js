@@ -109,10 +109,14 @@ angular.module('lf.services', ['jsonRpc'])
 		};
 		
 		this.project = function(projectId) {
-			return '/app/projects#/project/' + projectId + '/settings';
+			return '/gwt/project/' + projectId;
 			
 		};
 		
+		this.projectSettings = function(projectId) {
+			return '/app/projects#/project/' + projectId + '/settings';
+			
+		};
 		this.text = function(projectId, textId) {
 			return this.project(projectId) + "/" + textId;
 		};

@@ -65,6 +65,7 @@ angular.module(
 			projectService.update(model, function(result) {
 				if (result.ok) {
 					$scope.queryProjectsForUser();
+					
 				}
 			});
 		};
@@ -87,6 +88,7 @@ angular.module(
 			return fakeData.viewsCount;
 		};
 
+		
 		$scope.getUnreadAnswers = function(project) {
 			return fakeData.unreadAnswers;
 		};
@@ -98,8 +100,9 @@ angular.module(
 		$scope.enhanceDto = function(items) {
 			for (var i in items) {
 				items[i].url = linkService.project(items[i].id);
+				items[i].urlSettings = linkService.projectSettings(items[i].id);
 			}
-		}
+		};
 
 		// ----------------------------------------------------------
 		// Typeahead for project selection
@@ -123,14 +126,14 @@ angular.module(
 					//$scope.updateSomethingInTheForm(); // TODO: Figure out what, if anything, needs to be updated when the list comes back. 2013-08 RM
 				}
 			});
-		}
+		};
 
 		$scope.selectLanguage = function(item) {
 			console.log('selectLanguage called with args:');
 			console.log(arguments);
 			$scope.language = item;
 			$scope.typeahead.langName = item.description[0];
-		}
+		};
 
 		$scope.languageDescription = function(language) {
 			// Format a language description for display
@@ -145,7 +148,7 @@ angular.module(
 			} else {
 				return first;
 			}
-		}
+		};
 
 		$scope.deprecationWarning = function(language) {
 			if (language.deprecated) {
@@ -153,6 +156,6 @@ angular.module(
 			} else {
 				return "";
 			}
-		}
+		};
 	}])
 	;
