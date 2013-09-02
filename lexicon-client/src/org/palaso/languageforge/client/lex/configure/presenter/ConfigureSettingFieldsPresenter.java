@@ -50,7 +50,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
@@ -147,29 +146,24 @@ public class ConfigureSettingFieldsPresenter
 					}
 				});
 
-		view.getSetupHideIfEmptyToggleButton().addClickHandler(
-				new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						if (view.getFieldsTree().getSelectedItem() != null) {
-							FastTreeItem item = view.getFieldsTree()
-									.getSelectedItem();
+		view.getSetupHideIfEmptyToggleCheckbox().addValueChangeHandler( new ValueChangeHandler<Boolean>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (view.getFieldsTree().getSelectedItem() != null) {
+					FastTreeItem item = view.getFieldsTree()
+							.getSelectedItem();
 
-							CheckableItem checkableItem = (CheckableItem) item
-									.getData();
+					CheckableItem checkableItem = (CheckableItem) item
+							.getData();
 
-							SettingFieldsFieldElementDto fieldElementDto = (SettingFieldsFieldElementDto) (checkableItem
-									.getData());
+					SettingFieldsFieldElementDto fieldElementDto = (SettingFieldsFieldElementDto) (checkableItem
+							.getData());
+					fieldElementDto.setVisibility(event.getValue().booleanValue());
 
-							boolean newVisibility = !view
-									.getSetupHideIfEmptyToggleButton()
-									.getValue();
-
-							fieldElementDto.setVisibility(newVisibility);
-
-						}
-					}
-				});
+				}
+			}
+		});
 	}
 
 	public void onAttachFieldsView(SimplePanel simplePanel) {
@@ -440,10 +434,10 @@ public class ConfigureSettingFieldsPresenter
 	private void fillSetupTab(SettingFieldsFieldElementDto fieldElementDto) {
 		view.getSetupNameTextBox().setValue(fieldElementDto.getDisplayName());
 		if (fieldElementDto.getVisibility() == SettingFieldVisibilityType.NORMALLYHIDDEN) {
-			view.getSetupHideIfEmptyToggleButton().setValue(true);
+			view.getSetupHideIfEmptyToggleCheckbox().setValue(true);
 
 		} else {
-			view.getSetupHideIfEmptyToggleButton().setValue(false);
+			view.getSetupHideIfEmptyToggleCheckbox().setValue(false);
 		}
 	}
 
@@ -753,7 +747,7 @@ public class ConfigureSettingFieldsPresenter
 
 		public TabLayoutPanel getFieldDetailTabPanel();
 
-		public ToggleButton getSetupHideIfEmptyToggleButton();
+		public ExtendedCheckBox getSetupHideIfEmptyToggleCheckbox();
 	}
 
 	@Override

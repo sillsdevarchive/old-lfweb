@@ -91,21 +91,7 @@
 									<g:Label text="{string.ConfigureSettingFieldsView_Visibility}" />
 								</div>
 								<div class="lex-dc-column" id="c2">
-
-									<div class="lex-dc-row">
-										<div id="firefox-bug-fix">
-											<div class="lex-dc-column"
-												style="overflow: hidden; width:40px; max-width:40px">
-												<g:ToggleButton ui:field="hideIfEmptyButton"
-													width="20px" height="20px">
-												</g:ToggleButton>
-											</div>
-											<div class="lex-dc-column" id="c2">
-												<g:Label text="{string.ConfigureSettingFieldsView_Normally_hidden}" />
-											</div>
-										</div>
-									</div>
-
+									<cc:ExtendedCheckBox text="{string.ConfigureSettingFieldsView_Normally_hidden}" ui:field="chkboxNormallyHidden" ></cc:ExtendedCheckBox>
 								</div>
 								<!-- 
 								<div class="lex-dc-column" id="c3nosize"

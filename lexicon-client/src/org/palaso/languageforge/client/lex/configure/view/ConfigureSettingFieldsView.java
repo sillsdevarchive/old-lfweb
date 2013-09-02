@@ -1,5 +1,6 @@
 package org.palaso.languageforge.client.lex.configure.view;
 
+import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
 import org.palaso.languageforge.client.lex.controls.FastTree;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingFieldsPresenter.IConfigureSettingFieldsView;
@@ -31,7 +32,7 @@ public class ConfigureSettingFieldsView extends Composite implements
 	@UiField Button btnUp;
 
 	@UiField ExtendedTextBox txtNameOfDisplay;
-	@UiField ToggleButton hideIfEmptyButton;
+	@UiField ExtendedCheckBox chkboxNormallyHidden;
 	@UiField TabLayoutPanel fieldTabPanel;
 	
 	
@@ -39,8 +40,6 @@ public class ConfigureSettingFieldsView extends Composite implements
 
 	public ConfigureSettingFieldsView() {
 		initWidget(binder.createAndBindUi(this));
-		hideIfEmptyButton.getDownFace().setImage(new Image(GWT.getModuleBaseURL() +"/images/checkbox_checked.png"));
-		hideIfEmptyButton.getUpFace().setImage(new Image(GWT.getModuleBaseURL() +"/images/checkbox_unchecked.png"));
 	}
 
 	public Widget getWidget() {
@@ -73,8 +72,8 @@ public class ConfigureSettingFieldsView extends Composite implements
 	}
 
 	@Override
-	public ToggleButton getSetupHideIfEmptyToggleButton() {
-		return hideIfEmptyButton;
+	public ExtendedCheckBox getSetupHideIfEmptyToggleCheckbox() {
+		return chkboxNormallyHidden;
 	}
 	
 	@Override
