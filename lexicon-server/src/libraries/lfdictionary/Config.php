@@ -40,15 +40,10 @@ define('LANGUAGE_FORGE_SETTINGS_EXTENSION', '.WeSayConfig');
 define('LANGUAGE_FORGE_DEFAULT_SETTINGS_RWC', 'WeSayConfig.Rwc.Default'); // TODO Move this to the LFRapidWords project CP 2012-09
 define('LANGUAGE_FORGE_DEFAULT_SETTINGS', 'default.WeSayConfig');	// TODO name need to be changed, if a user named "default" will make problem!
 
-// the folder to keep input systems setting in a project // TODO Move to lexicon-server CP 2012-08
 define('WRITING_SYSTEMS_DIR', '/WritingSystems/');
 
 define('VCS_MASTER_PATH', '/var/vcs/languageforge/');
 define('LANGUAGE_FORGE_WORK_PATH', '/var/lib/languageforge/work/'); // TODO This doesn't need to be configurable. Should be in a static method somewhere CP 2012-10
-
-
-// max file size per post (byte) for jsupload, it you also need to change APC and PHP settings!
-define('PHP_UPLOAD_MAX_FILE_SIZE', 20 * 1024 * 1024);
 
 
 define('LEXICON_WORD_PACK_FILE_NAME', 'SILCawl.lift');
