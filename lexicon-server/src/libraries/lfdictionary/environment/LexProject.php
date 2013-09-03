@@ -108,7 +108,7 @@ class LexProject
 	}
 	
 	public function projectSettingsFolderPath() {
-		return $this->projectPath . LANGUAGE_FORGE_SETTINGS ;
+		return $this->projectPath . self::SETTINGS_DIR;
 	}
 	
 	public function writingSystemsFolderPath() {
