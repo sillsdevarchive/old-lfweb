@@ -1,123 +1,107 @@
 <?php
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
+require_once 'LexProjectTestEnvironment.php';
+use libraries\lfdictionary\environment\ProjectStates;
+
+use libraries\lfdictionary\environment\ProjectState;
+
+use models\ProjectModel;
+
 require_once(SIMPLETEST_PATH . 'autorun.php');
 require_once(LF_BASE_PATH . "Loader.php");
 
-use \libraries\lfdictionary\common\HgWrapper;
 use libraries\lfdictionary\environment\LexProject;
-class LexProjectTestEnvironment {
-	
-	/**
-	 * @var string
-	 */
-	public $projectWorkPath;
-	
-	/**
-	 * @var string
-	 */
-	public $projectName;
-	
-	/**
-	 * @var HgWrapper
-	 */
-	private $_hg;
-	
-	const PROJECT_NAME = 'LexProject_Test';
-	
-	function __construct($projectName = self::PROJECT_NAME, $projectWorkPath = null, $doInit = true) {
-		$this->projectName = $projectName;
-		if ($projectWorkPath == null) {
-			$this->projectWorkPath = self::normalizePath(sys_get_temp_dir());
-			self::recursiveDelete($this->getProjectPath());
-		}
-		if ($doInit) {
-			if (!file_exists($this->getProjectPath())) {
-				mkdir($this->getProjectPath());
-			}
-			$this->_hg = new \libraries\lfdictionary\common\HgWrapper($this->getProjectPath());
-			$this->_hg->init();
-		}
-// 		echo "construct";
-	}
-	
-	function __destruct() {
- 		self::recursiveDelete($this->getProjectPath());
-// 		echo "destruct";
-	}
-
-	public function getProjectPath() {
-		return self::normalizePath($this->projectWorkPath . $this->projectName);
-	}
-	
-	static private function recursiveDelete($str) {
-		if(is_file($str)) {
-			return @unlink($str);
-		} elseif(is_dir($str)) {
-			$str = self::normalizePath($str);
-			$objects = scandir($str);
-			foreach ($objects as $object) {
-				if ($object === "." || $object === "..") {
-					continue;
-				}
-				self::recursiveDelete($str . $object);
-			}
-			reset($objects);
-			@rmdir($str);
-		}
-	}
-	
-	static private function normalizePath($path) {
-		$path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		return $path;
-	}
-	
-	public function addFile($fileName, $contents) {
-		$filePath = $this->getProjectPath() . $fileName;
-		file_put_contents($filePath, $contents);
-		$this->_hg->addFile($filePath);
-		$this->_hg->commit("File added");
-	}
-	
-}
-
 class TestOfLexProject extends UnitTestCase {
 
-	function testConstructor_SetsAndNormalizeProjectPath() {
-		$project = new LexProject('SomeProject', '/tmp');
-		$this->assertEqual('/tmp/SomeProject/', $project->projectPath);
+	function testConstructor_NormalizedProjectPath() {
+		$e = new LexProjectTestEnvironment();
+		$model = new ProjectModel();
+		$model->projectname = "SomeProject";
+		$model->projectCode = ProjectModel::makeProjectCode("qaa", "SomeProject", "dictionary");
+		$e->cleanup($model->projectCode);
+		$project = new LexProject($model, '/tmp');
+		$this->assertEqual('/tmp/qaa-someproject-dictionary/', $project->projectPath);
 	}
 	
-	function testGetCurrentHash_SomeRepo_ReturnsHash() {
+	function testConstructor_StateFileMissing_StateReady() {
 		$e = new LexProjectTestEnvironment();
-		$e->addFile("File1.txt", "Contents");
-		
-		$project = new LexProject($e->projectName, $e->projectWorkPath);
-		$result = $project->getCurrentHash();
-		$this->assertEqual(12, strlen($result));
+		$model = new ProjectModel();
+		$model->projectname = "SomeProject";
+		$model->projectCode = ProjectModel::makeProjectCode("qaa", "SomeProject", "dictionary");
+		$e->cleanup($model->projectCode);
+		$project = new LexProject($model, '/tmp');
+		$project->createNewProject();
+		unlink(LexProject::stateFolderPath() . $model->projectCode . '.state'); // remove state file
+		$project2 = new LexProject($model, '/tmp');
+		$this->assertEqual($project2->projectState->getState(), ProjectStates::Ready);
 	}
 	
-	function testGetLiftFilePath_NoLiftFile_Throws() {
+	function testConstructor_ExistingProject_ProjectStateReadOk() {
 		$e = new LexProjectTestEnvironment();
-		$project = new LexProject($e->projectName, $e->projectWorkPath);
+		$model = new ProjectModel();
+		$model->projectname = "SomeProject";
+		$model->projectCode = ProjectModel::makeProjectCode("qaa", "SomeProject", "dictionary");
+		$e->cleanup($model->projectCode);
+		$project = new LexProject($model, '/tmp');
+		$project->createNewProject();
+		$project->projectState->setState(ProjectStates::Locked);
+		$project2 = new LexProject($model, '/tmp');
+		$this->assertEqual($project2->projectState->getState(), ProjectStates::Locked);
+	}
+	
+	function testCreateNewProject_ExistingProject_Throws() {
+		$e = new LexProjectTestEnvironment();
+		$e->lexProject->createNewProject();
 		$this->expectException('Exception');
-		$result = $project->getLiftFilePath();
+		$e->lexProject->createNewProject();
 	}
 	
-	function testGetLiftFilePath_LiftFile_ReturnsFilePath() {
-		$expected = 'Test.lift';
+	function testCreateNewProject_NewProject_Created() {
 		$e = new LexProjectTestEnvironment();
-		$e->addFile($expected, '<lift />');
-		$project = new LexProject($e->projectName, $e->projectWorkPath);
+		$e->lexProject->createNewProject();
+		$this->assertFileExists($e->lexProject->projectPath . $e->projectCode . ".lift");
+	}
+	
+	function tetGetLiftFilePath_NoLiftFile_NewDefaultCreated() {
+		$e = new LexProjectTestEnvironment();
+		$expected = $e->projectName . '.lift';
+		$project = new LexProject($e->projectCode, $e->projectWorkPath);
 		$result = $project->getLiftFilePath();
 		$this->assertEqual($e->getProjectPath() . $expected, $result);
 	}
 	
-	function testCreateNewProject_HasRequiredFiles() {
-		$e = new LexProjectTestEnvironment(LexProjectTestEnvironment::PROJECT_NAME, null, false);
-		$project = new LexProject($e->projectName, $e->projectWorkPath);
-		$project->createNewProject('de');
-		
-		$this->assertFileExists($e->getProjectPath() . $e->projectName . '.lift');
+	function testGetLiftFilePath_LiftFileWithProjectName_ReturnsPath() {
+		$e = new LexProjectTestEnvironment('lifttest');
+		$liftFilePath = $e->getProjectPath() . $e->projectCode . '.lift';
+		$e->lexProject->createNewProject();
+		$this->assertEqual($liftFilePath, $e->lexProject->getLiftFilePath());
+	}
+	
+	function testGetLiftFilePath_TwoLiftfiles_ReturnsProjectLiftFile() {
+		$e = new LexProjectTestEnvironment('lifttest');
+		$liftFilePath = $e->getProjectPath() . $e->projectCode . '.lift';
+		$randomLiftFilePath = $e->getProjectPath() . "randomLift.lift";
+		$e->lexProject->createNewProject();
+		file_put_contents($randomLiftFilePath, "<lift />");
+		$this->assertEqual($liftFilePath, $e->lexProject->getLiftFilePath());
+	}
+	
+	function testGetLiftFilePath_LiftFileWithRandomName_ReturnsPath() {
+		$e = new LexProjectTestEnvironment('lifttest');
+		$liftFilePath = $e->getProjectPath() . $e->projectCode . '.lift';
+		$randomLiftFilePath = $e->getProjectPath() . "randomLift.lift";
+		$e->lexProject->createNewProject();
+		file_put_contents($randomLiftFilePath, "<lift />");
+		unlink($liftFilePath);
+		$this->assertEqual($randomLiftFilePath, $e->lexProject->getLiftFilePath());
+	}
+	
+	function testGetCurrentHash_SomeRepo_ReturnsHash() {
+		$e = new LexProjectTestEnvironment();
+		$e->lexProject->createNewProject();
+		$e->addFile("File1.txt", "Contents");
+		$result = $e->lexProject->getCurrentHash();
+		$this->assertEqual(12, strlen($result));
 	}
 	
 	private function assertFileExists($filePath) {

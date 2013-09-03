@@ -21,19 +21,20 @@ class LexProjectFixer extends LexProject
 	 * @param ProjectModel $projectModel
 	 * @param bool $logMessages
 	 */
-	function __construct($projectModel, $logMessages = true) {
+	function __construct($projectModel, $logMessages = true, $projectBasePath = '') {
 		CodeGuard::checkTypeAndThrow($projectModel, 'models\ProjectModel');
-		parent::__construct($projectModel);
+		parent::__construct($projectModel, $projectBasePath);
 		$this->_shouldLog = $logMessages;
 	}
 	
 	private function fixProjectV01() {
 		if (!$this->checkTemplatesExist()) {
-			$message = "LexProject templates do not exist on this system.  Please put the appropriate files in the template folder to continue";
+			$message = "LexProject templates do not exist on this system. Check that " . $this->templatePath() . " exists and all files are present";
 			LoggerFactory::getLogger()->logInfoMessage($message);
 			throw new \Exception($message);
 		}
 		$this->ensureWorkFolderExists();
+		$this->ensureStateFolderExists();
 		$this->ensureProjectFolderExists();
 		$this->ensureSettingsFolderExists();
 		$this->ensureLiftFileExists();
@@ -45,8 +46,8 @@ class LexProjectFixer extends LexProject
 	/**
 	 * @param LexProject $lexProject
 	 */
-	public static function fixProjectVLatest($lexProject) {
-		$fixer = new LexProjectFixer($lexProject->projectModel);
+	public static function fixProjectVLatest($lexProject, $logMessages = true) {
+		$fixer = new LexProjectFixer($lexProject->projectModel, $logMessages, $lexProject->workFolderPath);
 		$fixer->fixProjectV01();
 	}
 	
@@ -62,11 +63,11 @@ class LexProjectFixer extends LexProject
 	}
 	
 	private function ensureWorkFolderExists() {
-		if (!file_exists(self::workFolderPath())) {
+		if (!file_exists($this->workFolderPath)) {
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("project path does not exist.  fixed %s",$this->projectPath));
 			}
-			mkdir(self::workFolderPath());
+			mkdir($this->workFolderPath);
 		}
 	}
 	
@@ -111,6 +112,15 @@ class LexProjectFixer extends LexProject
 		}
 	}
 	
+	private function ensureStateFolderExists() {
+		if (!file_exists($this->stateFolderPath())) {
+			mkdir($this->stateFolderPath());
+			if ($this->_shouldLog) {
+				LoggerFactory::getLogger()->logInfoMessage(sprintf("state folder does not exist.  fixed %s",$this->stateFolderPath()));
+			}
+		}
+	}
+	
 	private function ensureWeSayConfigExists() {
 		$this->ensureSettingsFolderExists();
 		$configFilePath = $this->projectDefaultSettingsFilePath();
@@ -144,7 +154,7 @@ class LexProjectFixer extends LexProject
 	 * @param string $userName
 	 * @return string - the user settings file path
 	 */
-	function ensureUserSettingsFileExists($userName) {
+	private function ensureUserSettingsFileExists($userName) {
 		$userSettingsFilePath = $this->projectSettingsFolderPath() . $userName . self::SETTINGS_EXTENSION;
 		if (file_exists($userSettingsFilePath)) {
 			return $userSettingsFilePath;

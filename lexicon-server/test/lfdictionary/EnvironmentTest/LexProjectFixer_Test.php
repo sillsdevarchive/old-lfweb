@@ -5,162 +5,58 @@ use libraries\lfdictionary\environment\LexProjectFixer;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "Loader.php");
+require_once 'LexProjectTestEnvironment.php';
 
-class LexProjectFixerTestEnvironment {
-	
-	/**
-	 * @var string
-	 */
-	public $projectWorkPath;
-	
-	/**
-	 * @var string
-	 */
-	public $projectName;
-	
-	/**
-	 * @var HgWrapper
-	 */
-	private $_hg;
-	
-	const PROJECT_NAME = 'LexProjectFixer_Test';
-	
-	function __construct($doInit = false, $projectName = self::PROJECT_NAME, $projectWorkPath = null) {
-		$this->projectName = $projectName;
-		if ($projectWorkPath == null) {
-			$this->projectWorkPath = self::normalizePath(sys_get_temp_dir());
-			self::recursiveDelete($this->getProjectPath());
-		}
-		if ($doInit) {
-			$this->init();
-		}
-// 		echo "construct";
-	}
-	
-	function __destruct() {
- 		self::recursiveDelete($this->getProjectPath());
-// 		echo "destruct";
-	}
-
-	public function init() {
-		if (!file_exists($this->getProjectPath())) {
-			mkdir($this->getProjectPath());
-		}
-	}
-	
-	public function lexProject() {
-		return new LexProject($this->projectName, $this->projectWorkPath);
-	}
-	
-	public function getProjectPath() {
-		return self::normalizePath($this->projectWorkPath . $this->projectName);
-	}
-	
-	public function getFilePath($fileName) {
-		return $this->getProjectPath() . $fileName;
-	}
-	
-	static private function recursiveDelete($str) {
-		if(is_file($str)) {
-			return @unlink($str);
-		} elseif(is_dir($str)) {
-			$str = self::normalizePath($str);
-			$objects = scandir($str);
-			foreach ($objects as $object) {
-				if ($object === "." || $object === "..") {
-					continue;
-				}
-				self::recursiveDelete($str . $object);
-			}
-			reset($objects);
-			@rmdir($str);
-		}
-	}
-	
-	static private function normalizePath($path) {
-		$path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		return $path;
-	}
-	
-	public function addFile($fileName, $contents) {
-		$filePath = $this->getProjectPath() . $fileName;
-		file_put_contents($filePath, $contents);
-	}
-	
-}
 
 class TestOfLexProjectFixer extends UnitTestCase {
-
-	public function testCheckProjectFolderExists_NoFolder_False() {
-		$e = new LexProjectFixerTestEnvironment();
-		$f = new LexProjectFixer($e->lexProject());
-		$result = $f->checkProjectFolderExists();
-		$this->assertTrue($result === false, "Expected false got $result");
+	
+	function testCheckTemplatesExists_doesNotThrow() {
+		// this is not really a test, but more of a warning in case the templates are not yet installed on the system
+		LexProjectFixer::checkTemplatesExist();
 	}
 	
-	public function testCheckProjectFolderExists_Folder_True() {
-		$e = new LexProjectFixerTestEnvironment();
-		$e->init();		$e->init(); // Creates the folder
-		
-		$f = new LexProjectFixer($e->lexProject());
-		$result = $f->checkProjectFolderExists();
-		$this->assertTrue($result);
-	}
-	
-	public function testCreateProjectFolder_NoFolder_CreatesFolder() {
-		$e = new LexProjectFixerTestEnvironment();
-		$f = new LexProjectFixer($e->lexProject());
-		// Pre-condition check
-		$pre = file_exists($e->getProjectPath());
+	function testFixProjectVLatest_noProject_defaultProjectCreated() {
+		$e = new LexProjectTestEnvironment();
+		$lexProject = $e->lexProject;
 		$this->assertFileNotExist($e->getProjectPath());
-		$f->createProjectFolder();
-		$result = file_exists($e->getProjectPath());
+		$this->assertFileNotExist($e->getProjectPath() . $e->projectCode . ".lift");
+		LexProjectFixer::fixProjectVLatest($lexProject);
 		$this->assertFileExists($e->getProjectPath());
+		$this->assertFileExists($e->getProjectPath() . $e->projectCode . ".lift");
 	}
 	
-	public function testCreateProjectFolder_Folder_CreatesFolder() {
-		$e = new LexProjectFixerTestEnvironment();
-		$e->init(); // Creates the folder
-		$f = new LexProjectFixer($e->lexProject());
-		// Pre-condition check
-		$pre = file_exists($e->getProjectPath());
-		$this->assertFileExists($e->getProjectPath());
-		$this->expectError(); // Currently we expect a php error, and do not throw our own exception.
-		$f->createProjectFolder();
+	function testFixProjectVLatest_projectButNoConfig_configCopied() {
+		$e = new LexProjectTestEnvironment();
+		$lexProject = $e->lexProject;
+		$lexProject->createNewProject();
+		$configFile = $e->lexProject->projectDefaultSettingsFilePath();
+		unlink($configFile);
+		$this->assertFileNotExist($configFile);
+		LexProjectFixer::fixProjectVLatest($lexProject);
+		$this->assertFileExists($configFile);
 	}
 	
-	public function testCheckLiftFile_NoFile_False() {
-		$e = new LexProjectFixerTestEnvironment(true);
-		$f = new LexProjectFixer($e->lexProject());
-		$result = $f->checkLiftFileExists();
-		$this->assertTrue($result === false, "Expected false got $result");
+	function testFixProjectVLatest_projectButNoLift_liftCreated() {
+		$e = new LexProjectTestEnvironment();
+		$lexProject = $e->lexProject;
+		$lexProject->createNewProject();
+		$liftFile = $e->lexProject->projectPath . $e->projectCode . ".lift";
+		unlink($liftFile);
+		$this->assertFileNotExist($liftFile);
+		LexProjectFixer::fixProjectVLatest($lexProject);
+		$this->assertFileExists($liftFile);
 	}
 	
-	public function testCheckLiftFile_File_True() {
-		$e = new LexProjectFixerTestEnvironment(true);
-		$f = new LexProjectFixer($e->lexProject());
-		$e->addFile($e->projectName . ".lift", '<lift />');
-		$result = $f->checkLiftFileExists();
-		$this->assertTrue($result === true, "Expected true got $result");
+	function testFixProjectVLatest_projectButNoWS_wsCreated() {
+		$e = new LexProjectTestEnvironment();
+		$lexProject = $e->lexProject;
+		$lexProject->createNewProject();
+		$writingSystemFile = $lexProject->writingSystemsFolderPath() . "en.ldml";
+		LexProjectTestEnvironment::recursiveDelete($lexProject->writingSystemsFolderPath());
+		$this->assertFileNotExist($writingSystemFile);
+		LexProjectFixer::fixProjectVLatest($lexProject);
+		$this->assertFileExists($writingSystemFile);
 	}
-	
-	public function testCheckTemplatesExist_Templates_True() {
-		$e = new LexProjectFixerTestEnvironment(true);
-		$f = new LexProjectFixer($e->lexProject());
-		$result = $f->checkTemplatesExist();
-		$this->assertTrue($result === true, "Expected true got $result");
-	}
-	
-	public function testCreateLiftFile_NoFile_CreatesFile() {
-		$e = new LexProjectFixerTestEnvironment(true);
-		$f = new LexProjectFixer($e->lexProject());
-		$filePath = $e->getFilePath($e->projectName . ".lift");
-		$this->assertFileNotExist($filePath);
-		$f->createLiftFile();
-		$this->assertFileExists($filePath);
-	}
-	
 	
 	private function assertFileExists($filePath) {
 		$this->assertTrue(file_exists($filePath), sprintf("Expected file not found '%s'", $filePath));
