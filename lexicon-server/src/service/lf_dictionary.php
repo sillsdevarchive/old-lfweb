@@ -589,20 +589,6 @@ class LfDictionary
 		return $this->getSettingInputSystems();
 	}
 
-	function updateProjectName($projectNodeId, $name) {
-		$projectModel = new ProjectModel($projectNodeId);
-		if ($projectModel->setTitle(urldecode($name))){
-
-			//reload
-			$projectModel = new ProjectModel($projectNodeId);
-			$getProjectDtO = new \libraries\lfdictionary\dto\ProjectDTO($projectModel);
-			return $getProjectDtO->encode();
-		}
-		else {
-			throw new Exception("Project name can not be updated.");
-		}
-	}
-
 	protected function getUserNameById($userId) {
 		$userModel = new UserModel($userId);
 		// use user name may not a good idea, Linux box is case sensitve,
