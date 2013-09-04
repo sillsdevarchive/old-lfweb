@@ -649,4 +649,5 @@ div-no-hide {
 	margin-bottom:  0px !important;
 	z-index: 999999;
 	position: absolute;
+	padding-top: 10px;
 }

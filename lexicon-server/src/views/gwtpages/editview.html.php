@@ -69,7 +69,7 @@
 							<?php include ("listview.html.php"); ?>
 						</div>
 						<div id="GWTContent"
-							style="height: 710px; width: 100%; padding-top: 10px;"
+							style="height: 720px; width: 100%;"
 							targetPage= "<?php echo $gwt_page; ?>">
 
 							<?php if ($canShowEditor): ?>
