@@ -619,7 +619,7 @@ div.hdrnav {
 }
 
 div.hdrnav li {
-	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
+	background: #777777;
 	display: block;
 	float: left;
 	margin-top: 2px;
@@ -627,7 +627,7 @@ div.hdrnav li {
 }
 
 div.hdrnav li.here {
-	background: #777777;
+	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
 }
 
 div.hdrnav li:hover {
