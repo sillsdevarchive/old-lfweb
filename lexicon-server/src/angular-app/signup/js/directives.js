@@ -2,7 +2,7 @@
 
 /* Directives */
 
-angular.module('signup.directives', ['lf.services']).
+angular.module('signup.directives', ['lf.services','vcRecaptcha']).
 
 // This directive's code is from http://stackoverflow.com/q/16016570/
   directive("requireEqual", function() {

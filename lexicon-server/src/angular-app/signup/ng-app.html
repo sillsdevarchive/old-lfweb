@@ -1,5 +1,4 @@
 <div class="container" ng-app="signup" ng-cloak>
-
 	<div ng-controller="UserCtrl">
 		<legend>Create an Account</legend>
 
@@ -13,10 +12,16 @@
 						<div>
 							<label>User Name</label> <input required type="text"
 								placeholder="(username)" ng-model="record.username"
-								name="username" id="username" unique-user = "record.username" /> 
-								<span  ng-show="usernameloading" id="usernameLoading"><img src="/images/loading-small.gif" style="position: absolute; padding-left: 5px; padding-top: 8px;" /></span>
-								<span  ng-show="usernameok" id="usernameOk"><img src="/images/tick.png" title="User name is avaiable!" style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
-								<span  ng-show="usernameexist" id="usernameExist"><img src="/images/exclamation.png" title="User name already exist!" style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
+								name="username" id="username" unique-user="record.username" />
+							<span ng-show="usernameloading" id="usernameLoading"><img
+								src="/images/loading-small.gif"
+								style="position: absolute; padding-left: 5px; padding-top: 8px;" /></span>
+							<span ng-show="usernameok" id="usernameOk"><img
+								src="/images/tick.png" title="User name is avaiable!"
+								style="position: absolute; padding-left: 5px; padding-top: 8px;" /></span>
+							<span ng-show="usernameexist" id="usernameExist"><img
+								src="/images/exclamation.png" title="User name already exist!"
+								style="position: absolute; padding-left: 5px; padding-top: 8px;" /></span>
 						</div>
 						<div>
 							<label>Name</label> <input required type="text"
@@ -30,7 +35,7 @@
 							<label>Password</label> <input required type="password"
 								ng-model="record.password" ng-focus="vars.inputfocus"
 								name="password" />
-								<ul id="strength" check-strength="record.password"></ul>
+							<ul id="strength" check-strength="record.password"></ul>
 						</div>
 						<div class="large-12">
 							<label>Confirm password</label> <input type="password"
@@ -38,6 +43,11 @@
 								require-equal="record.password" name="confirmPassword" /> <label
 								ng-show="passwordForm.confirmPassword.$error.match">Passwords
 								do not match</label>
+						</div>
+						<div>
+							<label>Recaptcha</label> 
+							<div vc-recaptcha ng-model="record.captcha" tabindex="3"
+								theme="clean" lang="en" key="---- YOUR PUBLIC KEY GOES HERE ----"></div>
 						</div>
 					</div>
 					<button class="btn btn-primary" type="submit"
@@ -53,5 +63,5 @@
 </div>
 
 <script>
-
+	
 </script>

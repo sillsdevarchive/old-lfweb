@@ -50,7 +50,18 @@ class UserModelWithPassword extends \models\mapper\MapperModel
 	 * @var string
 	 */
 	public $password;
+		
+	/**
+	 * 
+	 * @var string
+	 */
+	public $captcha_challenge;
 	
+	/**
+	 *
+	 * @var string
+	 */
+	public $captcha_response;
 }
 
 ?>

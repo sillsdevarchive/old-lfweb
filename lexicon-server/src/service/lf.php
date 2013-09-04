@@ -27,25 +27,25 @@ require_once(APPPATH . 'models/QuestionModel.php');
 require_once(APPPATH . 'models/TextModel.php');
 require_once(APPPATH . 'models/UserModel.php');
 require_once(APPPATH . 'models/LanguageModel.php');
-
+require_once(APPPATH . 'libraries/recaptchalib.php');
 class Lf
 {
 	/**
 	 * @var string
 	 */
 	private $_userId;
-	
+
 	public function __construct($controller) {
 		$this->_userId = (string)$controller->session->userdata('user_id');
 
 		// TODO put in the LanguageForge style error handler for logging / jsonrpc return formatting etc. CP 2013-07
- 		ini_set('display_errors', 0);
+		ini_set('display_errors', 0);
 	}
-	
+
 	//---------------------------------------------------------------
 	// USER API
 	//---------------------------------------------------------------
-	
+
 	/**
 	 * Create/Update a User
 	 * @param UserModel $json
@@ -70,11 +70,25 @@ class Lf
 			$dto = new ResultDTO(false, "usernameExists");
 			return $dto->encode();
 		}
-		$user->encryptPassword();
-		$user->active = false;
-		$user->write();
-		$dto = new ResultDTO(true);
-		return $dto->encode();
+
+		$privatekey = "---- YOUR Private KEY GOES HERE ----";
+		$resp = recaptcha_check_answer ($privatekey,
+				$_SERVER["REMOTE_ADDR"],
+				$user->captcha_challenge,
+				$user->captcha_response);
+
+		if (!$resp->is_valid) {
+			// What happens when the CAPTCHA was entered incorrectly
+			$dto = new ResultDTO(false, "CAPTCHA was entered incorrectly");
+			return $dto->encode();
+		} else {
+				
+			$user->encryptPassword();
+			$user->active = false;
+			$user->write();
+			$dto = new ResultDTO(true);
+			return $dto->encode();
+		}
 	}
 
 	/**
@@ -85,15 +99,15 @@ class Lf
 		$user = new \models\UserModel($id);
 		return JsonEncoder::encode($user);
 	}
-	
+
 	/**
 	 * Delete users
 	 * @param array<string> $userIds
 	 * @return int Count of deleted users
 	 */
- 	public function user_delete($userIds) {
- 		return UserCommands::deleteUsers($userIds);
- 	}
+	public function user_delete($userIds) {
+		return UserCommands::deleteUsers($userIds);
+	}
 
 	// TODO Pretty sure this is going to want some paging params
 	public function user_list() {
@@ -101,7 +115,7 @@ class Lf
 		$list->read();
 		return $list;
 	}
-	
+
 	public function user_typeahead($term) {
 		$list = new \models\UserTypeaheadModel($term);
 		$list->read();
@@ -114,9 +128,9 @@ class Lf
 		$resultDTO = new ResultDTO($userModel->usernameExists($userName));
 		return $resultDTO->encode();
 	}
-	
-	
-	
+
+
+
 	public function change_password($userId, $newPassword) {
 		if (!is_string($userId) && !is_string($newPassword)) {
 			throw new \Exception("Invalid args\n" . var_export($userId, true) . "\n" . var_export($newPassword, true));
@@ -125,12 +139,12 @@ class Lf
 		$user->changePassword($newPassword);
 		$user->write();
 	}
-	
-	
+
+
 	//---------------------------------------------------------------
 	// PROJECT API
 	//---------------------------------------------------------------
-	
+
 	/**
 	 * Create/Update a Project
 	 * @param ProjectModel $json
@@ -148,15 +162,15 @@ class Lf
 		$project = new \models\ProjectModel($id);
 		return JsonEncoder::encode($project);
 	}
-	
+
 	/**
 	 * Delete projects
 	 * @param array<string> $projectIds
 	 * @return int Count of deleted projects
 	 */
- 	public function project_delete($projectIds) {
- 		return ProjectCommands::deleteProjects($projectIds);
- 	}
+	public function project_delete($projectIds) {
+		return ProjectCommands::deleteProjects($projectIds);
+	}
 
 	// TODO Pretty sure this is going to want some paging params
 	public function project_list() {
@@ -164,50 +178,50 @@ class Lf
 		$list->read();
 		return $list;
 	}
-	
+
 	public function project_list_dto() {
 		// Eventually this will need to get the current user id and do:
 		//return \models\dto\ProjectListDto::encode($userId);
 		return \models\dto\ProjectListDto::encode();
 	}
-	
+
 	public function project_readUser($projectId, $userId) {
 		throw new \Exception("project_readUser NYI");
 	}
-	
+
 	public function project_updateUser($projectId, $object) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$command = new \models\commands\ProjectUserCommands($projectModel);
 		return $command->updateUser($object);
 	}
-	
+
 	public function project_deleteUsers($projectId, $userIds) {
 		// This removes the user from the project.
 		$projectModel = new \models\ProjectModel($projectId);
 		$command = new \models\commands\ProjectUserCommands($projectModel);
 		$command->removeUsers($userIds);
 	}
-	
+
 	public function project_listUsers($projectId) {
 		$result = ProjectSettingsDto::encode($projectId, $this->_userId);
 		return $result;
 	}
-	
+
 	//---------------------------------------------------------------
 	// LANGUAGE API
 	//---------------------------------------------------------------
-	
+
 	public function language_typeahead($term) {
 		$list = new \models\LanguageTypeaheadModel($term);
 		$list->read();
 		return $list;
 	}
-	
-	
+
+
 	//---------------------------------------------------------------
 	// TEXT API
 	//---------------------------------------------------------------
-	
+
 	public function text_update($projectId, $object) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$textModel = new \models\TextModel($projectModel);
@@ -222,24 +236,24 @@ class Lf
 		}
 		return $textId;
 	}
-	
+
 	public function text_read($projectId, $textId) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$textModel = new \models\TextModel($projectModel, $textId);
 		return JsonEncoder::encode($textModel);
 	}
-	
+
 	public function text_delete($projectId, $textIds) {
 		return TextCommands::deleteTexts($projectId, $textIds);
 	}
-	
+
 	public function text_list($projectId) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$textListModel = new \models\TextListModel($projectModel);
 		$textListModel->read();
 		return $textListModel;
 	}
-	
+
 	public function text_list_dto($projectId) {
 		return \models\dto\TextListDto::encode($projectId, $this->_userId);
 	}
@@ -247,11 +261,11 @@ class Lf
 	public function text_settings_dto($projectId, $textId) {
 		return \models\dto\TextSettingsDto::encode($projectId, $textId, $this->_userId);
 	}
-	
+
 	//---------------------------------------------------------------
 	// Question / Answer / Comment API
 	//---------------------------------------------------------------
-	
+
 	public function question_update($projectId, $object) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$questionModel = new \models\QuestionModel($projectModel);
@@ -266,28 +280,28 @@ class Lf
 		}
 		return $questionId;
 	}
-	
+
 	public function question_read($projectId, $questionId) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$questionModel = new \models\QuestionModel($projectModel, $questionId);
 		return JsonEncoder::encode($questionModel);
 	}
-	
+
 	public function question_delete($projectId, $questionIds) {
 		return QuestionCommands::deleteQuestions($projectId, $questionIds);
 	}
-	
+
 	public function question_list($projectId, $textId) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$questionListModel = new \models\QuestionListModel($projectModel, $textId);
 		$questionListModel->read();
 		return $questionListModel;
 	}
-	
+
 	public function question_update_answer($projectId, $questionId, $answer) {
 		return QuestionCommands::updateAnswer($projectId, $questionId, $answer, $this->_userId);
 	}
-	
+
 	public function question_update_answer_score($projectId, $questionId, $answerId, $score) {
 		$projectModel = new \models\ProjectModel($projectId);
 		$questionModel = new QuestionModel($projectModel, $questionId);
@@ -302,34 +316,34 @@ class Lf
 			ActivityCommands::updateScore($projectModel, $questionId, $answerId, $this->_userId, 'decrease');
 		}
 	}
-	
+
 	public function question_remove_answer($projectId, $questionId, $answerId) {
 		$projectModel = new \models\ProjectModel($projectId);
 		return QuestionModel::removeAnswer($projectModel->databaseName(), $questionId, $answerId);
 	}
-	
+
 	public function question_update_comment($projectId, $questionId, $answerId, $comment) {
 		return QuestionCommands::updateComment($projectId, $questionId, $answerId, $comment, $this->_userId);
 	}
-	
+
 	public function question_remove_comment($projectId, $questionId, $answerId, $commentId) {
 		$projectModel = new \models\ProjectModel($projectId);
 		return QuestionModel::removeComment($projectModel->databaseName(), $questionId, $answerId, $commentId);
 	}
-	
+
 	public function question_comment_dto($projectId, $questionId) {
 		return \models\dto\QuestionCommentDto::encode($projectId, $questionId, $this->_userId);
 	}
-	
+
 	public function question_list_dto($projectId, $textId) {
 		return \models\dto\QuestionListDto::encode($projectId, $textId, $this->_userId);
 	}
-	
+
 	// ---------------- Activity Feed -----------------
 	public function activity_list_dto() {
 		return \models\dto\ActivityListDto::getActivityForUser($this->_userId);
 	}
-	
+
 }
 
 ?>
