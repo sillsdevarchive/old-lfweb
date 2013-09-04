@@ -5,7 +5,7 @@
 }
 
 .accordion .ico-conf {
-	background: url('./images/ico-conf.png') no-repeat 3px 7px;
+	background: url('./images/ico-conf.png') no-repeat 3px 3px;
 }
 
 .accordion .ico-dashboard {
@@ -629,4 +629,24 @@ div-no-hide {
 {
 	font-size: 11px;
 	padding-top: 10px;
+}
+
+.main_top_menu_190PX
+{
+	width: 190px;
+	float: left;
+	padding-right: 5px;
+}
+.main_top_menu
+{
+	width: 130px;
+	float: left;
+	padding-right: 5px;
+}
+.main_top_menu_group
+{
+	margin-left: 300px;
+	margin-bottom:  0px !important;
+	z-index: 999999;
+	position: absolute;
 }

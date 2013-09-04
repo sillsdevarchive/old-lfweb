@@ -18,18 +18,18 @@
 	color:#3f7ca4;
 	display:block;
 	text-decoration:none;
-	padding:10px 30px 10px 11px;
-	background:url(./images/arrow04.gif) no-repeat 92% 18px;
+	padding: 5px 30px 5px 11px;
+	background: url(./images/arrow04.gif) no-repeat 92% 12px;
 }
 .accordion li.active a,
-.accordion li a:hover {background:url(./images/arrow05.gif) no-repeat 92% 18px;}
+.accordion li a:hover {background:url(./images/arrow05.gif) no-repeat 92% 12px;}
 .accordion li a span {
 	display:block;
 	padding:0 0 0 27px;
 }
 .accordion .ico1 {background:url(./images/ico05.gif) no-repeat 3px 7px;}
 .accordion .ico2 {background:url(./images/ico06.gif) no-repeat 6px 5px;}
-.accordion .ico3 {background:url(./images/ico07.gif) no-repeat 3px 7px;}
+.accordion .ico3 {background:url(./images/ico07.gif) no-repeat 3px 4px;}
 .accordion .ico4 {background:url(./images/ico08.gif) no-repeat 0 2px;}
 .accordion li .slide li {
 	background:none;

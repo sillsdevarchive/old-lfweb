@@ -244,12 +244,12 @@ body.loading .view-loading-progress {
 }
 
 .dic-view-switch {
-    height: 50px;
-    margin-top: 50px;
-    padding: 23px 10px 0 0;
-    position: absolute;
-    width: 229px;
-    z-index: 99999 !important;
+	height: 50px;
+	padding: 10px 0px 0 0;
+	position: absolute;
+	width: 200px;
+	z-index: 99999 !important;
+	margin-left: 135px;
 }
 
 .flexible .sidebar-view-switch {
@@ -286,4 +286,9 @@ body.loading .view-loading-progress {
 .accordion li.view-selected {
 	background: -moz-linear-gradient(center top, #EAE9E9 50%, #FFFFFF 100%)
 		repeat scroll 0 0 transparent;
+}
+
+.accordion_no_bottom_margin
+{
+	margin-bottom:  0px !important;
 }

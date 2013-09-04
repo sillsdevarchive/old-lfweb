@@ -1,10 +1,10 @@
 						<div id="ViewSwitch" class="dic-view-switch">
 							<aside id="sidebar-view-switch">
-								<nav class="accordion">
+								<nav class="accordion accordion_no_bottom_margin">
 									<ul id="view-switch" class="view-switch">
-										<div style="text-align: center;">
+										<div style="text-align:center;">
 											<div
-												style="display: inline-block; width: 107px; float: left;">
+												style="display: inline-block; width: 80px; float: left;">
 												<li id="view_button"
 													style="border-radius: 10px 0px 0px 10px;"><a
 													class="view-switch-noarrow" href="#"><span
@@ -12,7 +12,7 @@
 												</li>
 											</div>
 											<div
-												style="display: inline-block; width: 107px float:     left;">
+												style="display: inline-block; width: 80px; float:     left;">
 												<li id="edit_button" class="view-selected"
 													style="border-radius: 0px 10px 10px 0px;"><a
 													class="view-switch-noarrow" href="#"><span

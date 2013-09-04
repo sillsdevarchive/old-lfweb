@@ -1,22 +1,22 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
-	xmlns:lex="urn:import:org.palaso.languageforge.client.lex.main.view">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:lex="urn:import:org.palaso.languageforge.client.lex.main.view">
 
-	<g:DockLayoutPanel unit='PX'>
-		<g:west size="226">
-			<lex:NavPanel ui:field='navPanel' />
-		</g:west>
-		<g:center>
-			<g:HTMLPanel>
-				<section id="content" style="position: absolute; left: 0px; top: 0px; bottom: 0px; right:0px; padding-top: 20px;">
-					<!-- <h2>Thai Language Community - Food Dictionary</h2>  -->
-					<g:FlowPanel ui:field="messageList"/> 
-					<div class="content-block">
-						<g:SimpleLayoutPanel ui:field="bodyPanel" styleName="online-tool-content"/>
-					</div>
-				</section>
-			</g:HTMLPanel>
-		</g:center>
-	</g:DockLayoutPanel>
+	<g:FlowPanel>
+
+		<lex:NavPanel ui:field='navPanel' />
+
+		<g:HTMLPanel>
+			<section id="content"
+				style="position: absolute; left: 0px; top: 0px; bottom: 0px; right:0px;margin-top: 50px;">
+				<!-- <h2>Thai Language Community - Food Dictionary</h2> -->
+				<g:FlowPanel ui:field="messageList" />
+				<div class="content-block">
+					<g:SimpleLayoutPanel ui:field="bodyPanel"
+						styleName="online-tool-content" />
+				</div>
+			</section>
+		</g:HTMLPanel>
+
+	</g:FlowPanel>
 </ui:UiBinder> 

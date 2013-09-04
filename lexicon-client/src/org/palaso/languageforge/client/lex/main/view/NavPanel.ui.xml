@@ -6,12 +6,12 @@
 		
 	</ui:style>
 
-	<g:HTMLPanel width="206">
-		<aside id="sidebar"  style="padding-top:115px">
+	<g:HTMLPanel width="100%">
+		<aside id="sidebar">
 
-			<nav class="accordion">
+			<nav class="accordion main_top_menu_group">
 				<ul>
-					<g:HTMLPanel ui:field='dashBoardPanel'>
+					<g:HTMLPanel ui:field='dashBoardPanel' styleName="main_top_menu">
 					<li ui:field='dashBoardPanelLi'>
 						<g:Anchor href="#" styleName="noarrow" ui:field='dashBoard'>
 						
@@ -21,7 +21,7 @@
 						</g:Anchor>
 					</li>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field='gatherWordsPanel'>
+					<g:HTMLPanel ui:field='gatherWordsPanel'  styleName="main_top_menu_190PX">
 						<li class="active" ui:field='gatherWordsLi' >
 							<a href="#">
 								<span class="ico1">
@@ -71,7 +71,7 @@
 							</div>
 						</li>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field='addInformationPanel'>
+					<g:HTMLPanel ui:field='addInformationPanel' styleName="main_top_menu_190PX">
 					<li ui:field='addInformationPanelLi'>
 						<a href="#">
 							<span class="ico3">
@@ -107,7 +107,7 @@
 						</div>
 					</li>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field='configurePanel'>
+					<g:HTMLPanel ui:field='configurePanel' styleName="main_top_menu">
 					<li ui:field='configurePanelLi'>
 						<g:Anchor href="#" styleName="noarrow" ui:field='settings'>
 							<span class="ico-conf">
@@ -116,7 +116,7 @@
 						</g:Anchor>
 					</li>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field='contributePanel'>
+					<g:HTMLPanel ui:field='contributePanel'  styleName="main_top_menu">
 					<li ui:field='contributePanelLi'>
 					<g:Anchor href="#" styleName="noarrow" ui:field='contribute'>
 							<span class="ico4">
