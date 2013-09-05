@@ -25,7 +25,12 @@ class LexProjectMockObject {
 	}
 	
 	function writingSystemsFolderPath() {
-		return "test\lfdictionary\data\template\WritingSystems";
+		return "test/lfdictionary/data/template/WritingSystems";
+	}
+	
+	public function getUserSettingsFilePath($userName) {
+		
+		return "../../../test/lfdictionary/data/template/LanguageForgeSettings/$userName.WeSayConfig";
 	}
 }
 ?>
