@@ -246,7 +246,7 @@ body.loading .view-loading-progress {
 	padding: 10px 0px 0 0;
 	position: absolute;
 	width: 200px;
-	z-index: 99999 !important;
+	z-index: 1 !important;
 	margin-left: 135px;
 }
 

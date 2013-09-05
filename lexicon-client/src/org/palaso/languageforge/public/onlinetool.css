@@ -647,7 +647,7 @@ div-no-hide {
 {
 	margin-left: 300px;
 	margin-bottom:  0px !important;
-	z-index: 999999;
+	z-index: 1;
 	position: absolute;
 	padding-top: 10px;
 }

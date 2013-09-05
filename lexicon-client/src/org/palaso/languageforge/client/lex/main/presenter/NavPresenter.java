@@ -260,6 +260,11 @@ public class NavPresenter extends
 		view.setBoldStyleGatherFromTexts(false);
 		view.setBoldStyleGatherFromWordList(false);
 		view.setBoldStyleSettings(false);
+		view.setAddInformationMenuExpended(false);
+		view.setConfigureMenuExpended(false);
+		view.setContributeMenuExpended(false);
+		view.setDashboardMenuExpended(false);
+		view.setGatherWordsMenuExpended(false);
 		eventBus.clearMessageBox();
 	}
 
@@ -287,32 +292,26 @@ public class NavPresenter extends
 
 		if (urlCmdName.equals("fromtexts")) {
 			if (view.getGatherFromTextsVisible()) {
-				view.setGatherWordsMenuExpended(true);
 				view.getGatherFromTextsClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
 		} else if (urlCmdName.equals("fromwordlist")) {
 			if (view.getGatherFromWordListVisible()) {
-				view.setGatherWordsMenuExpended(true);
 				view.getGatherFromWordListClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
 		} else if (urlCmdName.equals("browseandedit")) {
 			if (view.getReviewBrowseEditVisible()) {
-				view.setGatherWordsMenuExpended(true);
 				view.getReviewBrowseEditClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
 		} else if (urlCmdName.equals("addmeanings")) {
 			if (view.getAddMeaningVisible()) {
-				view.setAddInformationMenuExpended(true);
 				view.getAddMeaningClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
 		} else if (urlCmdName.equals("addgrammaticalusage")) {
 			if (view.getAddGrammaticalPanelVisible()) {
-				view.setAddInformationMenuExpended(true);
 				view.getAddGrammaticalClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
 		} else if (urlCmdName.equals("addexamples")) {
 			if (view.getAddExamplePanelVisible()) {
-				view.setAddInformationMenuExpended(true);
 				view.getAddExampleClickHandlers().fireEvent(new UrlCmdClickEvent());
 			}
 		} else if (urlCmdName.equals("setting")) {
