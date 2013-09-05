@@ -11,7 +11,6 @@ import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.controls.ActivityChartDataSource;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.controls.LineChart;
-import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.dashboard.DashboardEventBus;
 import org.palaso.languageforge.client.lex.dashboard.view.DashboardMainView;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
@@ -21,6 +20,7 @@ import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDash
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 
+import com.github.gwtbootstrap.client.ui.Bar;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -89,13 +89,13 @@ public class DashboardMainPresenter extends
 
 		void setAddMoreExamplesButtonVisible(boolean visible);
 
-		ProgressLabel getProgressWordCount();
+		Bar getProgressWordCount();
 
-		ProgressLabel getProgressPOS();
+		Bar getProgressPOS();
 
-		ProgressLabel getProgressMeanings();
+		Bar getProgressMeanings();
 
-		ProgressLabel getProgressExamples();
+		Bar getProgressExamples();
 
 		ExtendedComboBox getActivityTimeRangeListBox();
 
@@ -410,32 +410,32 @@ public class DashboardMainPresenter extends
 		view.getLineChart().addCurve();
 		entryCurve = view.getLineChart().getCurve();
 		setCurveBasicSettings(entryCurve);
-		entryCurve.getSymbol().setBorderColor("#E67345");
-		entryCurve.getSymbol().setBackgroundColor("#E8A184");
+		entryCurve.getSymbol().setBorderColor("#faa732");
+		entryCurve.getSymbol().setBackgroundColor("#faa732");
 		entryCurve.setLegendLabel("Words");
 
 		// Example Curve
 		view.getLineChart().addCurve();
 		exampleCurve = view.getLineChart().getCurve();
 		setCurveBasicSettings(exampleCurve);
-		exampleCurve.getSymbol().setBorderColor("#FF0077");
-		exampleCurve.getSymbol().setBackgroundColor("#FF61AB");
+		exampleCurve.getSymbol().setBorderColor("#dd514c");
+		exampleCurve.getSymbol().setBackgroundColor("#dd514c");
 		exampleCurve.setLegendLabel("Examples");
 
 		// PartOfSpeech Curve
 		view.getLineChart().addCurve();
 		partOfSpeechCurve = view.getLineChart().getCurve();
 		setCurveBasicSettings(partOfSpeechCurve);
-		partOfSpeechCurve.getSymbol().setBorderColor("#73FF00");
-		partOfSpeechCurve.getSymbol().setBackgroundColor("#CAFF9E");
+		partOfSpeechCurve.getSymbol().setBorderColor("#5eb95e");
+		partOfSpeechCurve.getSymbol().setBackgroundColor("#5eb95e");
 		partOfSpeechCurve.setLegendLabel("Part of speechs");
 
 		// Definition Curve
 		view.getLineChart().addCurve();
 		definitionCurve = view.getLineChart().getCurve();
 		setCurveBasicSettings(definitionCurve);
-		definitionCurve.getSymbol().setBorderColor("#0062FF");
-		definitionCurve.getSymbol().setBackgroundColor("#80B1FF");
+		definitionCurve.getSymbol().setBorderColor("#0e90d2");
+		definitionCurve.getSymbol().setBackgroundColor("#0e90d2");
 		definitionCurve.setLegendLabel("Meanings");
 
 	}

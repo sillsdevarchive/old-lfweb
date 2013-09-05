@@ -1,10 +1,10 @@
 package org.palaso.languageforge.client.lex.dashboard.view;
 
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
-import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.controls.LineChart;
 import org.palaso.languageforge.client.lex.dashboard.presenter.DashboardMainPresenter.IDashboardView;
 
+import com.github.gwtbootstrap.client.ui.Bar;
 import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -34,10 +34,10 @@ public class DashboardMainView extends Composite implements IDashboardView {
 	@UiField Button btnAddMorePos;
 	@UiField Button btnAddMoreMeanings;
 	@UiField Button btnAddMoreExamples;
-	@UiField ProgressLabel progressWordCount;
-	@UiField ProgressLabel progressPOS;
-	@UiField ProgressLabel progressMeanings;
-	@UiField ProgressLabel progressExamples;
+	@UiField Bar progressWordCount;
+	@UiField Bar progressPOS;
+	@UiField Bar progressMeanings;
+	@UiField Bar progressExamples;
 	@UiField ExtendedComboBox activityTimeRangeListBox;
 	@UiField Image updatingImage;
 	@UiField HTMLPanel updatingPanel;
@@ -86,24 +86,24 @@ public class DashboardMainView extends Composite implements IDashboardView {
 
 
 	@Override
-	public ProgressLabel getProgressWordCount() {
+	public Bar getProgressWordCount() {
 		return progressWordCount;
 	}
 
 
 	@Override
-	public ProgressLabel getProgressPOS() {
+	public Bar getProgressPOS() {
 		return progressPOS;
 	}
 
 	@Override
-	public ProgressLabel getProgressMeanings() {
+	public Bar getProgressMeanings() {
 		return progressMeanings;
 	}
 
 
 	@Override
-	public ProgressLabel getProgressExamples() {
+	public Bar getProgressExamples() {
 		return progressExamples;
 	}
 	

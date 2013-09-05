@@ -3,12 +3,12 @@ package org.palaso.languageforge.client.lex.configure.view;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.configure.presenter.ConfigureSettingsPresenter.IConfigureSettingsView;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.touch.client.Point;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;

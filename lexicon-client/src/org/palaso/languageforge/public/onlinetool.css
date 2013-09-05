@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 .online-tool-content {
-	height: 670px;
+	height: auto;
+	position: inherit !important;
 }
 
 .accordion .ico-conf {
@@ -215,6 +216,13 @@ div-no-hide {
 	min-width: 80px;
 }
 
+#c1-dashboard-addmore {
+	padding-top: 7px;
+	padding-right: 15px;
+	width: 80px;
+	min-width: 80px;
+}
+
 #c1nosize {
 	padding: 10px;
 }
@@ -223,7 +231,9 @@ div-no-hide {
 	width: auto;
 	padding: 5px;
 }
-
+#c2-nopadding {
+	width: auto;
+}
 #c3 {
 	width: 120px;
 	min-width: 80px;
@@ -281,6 +291,15 @@ div-no-hide {
 
 .cnopadding {
 	padding: 0 !important;
+}
+
+#c3-dashboard-addmore {
+	width: 120px;
+	min-width: 80px;
+	padding-top: 3px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
 }
 
 .multiTextRow {
@@ -651,3 +670,4 @@ div-no-hide {
 	position: absolute;
 	padding-top: 10px;
 }
+

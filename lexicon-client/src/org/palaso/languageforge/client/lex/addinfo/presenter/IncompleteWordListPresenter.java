@@ -8,7 +8,6 @@ import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.SettingTaskNameType;
 import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
-import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.DashboardActivitiesDto;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
@@ -18,6 +17,7 @@ import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDash
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 
+import com.github.gwtbootstrap.client.ui.Bar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,7 +55,7 @@ public class IncompleteWordListPresenter extends
 
 		SimplePanel getScrollPanel();
 
-		ProgressLabel getProgressLabel();
+		Bar getProgressLabel();
 	}
 
 	private int startIndex, selectedRow = -1;
@@ -338,9 +338,7 @@ public class IncompleteWordListPresenter extends
 						}
 
 						view.getProgressLabel().setPercent((int) statsPercent);
-						view.getProgressLabel().setText(
-								"Add Infomation " + statsPercent
-										+ " % Complete");
+						view.getProgressLabel().setText(statsPercent + "% Complete");
 
 					}
 

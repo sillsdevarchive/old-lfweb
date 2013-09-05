@@ -1,9 +1,9 @@
 package org.palaso.languageforge.client.lex.addinfo.view;
 
 import org.palaso.languageforge.client.lex.addinfo.presenter.IncompleteWordListPresenter;
-import org.palaso.languageforge.client.lex.controls.ProgressLabel;
 import org.palaso.languageforge.client.lex.controls.navigationbar.NavigationBarView;
 
+import com.github.gwtbootstrap.client.ui.Bar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -48,7 +48,7 @@ public class IncompleteWordListView extends Composite implements
 	@UiField
 	SimplePanel scrollPanel;
 	@UiField
-	ProgressLabel progressBar;
+	Bar  progressBar;
 
 	@Inject
 	public IncompleteWordListView(NavigationBarView navView) {
@@ -120,7 +120,7 @@ public class IncompleteWordListView extends Composite implements
 	}
 
 	@Override
-	public ProgressLabel getProgressLabel() {
+	public Bar getProgressLabel() {
 		return progressBar;
 	}
 

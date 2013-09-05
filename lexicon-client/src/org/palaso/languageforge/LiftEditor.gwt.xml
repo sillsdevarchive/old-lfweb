@@ -26,7 +26,6 @@
 	<stylesheet src="ExtendedCheckBox.css" />
 	<stylesheet src="ConversationControl.css" />
 	<stylesheet src="FastTree.css" />
-	<stylesheet src="gwt-ProgressBar.css" />
 	<replace-with
 		class="org.palaso.languageforge.client.lex.controls.gwtcanvas.impl.GWTCanvasImplDefault">
 		<when-type-is
