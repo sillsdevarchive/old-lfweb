@@ -670,4 +670,7 @@ div-no-hide {
 	position: absolute;
 	padding-top: 10px;
 }
-
+.progress .bar
+{
+	color: #303030 !important;
+}
