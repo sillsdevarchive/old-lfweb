@@ -12,7 +12,7 @@ use lfbase\dto\LDAddProjectWithPasswordDTO;
  */
 
 
-require_once(dirname(__FILE__) . '/../TestConfig.php');
+require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(LF_BASE_PATH . "Loader.php");
 
 require_once(SIMPLETEST_PATH . 'autorun.php');

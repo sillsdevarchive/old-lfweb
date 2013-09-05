@@ -10,7 +10,7 @@ class AllTests extends TestSuite {
 		$this->addFile(TEST_PATH . 'MapperTest/AllTests.php');
 		$this->addFile(TEST_PATH . 'store/AllTests.php');
 		$this->addFile(TEST_PATH . 'EnvironmentTest/AllTests.php');
-		$this->addFile(TEST_PATH . 'APITest/AllTests.php');
+		//$this->addFile(TEST_PATH . 'APITest/AllTests.php');
 		$this->addFile(TEST_PATH . 'DashboardToolTest/AllTests.php');
 		$this->addFile(TEST_PATH . 'TransliterationTest/AllTests.php');
     }

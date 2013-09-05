@@ -2,7 +2,7 @@
 
 $rootPath = realpath(dirname(__FILE__) . '/../') . '/';
 
-//define('TestMode', true);
+define('TestMode', true);
 
 define('TEST_PATH', $rootPath . 'test/');
 define('TestLibPath', $rootPath . 'test/lib/');

@@ -23,5 +23,9 @@ class LexProjectMockObject {
 	function getLiftFilePath() {
 		return $this->_liftEnvironment->getLiftFilePath();
 	}
+	
+	function writingSystemsFolderPath() {
+		return "test\lfdictionary\data\template\WritingSystems";
+	}
 }
 ?>

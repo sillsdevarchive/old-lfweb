@@ -36,11 +36,14 @@ class GetSettingInputSystemsCommand
 	function processFile() {
 		$ldmls = array();
 		$writingSystemsPath = $this->_lexProject->writingSystemsFolderPath();
-		if (!file_exists($writingSystemsPath))
-		{
-			$fixer = new LexProjectFixer($this->_lexProject->projectModel);
-			$fixer->fixProjectVLatest($this->_lexProject);
-		}
+		if (!defined ("TestMode")) {
+			if (!file_exists($writingSystemsPath))
+			{
+				$fixer = new LexProjectFixer($this->_lexProject->projectModel);
+				$fixer->fixProjectVLatest($this->_lexProject);
+			}
+		} 
+		
 		
 		$filesPath = glob($writingSystemsPath ."*.ldml");
 		foreach ($filesPath as &$filePath) {
