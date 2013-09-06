@@ -4,11 +4,10 @@
 
 angular.module(
 	'dpimport.controllers',
-	[ 'lf.services', 'ui.bootstrap', 'timer']
+	[ 'lf.services', 'ui.bootstrap', 'dpimport.services']
 )
-.controller('UserCtrl', ['$scope', 'userService', function UserCtrl($scope, userService) {
-
-	$scope.progressstep=70;
+.controller('UserCtrl', ['$scope', 'userService', 'TimerService', function UserCtrl($scope, userService, TimerService) {
+	$scope.progressstep=1;
 	$scope.record = {};
 	$scope.success = {
 		'state':false,
@@ -32,5 +31,17 @@ angular.module(
 		});
 		return true;
 	};
-}])
-;
+ 
+	countController($scope);
+        //TimerService.stop(timerName);
+      
+}]);
+
+function countController($scope){
+    $scope.countDown = 10;    
+    var timer = setInterval(function(){
+    	$scope.progressstep++;
+        $scope.$apply();
+        console.log($scope.progressstep);
+    }, 1000);  
+}

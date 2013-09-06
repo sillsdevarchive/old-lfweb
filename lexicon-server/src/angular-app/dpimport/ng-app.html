@@ -1,7 +1,6 @@
 <div class="container" ng-app="dpimport" ng-cloak>
 	<div ng-controller="UserCtrl">
 		<div style="height:70px"></div>
-		<timer interval="1000"/>
 		<div class="notification errorMessage"
 			ng-show="!success.state && success.message">{{notify.error}}</div>
 		<div ng-hide="success.state" class="span4">
@@ -25,7 +24,7 @@
 						</div>
 					</div>
 					<div class="progress progress-striped active">
-					  <div class="bar" style="width: {{seconds}}%;">{{seconds}}%</div>
+					  <div class="bar" style="width: {{progressstep}}%;">{{progressstep}}%</div>
 					</div>
 					<button class="btn btn-primary" type="submit"
 						ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
