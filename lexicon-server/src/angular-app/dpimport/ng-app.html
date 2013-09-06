@@ -1,7 +1,7 @@
 <div class="container" ng-app="dpimport" ng-cloak>
 	<div ng-controller="UserCtrl">
-		<div style="height:100px"></div>
-
+		<div style="height:70px"></div>
+		<timer interval="1000"/>
 		<div class="notification errorMessage"
 			ng-show="!success.state && success.message">{{notify.error}}</div>
 		<div ng-hide="success.state" class="span4">
@@ -11,22 +11,21 @@
 					<div class="well">
 						<div>
 							<label>Language Depot Project Code</label> <input required type="text"
-								placeholder="(your name here)" ng-model="record.name" />
+								placeholder="(project cdoe here)" ng-model="record.projectcode" name="projectcode"/>
 						</div>
 						<div>
 							<label>Language Depot User Name</label> <input required type="text"
 								placeholder="(username)" ng-model="record.username"
-								name="username" id="username" unique-user="record.username" />
+								name="username" id="username"/>
 						</div>
 						<div>
 							<label>Language Depot Password</label> <input required type="password"
 								ng-model="record.password" ng-focus="vars.inputfocus"
 								name="password" />
-							<ul id="strength" check-strength="record.password"></ul>
 						</div>
 					</div>
 					<div class="progress progress-striped active">
-					  <div class="bar" style="width: 100%;">50%</div>
+					  <div class="bar" style="width: {{seconds}}%;">{{seconds}}%</div>
 					</div>
 					<button class="btn btn-primary" type="submit"
 						ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">

@@ -4,10 +4,11 @@
 
 angular.module(
 	'dpimport.controllers',
-	[ 'lf.services', 'ui.bootstrap' ]
+	[ 'lf.services', 'ui.bootstrap', 'timer']
 )
 .controller('UserCtrl', ['$scope', 'userService', function UserCtrl($scope, userService) {
 
+	$scope.progressstep=70;
 	$scope.record = {};
 	$scope.success = {
 		'state':false,

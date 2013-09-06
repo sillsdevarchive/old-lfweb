@@ -2,7 +2,7 @@
 
 /* Directives */
 
-angular.module('dpimport.directives', ['lf.services','vcRecaptcha']).
+angular.module('dpimport.directives', ['lf.services', 'vcRecaptcha', 'timer']).
 
 // This directive's code is from http://stackoverflow.com/q/16016570/
   directive("requireEqual", function() {
