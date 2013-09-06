@@ -1,0 +1,45 @@
+<div class="container" ng-app="dpimport" ng-cloak>
+	<div ng-controller="UserCtrl">
+		<div style="height:100px"></div>
+
+		<div class="notification errorMessage"
+			ng-show="!success.state && success.message">{{notify.error}}</div>
+		<div ng-hide="success.state" class="span4">
+			<form ng-submit="createUser(record)" name="userForm">
+				<fieldset>
+					<legend>Fill Depot Project Info</legend>
+					<div class="well">
+						<div>
+							<label>Language Depot Project Code</label> <input required type="text"
+								placeholder="(your name here)" ng-model="record.name" />
+						</div>
+						<div>
+							<label>Language Depot User Name</label> <input required type="text"
+								placeholder="(username)" ng-model="record.username"
+								name="username" id="username" unique-user="record.username" />
+						</div>
+						<div>
+							<label>Language Depot Password</label> <input required type="password"
+								ng-model="record.password" ng-focus="vars.inputfocus"
+								name="password" />
+							<ul id="strength" check-strength="record.password"></ul>
+						</div>
+					</div>
+					<div class="progress progress-striped active">
+					  <div class="bar" style="width: 100%;">50%</div>
+					</div>
+					<button class="btn btn-primary" type="submit"
+						ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
+						Import <i style="margin-left: 5px" class="icon-play"></i>
+					</button>
+				</fieldset>
+			</form>
+		</div>
+		<div ng-show="success.state">Thank you, {{record.name}}. You are
+			now signed up. We will contact you when your account is active.</div>
+	</div>
+</div>
+
+<script>
+	
+</script>
