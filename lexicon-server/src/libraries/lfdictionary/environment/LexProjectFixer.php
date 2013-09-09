@@ -150,30 +150,6 @@ class LexProjectFixer extends LexProject
 		}
 	}
 	
-	/**
-	 * @param string $userName
-	 * @return string - the user settings file path
-	 */
-	private function ensureUserSettingsFileExists($userName) {
-		$userSettingsFilePath = $this->projectSettingsFolderPath() . $userName . self::SETTINGS_EXTENSION;
-		if (file_exists($userSettingsFilePath)) {
-			return $userSettingsFilePath;
-		}
-		
-		// try to get it from the project folder projectname.WeSayConfig
-		$weSayProjectConfig = $this->projectPath . $this->projectModel->projectCode . self::SETTINGS_EXTENSION;
-		if (file_exists($weSayProjectConfig)) {
-			copy($weSayProjectConfig, $userSettingsFilePath);
-			return $userSettingsFilePath;
-		}
-		
-		// fall back to languageforgesettings/default.WeSayConfig
-		$this->ensureWeSayConfigExists();
-		copy($this->projectDefaultSettingsFilePath(), $userSettingsFilePath);
-		return $userSettingsFilePath;
-	}
-	
-	
 	static function checkTemplatesExist() {
 		$templatePath = self::templatePath();
 		if (!file_exists($templatePath)) {

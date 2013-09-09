@@ -84,6 +84,17 @@ class LexProject
 		$this->projectState->setState(\libraries\lfdictionary\environment\ProjectStates::Ready);
 	}
 	
+	public function getUserOrDefaultProjectSettingsFilePath($userName) {
+		$configFilePath = $this->getUserSettingsFilePath($userName);
+		if (!file_exists($configFilePath)) {
+			$configFilePath = $this->projectDefaultSettingsFilePath();
+			if (!file_exists($configFilePath)) {
+				LexProjectFixer::fixProjectVLatest($this);
+			}
+		}
+		return $configFilePath;
+	}
+	
 	/**
 	 * Returns the full path to the user (dictionary) settings file.
 	 * @param string $userName
@@ -92,10 +103,30 @@ class LexProject
 	 */
 	 public function getUserSettingsFilePath($userName) {
 	 	$configFile = $this->projectPath . self::SETTINGS_DIR . $userName . self::SETTINGS_EXTENSION;
-		if (!file_exists($configFile)) {
-			LexProjectFixer::fixProjectVLatest($this);
-		}
 		return $configFile;
+	}
+	
+	/**
+	 * @param string $userName
+	 * @return string - the user settings file path
+	 */
+	public function ensureUserSettingsFileExists($userName) {
+		$userSettingsFilePath = $this->projectSettingsFolderPath() . $userName . self::SETTINGS_EXTENSION;
+		if (file_exists($userSettingsFilePath)) {
+			return $userSettingsFilePath;
+		}
+	
+		// try to get it from the project folder projectname.WeSayConfig
+		$weSayProjectConfig = $this->projectPath . $this->projectModel->projectCode . self::SETTINGS_EXTENSION;
+		if (file_exists($weSayProjectConfig)) {
+			copy($weSayProjectConfig, $userSettingsFilePath);
+			return $userSettingsFilePath;
+		}
+	
+		// fall back to languageforgesettings/default.WeSayConfig
+		$this->ensureWeSayConfigExists();
+		copy($this->projectDefaultSettingsFilePath(), $userSettingsFilePath);
+		return $userSettingsFilePath;
 	}
 	
 	/**

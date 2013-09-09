@@ -89,12 +89,16 @@ class LexProjectUserSettings
 		$userName = $this->_userModel->username;
 		$userName = mb_strtolower($userName, mb_detect_encoding($userName));
 
-		$filePath = $this->_lexProject->getUserSettingsFilePath($userName);
-
+		$filePath = $this->_lexProject->getUserOrDefaultProjectSettingsFilePath($userName);
+		if (!file_exists($filePath)) {
+			// This would really be bad. The LexProjectFixer should have made things right.
+			throw new \Exception(sprintf("Project user settings file '%s' not found for user '%s'", $filePath, $this->_userModel->username));
+		}
+		
 		LoggerFactory::getLogger()->logInfoMessage(sprintf("LexProjectUserSettings: %s (%s) using settings '%s'",
-		$this->_userModel->username,
-		$this->_userModel->id,
-		$filePath
+			$this->_userModel->username,
+			$this->_userModel->id,
+			$filePath
 		));
 
 		$doc = new \DOMDocument;
