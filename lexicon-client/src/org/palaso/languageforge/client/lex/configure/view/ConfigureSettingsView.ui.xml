@@ -25,7 +25,7 @@
 					</g:SimplePanel>
 					</div>
 					<div class="lex-dc-column" id="c3-buttonforselection">
-						<b:Button text="{string.ConfigureSettingsView_Apply}" width="80px" ui:field="btnApply" type="PRIMARY" icon="SAVE"  />
+						<b:Button text="{string.ConfigureSettingsView_Apply}" width="80px" ui:field="btnApply" type="PRIMARY" icon="PENCIL"  />
 					</div>
 				</div>
 			</div>

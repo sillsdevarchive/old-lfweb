@@ -10,7 +10,7 @@
 					<b:Button ui:field='newButton' text="{string.ButtonBarControlView_New_Word}" type="SUCCESS" icon="PLUS"  width="120px"/>
 				</div>
 				<div class="lex-dc-column cpadding5" id="c2">
-					<b:Button ui:field='saveButton' text="{string.ButtonBarControlView_Save}" type="PRIMARY" icon="SAVE" width="120px"/>
+					<b:Button ui:field='saveButton' text="{string.ButtonBarControlView_Save}" type="PRIMARY" icon="PENCIL" width="120px"/>
 				</div>
 				<div class="lex-dc-column cpadding5" id="c3">
 				<b:Button ui:field='deleteButton' text="{string.ButtonBarControlView_Delete_Word}" type="LINK" icon="REMOVE" width="120px"/>
