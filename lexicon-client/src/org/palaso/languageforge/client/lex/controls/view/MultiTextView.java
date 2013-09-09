@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter;
 
+import com.github.gwtbootstrap.client.ui.ControlGroup;
+import com.github.gwtbootstrap.client.ui.Controls;
+import com.github.gwtbootstrap.client.ui.InputAddOn;
 import com.github.gwtbootstrap.client.ui.TextBox;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -30,8 +33,8 @@ public class MultiTextView extends Composite implements
 	@Override
 	public void addNewTextPanel(String form, String value, String label,
 			boolean editable) {
-		FlowPanel textPanel = createTextPanel(form, value, label, editable);
-		flowPanel.add(textPanel);
+		ControlGroup group = createTextPanel(form, value, label, editable);
+		flowPanel.add(group);
 	}
 
 	@Override
@@ -49,8 +52,13 @@ public class MultiTextView extends Composite implements
 		return textsHashMap.get(form).addBlurHandler(handler);
 	}
 
-	private FlowPanel createTextPanel(String form, String value, String label,
+	private ControlGroup createTextPanel(String form, String value, String label,
 			boolean editable) {
+		ControlGroup group = new ControlGroup();
+		Controls controls = new Controls();
+		group.add(controls);
+		
+		
 		TextBox textBox = new TextBox();
 		textBox.setValue(value);
 		textBox.setWidth("100%");
@@ -62,11 +70,11 @@ public class MultiTextView extends Composite implements
 			textBox.setReadOnly(true);
 		}
 
-		InlineLabel inlineLabel = new InlineLabel(label);
-		inlineLabel.setTitle(label);
-		panel.add(inlineLabel);
-
-		return panel;
+		InputAddOn  inputAddOn = new InputAddOn();
+		inputAddOn.setPrependText(label);
+		controls.add(inputAddOn);
+		inputAddOn.add(textBox);
+		return group;
 	}
 
 	// private FlowPanel createTextReadOnlyPanel(String form, String value) {
