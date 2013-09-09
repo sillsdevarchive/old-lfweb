@@ -4,6 +4,7 @@ use libraries\lfdictionary\mapper\TaskSettingXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
+require_once(dirname(__FILE__) . '/../MockObject/LexProjectMockObject.php');
 
 class TestOfTaskSettingXmlJsonMapper extends UnitTestCase {
 
@@ -12,7 +13,9 @@ class TestOfTaskSettingXmlJsonMapper extends UnitTestCase {
 	private $NEW_JSON_SETTING = '{"tasks":{"task":[{"taskName":"Dashboard","visible":"false","index":"1"}]}}';
 	
 	function testTaskSettingXmlJsonMapper_XmlToJson() {
-		$configFilePath = LexiconProjectEnvironment::locateConfigFilePath(TEST_PATH. "data/template/","user1");
+		$LexProjectMockObject = new LexProjectMockObject();
+		
+		$configFilePath = $LexProjectMockObject->getUserSettingsFilePath("user1");
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
@@ -27,7 +30,9 @@ class TestOfTaskSettingXmlJsonMapper extends UnitTestCase {
 	}
 
 	function testTaskSettingXmlJsonMapper_XmlUpdateByJsonArray() {
-		$configFilePath = LexiconProjectEnvironment::locateConfigFilePath(TEST_PATH. "data/template/","user1");
+		$LexProjectMockObject = new LexProjectMockObject();
+		
+		$configFilePath = $LexProjectMockObject->getUserSettingsFilePath("user1");
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
