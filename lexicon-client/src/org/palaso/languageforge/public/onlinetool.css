@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
+.gwt_main_part
+{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
 .online-tool-content {
-	height: auto;
+	height: 100%;
 	position: inherit !important;
 }
 

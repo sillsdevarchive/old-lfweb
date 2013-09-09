@@ -3,11 +3,7 @@
 	xmlns:lex="urn:import:org.palaso.languageforge.client.lex.main.view">
 	<ui:style>
 	</ui:style>
-	<g:DockLayoutPanel unit='PX' width="100%" height="100%">
-		<g:center>
-			<lex:LexMainView ui:field='lexMainView' />
-		</g:center>
-
-	</g:DockLayoutPanel>
-
+	<g:SimplePanel styleName="gwt_main_part">
+			<lex:LexMainView ui:field='lexMainView' height="100%"/>
+	</g:SimplePanel>
 </ui:UiBinder>

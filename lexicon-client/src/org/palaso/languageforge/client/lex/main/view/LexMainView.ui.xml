@@ -2,21 +2,21 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:lex="urn:import:org.palaso.languageforge.client.lex.main.view">
 
-	<g:FlowPanel>
+	<g:HTMLPanel  height="100%">
 
 		<lex:NavPanel ui:field='navPanel' />
 
-		<g:HTMLPanel>
+		<g:HTMLPanel  height="100%">
 			<section id="content"
 				style="position: absolute; left: 0px; top: 0px; bottom: 0px; right:0px;margin-top: 60px;">
 				<!-- <h2>Thai Language Community - Food Dictionary</h2> -->
 				<g:FlowPanel ui:field="messageList" />
-				<div class="content-block">
-					<g:SimpleLayoutPanel ui:field="bodyPanel"
+				<div class="content-block" >
+					<g:SimpleLayoutPanel ui:field="bodyPanel"  height="100%"
 						styleName="online-tool-content" />
 				</div>
 			</section>
 		</g:HTMLPanel>
 
-	</g:FlowPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 

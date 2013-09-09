@@ -8,11 +8,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
 public class MainView extends Composite implements MainPresenter.IView {
 
-	interface Binder extends UiBinder<DockLayoutPanel, MainView> {
+	interface Binder extends UiBinder<SimplePanel, MainView> {
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
