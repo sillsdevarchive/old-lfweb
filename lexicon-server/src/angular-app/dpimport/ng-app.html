@@ -9,25 +9,25 @@
 					<legend>Fill Depot Project Info</legend>
 					<div class="well">
 						<div>
-							<label>Language Depot Project Code</label> <input required type="text"
+							<label>Language Depot Project Code</label> <input required type="text" required ng-disabled="inprogerss"
 								placeholder="(project cdoe here)" ng-model="record.projectcode" name="projectcode"/>
 						</div>
 						<div>
-							<label>Language Depot User Name</label> <input required type="text"
+							<label>Language Depot User Name</label> <input required type="text" required ng-disabled="inprogerss"
 								placeholder="(username)" ng-model="record.projectusername"
 								name="projectusername" id="projectusername"/>
 						</div>
 						<div>
-							<label>Language Depot Password</label> <input required type="password"
+							<label>Language Depot Password</label> <input required type="password" required ng-disabled="inprogerss"
 								ng-model="record.projectpassword" ng-focus="vars.inputfocus"
 								name="projectpassword" />
 						</div>
 					</div>
-					<div class="progress progress-striped active" ng-show="showprogressbar">
+					<div class="progress progress-striped active" ng-show="showprogressbar"> 
 					  <div class="bar" style="width: {{progressstep}}%;">{{progressstep}}%</div>
 					</div>
-					<button class="btn btn-primary" type="submit"
-						ng-disabled="(depotImportForm.$invalid)">
+					<button class="btn btn-primary" type="submit" 
+						ng-disabled="(depotImportForm.$invalid || inprogerss)">
 						Import <i style="margin-left: 5px" class="icon-play"></i>
 					</button>
 				</fieldset>

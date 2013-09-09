@@ -632,7 +632,14 @@ class LfDictionary
 	
 	public function depot_check_import_states($model) {
 		error_log("Depot Import Check: $projectCode");
-		$resultDTO = new ResultDTO(false, strval(50));
+		$second =gmdate("s", time());
+		$isDone = false;
+		if (intval ($second)>=50){
+			$isDone=true;
+			//TODO replace with real ID!
+			$second = "51e3b48b9cde7fef33e7aef7";
+		}
+		$resultDTO = new ResultDTO($isDone, $second);
 		return $resultDTO->encode();
 	}
 	
