@@ -624,6 +624,20 @@ class LfDictionary
 		$result = new \libraries\lfdictionary\dto\ResultDTO(true, strval($wordCount));
 		return $result->encode();
 	}
+
+	public function depot_begin_import($model ) {
+		error_log("Depot Import: $model->projectCode, $model->projectUser, $model->projectPwd");
+		return null;
+	}
+	
+	public function depot_check_import_states($model) {
+		error_log("Depot Import Check: $projectCode");
+		$resultDTO = new ResultDTO(false, strval(50));
+		return $resultDTO->encode();
+	}
+	
 }
+
+
 
 ?>

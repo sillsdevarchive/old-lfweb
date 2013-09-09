@@ -4,7 +4,7 @@
 		<div class="notification errorMessage"
 			ng-show="!success.state && success.message">{{notify.error}}</div>
 		<div ng-hide="success.state" class="span4">
-			<form ng-submit="createUser(record)" name="userForm">
+			<form ng-submit="importProject(record)" name="depotImportForm">
 				<fieldset>
 					<legend>Fill Depot Project Info</legend>
 					<div class="well">
@@ -14,20 +14,20 @@
 						</div>
 						<div>
 							<label>Language Depot User Name</label> <input required type="text"
-								placeholder="(username)" ng-model="record.username"
-								name="username" id="username"/>
+								placeholder="(username)" ng-model="record.projectusername"
+								name="projectusername" id="projectusername"/>
 						</div>
 						<div>
 							<label>Language Depot Password</label> <input required type="password"
-								ng-model="record.password" ng-focus="vars.inputfocus"
-								name="password" />
+								ng-model="record.projectpassword" ng-focus="vars.inputfocus"
+								name="projectpassword" />
 						</div>
 					</div>
-					<div class="progress progress-striped active">
+					<div class="progress progress-striped active" ng-show="showprogressbar">
 					  <div class="bar" style="width: {{progressstep}}%;">{{progressstep}}%</div>
 					</div>
 					<button class="btn btn-primary" type="submit"
-						ng-disabled="(userForm.password.$pristine != userForm.confirmPassword.$pristine) || userForm.$invalid">
+						ng-disabled="(depotImportForm.$invalid)">
 						Import <i style="margin-left: 5px" class="icon-play"></i>
 					</button>
 				</fieldset>

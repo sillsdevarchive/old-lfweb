@@ -6,8 +6,9 @@ angular.module(
 	'dpimport.controllers',
 	[ 'lf.services', 'ui.bootstrap', 'dpimport.services']
 )
-.controller('UserCtrl', ['$scope', 'userService', 'TimerService', function UserCtrl($scope, userService, TimerService) {
-	$scope.progressstep=1;
+.controller('UserCtrl', ['$scope', 'depotImportService', function UserCtrl($scope, depotImportService) {
+	$scope.progressstep=0;
+	$scope.showprogressbar = false;
 	$scope.record = {};
 	$scope.success = {
 		'state':false,
@@ -16,32 +17,44 @@ angular.module(
 	$scope.usernameok = true;
 	$scope.usernameexist = false;
 	$scope.usernameloading = false;
-	$scope.record.id = '';
-	$scope.record.password = '';
-	$scope.createUser = function(record) {
-		record.captcha_challenge = record.captcha.challenge;
-		record.captcha_response = record.captcha.response;
-		userService.create(record, function(result) {
+	$scope.record.projectcode = '';
+	$scope.record.projectusername = '';
+	$scope.record.projectpassword = '';
+	
+	$scope.importProject = function(record) {
+		depotImportService.depotImport(record, function(result) {
 			if (result.ok) {
-			
+				$scope.showprogressbar = true;
+				$scope.progressstep=0;
+			    var timer = setInterval(function(){
+			    	
+			    	depotImportService.depotImportStates(record, function(result) {
+			    		if (result.ok) {
+				            if (result.data.succeed==true)
+			            	{ //import finished
+			            		clearInterval(timer);
+			            		$scope.progressstep=parseInt(result.data.code);
+						        //$scope.$apply();
+			            	}else
+			            		{
+			            		$scope.progressstep=parseInt(result.data.code);
+						        //$scope.$apply();
+			            		}
+			    		} else {
+			    			clearInterval(timer);
+							$scope.success.state = false;
+							$scope.success.message = "An error occurred in the import process: ";
+						}
+			    	});
+			    
+			        }, 2000);
 			} else {
 				$scope.success.state = false;
-				$scope.success.message = "An error occurred in the signup process: ";
+				$scope.success.message = "An error occurred in the import process: ";
 			}
 		});
 		return true;
 	};
- 
-	countController($scope);
-        //TimerService.stop(timerName);
-      
 }]);
 
-function countController($scope){
-    $scope.countDown = 10;    
-    var timer = setInterval(function(){
-    	$scope.progressstep++;
-        $scope.$apply();
-        console.log($scope.progressstep);
-    }, 1000);  
-}
+
