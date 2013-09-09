@@ -23,6 +23,7 @@ import org.palaso.languageforge.client.lex.common.Constants;
 import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 
+import com.github.gwtbootstrap.client.ui.base.TextBox;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
@@ -36,8 +37,6 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Callback;
 import com.google.gwt.user.client.ui.SuggestOracle.Request;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -60,12 +59,12 @@ public class AutoSuggestPresenter
 	}
 
 	public void onStart() {
-		TextBoxBase textfield = new TextBox();
+		TextBox textfield = new TextBox();
 		SuggestOracle oracle = new RestSuggestOracle();
 		suggestBox = new SuggestBox(oracle, textfield);
 		suggestBox.addSelectionHandler(this);
 		suggestBox.getTextBox().addChangeHandler(this);
-		suggestBox.setWidth("100%");
+		suggestBox.setWidth("auto");
 		suggestBox.setText(PRE_TEXT);
 		view.setSuggestBox(suggestBox);
 		valueMap = new HashMap<String, String>();

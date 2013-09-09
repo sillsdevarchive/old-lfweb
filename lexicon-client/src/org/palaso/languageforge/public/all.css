@@ -254,7 +254,7 @@ legend {display:none;}
 
 .aside {
 	float:left;
-	width:208px;
+	width:300px;
 	background:#faf3eb;
 	border-radius:10px;
 	-moz-border-radius:10px;
@@ -324,7 +324,7 @@ legend {display:none;}
 .vscroll-up {top:482px !important;}
 .vscroll-down {top:501px !important;}
 .aside .add-block .title {
-	width:204px;
+	width:296px;
 	padding:7px 0;
 	position:relative;
 	overflow:hidden;
@@ -336,7 +336,7 @@ legend {display:none;}
 }
 .aside .add-block .title strong {
 	float:left;
-	width:75px;
+	width:125px;
 	font-size:15px;
 	color:#11172d;
 	padding:0 0 0 18px;
@@ -383,7 +383,7 @@ legend {display:none;}
 }
 #content .navigation li {
 	float:left;
-	padding:0 7px;
+	padding:0 19px;
 	background:url(./images/divider05.gif) no-repeat;
 }
 .navigation li a {

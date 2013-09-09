@@ -3,6 +3,7 @@ package org.palaso.languageforge.client.lex.browse.edit.view;
 import org.palaso.languageforge.client.lex.browse.edit.presenter.LexBrowseEditListPresenter;
 import org.palaso.languageforge.client.lex.controls.navigationbar.NavigationBarView;
 
+import com.github.gwtbootstrap.client.ui.InputAddOn;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -45,7 +46,7 @@ public class LexBrowseEditListView extends Composite implements
 	@UiField
 	FlexTable table;
 	@UiField
-	Label suggestBoxLabel;
+	InputAddOn suggestBoxLabel;
 	@UiField
 	SimplePanel scrollPanel;
 	@Inject
@@ -137,8 +138,7 @@ public class LexBrowseEditListView extends Composite implements
 	
 	public void setSuggestBoxLabel(String text)
 	{
-		suggestBoxLabel.setText(text);
-		suggestBoxLabel.setTitle(text);
+		suggestBoxLabel.setPrependText(text);
 	}
 
 	@Override

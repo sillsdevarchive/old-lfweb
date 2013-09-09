@@ -21,6 +21,7 @@ import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
 
 import com.github.gwtbootstrap.client.ui.Bar;
+import com.github.gwtbootstrap.client.ui.StackProgressBar;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -47,8 +48,7 @@ import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 
 @Presenter(view = DashboardMainView.class)
-public class DashboardMainPresenter extends
-		BasePresenter<DashboardMainView, DashboardEventBus> {
+public class DashboardMainPresenter extends BasePresenter<DashboardMainView, DashboardEventBus> {
 
 	@Inject
 	private ILexService lexService;
@@ -97,6 +97,14 @@ public class DashboardMainPresenter extends
 
 		Bar getProgressExamples();
 
+		StackProgressBar getProgressWordCountBar();
+
+		StackProgressBar getProgressPOSBar();
+
+		StackProgressBar getProgressMeaningsBar();
+
+		StackProgressBar getProgressExamplesBar();
+
 		ExtendedComboBox getActivityTimeRangeListBox();
 
 		HTMLPanel getUpdatingPanel();
@@ -106,14 +114,11 @@ public class DashboardMainPresenter extends
 		Label getUpdatingPanelLabel();
 	}
 
-	class ActivityHoverParameterInterpreter implements
-			HoverParameterInterpreter {
-		public String getHoverParameter(String paramName,
-				GChart.Curve.Point hoveredOver) {
+	class ActivityHoverParameterInterpreter implements HoverParameterInterpreter {
+		public String getHoverParameter(String paramName, GChart.Curve.Point hoveredOver) {
 			if (paramName == "x") {
-				return DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)
-						.format(new Date((long) chartDateArray
-								.get(((int) hoveredOver.getX()) - 1) * 1000));
+				return DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT).format(
+						new Date((long) chartDateArray.get(((int) hoveredOver.getX()) - 1) * 1000));
 			} else if (paramName == "y") {
 				return String.valueOf((int) hoveredOver.getY());
 			} else if (paramName == "t") {
@@ -125,7 +130,7 @@ public class DashboardMainPresenter extends
 
 	public void onMainWindowResize(ResizeEvent event) {
 		if (view.isAttached()) {
-			try{
+			try {
 				refreshChart();
 			} catch (Exception e) {
 				// do nothing!
@@ -135,31 +140,29 @@ public class DashboardMainPresenter extends
 
 	public void onGoToDashboard() {
 
-		JsArray<SettingTasksTaskElementDto> tasksDto = SettingTasksDto
-				.getCurrentUserSetting().getEntries();
+
+		view.getProgressExamples().addStyleName("dashboard_percent_text");
+		view.getProgressMeanings().addStyleName("dashboard_percent_text");
+		view.getProgressPOS().addStyleName("dashboard_percent_text");
+		view.getProgressWordCount().addStyleName("dashboard_percent_text");
+		
+		JsArray<SettingTasksTaskElementDto> tasksDto = SettingTasksDto.getCurrentUserSetting().getEntries();
 		if (tasksDto.length() > 0) {
 			for (int i = 0; i < tasksDto.length(); i++) {
 				SettingTasksTaskElementDto taskElementDto = tasksDto.get(i);
 
 				if (taskElementDto.getTaskName() == SettingTaskNameType.ADDMISSINGINFO) {
 
-					if (taskElementDto.getField()
-							.equalsIgnoreCase("definition")) {
-						view.setAddMoreMeaningsButtonVisible(taskElementDto
-								.getVisible());
-					} else if (taskElementDto.getField()
-							.equalsIgnoreCase("POS")) {
-						view.setAddMorePosButtonVisible(taskElementDto
-								.getVisible());
-					} else if (taskElementDto.getField().equalsIgnoreCase(
-							"ExampleSentence")) {
-						view.setAddMoreExamplesButtonVisible(taskElementDto
-								.getVisible());
+					if (taskElementDto.getField().equalsIgnoreCase("definition")) {
+						view.setAddMoreMeaningsButtonVisible(taskElementDto.getVisible());
+					} else if (taskElementDto.getField().equalsIgnoreCase("POS")) {
+						view.setAddMorePosButtonVisible(taskElementDto.getVisible());
+					} else if (taskElementDto.getField().equalsIgnoreCase("ExampleSentence")) {
+						view.setAddMoreExamplesButtonVisible(taskElementDto.getVisible());
 					}
 				} else if (taskElementDto.getTaskName() == SettingTaskNameType.DICTIONARY) {
 
-					view.setAddMoreWordsButtonVisible(taskElementDto
-							.getVisible());
+					view.setAddMoreWordsButtonVisible(taskElementDto.getVisible());
 				}
 			}
 		}
@@ -182,21 +185,18 @@ public class DashboardMainPresenter extends
 			view.getActivityTimeRangeListBox().setSelectedIndex(0);
 			break;
 		}
-		getDashBoardData(dashboardSpeData.getActivityTimeRange(),
-				dashboardSpeData, true);
+		getDashBoardData(dashboardSpeData.getActivityTimeRange(), dashboardSpeData, true);
 	}
 
 	private SettingTasksDashboardSettings getDashboardSettings() {
-		JsArray<SettingTasksTaskElementDto> tasksDto = SettingTasksDto
-				.getCurrentUserSetting().getEntries();
+		JsArray<SettingTasksTaskElementDto> tasksDto = SettingTasksDto.getCurrentUserSetting().getEntries();
 		if (tasksDto.length() > 0) {
 			for (int i = 0; i < tasksDto.length(); i++) {
 				SettingTasksTaskElementDto taskElementDto = tasksDto.get(i);
 
 				if (taskElementDto.getTaskName() == SettingTaskNameType.DASHBOARD) {
 					SettingTasksDashboardSettings taskDashboardSpeData = SettingTasksDashboardSettings
-							.<SettingTasksDashboardSettings> decode(taskElementDto
-									.getTaskSpecifiedData());
+							.<SettingTasksDashboardSettings> decode(taskElementDto.getTaskSpecifiedData());
 					return taskDashboardSpeData;
 				}
 			}
@@ -208,86 +208,75 @@ public class DashboardMainPresenter extends
 	public void bind() {
 		super.bind();
 
-		view.getActivityTimeRangeListBox().addItem(
-				ActivityTimeRangeType.DAY_30.getValue(),
+		view.getActivityTimeRangeListBox().addItem(ActivityTimeRangeType.DAY_30.getValue(),
 				String.valueOf(ActivityTimeRangeType.DAY_30.ordinal()));
-		view.getActivityTimeRangeListBox().addItem(
-				ActivityTimeRangeType.DAY_90.getValue(),
+		view.getActivityTimeRangeListBox().addItem(ActivityTimeRangeType.DAY_90.getValue(),
 				String.valueOf(ActivityTimeRangeType.DAY_90.ordinal()));
-		view.getActivityTimeRangeListBox().addItem(
-				ActivityTimeRangeType.DAY_365.getValue(),
+		view.getActivityTimeRangeListBox().addItem(ActivityTimeRangeType.DAY_365.getValue(),
 				String.valueOf(ActivityTimeRangeType.DAY_365.ordinal()));
-		view.getActivityTimeRangeListBox().addItem(
-				ActivityTimeRangeType.DAY_ALL.getValue(),
+		view.getActivityTimeRangeListBox().addItem(ActivityTimeRangeType.DAY_ALL.getValue(),
 				String.valueOf(ActivityTimeRangeType.DAY_ALL.ordinal()));
 		// getDashboardSpecifiedData().getActivityTimeRange()
-		view.getActivityTimeRangeListBox().addChangeHandler(
-				new ChangeHandler() {
+		view.getActivityTimeRangeListBox().addChangeHandler(new ChangeHandler() {
 
-					@Override
-					public void onChange(ChangeEvent event) {
+			@Override
+			public void onChange(ChangeEvent event) {
 
-						switch (Integer.parseInt(view
-								.getActivityTimeRangeListBox().getValue(
-										view.getActivityTimeRangeListBox()
-												.getSelectedIndex()))) {
-						case 0:
-							getDashBoardData(30, dashboardSpeData, false);
-							break;
-						case 1:
-							getDashBoardData(90, dashboardSpeData, false);
-							break;
-						case 2:
-							getDashBoardData(365, dashboardSpeData, false);
-							break;
-						case 3:
-							getDashBoardData(0, dashboardSpeData, false);
-							break;
-						default:
-							getDashBoardData(30, dashboardSpeData, false);
-							break;
-						}
+				switch (Integer.parseInt(view.getActivityTimeRangeListBox().getValue(
+						view.getActivityTimeRangeListBox().getSelectedIndex()))) {
+				case 0:
+					getDashBoardData(30, dashboardSpeData, false);
+					break;
+				case 1:
+					getDashBoardData(90, dashboardSpeData, false);
+					break;
+				case 2:
+					getDashBoardData(365, dashboardSpeData, false);
+					break;
+				case 3:
+					getDashBoardData(0, dashboardSpeData, false);
+					break;
+				default:
+					getDashBoardData(30, dashboardSpeData, false);
+					break;
+				}
 
-					}
-				});
+			}
+		});
 
-		view.getAddMoreExamplesButtonClickHandlers().addClickHandler(
-				new ClickHandler() {
+		view.getAddMoreExamplesButtonClickHandlers().addClickHandler(new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
-						eventBus.goToLexMissingInfo(EntryFieldType.EXAMPLESENTENCE);
+			@Override
+			public void onClick(ClickEvent event) {
+				eventBus.goToLexMissingInfo(EntryFieldType.EXAMPLESENTENCE);
 
-					}
-				});
+			}
+		});
 
-		view.getAddMoreMeaningsButtonClickHandlers().addClickHandler(
-				new ClickHandler() {
+		view.getAddMoreMeaningsButtonClickHandlers().addClickHandler(new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
-						eventBus.goToLexMissingInfo(EntryFieldType.DEFINITION);
-					}
-				});
+			@Override
+			public void onClick(ClickEvent event) {
+				eventBus.goToLexMissingInfo(EntryFieldType.DEFINITION);
+			}
+		});
 
-		view.getAddMorePosButtonClickHandlers().addClickHandler(
-				new ClickHandler() {
+		view.getAddMorePosButtonClickHandlers().addClickHandler(new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
-						eventBus.goToLexMissingInfo(EntryFieldType.POS);
+			@Override
+			public void onClick(ClickEvent event) {
+				eventBus.goToLexMissingInfo(EntryFieldType.POS);
 
-					}
-				});
+			}
+		});
 
-		view.getAddMoreWordsButtonClickHandlers().addClickHandler(
-				new ClickHandler() {
+		view.getAddMoreWordsButtonClickHandlers().addClickHandler(new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
-						eventBus.openBrowseAddMoreWord();
-					}
-				});
+			@Override
+			public void onClick(ClickEvent event) {
+				eventBus.openBrowseAddMoreWord();
+			}
+		});
 		updateChartSettings();
 		if (dashboardStatePoller == null) {
 			dashboardStatePoller = new Timer() {
@@ -296,104 +285,87 @@ public class DashboardMainPresenter extends
 					// only run it when dashboard is show
 					if (view.isAttached() && !poller_locker) {
 						poller_locker = true;
-						lexService
-								.getIsDashboardUpdateToolRunning(new AsyncCallback<ResultDto>() {
+						lexService.getIsDashboardUpdateToolRunning(new AsyncCallback<ResultDto>() {
 
-									@Override
-									public void onSuccess(ResultDto result) {
-										DashboardUpdateResultType updateResult = DashboardUpdateResultType
-												.getFromValue(result.getCode());
+							@Override
+							public void onSuccess(ResultDto result) {
+								DashboardUpdateResultType updateResult = DashboardUpdateResultType.getFromValue(result
+										.getCode());
 
-										switch (updateResult) {
-										case STANDBY:
-											// do nothing
-											break;
-										case RUNNING:
-											// still running
-											view.getUpdatingPanel().setVisible(
-													true);
-											break;
-										case UPDATED:
-											// finished with changes
-											view.getUpdatingPanel().setVisible(
-													false);
-											dashboardStatePoller.cancel();
-											switch (Integer
-													.parseInt(view
-															.getActivityTimeRangeListBox()
-															.getValue(
-																	view.getActivityTimeRangeListBox()
-																			.getSelectedIndex()))) {
-											case 0:
-												getDashBoardData(30,
-														dashboardSpeData, false);
-												break;
-											case 1:
-												getDashBoardData(90,
-														dashboardSpeData, false);
-												break;
-											case 2:
-												getDashBoardData(365,
-														dashboardSpeData, false);
-												break;
-											case 3:
-												getDashBoardData(0,
-														dashboardSpeData, false);
-												break;
-											default:
-												getDashBoardData(30,
-														dashboardSpeData, false);
-												break;
-											}
-											break;
-										case NOCHANGE:
-											// finished without changes
-											view.getUpdatingPanel().setVisible(
-													false);
-											dashboardStatePoller.cancel();
-											break;
-										}
-										poller_locker = false;
+								switch (updateResult) {
+								case STANDBY:
+									// do nothing
+									break;
+								case RUNNING:
+									// still running
+									view.getUpdatingPanel().setVisible(true);
+									break;
+								case UPDATED:
+									// finished with changes
+									view.getUpdatingPanel().setVisible(false);
+									dashboardStatePoller.cancel();
+									switch (Integer.parseInt(view.getActivityTimeRangeListBox().getValue(
+											view.getActivityTimeRangeListBox().getSelectedIndex()))) {
+									case 0:
+										getDashBoardData(30, dashboardSpeData, false);
+										break;
+									case 1:
+										getDashBoardData(90, dashboardSpeData, false);
+										break;
+									case 2:
+										getDashBoardData(365, dashboardSpeData, false);
+										break;
+									case 3:
+										getDashBoardData(0, dashboardSpeData, false);
+										break;
+									default:
+										getDashBoardData(30, dashboardSpeData, false);
+										break;
 									}
+									break;
+								case NOCHANGE:
+									// finished without changes
+									view.getUpdatingPanel().setVisible(false);
+									dashboardStatePoller.cancel();
+									break;
+								}
+								poller_locker = false;
+							}
 
-									@Override
-									public void onFailure(Throwable caught) {
-										eventBus.handleError(caught);
-										dashboardStatePoller.cancel();
-										poller_locker = false;
-									}
-								});
+							@Override
+							public void onFailure(Throwable caught) {
+								eventBus.handleError(caught);
+								dashboardStatePoller.cancel();
+								poller_locker = false;
+							}
+						});
 					}
 				}
 			};
 		}
 	}
 
-	private void getDashBoardData(int activityTimeRange,
-			final SettingTasksDashboardSettings dashboardSpeData,
+	private void getDashBoardData(int activityTimeRange, final SettingTasksDashboardSettings dashboardSpeData,
 			final boolean triggerUpdate) {
-		lexService.getDashboardData(activityTimeRange,
-				new AsyncCallback<DashboardActivitiesDto>() {
+		lexService.getDashboardData(activityTimeRange, new AsyncCallback<DashboardActivitiesDto>() {
 
-					@Override
-					public void onSuccess(DashboardActivitiesDto result) {
-						updateDashboard(result, dashboardSpeData);
-						if (triggerUpdate) {
-							dashboardStatePoller
-									.scheduleRepeating(POLLER_INTERVAL);
-						}
-					}
+			@Override
+			public void onSuccess(DashboardActivitiesDto result) {
+				updateDashboard(result, dashboardSpeData);
+				if (triggerUpdate) {
+					dashboardStatePoller.scheduleRepeating(POLLER_INTERVAL);
+				}
+			}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						eventBus.handleError(caught);
-					}
-				});
+			@Override
+			public void onFailure(Throwable caught) {
+				eventBus.handleError(caught);
+			}
+		});
 	}
 
 	private void updateChartSettings() {
-		view.getLineChart().setHoverParameterInterpreter(
-				new ActivityHoverParameterInterpreter());
+		view.getLineChart().setHoverParameterInterpreter(new ActivityHoverParameterInterpreter());
 		view.getLineChart().setPadding("20px");
 		view.getLineChart().setPlotAreaBorderColor("#c6defa");
 		view.getLineChart().setGridColor("#c6defa");
@@ -442,8 +414,7 @@ public class DashboardMainPresenter extends
 
 	private void setCurveBasicSettings(Curve curve) {
 		curve.getSymbol().setSymbolType(SymbolType.LINE);
-		curve.getSymbol().setHovertextTemplate(
-				GChart.formatAsHovertext("<b>${x}: ${y} ${t}</b>"));
+		curve.getSymbol().setHovertextTemplate(GChart.formatAsHovertext("<b>${x}: ${y} ${t}</b>"));
 		curve.getSymbol().setHoverLocation(AnnotationLocation.CENTER);
 		curve.getSymbol().setFillThickness(2); // px line width
 		curve.getSymbol().setBorderWidth(1);
@@ -451,20 +422,17 @@ public class DashboardMainPresenter extends
 		curve.getSymbol().setWidth(2);
 		curve.getSymbol().setHeight(2);
 
-		curve.getSymbol().setHoverWidget(curve.getSymbol().getHoverWidget(), 0,
-				0);
+		curve.getSymbol().setHoverWidget(curve.getSymbol().getHoverWidget(), 0, 0);
 	}
 
 	private void refreshChart() {
-		view.getLineChart().setXChartSize(
-				view.asWidget().getOffsetWidth() - 100);
+		view.getLineChart().setXChartSize(view.asWidget().getOffsetWidth() - 100);
 		view.getLineChart().setYChartSize(300);
 		view.getLineChart().getXAxis().setAxisLabel("");
 		view.getLineChart().update();
 	}
 
-	private void updateDashboard(DashboardActivitiesDto dto,
-			SettingTasksDashboardSettings dashboardSpeData) {
+	private void updateDashboard(DashboardActivitiesDto dto, SettingTasksDashboardSettings dashboardSpeData) {
 
 		List<ActivityChartDataSource> entryDatasource = new ArrayList<ActivityChartDataSource>();
 		List<ActivityChartDataSource> exampleDatasource = new ArrayList<ActivityChartDataSource>();
@@ -494,8 +462,7 @@ public class DashboardMainPresenter extends
 			if (maxActivity < actValue) {
 				maxActivity = actValue;
 			}
-			partOfSpeechDatasource.add(new ActivityChartDataSource(i + 1,
-					actValue));
+			partOfSpeechDatasource.add(new ActivityChartDataSource(i + 1, actValue));
 		}
 
 		for (int i = 0; i < dto.getDefinitionActivities().length(); i++) {
@@ -503,23 +470,18 @@ public class DashboardMainPresenter extends
 			if (maxActivity < actValue) {
 				maxActivity = actValue;
 			}
-			definitionDatasource.add(new ActivityChartDataSource(i + 1,
-					actValue));
+			definitionDatasource.add(new ActivityChartDataSource(i + 1, actValue));
 		}
 
 		if (dto.getActivityDate().length() < 60) {
-			view.getLineChart().getXAxis()
-					.setTickCount(dto.getDefinitionActivities().length());
+			view.getLineChart().getXAxis().setTickCount(dto.getDefinitionActivities().length());
 		} else {
-			view.getLineChart().getXAxis()
-					.setTickCount(dto.getDefinitionActivities().length() / 10);
+			view.getLineChart().getXAxis().setTickCount(dto.getDefinitionActivities().length() / 10);
 		}
 		// change chart X/Y size depended on data
-		view.getLineChart().getYAxis()
-				.setAxisMax(maxActivity + (maxActivity * 0.1));
+		view.getLineChart().getYAxis().setAxisMax(maxActivity + (maxActivity * 0.1));
 		view.getLineChart().getXAxis().setAxisMin(1);
-		view.getLineChart().getXAxis()
-				.setAxisMax(dto.getDefinitionActivities().length());
+		view.getLineChart().getXAxis().setAxisMax(dto.getDefinitionActivities().length());
 
 		entryCurve.clearPoints();
 		view.getLineChart().setDataSource(entryCurve, entryDatasource);
@@ -528,25 +490,20 @@ public class DashboardMainPresenter extends
 		view.getLineChart().setDataSource(exampleCurve, exampleDatasource);
 
 		partOfSpeechCurve.clearPoints();
-		view.getLineChart().setDataSource(partOfSpeechCurve,
-				partOfSpeechDatasource);
+		view.getLineChart().setDataSource(partOfSpeechCurve, partOfSpeechDatasource);
 
 		definitionCurve.clearPoints();
-		view.getLineChart()
-				.setDataSource(definitionCurve, definitionDatasource);
+		view.getLineChart().setDataSource(definitionCurve, definitionDatasource);
 
 		// calculate percent
 		int targetWordCount = dashboardSpeData.getTargetWordCount();
 
-		int statsWordCountPercent = (dto.getStatsWordCount() * 100)
-				/ targetWordCount;
-		int statsPosPercent = statsWordCountPercent == 0 ? dto.getStatsPos()
-				: (dto.getStatsPos() * 100) / dto.getStatsWordCount();
-		int statsMeaningsPercent = statsWordCountPercent == 0 ? dto
-				.getStatsMeanings() : (dto.getStatsMeanings() * 100)
+		int statsWordCountPercent = (dto.getStatsWordCount() * 100) / targetWordCount;
+		int statsPosPercent = statsWordCountPercent == 0 ? dto.getStatsPos() : (dto.getStatsPos() * 100)
 				/ dto.getStatsWordCount();
-		int statsExamplesPercent = statsWordCountPercent == 0 ? dto
-				.getStatsExamples() : (dto.getStatsExamples() * 100)
+		int statsMeaningsPercent = statsWordCountPercent == 0 ? dto.getStatsMeanings() : (dto.getStatsMeanings() * 100)
+				/ dto.getStatsWordCount();
+		int statsExamplesPercent = statsWordCountPercent == 0 ? dto.getStatsExamples() : (dto.getStatsExamples() * 100)
 				/ dto.getStatsWordCount();
 
 		view.getProgressWordCount().setPercent(statsWordCountPercent);
@@ -554,10 +511,10 @@ public class DashboardMainPresenter extends
 		view.getProgressMeanings().setPercent(statsMeaningsPercent);
 		view.getProgressExamples().setPercent(statsExamplesPercent);
 
-		view.getProgressWordCount().setText(statsWordCountPercent + " %");
-		view.getProgressPOS().setText(statsPosPercent + " %");
-		view.getProgressMeanings().setText(statsMeaningsPercent + " %");
-		view.getProgressExamples().setText(statsExamplesPercent + " %");
+		view.getProgressWordCount().setText(statsWordCountPercent + "%");
+		view.getProgressPOS().setText(statsPosPercent + "%");
+		view.getProgressMeanings().setText(statsMeaningsPercent + "%");
+		view.getProgressExamples().setText(statsExamplesPercent + "%");
 		refreshChart();
 	}
 }

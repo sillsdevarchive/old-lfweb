@@ -6,6 +6,7 @@ import org.palaso.languageforge.client.lex.dashboard.presenter.DashboardMainPres
 
 import com.github.gwtbootstrap.client.ui.Bar;
 import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.StackProgressBar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -38,6 +39,10 @@ public class DashboardMainView extends Composite implements IDashboardView {
 	@UiField Bar progressPOS;
 	@UiField Bar progressMeanings;
 	@UiField Bar progressExamples;
+	@UiField StackProgressBar progressWordCountBar;
+	@UiField StackProgressBar progressPOSBar;
+	@UiField StackProgressBar progressMeaningsBar;
+	@UiField StackProgressBar progressExamplesBar;
 	@UiField ExtendedComboBox activityTimeRangeListBox;
 	@UiField Image updatingImage;
 	@UiField HTMLPanel updatingPanel;
@@ -84,6 +89,29 @@ public class DashboardMainView extends Composite implements IDashboardView {
 		return btnAddMoreExamples;
 	}
 
+	
+	@Override
+	public StackProgressBar getProgressWordCountBar() {
+		return progressWordCountBar;
+	}
+
+
+	@Override
+	public StackProgressBar getProgressPOSBar() {
+		return progressPOSBar;
+	}
+
+	@Override
+	public StackProgressBar getProgressMeaningsBar() {
+		return progressMeaningsBar;
+	}
+
+
+	@Override
+	public StackProgressBar getProgressExamplesBar() {
+		return progressExamplesBar;
+	}
+	
 
 	@Override
 	public Bar getProgressWordCount() {

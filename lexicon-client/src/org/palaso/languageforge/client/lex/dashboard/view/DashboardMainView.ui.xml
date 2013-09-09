@@ -57,7 +57,7 @@
 								styleName="gwt-Label wordfromtexttextlabel" ui:field="lblWordCount"></g:Label>
 						</div>
 						<div class="lex-dc-column" id="c2-nopadding">
-							<b:StackProgressBar width="280px" height="35px">
+							<b:StackProgressBar width="280px" height="35px" ui:field="progressWordCountBar">
 								<b:Bar color="WARNING" ui:field="progressWordCount"></b:Bar>
 							</b:StackProgressBar>
 						</div>
@@ -77,7 +77,7 @@
 								ui:field="lblPOS"></g:Label>
 						</div>
 						<div class="lex-dc-column" id="c2-nopadding">
-							<b:StackProgressBar width="280px" height="35px">
+							<b:StackProgressBar width="280px" height="35px" ui:field="progressPOSBar">
 								<b:Bar color="SUCCESS" ui:field="progressPOS"></b:Bar>
 							</b:StackProgressBar>
 						</div>
@@ -95,7 +95,7 @@
 								styleName="gwt-Label wordfromtexttextlabel" ui:field="lblMeanings"></g:Label>
 						</div>
 						<div class="lex-dc-column" id="c2-nopadding">
-							<b:StackProgressBar width="280px" height="35px">
+							<b:StackProgressBar width="280px" height="35px" ui:field="progressMeaningsBar">
 								<b:Bar color="DEFAULT" ui:field="progressMeanings"></b:Bar>
 							</b:StackProgressBar>
 						</div>
@@ -114,7 +114,7 @@
 								styleName="gwt-Label wordfromtexttextlabel" ui:field="lblExamples"></g:Label>
 						</div>
 						<div class="lex-dc-column" id="c2-nopadding">
-							<b:StackProgressBar width="280px" height="35px">
+							<b:StackProgressBar width="280px" height="35px" ui:field="progressExamplesBar">
 								<b:Bar color="DANGER" ui:field="progressExamples"></b:Bar>
 							</b:StackProgressBar>
 						</div>

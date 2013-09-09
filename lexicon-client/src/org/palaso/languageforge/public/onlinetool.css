@@ -674,3 +674,9 @@ div-no-hide {
 {
 	color: #303030 !important;
 }
+
+.dashboard_percent_text
+{
+	line-height: 35px;
+	text-align: center;
+}
