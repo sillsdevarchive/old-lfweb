@@ -680,3 +680,8 @@ div-no-hide {
 	line-height: 35px;
 	text-align: center;
 }
+
+.aside .add-on
+{
+	float: left;
+}

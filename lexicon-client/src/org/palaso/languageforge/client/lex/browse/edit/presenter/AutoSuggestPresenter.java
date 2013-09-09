@@ -64,7 +64,7 @@ public class AutoSuggestPresenter
 		suggestBox = new SuggestBox(oracle, textfield);
 		suggestBox.addSelectionHandler(this);
 		suggestBox.getTextBox().addChangeHandler(this);
-		suggestBox.setWidth("auto");
+		suggestBox.setWidth("250px");
 		suggestBox.setText(PRE_TEXT);
 		view.setSuggestBox(suggestBox);
 		valueMap = new HashMap<String, String>();

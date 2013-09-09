@@ -11,8 +11,8 @@
 				<div class="lex-dc-column cpadding5" id="c2">
 				</div>
 				<div class="lex-dc-column cpadding5" id="c3">
-					<b:Button ui:field='prevButton' text="" title="{string.ButtonBarControlView_Previous}" width="40px"  icon="ARROW_LEFT"/>
-					<b:Button ui:field='nextButton' text="" title="{string.ButtonBarControlView_Next}" width="40px" icon="ARROW_RIGHT" iconPosition="RIGHT" />
+					<b:Button ui:field='prevButton' text="" title="{string.ButtonBarControlView_Previous}" width="20px"  icon="ARROW_LEFT"/>
+					<b:Button ui:field='nextButton' text="" title="{string.ButtonBarControlView_Next}" width="20px" icon="ARROW_RIGHT" iconPosition="RIGHT" />
 				</div>
 			</div>
 		</div>

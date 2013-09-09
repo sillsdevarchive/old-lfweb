@@ -65,8 +65,8 @@ public class LexBrowseEditListView extends Composite implements
 	private void initTable() {
 
 		// Initialize the table.
-		table.getColumnFormatter().setWidth(0, "85px");
-		table.getColumnFormatter().setWidth(1, "100px");
+		table.getColumnFormatter().setWidth(0, "188px");
+		table.getColumnFormatter().setWidth(1, "188px");
 		
 
 	}
