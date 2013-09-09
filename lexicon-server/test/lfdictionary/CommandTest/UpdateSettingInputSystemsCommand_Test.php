@@ -5,6 +5,7 @@ use libraries\lfdictionary\commands\UpdateSettingInputSystemsCommand;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
+require_once(dirname(__FILE__) . '/../MockObject/LexProjectMockObject.php');
 
 class TestOfUpdateSettingInputSystemsCommand extends UnitTestCase {
 	
@@ -21,11 +22,14 @@ class TestOfUpdateSettingInputSystemsCommand extends UnitTestCase {
 		if (!file_exists($this->_path)) {
 			mkdir($this->_path);
 		}
-		$command = new UpdateSettingInputSystemsCommand($this->_path,$this->JSON_SOURCE);
+		
+		$LexProjectMockObject = new LexProjectMockObject();
+		
+		$command = new UpdateSettingInputSystemsCommand($LexProjectMockObject,$this->JSON_SOURCE);
 		$command->execute();
 		
 		// get file and to json again!
-		$command = new GetSettingInputSystemsCommand($this->_path);
+		$command = new GetSettingInputSystemsCommand($LexProjectMockObject);
 		$result = json_encode($command->execute());
 		$this->assertEqual($this->JSON_SOURCE, $result);
 	}
