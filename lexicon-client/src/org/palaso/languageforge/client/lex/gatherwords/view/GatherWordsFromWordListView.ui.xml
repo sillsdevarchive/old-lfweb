@@ -53,7 +53,7 @@
 											ui:field="dictEditView"></lexmain:EntryView>
 								</div>
 								<div class="lex-dc-column" id="c3-100PIX">
-									<b:Button width="80px" text="{string.GatherWordsFromWordListView_Add_word}"  type="PRIMARY"
+									<b:Button width="70px" text="{string.GatherWordsFromWordListView_Add_word}"  type="PRIMARY"
 											ui:field="btnAddWord" icon="PLUS"></b:Button>
 								</div>
 							</div>

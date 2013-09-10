@@ -144,6 +144,7 @@ public class GatherWordsFromWordListPresenter
 											getRecentAddedAsList());
 									view.getRecentlyAddedTable().redraw();
 									newWordEntryPresenter.getWordPresenter().setEnabled(false);
+									fillData(+1);
 								}
 
 								@Override
