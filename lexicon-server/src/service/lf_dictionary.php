@@ -426,7 +426,7 @@ class LfDictionary
 			// apply to special user
 			$userNames[] = $this->getUserNameById($userIds);
 		}
-		$command = new \libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand($this->_lexProject->projectPath,$userNames,$fields);
+		$command = new \libraries\lfdictionary\commands\UpdateSettingUserFieldsSettingCommand($this->_lexProject,$userNames,$fields);
 		$result = $command->execute();
 		return $result;
 	}
