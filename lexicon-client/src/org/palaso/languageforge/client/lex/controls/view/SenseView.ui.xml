@@ -4,7 +4,7 @@
 	xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
 	xmlns:lexmain='urn:import:org.palaso.languageforge.client.lex.controls.view'
 	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'>
-	<g:HTMLPanel width="100%" height="100%" styleName="lex-sense">
+	<g:HTMLPanel width="auto" height="100%" styleName="lex-sense">
 		<div class="lex-dc-row">
 			<div id="firefox-bug-fix">
 				<div class="lex-dc-column" id="c1">
