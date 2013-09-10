@@ -70,8 +70,9 @@ class Lf
 			$dto = new ResultDTO(false, "usernameExists");
 			return $dto->encode();
 		}
-
-		$privatekey = "---- YOUR Private KEY GOES HERE ----";
+		
+		//TODO: ---- YOUR Private KEY GOES HERE ----
+		$privatekey = "6LfxQecSAAAAAMjuC5FKBw6zZrGSOF-KBqWdi1IL";
 		$resp = recaptcha_check_answer ($privatekey,
 				$_SERVER["REMOTE_ADDR"],
 				$user->captcha_challenge,
