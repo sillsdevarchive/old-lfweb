@@ -5,11 +5,11 @@ import org.palaso.languageforge.client.lex.controls.ExtendedCheckBox;
 import org.palaso.languageforge.client.lex.controls.ExtendedTextBox;
 import org.palaso.languageforge.client.lex.controls.FastTree;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;

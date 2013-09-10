@@ -3,13 +3,13 @@ package org.palaso.languageforge.client.lex.review.view;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationListControl;
 import org.palaso.languageforge.client.lex.review.presenter.ReviewMainPresenter.IReviewView;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.Button;
 
 public class ReviewMainView extends Composite implements IReviewView {
 
@@ -40,14 +40,6 @@ public class ReviewMainView extends Composite implements IReviewView {
 
 	public ReviewMainView() {
 		initWidget(binder.createAndBindUi(this));
-		btnQuestionAll.addStyleName("small-button");
-		btnQuestionResolved.addStyleName("small-button");
-		btnQuestionUnresolved.addStyleName("small-button");
-		btnRecentAll.addStyleName("small-button");
-		btnRecentResolved.addStyleName("small-button");
-		btnRecentUnresolved.addStyleName("small-button");
-		btnRecentChanges.addStyleName("small-button");
-		btnRecentMerges.addStyleName("small-button");
 	}
 
 	@Override

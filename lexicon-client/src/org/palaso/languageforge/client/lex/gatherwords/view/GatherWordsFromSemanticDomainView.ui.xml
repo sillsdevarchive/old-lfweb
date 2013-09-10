@@ -4,6 +4,7 @@
 	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
 	xmlns:lexmain='urn:import:org.palaso.languageforge.client.lex.controls.view'
 	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'
+	xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
 	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
 
@@ -28,12 +29,9 @@
 										styleName="entryViewSelection" width="100%" ui:field="domainTreeListBox">
 									</cc:ExtendedComboBox>
 								</div>
-								<div class="lex-dc-column" id="c3-100PIX">
-									<g:Button width="40px" text=" " ui:field="btnPre"
-										styleName="gwt-Button arrowleftbutton"></g:Button>
-
-									<g:Button width="40px" text=" " ui:field="btnNext"
-										styleName="gwt-Button arrowrightbutton"></g:Button>
+								<div class="lex-dc-column" id="c3-100PIX">										
+									<b:Button ui:field='btnPre' width="20px"  icon="ARROW_LEFT"/>
+									<b:Button ui:field='btnNext' width="20px" icon="ARROW_RIGHT" iconPosition="RIGHT" />
 								</div>
 							</div>
 						</div>
@@ -58,7 +56,7 @@
 												ui:field="dictEditView"></lexmain:EntryView>
 										</div>
 										<div class="lex-dc-column" id="c3-100PIX">
-											<g:Button width="100px" text="{string.GatherWordsFromSemanticDomainView_Add_word}" ui:field="btnAddWord"></g:Button>
+											<b:Button width="80px" type="PRIMARY" icon="PLUS" text="{string.GatherWordsFromSemanticDomainView_Add_word}" ui:field="btnAddWord" />
 										</div>
 									</div>
 								</div>
