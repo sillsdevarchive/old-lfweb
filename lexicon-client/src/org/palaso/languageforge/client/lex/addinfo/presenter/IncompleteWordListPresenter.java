@@ -337,8 +337,12 @@ public class IncompleteWordListPresenter extends
 							throw new RuntimeException();
 						}
 
-						view.getProgressLabel().setPercent((int) statsPercent);
 						view.getProgressLabel().setText(statsPercent + "% Complete");
+						
+						statsPercent = statsPercent>100 ? 100 : statsPercent;
+						
+						view.getProgressLabel().setPercent((int) statsPercent);
+
 
 					}
 

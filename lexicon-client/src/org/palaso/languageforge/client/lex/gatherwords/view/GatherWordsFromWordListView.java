@@ -7,12 +7,12 @@ import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter.IEntryView;
 import org.palaso.languageforge.client.lex.controls.view.EntryView;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;

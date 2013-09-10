@@ -506,15 +506,22 @@ public class DashboardMainPresenter extends BasePresenter<DashboardMainView, Das
 		int statsExamplesPercent = statsWordCountPercent == 0 ? dto.getStatsExamples() : (dto.getStatsExamples() * 100)
 				/ dto.getStatsWordCount();
 
+		view.getProgressWordCount().setText(statsWordCountPercent + "%");
+		view.getProgressPOS().setText(statsPosPercent + "%");
+		view.getProgressMeanings().setText(statsMeaningsPercent + "%");
+		view.getProgressExamples().setText(statsExamplesPercent + "%");
+		
+		statsWordCountPercent = statsWordCountPercent>100 ? 100 : statsWordCountPercent;
+		statsPosPercent = statsPosPercent>100 ? 100 : statsPosPercent;
+		statsMeaningsPercent = statsMeaningsPercent>100 ? 100 : statsMeaningsPercent;
+		statsExamplesPercent = statsExamplesPercent>100 ? 100 : statsExamplesPercent;
+		
 		view.getProgressWordCount().setPercent(statsWordCountPercent);
 		view.getProgressPOS().setPercent(statsPosPercent);
 		view.getProgressMeanings().setPercent(statsMeaningsPercent);
 		view.getProgressExamples().setPercent(statsExamplesPercent);
 
-		view.getProgressWordCount().setText(statsWordCountPercent + "%");
-		view.getProgressPOS().setText(statsPosPercent + "%");
-		view.getProgressMeanings().setText(statsMeaningsPercent + "%");
-		view.getProgressExamples().setText(statsExamplesPercent + "%");
+
 		refreshChart();
 	}
 }

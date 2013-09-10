@@ -138,8 +138,8 @@
 	box-shadow: 0 1px 0 #E7E7E7 inset;
 	overflow: hidden;
 	padding: 0 5px;
-	min-height: 2.4em;
-	float: left;
+	/*min-height: 2.4em;
+	float: left;*/
 }
 
 .gwt-TextBox[disabled] {
