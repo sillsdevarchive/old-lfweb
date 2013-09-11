@@ -1,97 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
-	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'
 	xmlns:b="urn:import:com.github.gwtbootstrap.client.ui">
-	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface'
+		field='string' />
 	<ui:style>
 		
 	</ui:style>
 	<g:HTMLPanel width="100%" height="100%">
-		<aside class="aside" style="min-width:200px;width:35%; height:565px;">
-			<div class="lex-dc-row">
-				<div id="firefox-bug-fix">
-					<div class="lex-dc-column cpadding5" id="c1">
-						<b:Button text="{string.ConfigureSettingInputSystemsView_New}" width="100%" ui:field="btnNew"  type="SUCCESS" icon="PLUS" />
-					</div>
-					<div class="lex-dc-column" id="c2">
-						<!-- empty space -->
-					</div>
-					<div class="lex-dc-column cpadding5" id="c3">
-						<b:Button text="{string.ConfigureSettingInputSystemsView_More}" width="100px" ui:field="btnMore" type="INFO"  />
+		<aside class="aside" style="min-width:200px;width:35%; height:100%;">
+			<div class="aside_inner">
+				<div class="lex-dc-row">
+					<div id="firefox-bug-fix">
+						<div class="lex-dc-column cpadding5" id="c1">
+							<b:Button text="{string.ConfigureSettingInputSystemsView_New}"
+								width="100%" ui:field="btnNew" type="SUCCESS" icon="PLUS" />
+						</div>
+						<div class="lex-dc-column" id="c2">
+							<!-- empty space -->
+						</div>
+						<div class="lex-dc-column cpadding5" id="c3">
+							<b:Button text="{string.ConfigureSettingInputSystemsView_More}"
+								width="100px" ui:field="btnMore" type="INFO" />
+						</div>
 					</div>
 				</div>
-			</div>
-			<g:ScrollPanel width="auto" height="525px">
-				<cc:FastTree width="auto" height="auto" ui:field="tree">
+				<g:ScrollPanel width="auto" height="550px">
+					<cc:FastTree width="auto" height="auto" ui:field="tree">
 
-				</cc:FastTree>
-			</g:ScrollPanel>
+					</cc:FastTree>
+				</g:ScrollPanel>
+			</div>
 		</aside>
-		<section class="content gwt-content-height" style="width:auto; height:550px;">
+		<section class="content gwt-content-height" style="width:auto; height:100%;">
 			<div class="lex-dc-row">
 				<div id="firefox-bug-fix">
 					<div class="lex-dc-column" id="c1" style="width:auto">
-						<g:Label text="{string.ConfigureSettingInputSystemsView_Long_language_name}" width="auto"
-										horizontalAlignment="ALIGN_LEFT" ui:field="identifiersLblLangNameLeft"></g:Label>
+						<g:Label
+							text="{string.ConfigureSettingInputSystemsView_Long_language_name}"
+							width="auto" horizontalAlignment="ALIGN_LEFT" ui:field="identifiersLblLangNameLeft"></g:Label>
 					</div>
 					<div class="lex-dc-column" id="c2">
 
 					</div>
 					<div class="lex-dc-column" id="c3" style="width:auto">
-						<g:Label text="{string.ConfigureSettingInputSystemsView_LanguageCode}" width="auto"
-										horizontalAlignment="ALIGN_RIGHT"  ui:field="identifiersLblLangNameRight"></g:Label>
+						<g:Label text="{string.ConfigureSettingInputSystemsView_LanguageCode}"
+							width="auto" horizontalAlignment="ALIGN_RIGHT" ui:field="identifiersLblLangNameRight"></g:Label>
 					</div>
 				</div>
 			</div>
-			<g:TabLayoutPanel width="100%" height="500px" 
+			<g:TabLayoutPanel width="100%" height="100%"
 				ui:field="inputSystemTabPanel" barUnit="PX" barHeight="60">
 				<g:tab>
 					<g:header>
-						<ui:text from="{string.ConfigureSettingInputSystemsView_Identifiers}"/>
+						<ui:text from="{string.ConfigureSettingInputSystemsView_Identifiers}" />
 					</g:header>
 					<g:HTMLPanel width="auto" height="auto" ui:field="identifiersPanel"
 						styleName="content-block content-block-tab ">
 						<div class="lex-dc-row">
 							<div id="firefox-bug-fix">
 								<div class="lex-dc-column" id="c1">
-									<g:Label text="{string.ConfigureSettingInputSystemsView_Abbreviation}" width="100px" height="100%"
-										horizontalAlignment="ALIGN_RIGHT"></g:Label>
+									<g:Label
+										text="{string.ConfigureSettingInputSystemsView_Abbreviation}"
+										width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 								</div>
 								<div class="lex-dc-column textBox-padding-fix" id="c2">
-									
-										<g:TextBox ui:field="txtAbbreviation"
-											width="100%"></g:TextBox>
-									
-								</div>
-								
-								<!-- 
-								<div class="lex-dc-column" id="c3nosize"
-									style="overflow: hidden; width:50px; max-width:50px">
+
+									<g:TextBox ui:field="txtAbbreviation" width="100%"></g:TextBox>
 
 								</div>
-								-->
+
+								<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+									width:50px; max-width:50px"> </div> -->
 							</div>
 						</div>
 
 						<div class="lex-dc-row">
 							<div id="firefox-bug-fix">
 								<div class="lex-dc-column" id="c1">
-									<g:Label text="{string.ConfigureSettingInputSystemsView_Special}" width="100px" height="100%"
-										horizontalAlignment="ALIGN_RIGHT"></g:Label>
+									<g:Label text="{string.ConfigureSettingInputSystemsView_Special}"
+										width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 								</div>
 								<div class="lex-dc-column" id="c2">
 									<cc:ExtendedComboBox multipleSelect="false"
 										width="100%" ui:field="inputSystemIdentifierSpecialListBox">
 									</cc:ExtendedComboBox>
 								</div>
-								<!-- 
-								<div class="lex-dc-column" id="c3nosize"
-									style="overflow: hidden; width:50px; max-width:50px">
-
-								</div>
-								-->
+								<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+									width:50px; max-width:50px"> </div> -->
 							</div>
 						</div>
 
@@ -105,22 +102,19 @@
 										<div class="lex-dc-row">
 											<div id="firefox-bug-fix">
 												<div class="lex-dc-column" id="c1">
-													<g:Label text="{string.ConfigureSettingInputSystemsView_Purpose}" width="100px" height="100%"
-														horizontalAlignment="ALIGN_RIGHT"></g:Label>
+													<g:Label
+														text="{string.ConfigureSettingInputSystemsView_Purpose}"
+														width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 												</div>
 												<div class="lex-dc-column" id="c2">
-												
+
 													<cc:ExtendedComboBox multipleSelect="false"
 														width="100%" ui:field="inputSystemLangIdPurposeListBox">
 													</cc:ExtendedComboBox>
-												
-												</div>
-												<!-- 
-												<div class="lex-dc-column" id="c3nosize"
-													style="overflow: hidden;  width:0px; max-width:0px">
 
 												</div>
-												-->
+												<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: 
+													hidden; width:0px; max-width:0px"> </div> -->
 											</div>
 										</div>
 										<div class="lex-dc-row">
@@ -129,26 +123,18 @@
 
 												</div>
 												<div class="lex-dc-column" id="c2">
-													<g:Anchor href="#" styleName="read-more"
-														ui:field='readmoreIPA'>
-														<ui:text from="{string.ConfigureSettingInputSystemsView_Read_more_about_IPA_transcription}"/>
-														</g:Anchor>
+													<g:Anchor href="#" styleName="read-more" ui:field='readmoreIPA'>
+														<ui:text
+															from="{string.ConfigureSettingInputSystemsView_Read_more_about_IPA_transcription}" />
+													</g:Anchor>
 												</div>
-												<!-- 
-												<div class="lex-dc-column" id="c3nosize"
-													style="overflow: hidden; width:0px; max-width:0px">
-
-												</div>
-												-->
+												<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: 
+													hidden; width:0px; max-width:0px"> </div> -->
 											</div>
 										</div>
 									</div>
-									<!-- 
-									<div class="lex-dc-column" id="c3nosize"
-										style="overflow: hidden; width:35px; max-width:35px">
-
-									</div>
-									-->
+									<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+										width:35px; max-width:35px"> </div> -->
 								</div>
 							</div>
 						</g:HTMLPanel>
@@ -160,67 +146,56 @@
 
 									</div>
 									<div class="lex-dc-column" id="c2">
-									
-																			<div class="lex-dc-row">
+
+										<div class="lex-dc-row">
 											<div id="firefox-bug-fix">
 												<div class="lex-dc-column" id="c1">
-													<g:Label text="{string.ConfigureSettingInputSystemsView_Script}" width="100px" height="100%"
-														horizontalAlignment="ALIGN_RIGHT"></g:Label>
+													<g:Label text="{string.ConfigureSettingInputSystemsView_Script}"
+														width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 												</div>
 												<div class="lex-dc-column" id="c2">
 													<cc:ExtendedComboBox multipleSelect="false"
 														width="100%" ui:field="inputSystemScriptListBox">
 													</cc:ExtendedComboBox>
 												</div>
-												<!-- 
-												<div class="lex-dc-column" id="c3nosize"
-													style="overflow: hidden;  width:0px; max-width:0px">
-
-												</div>
-												-->
+												<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: 
+													hidden; width:0px; max-width:0px"> </div> -->
 											</div>
 										</div>
-										
-										
-																				<div class="lex-dc-row">
+
+
+										<div class="lex-dc-row">
 											<div id="firefox-bug-fix">
 												<div class="lex-dc-column" id="c1">
-													<g:Label text="{string.ConfigureSettingInputSystemsView_Region}" width="100px" height="100%"
-														horizontalAlignment="ALIGN_RIGHT"></g:Label>
+													<g:Label text="{string.ConfigureSettingInputSystemsView_Region}"
+														width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 												</div>
 												<div class="lex-dc-column" id="c2">
 													<cc:ExtendedComboBox multipleSelect="false"
 														width="100%" ui:field="inputSystemRegionListBox">
 													</cc:ExtendedComboBox>
 												</div>
-												<!-- 
-												<div class="lex-dc-column" id="c3nosize"
-													style="overflow: hidden;  width:0px; max-width:0px">
-
-												</div>
-												-->
+												<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: 
+													hidden; width:0px; max-width:0px"> </div> -->
 											</div>
 										</div>
-									
-									
+
+
 										<div class="lex-dc-row">
 											<div id="firefox-bug-fix">
 												<div class="lex-dc-column" id="c1">
-													<g:Label text="{string.ConfigureSettingInputSystemsView_Variant}" width="100px" height="100%"
-														horizontalAlignment="ALIGN_RIGHT"></g:Label>
+													<g:Label
+														text="{string.ConfigureSettingInputSystemsView_Variant}"
+														width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 												</div>
 												<div class="lex-dc-column textBox-padding-fix" id="c2">
-												
-														<g:TextBox ui:field="txtLangIdVariant"
-															width="100%" maxLength="8"></g:TextBox>
-													
-												</div>
-												<!-- 
-												<div class="lex-dc-column" id="c3nosize"
-													style="overflow: hidden; width:0px; max-width:0px">
+
+													<g:TextBox ui:field="txtLangIdVariant" width="100%"
+														maxLength="8"></g:TextBox>
 
 												</div>
-												-->
+												<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: 
+													hidden; width:0px; max-width:0px"> </div> -->
 											</div>
 										</div>
 										<div class="lex-dc-row">
@@ -229,26 +204,18 @@
 
 												</div>
 												<div class="lex-dc-column" id="c2">
-													<g:Anchor href="#" styleName="read-more"
-														ui:field='readmoreLangID'><ui:text from="{string.ConfigureSettingInputSystemsView_Read_more_about_language_identifiers}"/>
-														</g:Anchor>
+													<g:Anchor href="#" styleName="read-more" ui:field='readmoreLangID'>
+														<ui:text
+															from="{string.ConfigureSettingInputSystemsView_Read_more_about_language_identifiers}" />
+													</g:Anchor>
 												</div>
-												<!-- 
-												<div class="lex-dc-column" id="c3nosize"
-													style="overflow: hidden; width:0px; max-width:0px">
-
-												</div>
-												-->
+												<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: 
+													hidden; width:0px; max-width:0px"> </div> -->
 											</div>
 										</div>
 									</div>
-									<!-- 
-									<div class="lex-dc-column" id="c3nosize"
-										style="overflow: hidden;  width:35px; max-width:35px">
-
-									</div>
-									
-									-->
+									<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+										width:35px; max-width:35px"> </div> -->
 								</div>
 							</div>
 						</g:HTMLPanel>
@@ -260,74 +227,38 @@
 
 									</div>
 									<div class="lex-dc-column" id="c2">
-										<g:Label text="{string.ConfigureSettingInputSystemsView_In_applications_which_support_this_option_fields_with_this_input_system_will_able_to_play_and_record_voice}" height="100%"
-											horizontalAlignment="ALIGN_RIGHT"></g:Label>
+										<g:Label
+											text="{string.ConfigureSettingInputSystemsView_In_applications_which_support_this_option_fields_with_this_input_system_will_able_to_play_and_record_voice}"
+											height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label>
 									</div>
-									<!-- 
-									<div class="lex-dc-column" id="c3nosize"
-										style="overflow: hidden; width:35px; max-width:35px">
-
-									</div>
-										-->
+									<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+										width:35px; max-width:35px"> </div> -->
 								</div>
 							</div>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:tab>
-				<!--  
-				<g:tab>
-					<g:header>
-						Sorting
-					</g:header>
-					<g:HTMLPanel width="auto" height="auto" ui:field="sortingPanel"
-						styleName="content-block content-block-tab">
-										<div class="lex-dc-row">
-											<div id="firefox-bug-fix">
-												<div class="lex-dc-column" id="c1">
-													<g:Label text="Sort" width="100px" height="100%"
-														horizontalAlignment="ALIGN_RIGHT"></g:Label>
-												</div>
-												<div class="lex-dc-column" id="c2">
-													<cc:ExtendedComboBox multipleSelect="false"
-														width="100%" ui:field="inputSystemSortingListBox">
-													</cc:ExtendedComboBox>
-												</div>
-												<div class="lex-dc-column" id="c3-buttonforselection">
-													<g:Button text="Test Sort" width="120px" ui:field="btnTestSort"></g:Button>
-												</div>
-											</div>
-										</div>
-										<div class="lex-dc-row">
-											<div id="firefox-bug-fix">
-												<div class="lex-dc-column" id="c1" stlye="width:300px;">
-													<g:SimplePanel width="300px" height="100%" ui:field="customSortPanel">
-														<g:TextArea width="100%" height="400px"></g:TextArea>
-													</g:SimplePanel>
-													<g:SimplePanel width="300px" height="100%" ui:field="sortAsAnotherPanel">
-														<g:FlowPanel width="100%" height="auto">
-														<g:Label text="Language:" width="100%"
-														horizontalAlignment="ALIGN_LEFT"></g:Label>
-														<cc:ExtendedComboBox multipleSelect="false"
-														width="100%" ui:field="inputSystemSortingLanguageListBox">
-													</cc:ExtendedComboBox>
-													</g:FlowPanel>
-													</g:SimplePanel>
-												</div>
-												<div class="lex-dc-column" id="c2">
-													<g:FlowPanel width="auto" height="100%">
-													<g:Label text="Text to Sort:" width="auto"
-														horizontalAlignment="ALIGN_LEFT"></g:Label>
-														<g:TextArea width="100%" height="170px"></g:TextArea>
-													<g:Label text="Sort Result:" width="auto"
-														horizontalAlignment="ALIGN_LEFT"></g:Label>
-													<g:TextArea width="100%" height="170px" readOnly="true"></g:TextArea>
-													</g:FlowPanel>
-												</div>
-											</div>
-										</div>
-						</g:HTMLPanel>
-				</g:tab>
-				-->
+				<!-- <g:tab> <g:header> Sorting </g:header> <g:HTMLPanel width="auto" 
+					height="auto" ui:field="sortingPanel" styleName="content-block content-block-tab"> 
+					<div class="lex-dc-row"> <div id="firefox-bug-fix"> <div class="lex-dc-column" 
+					id="c1"> <g:Label text="Sort" width="100px" height="100%" horizontalAlignment="ALIGN_RIGHT"></g:Label> 
+					</div> <div class="lex-dc-column" id="c2"> <cc:ExtendedComboBox multipleSelect="false" 
+					width="100%" ui:field="inputSystemSortingListBox"> </cc:ExtendedComboBox> 
+					</div> <div class="lex-dc-column" id="c3-buttonforselection"> <g:Button text="Test 
+					Sort" width="120px" ui:field="btnTestSort"></g:Button> </div> </div> </div> 
+					<div class="lex-dc-row"> <div id="firefox-bug-fix"> <div class="lex-dc-column" 
+					id="c1" stlye="width:300px;"> <g:SimplePanel width="300px" height="100%" 
+					ui:field="customSortPanel"> <g:TextArea width="100%" height="400px"></g:TextArea> 
+					</g:SimplePanel> <g:SimplePanel width="300px" height="100%" ui:field="sortAsAnotherPanel"> 
+					<g:FlowPanel width="100%" height="auto"> <g:Label text="Language:" width="100%" 
+					horizontalAlignment="ALIGN_LEFT"></g:Label> <cc:ExtendedComboBox multipleSelect="false" 
+					width="100%" ui:field="inputSystemSortingLanguageListBox"> </cc:ExtendedComboBox> 
+					</g:FlowPanel> </g:SimplePanel> </div> <div class="lex-dc-column" id="c2"> 
+					<g:FlowPanel width="auto" height="100%"> <g:Label text="Text to Sort:" width="auto" 
+					horizontalAlignment="ALIGN_LEFT"></g:Label> <g:TextArea width="100%" height="170px"></g:TextArea> 
+					<g:Label text="Sort Result:" width="auto" horizontalAlignment="ALIGN_LEFT"></g:Label> 
+					<g:TextArea width="100%" height="170px" readOnly="true"></g:TextArea> </g:FlowPanel> 
+					</div> </div> </div> </g:HTMLPanel> </g:tab> -->
 			</g:TabLayoutPanel>
 		</section>
 	</g:HTMLPanel>

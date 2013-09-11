@@ -13,13 +13,15 @@ xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
 		}
 	</ui:style>
 	<g:HTMLPanel width="100%" height="100%">
-		<aside class="aside" style="width:35%; height:565px;">
+		<aside class="aside" style="width:35%; height:100%;">
+		<div class="aside_inner">
 			<g:Label text="{string.ConfigureSettingFieldsView_Check_each_field_that_you_want_to_see}" />
 			<br />
-			<g:ScrollPanel width="auto" height="510px">
+			<g:ScrollPanel width="auto" height="auto">
 				<cc:FastTree width="auto" height="auto" ui:field="fieldsTree">
 				</cc:FastTree>
 			</g:ScrollPanel>
+		</div>
 		</aside>
 		<section class="content gwt-content-height" style="width:auto; height:550px;">
 			<g:TabLayoutPanel width="100%" height="100%"

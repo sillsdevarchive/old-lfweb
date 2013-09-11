@@ -14,7 +14,7 @@
 	cursor: hand;
 	min-width: 80px;
 	min-height: 20px;
-	background: none repeat scroll 0 0 #999;
+	background: none repeat scroll 0 0 #B3B3B3;
 	text-align: center;
 	settingsTopUserBox vertical-align: middle;
 	float: left;
@@ -62,7 +62,7 @@
 }
 
 .gwt-SuggestBoxPopup .item {
-	background: #B3B3B3;
+	background: #f3f3f3;
 	color: black;
 	padding: 0px 8px;
 	line-height: 20px;

@@ -1,17 +1,4 @@
 
-.skip {
-	position:absolute;
-	left:-10000px;
-	top:auto;
-	width:1px;
-	height:1px;
-	overflow:hidden;
-}
-.skip:focus {
-	position:static;
-	width:auto;
-	height:auto;
-}
 .alignleft {float:left;}
 .alignright {float:right;}
 #wrapper {
@@ -255,13 +242,17 @@ legend {display:none;}
 .aside {
 	float:left;
 	width:300px;
-	background:#B3B3B3;
+	background:#f3f3f3;
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
-	padding: 5px 10px;
 	margin:0 10px 0 0;
 }
+.aside .aside_inner {
+	padding: 5px 10px;
+	height: 100%
+}
+
 .aside .search {
 	position:relative;
 	margin:0 0 13px;
@@ -406,7 +397,7 @@ legend {display:none;}
 }
 #GWTContent .content {
 	overflow:hidden;
-	background:#B3B3B3;
+	background:#f3f3f3;
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;

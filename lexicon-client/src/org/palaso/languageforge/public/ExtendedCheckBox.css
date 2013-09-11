@@ -1,10 +1,5 @@
 @CHARSET "UTF-8";
 
-.ext_checkboxOuttaHere {
-	position: absolute;
-	left: -9999px;
-}
-
 .ext_checkboxArea,.ext_checkboxAreaChecked {
 	float: left;
 	width: 20px !important;
