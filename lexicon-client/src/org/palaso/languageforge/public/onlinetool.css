@@ -654,6 +654,12 @@ div-no-hide {
 	padding-left: 5px;
 }
 
+#c3-100PIX-PADDING5 {
+	width: 100px;
+	min-width: 100px;
+	padding: 5px;
+}
+
 #c3-buttonforselection {
 	width: 80px;
 	padding-top: 5px;

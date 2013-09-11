@@ -30,7 +30,7 @@
 									<lexmain:MultiTextView styleName="add_word_word_list_sample"
 									ui:field="mutTxtSample"></lexmain:MultiTextView>
 								</div>
-								<div class="lex-dc-column" id="c3-100PIX">
+								<div class="lex-dc-column" id="c3-100PIX-PADDING5">
 									<b:Button ui:field='btnPre' width="20px"  icon="ARROW_LEFT"/>
 									<b:Button ui:field='btnNext' width="20px" icon="ARROW_RIGHT" iconPosition="RIGHT" />
 								</div>
