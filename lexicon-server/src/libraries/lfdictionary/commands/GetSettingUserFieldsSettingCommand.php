@@ -38,7 +38,7 @@ class GetSettingUserFieldsSettingCommand {
 	}
 
 	function processFile() {
-		$configFilePath = $this->_lexProject->getUserSettingsFilePath($this->_userName);
+		$configFilePath = $this->_lexProject->getUserOrDefaultProjectSettingsFilePath($this->_userName);
 		$xml_str = file_get_contents($configFilePath);
 		$doc = new \DOMDocument;
 		$doc->preserveWhiteSpace = FALSE;
