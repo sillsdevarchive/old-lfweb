@@ -2,38 +2,42 @@
 namespace environment;
 
 use libraries\lfdictionary\environment\LexProject;
-
+use models\ProjectModel;
 require_once(dirname(__FILE__) . '/../Config.php');
-require_once(LF_BASE_PATH . "/lfbase/Loader.php");
 
-class LanguageDepotImportEnvironment {	
-	public $WorkRootPath;
-	public $StateRootPath;
-	public $ProjectPathName;
-}
 
 
 class LanguageDepotImporter {
 	
 	/**
-	 * @var LanguageDepotImportEnvironment
+	 * @var LexProject
 	 */
-	private $_environment;
+	private $_lexProject;
 		
 	/**
-	 * @param int $projectNodeId
-	 * @param LanguageDepotImportEnvironment $environment
+	 * @param String $projectCode
+	 * @param String $projectAdminUserId
+	 * @param LexProject $lexProject
 	 */
-	public function __construct($projectNodeId, $environment = null) {
-		$this->_environment = ($environment) ? $environment : self::createEnvironment($projectNodeId);
+	public function __construct($projectCode, $projectAdminUserId, $lexProject = null) {
+		$this->_lexProject = ($lexProject) ? $lexProject : self::createEnvironment($projectCode);
 	}
 	
-	private static function createEnvironment($projectNodeId) {
-		$result = new LanguageDepotImportEnvironment();
-		$result->WorkRootPath = LexProject::workFolderPath();
-		$result->StateRootPath = LexProject::stateFolderPath();
-		$projectModel = new \lfbase\environment\ProjectModel($projectNodeId);
-		$result->ProjectPathName = $projectModel->getName();
+	/*TODO
+	 * 1. always pass projectCode and userid back to here
+	 * 2. clone first.
+	 * 3. tracking progress (by userID and projectCode)
+	 * 4. when clone done create project entry in the DB
+	 */
+	private static function createEnvironment($projectCode) {
+		$projectModel = new ProjectModel();
+		$projectModel->projectname = $projectCode;
+		$projectModel->$projectCode = $projectCode;
+		$projectModel->write();
+		
+		//TODO :I think will need do create new project in db at last step.
+		$result = new LexProject($projectModel);
+		//$result -> createNewProject();
 		return $result;
 	}
 	
@@ -52,7 +56,7 @@ class LanguageDepotImporter {
 	 * @param string $projectId Project ID on LanguageDepot
 	 * @return AsyncRunner
 	 */
-	public function cloneRepository($user, $password, $projectId) {
+	public function cloneRepository($user, $password, $projectCode) {
 		// TODO Add support for private repo? CP 2012-08
 		$asyncRunner = $this->createAsyncRunner();
 		if ($asyncRunner->isRunning()) {
@@ -63,7 +67,7 @@ class LanguageDepotImporter {
 				return $asyncRunner;
 			}
 		}
-		$url = "http://$user:$password@hg-public.languagedepot.org/$projectId";
+		$url = "http://$user:$password@hg-public.languagedepot.org/$projectCode";
 		$hg = new \lfbase\common\HgWrapper($this->destinationPath());
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;

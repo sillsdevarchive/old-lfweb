@@ -626,16 +626,24 @@ class LfDictionary
 	}
 
 	public function depot_begin_import($model ) {
+		/*
+		 * HERE start the clone only
+		 */
+		
 		error_log("Depot Import: $model->projectCode, $model->projectUser, $model->projectPwd");
 		return null;
 	}
 	
 	public function depot_check_import_states($model) {
 		error_log("Depot Import Check: $projectCode");
+		
+		//LanguageDepotImporter::progress($projectCode);
 		$second =gmdate("s", time());
 		$isDone = false;
 		if (intval ($second)>=50){
 			$isDone=true;
+			//TODO isComplete = true;
+			//TODO here we create new project into DB and return ID.
 			//TODO replace with real ID!
 			$second = "51e3b48b9cde7fef33e7aef7";
 		}
