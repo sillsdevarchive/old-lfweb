@@ -160,14 +160,6 @@
 	padding: 0 0px;
 }
 
-.gwt-aside {
-	margin: 0 0 0 0;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-}
 
 .gwt-content-height {
 	height: 100%;
@@ -183,6 +175,11 @@
 	max-width: 277px !important;
 	font-size: 12px;
 	width: 277px !important;
+}
+
+.gwt-wordsbrowsetable th {
+	color: #f4f4f6 !important;
+	text-shadow: none !important;
 }
 
 .gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled,.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled

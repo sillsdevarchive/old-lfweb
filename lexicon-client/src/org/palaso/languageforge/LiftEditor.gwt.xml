@@ -18,9 +18,7 @@
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
 
-	<stylesheet src="lexicon.css" />
 	<stylesheet src="gwt-lf.css" />
-	<stylesheet src="all.css" />
 	<stylesheet src="onlinetool.css" />
 	<stylesheet src="ExtendedComboBox.css" />
 	<stylesheet src="ExtendedCheckBox.css" />
