@@ -17,6 +17,12 @@ public class JSNIJQueryWrapper {
 		});
 	}-*/;
 
+	public static native void closeAllJQueryOpenClose() /*-{
+		$wnd.jQuery(function() {
+			$wnd.closeAllOpenClose();
+		});
+	}-*/;
+
 	public static native void addJQueryScrollbars(String gwtBasePath) /*-{
 		$wnd.jQuery(function() {
 			$wnd.VSA_initScrollbars(gwtBasePath);
@@ -48,16 +54,14 @@ public class JSNIJQueryWrapper {
 		}
 	}-*/;
 
-	public static native void startjQueryFileUpload(String id,
-			JavaScriptObject fileAddCallback, JavaScriptObject doneCallback,
-			JavaScriptObject failCallback) /*-{
+	public static native void startjQueryFileUpload(String id, JavaScriptObject fileAddCallback,
+			JavaScriptObject doneCallback, JavaScriptObject failCallback) /*-{
 
 		$wnd.initUploader(id, fileAddCallback, doneCallback, failCallback);
 
 	}-*/;
 
-	public static native void startUploadFileByFileData(
-			JavaScriptObject preAddedFile) /*-{
+	public static native void startUploadFileByFileData(JavaScriptObject preAddedFile) /*-{
 		$wnd.jQuery(function() {
 			preAddedFile.submit();
 		});

@@ -1,11 +1,3 @@
-jQuery(function() {
-	initInputs();
-	initCustomForms();
-	initSlider();
-	initOpenClose();
-	VSA_initScrollbars();
-});
-
 function initUploader(elementId, fileAddCallback, doneCallback, failCallback) {
 	jQuery(function() {
 		'use strict';
@@ -65,6 +57,27 @@ function initUploader(elementId, fileAddCallback, doneCallback, failCallback) {
 
 }
 
+function closeAllOpenClose() {
+	jQuery('.accordion > ul > div > li').each(
+			function() {
+				var _holder = jQuery(this);
+				var _activeClass = 'active';
+				var _slider = jQuery('.slide');
+				var _effect = 'fade';
+				var _slideSpeed = 100;
+			
+				if (_holder.hasClass(_activeClass)) {
+					_slider[_effect == 'fade' ? 'fadeOut' : 'slideUp'](
+							_slideSpeed, function() {
+							if (this.nodeName == "A")
+							{
+								$(this).show();
+							}
+							});
+					_holder.removeClass(_activeClass);
+				}
+			});
+}
 /* initOpenClose */
 
 function initOpenClose() {

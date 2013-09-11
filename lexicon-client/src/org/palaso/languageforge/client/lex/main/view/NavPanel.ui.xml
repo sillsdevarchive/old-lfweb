@@ -22,7 +22,7 @@
 					</li>
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field='gatherWordsPanel'  styleName="main_top_menu_190PX">
-						<li class="active" ui:field='gatherWordsLi' >
+						<li ui:field='gatherWordsLi' >
 							<a href="#">
 								<span class="ico1">
 									<ui:text from="{string.NaviPanel_Gather_Words}"/>

@@ -5,6 +5,7 @@ import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
+import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
 import org.palaso.languageforge.client.lex.main.MainEventBus;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.UserDto;
@@ -249,6 +250,7 @@ public class NavPresenter extends
 	}
 
 	private void resetSelection() {
+		JSNIJQueryWrapper.closeAllJQueryOpenClose();
 		view.setBoldStyleReviewRecentChanges(false);
 		view.setBoldStyleDashboard(false);
 		view.setBoldStyleAddGrammatical(false);
@@ -260,11 +262,6 @@ public class NavPresenter extends
 		view.setBoldStyleGatherFromTexts(false);
 		view.setBoldStyleGatherFromWordList(false);
 		view.setBoldStyleSettings(false);
-		view.setAddInformationMenuExpended(false);
-		view.setConfigureMenuExpended(false);
-		view.setContributeMenuExpended(false);
-		view.setDashboardMenuExpended(false);
-		view.setGatherWordsMenuExpended(false);
 		eventBus.clearMessageBox();
 	}
 

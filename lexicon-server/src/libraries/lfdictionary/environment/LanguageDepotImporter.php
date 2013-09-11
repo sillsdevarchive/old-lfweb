@@ -12,62 +12,6 @@ class LanguageDepotImportEnvironment {
 	public $ProjectPathName;
 }
 
-class LanguageDepotProjectDatabase {
-	
-	/**
-	 * Language Depot project Id
-	 * @var string
-	 */
-	private $_projectId;
-	
-
-	/**
-	 * The handle to the LanguageDepot database connection. May be null if no connection is possible.
-	 * @var Handle
-	 */
-	private $_dbLanguageDepot;
-	
-	public function __construct($projectId) {
-		$this->_projectId = $projectId;
-		// TODO We may not be on the same server, so try, fail quietly and ensure other functions do not assume connection exists. CP 2012-08
-		$this->_dbLanguageDepot = new DataConnection(DB_SERVER, DB_USER, DB_PASS, LANG_DEPOT_DB_NAME);
-		$this->_dbLanguageDepot->open();		
-	}
-	
-	function __destruct() {
-		$this->_dbLanguageDepot->close();
-	}
-	
-	// TODO This needs work CP 2012-08
-	public function makeReady($nid, $source, $destination) {
-		$sql = "SELECT u.login, u.hashed_password, u.mail FROM projects p INNER JOIN members m ON p.id = m.project_id INNER JOIN users u ON u.id = m.user_id WHERE u.status = 1 AND p.identifier = '$this->_projectCode'";
-		$query = $this->_dbLanguageDepot->execute($sql);
-		$userId = 1; //Admin user Id for reference/dummy Id
-		$UserModel = new UserModel($userId);
-		while($result = mysql_fetch_object($query)) {
-	
-		if(!$UserModel->isUserMailId($result->mail)) {
-		$newUser = array('name' => $result->login, 'pass' => $result->hashed_password, 'mail' => $result->mail);
-		$userResult = $UserModel->addUser($newUser);
-		$userName = "$result->login, $result->mail";
-		$projResult = $UserModel->addUserToProject($nid, $userName);
-		}
-		}
-	
-		$ProjectModel = new ProjectModel($nid);
-	
-		$hgWrapper = new HgWrapper($destination);
-		$hgWrapper->cloneRepository($source);
-	}
-	
-	public function IsProjectManager($userMail) {
-		$sql = "SELECT * FROM projects p INNER JOIN members m ON p.id = m.project_id INNER JOIN users u ON u.id = m.user_id WHERE u.status = 1 AND p.identifier = '$this->_projectCode' AND u.mail = '$userMail' AND m.role_id = 3";
-		$query = $this->_dbLanguageDepot->execute($sql);
-		$result = $this->_dbLanguageDepot->numrows($query) > 0;
-		return $result;
-	}
-
-}
 
 class LanguageDepotImporter {
 	
