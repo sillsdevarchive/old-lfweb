@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
-	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'>
-	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'>
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface'
+		field='string' />
 	<ui:style>
 		.textbox-margin {
 			margin-left: 5px;
@@ -11,76 +11,85 @@
 	</ui:style>
 	<g:HTMLPanel width="100%" height="100%">
 		<aside class="aside" style="width:35%; height:100%;">
-		<div class="aside_inner">
-			<g:Label text="{string.ConfigureSettingTasksView_Check_each_task_that_you_want_to_see}" />
-			<br />
-			<g:ScrollPanel width="auto" height="auto">
-				<cc:FastTree width="auto" height="auto" ui:field="tasksTree">
-				</cc:FastTree>
-			</g:ScrollPanel>
-		</div>
-		</aside>
-		<section class="content gwt-content-height" style="width:auto; height:550px;">
-			<g:HTMLPanel width="100%" height="100%"
-				ui:field="subSettingSemanticDomainsHtmlPanel">
-				<div style="height:45px;">
-				</div>
-				<g:Label text="{string.ConfigureSettingTasksView_Settings_for_Gather_from_Semantic_Domains}" />
-				<div class="lex-dc-row">
-					<div id="firefox-bug-fix">
-						<div class="lex-dc-column" id="c1">
-							<g:Label text="{string.ConfigureSettingTasksView_Language}" width="60%" height="100%"
-								styleName="wordfromtexttextlabel" horizontalAlignment="ALIGN_RIGHT"></g:Label>
-						</div>
-						<div class="lex-dc-column" id="c2">
-							<g:SimplePanel ui:field="userNameListBoxPanel"
-								width="100%" height="100%">
-								<cc:ExtendedComboBox multipleSelect="false"
-									styleName="entryViewSelection" width="100%" ui:field="domainLanguageListBox">
-								</cc:ExtendedComboBox>
-							</g:SimplePanel>
-						</div>
-					</div>
-				</div>
+			<div class="aside_inner">
 				<g:Label
-					text="{string.ConfigureSettingTasksView_Check_each_field_that_you_would_like_to_gather_along_with_the_Word}" />
-				<g:ScrollPanel width="auto" height="510px">
-					<cc:FastTree width="auto" height="auto" ui:field="subSettingTree">
+					text="{string.ConfigureSettingTasksView_Check_each_task_that_you_want_to_see}" />
+				<br />
+				<g:ScrollPanel width="auto" height="auto">
+					<cc:FastTree width="auto" height="auto" ui:field="tasksTree">
 					</cc:FastTree>
 				</g:ScrollPanel>
-			</g:HTMLPanel>
-			<g:HTMLPanel width="100%" height="100%"
-				ui:field="subSettingDashboardHtmlPanel">
-				<div style="height:45px;">
-				</div>
-				<g:Label text="{string.ConfigureSettingTasksView_Settings_for_Dashboard}" />
-				<div class="lex-dc-row">
-					<div id="firefox-bug-fix">
-						<div class="lex-dc-column" id="c1">
-							<g:Label text="{string.ConfigureSettingTasksView_Activity_time_range}" height="100%"
-								styleName="wordfromtexttextlabel" horizontalAlignment="ALIGN_RIGHT"></g:Label>
-						</div>
-						<div class="lex-dc-column" id="c2">
-							<cc:ExtendedComboBox multipleSelect="false"
-								styleName="entryViewSelection" width="100%" ui:field="activityTimeRangeListBox">
-							</cc:ExtendedComboBox>
+			</div>
+		</aside>
+		<section class="content gwt-content-height" style="width:auto; height:100%;">
+			<div class="content_inner">
+				<g:HTMLPanel width="100%" height="100%"
+					ui:field="subSettingSemanticDomainsHtmlPanel">
+					<div style="height:45px;">
+					</div>
+					<g:Label
+						text="{string.ConfigureSettingTasksView_Settings_for_Gather_from_Semantic_Domains}" />
+					<div class="lex-dc-row">
+						<div id="firefox-bug-fix">
+							<div class="lex-dc-column" id="c1">
+								<g:Label text="{string.ConfigureSettingTasksView_Language}"
+									width="60%" height="100%" styleName="wordfromtexttextlabel"
+									horizontalAlignment="ALIGN_RIGHT"></g:Label>
+							</div>
+							<div class="lex-dc-column" id="c2">
+								<g:SimplePanel ui:field="userNameListBoxPanel"
+									width="100%" height="100%">
+									<cc:ExtendedComboBox multipleSelect="false"
+										styleName="entryViewSelection" width="100%" ui:field="domainLanguageListBox">
+									</cc:ExtendedComboBox>
+								</g:SimplePanel>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="lex-dc-row">
-					<div id="firefox-bug-fix">
-						<div class="lex-dc-column" id="c1">
-							<g:Label text="{string.ConfigureSettingTasksView_Target_word_count}" height="100%"
-								styleName="wordfromtexttextlabel" horizontalAlignment="ALIGN_RIGHT"></g:Label>
-						</div>
-						<div class="lex-dc-column" id="c2">
-							<cc:ExtendedTextBox width="200px"
-								styleName='gwt-TextBox {style.textbox-margin}' ui:field="targerWordCountTextbox">
-							</cc:ExtendedTextBox>
+					<g:Label
+						text="{string.ConfigureSettingTasksView_Check_each_field_that_you_would_like_to_gather_along_with_the_Word}" />
+					<g:ScrollPanel width="auto" height="510px">
+						<cc:FastTree width="auto" height="auto" ui:field="subSettingTree">
+						</cc:FastTree>
+					</g:ScrollPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel width="100%" height="100%"
+					ui:field="subSettingDashboardHtmlPanel">
+					<div style="height:45px;">
+					</div>
+					<g:Label
+						text="{string.ConfigureSettingTasksView_Settings_for_Dashboard}" />
+					<div class="lex-dc-row">
+						<div id="firefox-bug-fix">
+							<div class="lex-dc-column" id="c1">
+								<g:Label
+									text="{string.ConfigureSettingTasksView_Activity_time_range}"
+									height="100%" styleName="wordfromtexttextlabel"
+									horizontalAlignment="ALIGN_RIGHT"></g:Label>
+							</div>
+							<div class="lex-dc-column" id="c2">
+								<cc:ExtendedComboBox multipleSelect="false"
+									styleName="entryViewSelection" width="100%" ui:field="activityTimeRangeListBox">
+								</cc:ExtendedComboBox>
+							</div>
 						</div>
 					</div>
-				</div>
-			</g:HTMLPanel>
+					<div class="lex-dc-row">
+						<div id="firefox-bug-fix">
+							<div class="lex-dc-column" id="c1">
+								<g:Label text="{string.ConfigureSettingTasksView_Target_word_count}"
+									height="100%" styleName="wordfromtexttextlabel"
+									horizontalAlignment="ALIGN_RIGHT"></g:Label>
+							</div>
+							<div class="lex-dc-column" id="c2">
+								<cc:ExtendedTextBox width="200px"
+									styleName='gwt-TextBox {style.textbox-margin}' ui:field="targerWordCountTextbox">
+								</cc:ExtendedTextBox>
+							</div>
+						</div>
+					</div>
+				</g:HTMLPanel>
+			</div>
 		</section>
 	</g:HTMLPanel>
 </ui:UiBinder>

@@ -5,10 +5,14 @@
 	</ui:style>
 	<g:HTMLPanel width="100%" >
 		<aside class="aside">
+		<div class="aside_inner">
 			<lex:LexBrowseEditListView ui:field="lexDBEListView" />
+			</div>
 		</aside>
 		<section class="content gwt-content-height">
+		<div class="content_inner">
 			<lex:LexBrowseEditView ui:field="lexDBEEditView" />
+			</div>
 		</section>
 	</g:HTMLPanel>
 </ui:UiBinder> 

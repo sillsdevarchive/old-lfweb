@@ -1,109 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
-	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
+	xmlns:b="urn:import:com.github.gwtbootstrap.client.ui" xmlns:g='urn:import:com.google.gwt.user.client.ui'
 	xmlns:cc='urn:import:org.palaso.languageforge.client.lex.controls'>
-	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface' field='string' />
+	<ui:with type='org.palaso.languageforge.client.lex.common.I18nInterface'
+		field='string' />
 	<ui:style>
-		.space
-		{
+		.space {
 			height: 5px;
 			margin: 0em 0em 1.5em 0em;
 		}
 	</ui:style>
 	<g:HTMLPanel width="100%" height="100%">
 		<aside class="aside" style="width:35%; height:100%;">
-		<div class="aside_inner">
-			<g:Label text="{string.ConfigureSettingFieldsView_Check_each_field_that_you_want_to_see}" />
-			<br />
-			<g:ScrollPanel width="auto" height="auto">
-				<cc:FastTree width="auto" height="auto" ui:field="fieldsTree">
-				</cc:FastTree>
-			</g:ScrollPanel>
-		</div>
+			<div class="aside_inner">
+				<g:Label
+					text="{string.ConfigureSettingFieldsView_Check_each_field_that_you_want_to_see}" />
+				<br />
+				<g:ScrollPanel width="auto" height="auto">
+					<cc:FastTree width="auto" height="auto" ui:field="fieldsTree">
+					</cc:FastTree>
+				</g:ScrollPanel>
+			</div>
 		</aside>
-		<section class="content gwt-content-height" style="width:auto; height:550px;">
-			<g:TabLayoutPanel width="100%" height="100%"
-				ui:field="fieldTabPanel" barUnit="PX" barHeight="60">
-				<g:tab>
-					<g:header>
-						<ui:text from="{string.ConfigureSettingFieldsView_Input_Systems}"/>
-					</g:header>
-					<g:HTMLPanel width="auto" height="auto" ui:field="inputSystemsPanel"
-						styleName="content-block content-block-tab gwt-FastTree">
+		<section class="content gwt-content-height" style="width:auto; height:100%;">
+			<div class="content_inner">
+				<g:TabLayoutPanel width="100%" height="100%"
+					ui:field="fieldTabPanel" barUnit="PX" barHeight="60">
+					<g:tab>
+						<g:header>
+							<ui:text from="{string.ConfigureSettingFieldsView_Input_Systems}" />
+						</g:header>
+						<g:HTMLPanel width="auto" height="auto" ui:field="inputSystemsPanel"
+							styleName="content-block content-block-tab gwt-FastTree">
 
-						<div class="lex-dc-row">
-							<div id="firefox-bug-fix">
-								<div class="lex-dc-column" id="c1noszie">
-								</div>
-								<div class="lex-dc-column" id="c2">
-									<g:ScrollPanel width="auto" height="450px">
-										<cc:FastTree width="auto" height="auto"
-											ui:field="inputSystemsTree">
-										</cc:FastTree>
-									</g:ScrollPanel>
-								</div>
-								<div class="lex-dc-column" id="c3">
-									<g:FlowPanel width="40px" height="60px">
-										<b:Button width="15px" text=" " ui:field="btnUp" icon="ARROW_UP" />
-										<g:HTMLPanel styleName='{style.space}'></g:HTMLPanel>
-										<b:Button width="15px" text=" " ui:field="btnDown" icon="ARROW_DOWN" />
-									</g:FlowPanel>
-								</div>
-							</div>
-						</div>
-					</g:HTMLPanel>
-				</g:tab>
-				<g:tab>
-					<g:header>
-						<ui:text from="{string.ConfigureSettingFieldsView_Setup}"/>
-					</g:header>
-					<g:HTMLPanel width="auto" height="auto" ui:field="setupPanel"
-						styleName="content-block content-block-tab ">
-
-						<g:Label text="{string.ConfigureSettingFieldsView_Check_each_field_that_you_want_to_see}" />
-						<br />
-						<div class="lex-dc-row">
-							<div id="firefox-bug-fix">
-								<div class="lex-dc-column" id="c1"
-									style="overflow: hidden; width:150px; max-width:150px">
-									<g:Label text="{string.ConfigureSettingFieldsView_Name_for_display}" />
-								</div>
-								<div class="lex-dc-column textBox-padding-fix" id="c2">
-									<div class="field">
-										<cc:ExtendedTextBox ui:field="txtNameOfDisplay"
-											width="100%"></cc:ExtendedTextBox>
+							<div class="lex-dc-row">
+								<div id="firefox-bug-fix">
+									<div class="lex-dc-column" id="c1noszie">
+									</div>
+									<div class="lex-dc-column" id="c2">
+										<g:ScrollPanel width="auto" height="450px">
+											<cc:FastTree width="auto" height="auto"
+												ui:field="inputSystemsTree">
+											</cc:FastTree>
+										</g:ScrollPanel>
+									</div>
+									<div class="lex-dc-column" id="c3">
+										<g:FlowPanel width="40px" height="60px">
+											<b:Button width="15px" text=" " ui:field="btnUp"
+												icon="ARROW_UP" />
+											<g:HTMLPanel styleName='{style.space}'></g:HTMLPanel>
+											<b:Button width="15px" text=" " ui:field="btnDown"
+												icon="ARROW_DOWN" />
+										</g:FlowPanel>
 									</div>
 								</div>
-								
-								<!-- 
-								<div class="lex-dc-column" id="c3nosize"
-									style="overflow: hidden; width:50px; max-width:50px">
-								</div>
-								
-								-->
 							</div>
-						</div>
-						<div class="lex-dc-row">
-							<div id="firefox-bug-fix">
-								<div class="lex-dc-column" id="c1"
-									style="overflow: hidden; width:150px; max-width:150px">
-									<g:Label text="{string.ConfigureSettingFieldsView_Visibility}" />
+						</g:HTMLPanel>
+					</g:tab>
+					<g:tab>
+						<g:header>
+							<ui:text from="{string.ConfigureSettingFieldsView_Setup}" />
+						</g:header>
+						<g:HTMLPanel width="auto" height="auto" ui:field="setupPanel"
+							styleName="content-block content-block-tab ">
+
+							<g:Label
+								text="{string.ConfigureSettingFieldsView_Check_each_field_that_you_want_to_see}" />
+							<br />
+							<div class="lex-dc-row">
+								<div id="firefox-bug-fix">
+									<div class="lex-dc-column" id="c1"
+										style="overflow: hidden; width:150px; max-width:150px">
+										<g:Label
+											text="{string.ConfigureSettingFieldsView_Name_for_display}" />
+									</div>
+									<div class="lex-dc-column textBox-padding-fix" id="c2">
+										<div class="field">
+											<cc:ExtendedTextBox ui:field="txtNameOfDisplay"
+												width="100%"></cc:ExtendedTextBox>
+										</div>
+									</div>
+
+									<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+										width:50px; max-width:50px"> </div> -->
 								</div>
-								<div class="lex-dc-column" id="c2">
-									<cc:ExtendedCheckBox text="{string.ConfigureSettingFieldsView_Normally_hidden}" ui:field="chkboxNormallyHidden" ></cc:ExtendedCheckBox>
-								</div>
-								<!-- 
-								<div class="lex-dc-column" id="c3nosize"
-									style="overflow: hidden; width:50px; max-width:50px">
-								</div>
-								 -->
 							</div>
-						</div>
-					</g:HTMLPanel>
-				</g:tab>
-			</g:TabLayoutPanel>
+							<div class="lex-dc-row">
+								<div id="firefox-bug-fix">
+									<div class="lex-dc-column" id="c1"
+										style="overflow: hidden; width:150px; max-width:150px">
+										<g:Label text="{string.ConfigureSettingFieldsView_Visibility}" />
+									</div>
+									<div class="lex-dc-column" id="c2">
+										<cc:ExtendedCheckBox
+											text="{string.ConfigureSettingFieldsView_Normally_hidden}"
+											ui:field="chkboxNormallyHidden"></cc:ExtendedCheckBox>
+									</div>
+									<!-- <div class="lex-dc-column" id="c3nosize" style="overflow: hidden; 
+										width:50px; max-width:50px"> </div> -->
+								</div>
+							</div>
+						</g:HTMLPanel>
+					</g:tab>
+				</g:TabLayoutPanel>
+			</div>
 		</section>
 	</g:HTMLPanel>
 </ui:UiBinder>

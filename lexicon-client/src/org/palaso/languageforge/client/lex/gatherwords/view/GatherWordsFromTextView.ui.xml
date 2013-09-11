@@ -54,6 +54,7 @@
 
 		<!-- from file begin -->
 		<section class="content">
+		<div class="content_inner">
 			<div class="form-word">
 				<div class="row">
 					<g:Label
@@ -114,6 +115,7 @@
 				</div>
 
 			</div>
+			</div>
 		</section>
 		<!-- from file end -->
 
@@ -124,6 +126,7 @@
 
 		<!-- from text begin -->
 		<section class="content">
+		<div class="content_inner">
 			<div class="form-word">
 				<div class="lex-dc-row">
 					<div id="firefox-bug-fix">
@@ -159,7 +162,7 @@
 					</div>
 				</div>
 			</div>
-
+</div>
 		</section>
 		<!-- from text end -->
 	</g:HTMLPanel>

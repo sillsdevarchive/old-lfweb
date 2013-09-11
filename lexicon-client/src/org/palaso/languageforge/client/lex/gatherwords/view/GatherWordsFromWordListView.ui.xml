@@ -14,6 +14,7 @@
 			<div id="firefox-bug-fix">
 				<div class="lex-dc-column cnopadding" id="c2">
 					<section class="content" style="height:625px;margin-right:5px;">
+						<div class="content_inner">
 						<div class="row">
 							<g:Label height="100%" ui:field="lblTitle"
 								text="{string.GatherWordsFromWordListView_Try_to_think_of_ways_to_say_these_words_in_your_own_language}"></g:Label>
@@ -58,10 +59,12 @@
 								</div>
 							</div>
 						</div>
+						</div>
 					</section>
 				</div>
 				<div class="lex-dc-column cnopadding" id="c3">
 					<section class="content"  style="height:625px;margin-left:5px">
+					<div class="content_inner">
 						<g:FlowPanel width="210px" height="30px">
 								<g:Label height="100%" text="{string.GatherWordsFromWordListView_Recently_added}"
 									horizontalAlignment="ALIGN_CENTER"></g:Label>
@@ -69,6 +72,7 @@
 								<p1:CellTable ui:field="cellTable" width="100%"  />
 							</g:ScrollPanel>
 						</g:FlowPanel>
+						</div>
 					</section>
 				</div>
 			</div>

@@ -17,6 +17,7 @@
 				<div class="lex-dc-column cnopadding" id="c2">
 
 					<section class="content" style="height:630px;margin-right:5px">
+					<div class="content_inner">
 						<div class="row">
 							<g:Label height="100%" ui:field="lblTitle"
 								text="{string.GatherWordsFromSemanticDomainView_Try_to_think_of_ways_to_say_these_words_in_your_own_language}"></g:Label>
@@ -62,10 +63,12 @@
 								</div>
 							</g:HTMLPanel>
 						</g:ScrollPanel>
+						</div>
 					</section>
 				</div>
 				<div class="lex-dc-column cnopadding" id="c3">
 					<section class="content" style="height:630px;margin-left:5px">
+					<div class="content_inner">
 						<g:FlowPanel width="250px" height="30px">
 							<g:Label height="100%" text="{string.GatherWordsFromSemanticDomainView_Recently_added}"
 								horizontalAlignment="ALIGN_CENTER"></g:Label>
@@ -73,6 +76,7 @@
 								<p1:CellTable ui:field="cellTable" width="100%" />
 							</g:ScrollPanel>
 						</g:FlowPanel>
+						</div>
 					</section>
 				</div>
 

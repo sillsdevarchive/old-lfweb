@@ -249,6 +249,9 @@ legend {display:none;}
 	margin:0 10px 0 0;
 }
 .aside .aside_inner {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box; /* Opera/IE 8+ */
 	padding: 5px 10px;
 	height: 100%
 }
@@ -374,7 +377,7 @@ legend {display:none;}
 }
 #content .navigation li {
 	float:left;
-	padding:0 19px;
+	padding:0 16px;
 	background:url(./images/divider05.gif) no-repeat;
 }
 .navigation li a {
@@ -401,8 +404,15 @@ legend {display:none;}
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
-	padding:15px 12px 30px 18px;
 }
+#GWTContent .content .content_inner
+{	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box; /* Opera/IE 8+ */
+	padding:15px 12px 30px 18px;
+	height: 100%;
+}
+
 .form-word .top-line {
 	overflow:hidden;
 	padding:5px 8px 20px 0;
