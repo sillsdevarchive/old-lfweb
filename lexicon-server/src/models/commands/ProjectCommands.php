@@ -29,18 +29,18 @@ class ProjectCommands
 
 		if ($isNewProject) {
 			$user = new \models\UserModel();
-			$user->read($userId);
-			$user->addProject($id);
-			$user->write();
+			$user->read($userId);		
 			
-			$project->addUser($userId, Roles::PROJECT_ADMIN);
-			
+			$project->addUser($userId, Roles::PROJECT_ADMIN);			
 			$project->projectCode = ProjectModel::makeProjectCode($project->languageCode, $project->projectname, ProjectModel::PROJECT_LIFT);
-			
-		
 		}
 
 		$result = $project->write();
+		
+		$user->addProject($result);
+		$user->write();
+		
+		
 		if ($isNewProject) {
 			//ActivityCommands::addProject($project); // TODO: Determine if any other params are needed. RM 2013-08
 		}
