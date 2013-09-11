@@ -47,7 +47,6 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -139,7 +138,7 @@ public class ConfigureSettingFieldsPresenter
 
 							fieldElementDto.setDisplayName(newDisplayName);
 							checkableItem.setDisplayText(newDisplayName);
-							((CheckBox) item.getWidget())
+							((ExtendedCheckBox) item.getWidget())
 									.setText(newDisplayName);
 						}
 
@@ -229,7 +228,7 @@ public class ConfigureSettingFieldsPresenter
 
 					for (FastTreeItem fastTreeItem : itemList) {
 						// we need checked only
-						if (((CheckBox) fastTreeItem.getWidget()).getValue() == true) {
+						if (((ExtendedCheckBox) fastTreeItem.getWidget()).getValue() == true) {
 							SettingFieldsFieldWritingSystemDto newWritingSystemDto = SettingFieldsFieldWritingSystemDto
 									.getNew();
 							newWritingSystemDto
