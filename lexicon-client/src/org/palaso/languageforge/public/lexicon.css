@@ -39,7 +39,7 @@
 	border:0;
 	margin:0;
 	font-size:0.813em;
-	padding:6px 10px 6px 25px;
+	padding:6px 10px 6px 10px;
 	background:url(./images/divider04.gif) repeat-x;
 }
 .accordion li .slide li a {

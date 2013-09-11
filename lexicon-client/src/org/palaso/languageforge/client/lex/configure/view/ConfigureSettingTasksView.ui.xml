@@ -61,7 +61,7 @@
 						text="{string.ConfigureSettingTasksView_Settings_for_Dashboard}" />
 					<div class="lex-dc-row">
 						<div id="firefox-bug-fix">
-							<div class="lex-dc-column" id="c1">
+							<div class="lex-dc-column" id="c1"  style="width: 150px;">
 								<g:Label
 									text="{string.ConfigureSettingTasksView_Activity_time_range}"
 									height="100%" styleName="wordfromtexttextlabel"
@@ -76,7 +76,7 @@
 					</div>
 					<div class="lex-dc-row">
 						<div id="firefox-bug-fix">
-							<div class="lex-dc-column" id="c1">
+							<div class="lex-dc-column" id="c1" style="width: 150px;">
 								<g:Label text="{string.ConfigureSettingTasksView_Target_word_count}"
 									height="100%" styleName="wordfromtexttextlabel"
 									horizontalAlignment="ALIGN_RIGHT"></g:Label>
