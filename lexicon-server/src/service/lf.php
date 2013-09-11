@@ -152,7 +152,7 @@ class Lf
 	 * @return string Id of written object
 	 */
 	public function project_update($object) {
-		return ProjectCommands::createProject($object);
+		return ProjectCommands::createProject($object, $this->_userId);
 	}
 
 	/**

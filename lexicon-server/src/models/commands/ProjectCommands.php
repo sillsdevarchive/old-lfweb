@@ -3,6 +3,9 @@
 namespace models\commands;
 
 use models\ProjectModel;
+use models\UserModel;
+use models\rights\Roles;
+
 
 use libraries\palaso\CodeGuard;
 use models\mapper\JsonEncoder;
@@ -15,7 +18,7 @@ class ProjectCommands
 	 * @param ProjectModel $json
 	 * @return string Id of written object
 	 */
-	public static function createProject($jsonModel) {
+	public static function createProject($jsonModel, $userId) {
 		$project = new \models\ProjectModel();
 		$id = $jsonModel['id'];
 		$isNewProject = ($id == '');
@@ -25,7 +28,16 @@ class ProjectCommands
 		JsonDecoder::decode($project, $jsonModel);
 
 		if ($isNewProject) {
+			$user = new \models\UserModel();
+			$user->read($userId);
+			$user->addProject($id);
+			$user->write();
+			
+			$project->addUser($userId, Roles::PROJECT_ADMIN);
+			
 			$project->projectCode = ProjectModel::makeProjectCode($project->languageCode, $project->projectname, ProjectModel::PROJECT_LIFT);
+			
+		
 		}
 
 		$result = $project->write();
