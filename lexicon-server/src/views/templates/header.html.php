@@ -24,7 +24,7 @@
 								<?php foreach($all_projects as $project): ?>
 											<li><a href="<?php echo "/gwt/main/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 								<?php endforeach;?>
-								<li><a href="/gwt/main/51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>
+								<!--<li><a href="/gwt/main/51e3b48b9cde7fef33e7aef7">LF Project Page</a></li>-->
 							</ul>
 						</li>
 						<li><a href="/learn_language_forge">Learn</a>

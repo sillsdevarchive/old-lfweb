@@ -255,7 +255,7 @@ legend {display:none;}
 .aside {
 	float:left;
 	width:300px;
-	background:#faf3eb;
+	background:#B3B3B3;
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
@@ -406,7 +406,7 @@ legend {display:none;}
 }
 #GWTContent .content {
 	overflow:hidden;
-	background:#faf3eb;
+	background:#B3B3B3;
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;

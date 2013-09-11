@@ -14,18 +14,18 @@
 	cursor: hand;
 	min-width: 80px;
 	min-height: 20px;
-	background: none repeat scroll 0 0 #DDECF4;
+	background: none repeat scroll 0 0 #999;
 	text-align: center;
 	settingsTopUserBox vertical-align: middle;
 	float: left;
 	margin-right: 3px;
-	color: #131B32;
 	font-size: 14px;
 	padding: 18px 5px 0 5px;
-	text-shadow: 1px 1px 0 #FFFFFF;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	line-height: 10px;
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
@@ -48,7 +48,7 @@
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
 	border: 1px solid #E9E7E7;
-	background-color: #FAF6F1;
+	/*background-color: #FAF6F1;*/
 }
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTabInner {
@@ -62,7 +62,7 @@
 }
 
 .gwt-SuggestBoxPopup .item {
-	background: #FAF3EB;
+	background: #B3B3B3;
 	color: black;
 	padding: 0px 8px;
 	line-height: 20px;
