@@ -227,12 +227,12 @@ class DashboardCounterExtracter
 		//echo "Sum of part of speech count ".$this->_speech->length."<br/>";
 		//echo "Sum of example count ".$this->_example->length;
 		
-		$DashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
+		$DashboardToolCommands = DashboardToolFactory::getDashboardCommands(DashboardDbType::DB_MONGODB);
 		
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_ENTRY, $entries, $timestamp, $hg_version, $hg_hash);
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_MEANING, $meaning, $timestamp, $hg_version, $hg_hash);
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_PARTOFSPEECH, $speech, $timestamp, $hg_version, $hg_hash);
-		$result = $DashboardToolDbAccess->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_EXAMPLE, $example, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardCommands->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_ENTRY, $entries, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardCommands->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_MEANING, $meaning, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardCommands->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_PARTOFSPEECH, $speech, $timestamp, $hg_version, $hg_hash);
+		$result = $DashboardCommands->insertUpdateCounter($this->projectId, ActivityFieldType::COUNT_EXAMPLE, $example, $timestamp, $hg_version, $hg_hash);
 	}
 	
 	

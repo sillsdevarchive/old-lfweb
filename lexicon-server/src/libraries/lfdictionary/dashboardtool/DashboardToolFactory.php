@@ -10,13 +10,13 @@ class DashboardDbType
 
 class DashboardToolFactory
 {
-	public static function getDashboardDbAccess($dbType)
+	public static function getDashboardCommands($dbType)
 	{
 		switch ($dbType) {
 			case DashboardDbType::DB_MYSQL:
-				return new DashboardToolDbAccessMySql();
+				return new DashboardCommandsMySql();
 			case DashboardDbType::DB_MONGODB:
-				return new DashboardToolDbAccessMongoDb();
+				return new DashboardCommandsMongoDb();
 			case DashboardDbType::DB_TEST:
 				throw new \Exception('Not implemented');
 				break;

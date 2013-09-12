@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/../Config.php');
 use \libraries\lfdictionary\common\DataConnector;
 use \libraries\lfdictionary\common\DataConnection;
 use \libraries\lfdictionary\common\LoggerFactory;
-class DashboardToolDbAccessMySql implements IDashboardToolDbAccess
+class DashboardCommandsMySql implements IDashboardCommands
 {
 	
 	private $_entries;

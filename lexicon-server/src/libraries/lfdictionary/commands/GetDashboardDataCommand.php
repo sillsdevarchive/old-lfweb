@@ -22,7 +22,7 @@ class GetDashboardDataCommand {
 
 	var $counterValuesArray = array();
 
-	var $dashboardToolDbAccess;
+	var $dashboardCommands;
 	function __construct($lexStore, $projectId,$filePath, $actRange) {
 		$this->_projectId = $projectId;
 		$this->_filePath = $filePath;
@@ -56,14 +56,14 @@ class GetDashboardDataCommand {
 		$this->counterValuesArray['COUNT_PARTOFSPEECH'] = 0;
 		$this->counterValuesArray['COUNT_EXAMPLE'] = 0;
 
-		$this->dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
+		$this->dashboardCommands = DashboardToolFactory::getDashboardCommands(DashboardDbType::DB_MONGODB);
 		$timeStamps;
 		
 		if ($this->_actRange == 0) {
-			$timeStamps = $this->dashboardToolDbAccess->getAllTimeStamps($this->_projectId);
+			$timeStamps = $this->dashboardCommands->getAllTimeStamps($this->_projectId);
 		} else {
 			// read the historical counter values from the database
-			$timeStamps = $this->dashboardToolDbAccess->getTimeStampsByDateRange($this->_projectId, $start, $end);
+			$timeStamps = $this->dashboardCommands->getTimeStampsByDateRange($this->_projectId, $start, $end);
 		}
 		//echo var_dump($timeStamps);
 		if ($timeStamps != null && count($timeStamps) > 0) {
@@ -72,7 +72,7 @@ class GetDashboardDataCommand {
 
 				$timestamp = $key;
 				$currentTimestamp;
-				$counters = $this->dashboardToolDbAccess->getCountersByTimeStamp($this->_projectId, $timestamp);
+				$counters = $this->dashboardCommands->getCountersByTimeStamp($this->_projectId, $timestamp);
 				
 				$entryActivities = 0;
 				$definitionActivities = 0;

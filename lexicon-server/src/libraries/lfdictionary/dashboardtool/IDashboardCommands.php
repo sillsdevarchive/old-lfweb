@@ -1,6 +1,6 @@
 <?php
 namespace libraries\lfdictionary\dashboardtool;
-interface IDashboardToolDbAccess
+interface IDashboardCommands
 {
 
 	/**

@@ -65,10 +65,10 @@ class UpdateDashboardCommand
 			}
 		}
 		$projectRepoPath = $this->_lexProject->projectPath;
-		$dashboardToolDbAccess = DashboardToolFactory::getDashboardDbAccess(DashboardDbType::DB_MONGODB);
+		$dashboardCommands = DashboardToolFactory::getDashboardCommands(DashboardDbType::DB_MONGODB);
 		$historicalHgDataFetcher = new HistoricalHgDataFetcher($projectRepoPath);
 		$asyncRunner =  $this->createAsyncRunner();
-		$lastEntry = $dashboardToolDbAccess->getLastReversionEntry($this->_projectNodeId);
+		$lastEntry = $dashboardCommands->getLastReversionEntry($this->_projectNodeId);
 		$lastReversion="";
 		$lastHash="";
 		if ($lastEntry != null && count($lastEntry) == 1) {
@@ -115,7 +115,7 @@ class UpdateDashboardCommand
 					$hgHash = $hgLogs[0];
 					$hgdate = $hgLogs[1];
 					$hgRevision = $hgLogs[2];
-					$revisionNumberArray = $dashboardToolDbAccess->getReversionNumberByHash($this->_projectNodeId, $hgHash);
+					$revisionNumberArray = $dashboardCommands->getReversionNumberByHash($this->_projectNodeId, $hgHash);
 					if ($revisionNumberArray != null && count($revisionNumberArray) == 1) {
 						$revisionNumber=$revisionNumberArray[0];
 						$DbRevision=$revisionNumber['hg_version'];

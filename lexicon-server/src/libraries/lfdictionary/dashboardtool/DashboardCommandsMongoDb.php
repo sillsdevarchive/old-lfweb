@@ -6,7 +6,7 @@ use libraries\lfdictionary\dto\DashboardActivitiesDTO;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 use \libraries\lfdictionary\common\LoggerFactory;
-class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
+class DashboardCommandsMongoDb implements IDashboardCommands
 {
 
 	private $_entries;
