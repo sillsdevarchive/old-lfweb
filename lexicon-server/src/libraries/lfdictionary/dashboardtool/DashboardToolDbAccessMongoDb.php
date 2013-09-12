@@ -45,9 +45,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	public function updateCounter($projectId, $field_type, $count, $timestamp, $hg_version, $hg_hash) {
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
 		
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
-											"hg_hash" => $hg_hash,
-											"field_type" => $field_type));
+		$dashboardActivitiesList->getDashboardActivitiesList($projectId, $hg_hash, $field_type);
 		
 		foreach ($dashboardActivitiesList->entries as $value)
 		{
@@ -67,8 +65,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	public function getCountersByTimeStamp($projectId, $timestamp){
 		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp = '".$timestamp."'";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
-											"time_stamp" => $timestamp));
+		$dashboardActivitiesList->getDashboardActivitiesList($projectId, $timestamp);
 		return $dashboardActivitiesList->entries;
 	}
 
@@ -76,19 +73,14 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 
 		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." AND hg_hash = '$hg_hash' AND field_type ='$field_type'";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
-											"hg_hash" => $hg_hash,
-											"field_type" => $field_type));
+		$dashboardActivitiesList->getDashboardActivitiesList($projectId, $hg_hash, $field_type);
 		return $dashboardActivitiesList->entries;
 	}
 
 	public function  getTimeStampsByDateRange($projectId, $start, $end){
 		//$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp >=FROM_UNIXTIME(".$start.") AND time_stamp <= FROM_UNIXTIME(".$end.") GROUP BY time_stamp ORDER BY hg_version ASC";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId,
-											"time_stamp" => array('$gte'=> $start, '$lte'=>$end)),
-		array("time_stamp", "hg_version"),
-		array("hg_version" => 1),1);
+		$dashboardActivitiesList->getDashboardActivitiesListStartEnd($projectId, $start, $end);
 		$result = array();
 		foreach ($dashboardActivitiesList->entries as $data) {
 			$key = $data['time_stamp'];
@@ -104,9 +96,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	public function  getAllTimeStamps($projectId){
 		//$sql = "SELECT time_stamp FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version ASC";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId),
-		array("time_stamp","field_type"),
-		array("hg_version" => 1));
+		$dashboardActivitiesList->getDashboardActivitiesListAll($projectId);
 		
 		$result = array();
 		foreach ($dashboardActivitiesList->entries as $data) {
@@ -128,8 +118,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." GROUP BY time_stamp ORDER BY hg_version DESC LIMIT 1";
 
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId),
-		array(), array("hg_version" => -1), 1);
+		$dashboardActivitiesList->getDashboardActivitiesListLast($projectId);
 
 		return $dashboardActivitiesList->entries;
 	}
@@ -141,8 +130,7 @@ class DashboardToolDbAccessMongoDb implements IDashboardToolDbAccess
 	public function  getReversionNumberByHash($projectId, $hash){
 		//$sql = "SELECT hg_version FROM lf_activity WHERE projectID = ".$projectId." AND hg_hash = '" . $hash . "' LIMIT 1";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->readByQuery(array("project_id" => $projectId, "hg_hash" => $hash),
-		array("hg_version"), array(), 1);
+		$dashboardActivitiesList->getDashboardActivitiesListByHash($projectId, $hash);
 
 		return $dashboardActivitiesList->entries;
 	}
