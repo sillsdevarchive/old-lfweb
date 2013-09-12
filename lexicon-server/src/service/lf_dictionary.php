@@ -1,12 +1,7 @@
 <?php
 use libraries\lfdictionary\store\LexStoreType;
-
 use libraries\lfdictionary\store\LexStoreController;
-
-use models\ProjectModelFixer;
-
 use libraries\lfdictionary\environment\ProjectStates;
-
 use libraries\lfdictionary\common\AsyncRunner;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\common\UserActionDeniedException;
@@ -16,16 +11,20 @@ use libraries\lfdictionary\dto\ProjectStateDTO;
 use libraries\lfdictionary\dto\ResultDTO;
 use libraries\lfdictionary\dto\UserDTO;
 use libraries\lfdictionary\dto\UserListDTO;
+use libraries\lfdictionary\environment\LanguageDepotImporter;
 use libraries\lfdictionary\environment\EnvironmentMapper;
 use libraries\lfdictionary\environment\LexProject;
 use libraries\lfdictionary\environment\ProjectState;
 use libraries\lfdictionary\store\LexStoreMissingInfo;
 use libraries\lfdictionary\store\LexStore;
 use libraries\palaso\CodeGuard;
+use models\mapper\JsonDecoder;
 use models\UserModel;
 use models\ProjectModel;
 use models\rights\Operation;
 use models\rights\Domain;
+use models\ProjectModelFixer;
+use models\DepotProjectModel;
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -625,26 +624,32 @@ class LfDictionary
 		return $result->encode();
 	}
 
-	public function depot_begin_import($model ) {
+	public function depot_begin_import($model) {
 		/*
 		 * HERE start the clone only
 		 */
+		$depotproject = new DepotProjectModel();
+		JsonDecoder::decode($depotproject, $model);
 		
-		error_log("Depot Import: $model->projectCode, $model->projectUser, $model->projectPwd");
-		return null;
+		error_log("Depot Import: $depotproject->projectcode, $depotproject->projectusername, $depotproject->projectpassword");
+		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode, $this->_userModel->id);
+		$languageDepotImporter->cloneRepository($depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode);
+		$languageDepotImporter->importContinue(ProjectStates::Importing);
+		$resultDTO = new ResultDTO(true);
+		return $resultDTO->encode();
 	}
 	
 	public function depot_check_import_states($model) {
-		error_log("Depot Import Check: $projectCode");
+		$depotproject = new DepotProjectModel();
+		JsonDecoder::decode($depotproject, $model);
+		error_log("Depot Import Progress Check: $depotproject->projectcode, $depotproject->projectusername, $depotproject->projectpassword");
 		
+		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectCode, $this->_userModel->id);
 		//LanguageDepotImporter::progress($projectCode);
-		$second =gmdate("s", time());
+		$second = $languageDepotImporter->progress();
 		$isDone = false;
-		if (intval ($second)>=50){
+		if ($languageDepotImporter.$isDone){
 			$isDone=true;
-			//TODO isComplete = true;
-			//TODO here we create new project into DB and return ID.
-			//TODO replace with real ID!
 			$second = "51e3b48b9cde7fef33e7aef7";
 		}
 		$resultDTO = new ResultDTO($isDone, $second);

@@ -1,11 +1,11 @@
 <?php
-namespace environment;
-
-use libraries\lfdictionary\environment\LexProject;
-use models\ProjectModel;
+namespace libraries\lfdictionary\environment;
 require_once(dirname(__FILE__) . '/../Config.php');
 
-
+use libraries\lfdictionary\common\AsyncRunner;
+use libraries\lfdictionary\common\HgWrapper;
+use libraries\lfdictionary\environment\LexProject;
+use models\ProjectModel;
 
 class LanguageDepotImporter {
 	
@@ -32,21 +32,13 @@ class LanguageDepotImporter {
 	private static function createEnvironment($projectCode) {
 		$projectModel = new ProjectModel();
 		$projectModel->projectname = $projectCode;
-		$projectModel->$projectCode = $projectCode;
+		$projectModel->projectCode = $projectCode;
 		$projectModel->write();
 		
 		//TODO :I think will need do create new project in db at last step.
 		$result = new LexProject($projectModel);
 		//$result -> createNewProject();
 		return $result;
-	}
-	
-	private function destinationPath() {
-		return $this->_environment->WorkRootPath . $this->_environment->ProjectPathName;
-	}
-	
-	private function stateFilePath() {
-		return $this->_environment->StateRootPath . $this->_environment->ProjectPathName;
 	}
 	
 	/**
@@ -68,7 +60,9 @@ class LanguageDepotImporter {
 			}
 		}
 		$url = "http://$user:$password@hg-public.languagedepot.org/$projectCode";
-		$hg = new \lfbase\common\HgWrapper($this->destinationPath());
+		error_log("URL: " .  $url);
+		error_log("DestinationPath: " .  $this->_lexProject->defaultWorkFolderPath(). $this->_lexProject->projectModel->projectname);
+		$hg = new HgWrapper($this->_lexProject->defaultWorkFolderPath(). $this->_lexProject->projectModel->projectname);
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;
 	}
@@ -82,7 +76,7 @@ class LanguageDepotImporter {
 		// Analyze the output of the async file and return an appropriate progress indicator.
 		$asyncRunner = $this->createAsyncRunner();
 		if (!$asyncRunner->isRunning()) {
-			throw new \Exception("Process '" . $this->stateFilePath() . "' not running");
+			throw new \Exception("Process '" . $this->_lexProject->stateFolderPath() . $this->_lexProject->projectModel->projectname . "' not running");
 		}
 		if ($asyncRunner->isComplete()) {
 			return 100;
@@ -108,7 +102,7 @@ class LanguageDepotImporter {
 	public function error() {
 		$asyncRunner = $this->createAsyncRunner();
 		$output = $asyncRunner->getOutput();
-		$errors = \lfbase\common\HgWrapper::errorMessageFilter($output);
+		$errors = HgWrapper::errorMessageFilter($output);
 		return $errors;
 	}
 	
@@ -121,7 +115,7 @@ class LanguageDepotImporter {
 	}
 	
 	private function createAsyncRunner() {
-		return new \lfbase\common\AsyncRunner($this->stateFilePath());
+		return new AsyncRunner($this->_lexProject->stateFolderPath() . $this->_lexProject->projectModel->projectname);
 	}
 	
 	/**

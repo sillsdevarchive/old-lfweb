@@ -31,11 +31,11 @@ angular.module(
 			    	
 			    	depotImportService.depotImportStates(record, function(result) {
 			    		if (result.ok) {
-				            if (result.data.succeed==true)
+				            if (result.data.succeed==true || result.data.code==100)
 			            	{ //import finished, so return code will be new project ID, and will redirect
 			            		clearInterval(timer);
 			            		$scope.progressstep=100;
-			            		window.location.href="/gwt/main/" + result.data.code;
+			            		//window.location.href="/gwt/main/" + result.data.code;
 			            	}else
 			            		{
 			            		$scope.progressstep=parseInt(result.data.code);
