@@ -631,9 +631,10 @@ class LfDictionary
 		 */
 		$depotproject = new DepotProjectModel();
 		JsonDecoder::decode($depotproject, $model);
-		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode);
+		$lfProjectCode = ProjectModel::makeProjectCode("qaa", $depotproject->projectcode, ProjectModel::PROJECT_LIFT);
+		$languageDepotImporter = new LanguageDepotImporter($lfProjectCode);
 		$languageDepotImporter->cloneRepository($depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode);
-		$projectState = new ProjectState($depotproject->projectcode);
+		$projectState = new ProjectState($lfProjectCode);
 		$languageDepotImporter->importContinue($projectState);
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
@@ -642,8 +643,8 @@ class LfDictionary
 	public function depot_check_import_states($model) {
 		$depotproject = new DepotProjectModel();
 		JsonDecoder::decode($depotproject, $model);
-		//error_log("Depot Import Progress Check: $depotproject->projectcode, $depotproject->projectusername");
-		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode);
+		$lfProjectCode = ProjectModel::makeProjectCode("qaa", $depotproject->projectcode, ProjectModel::PROJECT_LIFT);
+		$languageDepotImporter = new LanguageDepotImporter($lfProjectCode);
 		//LanguageDepotImporter::progress($projectCode);
 
 		$resultDTO = null;

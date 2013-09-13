@@ -44,7 +44,7 @@ class LanguageDepotImporter {
 			}
 		}
 		$url = "http://$user:$password@hg-public.languagedepot.org/$projectCode";
-		$hg = new HgWrapper(LexProject::defaultWorkFolderPath(). $this->_projectCode);
+		$hg = new HgWrapper(LexProject::defaultWorkFolderPath(). $this->_projectCode .'/');
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;
 	}
