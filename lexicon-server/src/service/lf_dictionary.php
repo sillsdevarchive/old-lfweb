@@ -631,7 +631,7 @@ class LfDictionary
 		 */
 		$depotproject = new DepotProjectModel();
 		JsonDecoder::decode($depotproject, $model);
-		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode, $this->_userModel->id);
+		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode);
 		$languageDepotImporter->cloneRepository($depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode);
 		$projectState = new ProjectState($depotproject->projectcode);
 		$languageDepotImporter->importContinue($projectState);
@@ -642,25 +642,19 @@ class LfDictionary
 	public function depot_check_import_states($model) {
 		$depotproject = new DepotProjectModel();
 		JsonDecoder::decode($depotproject, $model);
-		error_log("Depot Import Progress Check: $depotproject->projectcode, $depotproject->projectusername");
-		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode, $this->_userModel->id);
+		//error_log("Depot Import Progress Check: $depotproject->projectcode, $depotproject->projectusername");
+		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode);
 		//LanguageDepotImporter::progress($projectCode);
-		$resultText = $languageDepotImporter->progress();
-		$isDone = false;
+
+		$resultDTO = null;
 		if ($languageDepotImporter->isComplete()){
 			//create new project
-			error_log("create new project for depotimport");
-			$newProjectModel= new ProjectModel();
-			$newProjectModel->title=$depotproject->projectcode;
-			$newProjectModel->languageCode="qaa";
-			$newProjectModel->projectname=$depotproject->projectcode;
-			$newProjectModel->projectCode=$depotproject->projectcode;
-			$newProjectModel->projectType=ProjectModel::PROJECT_LIFT;
-			error_log($project->projectCode);
+			$newProjectModel=  ProjectModel::createNewProject("qaa", $depotproject->projectcode);
 			$resultText = ProjectCommands::createOrUpdateProject($newProjectModel, $this->_userModel->id->asString(), true);
-			$isDone=true;
+			$resultDTO = new ResultDTO(true, $resultText);
+		}else {
+			$resultDTO = new ResultDTO(false,  $languageDepotImporter->progress());
 		}
-		$resultDTO = new ResultDTO($isDone, $resultText);
 		return $resultDTO->encode();
 	}
 	

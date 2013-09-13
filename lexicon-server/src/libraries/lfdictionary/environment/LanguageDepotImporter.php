@@ -9,26 +9,21 @@ use models\ProjectModel;
 
 class LanguageDepotImporter {
 	
+	
 	/**
-	 * @var LexProject
+	 * @var String
 	 */
-	private $_lexProject;
+	private $_projectCode;
 		
 	/**
 	 * @param String $projectCode
 	 * @param String $projectAdminUserId
 	 * @param LexProject $lexProject
 	 */
-	public function __construct($projectCode, $projectName, $projectAdminUserId, $lexProject = null) {
-		$this->_lexProject = ($lexProject) ? $lexProject : self::createEnvironment($projectCode, $projectName);
+	public function __construct($projectCode) {
+		$this->_projectCode = $projectCode;
 	}
-		private static function createEnvironment($projectCode, $projectName) {
-		$projectModel = new ProjectModel();
-		$projectModel->projectname = $projectName;
-		$projectModel->projectCode = ProjectModel::makeProjectCode($projectCode, $projectName, ProjectModel::PROJECT_LIFT);
-		$result = new LexProject($projectModel);
-		return $result;
-	}
+
 	
 	/**
 	 * Starts a clone using an AsyncRunner
@@ -49,9 +44,7 @@ class LanguageDepotImporter {
 			}
 		}
 		$url = "http://$user:$password@hg-public.languagedepot.org/$projectCode";
-		error_log("URL: " .  $url);
-		error_log("DestinationPath: " .  $this->_lexProject->defaultWorkFolderPath(). $this->_lexProject->projectModel->projectname);
-		$hg = new HgWrapper($this->_lexProject->defaultWorkFolderPath(). $this->_lexProject->projectModel->projectname);
+		$hg = new HgWrapper(LexProject::defaultWorkFolderPath(). $this->_projectCode);
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;
 	}
@@ -65,7 +58,7 @@ class LanguageDepotImporter {
 		// Analyze the output of the async file and return an appropriate progress indicator.
 		$asyncRunner = $this->createAsyncRunner();
 		if (!$asyncRunner->isRunning()) {
-			throw new \Exception("Process '" . $this->_lexProject->stateFolderPath() . $this->_lexProject->projectModel->projectname . "' not running");
+			throw new \Exception("Process '" . LexProject::stateFolderPath() . $this->_projectCode . "' not running");
 		}
 		if ($asyncRunner->isComplete()) {
 			return 100;
@@ -104,7 +97,7 @@ class LanguageDepotImporter {
 	}
 	
 	private function createAsyncRunner() {
-		return new AsyncRunner($this->_lexProject->stateFolderPath() . $this->_lexProject->projectModel->projectname);
+		return new AsyncRunner(LexProject::stateFolderPath() .$this->_projectCode);
 	}
 	
 	/**

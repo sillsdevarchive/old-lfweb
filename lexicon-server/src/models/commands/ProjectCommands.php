@@ -37,24 +37,22 @@ class ProjectCommands
 	public static function createOrUpdateProject($project, $userId, $isNewProject) {
 		CodeGuard::checkTypeAndThrow($project, 'models\ProjectModel');
 		if ($isNewProject) {
-			error_log($project->projectname);
 			$user = new \models\UserModel($userId);
 			$user->read($userId);
 				
 			$project->addUser($userId, Roles::PROJECT_ADMIN);
 			$project->projectCode = ProjectModel::makeProjectCode($project->languageCode, $project->projectname, ProjectModel::PROJECT_LIFT);
-			error_log($project->projectCode);
 		}
 	
-		$result = $project->write();
-	
-		$user->addProject($result);
+		$newProjectId = $project->write();
+		error_log("New Project ID: " . $newProjectId);
+		$user->addProject($newProjectId);
 		$user->write();
 	
 		if ($isNewProject) {
 			//ActivityCommands::addProject($project); // TODO: Determine if any other params are needed. RM 2013-08
 		}
-		return $result;
+		return $newProjectId;
 	}
 	
 	/**

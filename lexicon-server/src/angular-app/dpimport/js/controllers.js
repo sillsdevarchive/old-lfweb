@@ -33,7 +33,6 @@ angular.module(
 			    		if (result.ok) {
 				            if (result.data.succeed==true)
 			            	{ 	//import finished, so return code will be new project ID, and will redirect
-			            		clearInterval(timer);
 			            		$scope.progressstep=100;
 			            		window.location.href="/gwt/main/" + result.data.code;
 			            	}else
