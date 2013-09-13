@@ -25,6 +25,7 @@ use models\rights\Operation;
 use models\rights\Domain;
 use models\ProjectModelFixer;
 use models\DepotProjectModel;
+use models\commands\ProjectCommands;
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -630,11 +631,10 @@ class LfDictionary
 		 */
 		$depotproject = new DepotProjectModel();
 		JsonDecoder::decode($depotproject, $model);
-		
-		error_log("Depot Import: $depotproject->projectcode, $depotproject->projectusername, $depotproject->projectpassword");
 		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode, $this->_userModel->id);
 		$languageDepotImporter->cloneRepository($depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode);
-		$languageDepotImporter->importContinue(ProjectStates::Importing);
+		$projectState = new ProjectState($depotproject->projectcode);
+		$languageDepotImporter->importContinue($projectState);
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
 	}
@@ -642,17 +642,25 @@ class LfDictionary
 	public function depot_check_import_states($model) {
 		$depotproject = new DepotProjectModel();
 		JsonDecoder::decode($depotproject, $model);
-		error_log("Depot Import Progress Check: $depotproject->projectcode, $depotproject->projectusername, $depotproject->projectpassword");
-		
-		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectCode, $this->_userModel->id);
+		error_log("Depot Import Progress Check: $depotproject->projectcode, $depotproject->projectusername");
+		$languageDepotImporter = new LanguageDepotImporter($depotproject->projectcode, $this->_userModel->id);
 		//LanguageDepotImporter::progress($projectCode);
-		$second = $languageDepotImporter->progress();
+		$resultText = $languageDepotImporter->progress();
 		$isDone = false;
-		if ($languageDepotImporter.$isDone){
+		if ($languageDepotImporter->isComplete()){
+			//create new project
+			error_log("create new project for depotimport");
+			$newProjectModel= new ProjectModel();
+			$newProjectModel->title=$depotproject->projectcode;
+			$newProjectModel->languageCode="qaa";
+			$newProjectModel->projectname=$depotproject->projectcode;
+			$newProjectModel->projectCode=$depotproject->projectcode;
+			$newProjectModel->projectType=ProjectModel::PROJECT_LIFT;
+			error_log($project->projectCode);
+			$resultText = ProjectCommands::createOrUpdateProject($newProjectModel, $this->_userModel->id->asString(), true);
 			$isDone=true;
-			$second = "51e3b48b9cde7fef33e7aef7";
 		}
-		$resultDTO = new ResultDTO($isDone, $second);
+		$resultDTO = new ResultDTO($isDone, $resultText);
 		return $resultDTO->encode();
 	}
 	

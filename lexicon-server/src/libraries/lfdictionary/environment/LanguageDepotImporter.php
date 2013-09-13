@@ -19,25 +19,14 @@ class LanguageDepotImporter {
 	 * @param String $projectAdminUserId
 	 * @param LexProject $lexProject
 	 */
-	public function __construct($projectCode, $projectAdminUserId, $lexProject = null) {
-		$this->_lexProject = ($lexProject) ? $lexProject : self::createEnvironment($projectCode);
+	public function __construct($projectCode, $projectName, $projectAdminUserId, $lexProject = null) {
+		$this->_lexProject = ($lexProject) ? $lexProject : self::createEnvironment($projectCode, $projectName);
 	}
-	
-	/*TODO
-	 * 1. always pass projectCode and userid back to here
-	 * 2. clone first.
-	 * 3. tracking progress (by userID and projectCode)
-	 * 4. when clone done create project entry in the DB
-	 */
-	private static function createEnvironment($projectCode) {
+		private static function createEnvironment($projectCode, $projectName) {
 		$projectModel = new ProjectModel();
-		$projectModel->projectname = $projectCode;
-		$projectModel->projectCode = $projectCode;
-		$projectModel->write();
-		
-		//TODO :I think will need do create new project in db at last step.
+		$projectModel->projectname = $projectName;
+		$projectModel->projectCode = ProjectModel::makeProjectCode($projectCode, $projectName, ProjectModel::PROJECT_LIFT);
 		$result = new LexProject($projectModel);
-		//$result -> createNewProject();
 		return $result;
 	}
 	

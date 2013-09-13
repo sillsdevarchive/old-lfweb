@@ -27,28 +27,30 @@ angular.module(
 				$scope.showprogressbar = true;
 				$scope.progressstep=0;
 				$scope.inprogerss=true;
-			    var timer = setInterval(function(){
-			    	
+				record.projectpassword = '';
+				var stateChecker = function(){
 			    	depotImportService.depotImportStates(record, function(result) {
 			    		if (result.ok) {
-				            if (result.data.succeed==true || result.data.code==100)
-			            	{ //import finished, so return code will be new project ID, and will redirect
+				            if (result.data.succeed==true)
+			            	{ 	//import finished, so return code will be new project ID, and will redirect
 			            		clearInterval(timer);
 			            		$scope.progressstep=100;
-			            		//window.location.href="/gwt/main/" + result.data.code;
+			            		window.location.href="/gwt/main/" + result.data.code;
 			            	}else
-			            		{
+			            	{
+			            		setTimeout(stateChecker,1000);
 			            		$scope.progressstep=parseInt(result.data.code);
-			            		}
+			            	}
 			    		} else {
-			    			clearInterval(timer);
 			    			$scope.inprogerss=false;
 							$scope.success.state = false;
 							$scope.success.message = "An error occurred in the import process: ";
 						}
 			    	});
 			    
-			        }, 2000);
+			        };
+
+			     setTimeout(stateChecker,1000);
 			} else {
 				$scope.inprogerss=false;
 				$scope.success.state = false;
