@@ -65,7 +65,7 @@ class DashboardCommandsMongoDb implements IDashboardCommands
 	public function getCountersByTimeStamp($projectId, $timestamp){
 		//$sql = "SELECT * FROM lf_activity WHERE projectID = ".$projectId." AND time_stamp = '".$timestamp."'";
 		$dashboardActivitiesList = new DashboardToolMongoListModel();
-		$dashboardActivitiesList->getDashboardActivitiesList($projectId, $timestamp);
+		$dashboardActivitiesList->getDashboardActivitiesListByTimeStamp($projectId, $timestamp);
 		return $dashboardActivitiesList->entries;
 	}
 

@@ -21,7 +21,7 @@ class DashboardToolMongoListModel extends \models\mapper\MapperListModel
 	}
 	
 	
-	public function getDashboardActivitiesList($projectId, $timestamp) {
+	public function getDashboardActivitiesListByTimeStamp($projectId, $timestamp) {
 		return $this->readByQuery(array("project_id" => $projectId,
 											"time_stamp" => $timestamp));
 	}
