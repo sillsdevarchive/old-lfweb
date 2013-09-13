@@ -241,12 +241,14 @@ class MongoMapper
 		CodeGuard::checkTypeAndThrow($id, 'string');
 		if ($keyType == self::ID_IN_KEY) {
 			if (empty($rootId)) {
+				$mongoid = self::mongoId($id);
 				$result = $this->_collection->update(
-					array('_id' => self::mongoId($id)),
+					array('_id' => $mongoid),
 					array('$set' => $data),
 					array('upsert' => true, 'multiple' => false, 'safe' => true)
 				);
-				$id = isset($result['upserted']) ? $result['upserted'].$id : $id;
+				//$id = isset($result['upserted']) ? $result['upserted'].$id : $id;
+				$id = $mongoid->__toString();
 			} else {
 				CodeGuard::checkNullAndThrow($id, 'id');
 				CodeGuard::checkNullAndThrow($property, 'property');
