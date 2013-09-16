@@ -241,6 +241,74 @@ body.loading .view-loading-progress {
 	background: #fefcf9;
 }
 
+/* accordian for left nav */
+.accordion li {
+	border:1px solid #d9d9d9;
+	background: #eaeaea;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	margin:0 0 10px;
+	background: -moz-linear-gradient(top,  #eaeaea 0%, #e1e0e0 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(100%,#e1e0e0));
+	background: -webkit-linear-gradient(top,  #eaeaea 0%,#e1e0e0 100%);
+	background: -o-linear-gradient(top,  #eaeaea 0%,#e1e0e0 100%);
+	background: -ms-linear-gradient(top,  #eaeaea 0%,#e1e0e0 100%);
+	background: linear-gradient(top,  #eaeaea 0%,#e1e0e0 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#e1e0e0',GradientType=0 );
+}
+.accordion li a {
+	color:#3f7ca4;
+	display:block;
+	text-decoration:none;
+	padding: 5px 30px 5px 11px;
+	background: url(./../images/lfdictionary/arrow04.gif) no-repeat 92% 12px;
+}
+.accordion li.active a,
+.accordion li a:hover {background:url(./../images/lfdictionary/arrow05.gif) no-repeat 92% 12px;}
+.accordion li a span {
+	display:block;
+	padding:0 0 0 27px;
+}
+.accordion .ico1 {background:url(./../images/lfdictionary/ico05.gif) no-repeat 3px 7px;}
+.accordion .ico2 {background:url(./../images/lfdictionary/ico06.gif) no-repeat 6px 5px;}
+.accordion .ico3 {background:url(./../images/lfdictionary/ico07.gif) no-repeat 3px 4px;}
+.accordion .ico4 {background:url(./../images/lfdictionary/ico08.gif) no-repeat 0 2px;}
+.accordion li .slide li {
+	background:none;
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border:0;
+	margin:0;
+	font-size:0.813em;
+	padding:6px 10px 6px 10px;
+	background:url(./../images/lfdictionary/divider04.gif) repeat-x;
+}
+.accordion li .slide li a {
+	padding:0;
+	background:none;
+	color:#666;
+	font-size:px;
+}
+
+.accordion .ico-conf {
+	background: url('./../images/lfdictionary/ico-conf.png') no-repeat 3px 3px;
+}
+
+.accordion .ico-dashboard {
+	background: url('./../images/lfdictionary/ico06.gif') no-repeat 7px 3px;
+}
+
+.mainNavBarboldTitle {
+	font-weight: bold;
+}
+
+.accordion ul, ol {
+    margin: 0 10px 0 !important;
+}
+.accordion li .slide li a:hover {text-decoration:underline;}
+
 .accordion .ico-view-switch {
 	background: url('./../images/lfdictionary/eye.png') no-repeat 0px 1px;
 }
