@@ -40,7 +40,17 @@ class LiftMongoImporter implements ILiftImporter
 			},
 			function ($node) use ($scanner, $importer, $policy) {
 				$entry = $scanner->readEntry($node);
-				$importer->updateEntry($entry, $policy);
+				if ($entry!=null){
+					$importer->updateEntry($entry, $policy);
+				}else if (isset($node->attributes()->dateDeleted))
+				{
+					$this->_lexStoreMongo->deleteEntry($node->attributes()->guid);
+					error_log("Entry deledted by Lift file scanner: " . $node->attributes()->id);
+				}else
+				{
+					throw new \Exception("Unknow Entry operation: " . $node->attributes()->id);
+				}
+				
 			}
 		);
 	}

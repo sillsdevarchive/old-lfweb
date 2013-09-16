@@ -112,7 +112,6 @@ class LanguageDepotImporter {
 			$time -= $increment;
 			if ($this->isComplete()) {
 				$error = $this->error();
-				error_log($error);
 				if ($error) {
 					$projectState->setState(ProjectStates::Error, $error);
 					break;

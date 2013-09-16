@@ -421,7 +421,6 @@ class LfDictionary {
 		// example: 'zh_Hans_CN' -NO-> 'zh_Hans' -NO-> 'zh' ->FOUND!
 		$languageCode = $this->_projectModel->languageCode;
 		$fileName = preg_replace ( '/-+/', '_', $languageCode );
-		error_log ( $fileName );
 		while ( true ) {
 			$fileFullPath = LF_LIBRARY_PATH . "/data/ldml-core-common-main/" . $fileName . ".xml";
 			if (file_exists ( $fileFullPath )) {
