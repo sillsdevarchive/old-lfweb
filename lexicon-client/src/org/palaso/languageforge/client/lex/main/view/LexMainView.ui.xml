@@ -3,9 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:lex="urn:import:org.palaso.languageforge.client.lex.main.view">
 
 	<g:HTMLPanel  height="100%">
-
-		<lex:NavPanel ui:field='navPanel' />
-
 		<g:HTMLPanel  height="100%">
 			<section id="content"
 				style="position: absolute; left: 0px; top: 0px; bottom: 0px; right:0px;margin-top: 60px;">

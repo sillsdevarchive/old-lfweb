@@ -12,7 +12,6 @@ import org.palaso.languageforge.client.lex.controls.presenter.LoadingProgressInd
 import org.palaso.languageforge.client.lex.dashboard.DashboardModule;
 import org.palaso.languageforge.client.lex.main.presenter.LexMainPresenter;
 import org.palaso.languageforge.client.lex.main.presenter.MainPresenter;
-import org.palaso.languageforge.client.lex.main.presenter.NavPresenter;
 import org.palaso.languageforge.client.lex.main.presenter.TopPresenter;
 import org.palaso.languageforge.client.lex.main.view.MainView;
 import org.palaso.languageforge.client.lex.review.ReviewModule;
@@ -48,7 +47,7 @@ public interface MainEventBus extends EventBus{
 	// @InitHistory
 	// @Event
 	@Start
-	@Event(handlers = { TopPresenter.class, NavPresenter.class })
+	@Event(handlers = {TopPresenter.class, MainPresenter.class})
 	void start();
 
 	/* Navigation events */
@@ -103,7 +102,7 @@ public interface MainEventBus extends EventBus{
 	@Event(handlers = MainPresenter.class)
 	void openNewWindow(String url);
 	
-	@Event(handlers = NavPresenter.class)
+	@Event(handlers = MainPresenter.class)
 	void taskSettingChanged();
 	
 	@Event(handlers = MainPresenter.class)
