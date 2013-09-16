@@ -3,7 +3,6 @@ package org.palaso.languageforge.client.lex.main.presenter;
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.callback.CallbackComm;
-import org.palaso.languageforge.client.lex.common.callback.CallbackResult;
 import org.palaso.languageforge.client.lex.common.callback.CallbackResultString;
 import org.palaso.languageforge.client.lex.common.callback.ICallback;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
@@ -11,18 +10,17 @@ import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
 import org.palaso.languageforge.client.lex.main.MainEventBus;
+import org.palaso.languageforge.client.lex.main.view.NavPanel;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.UserDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksDto;
 import org.palaso.languageforge.client.lex.model.settings.tasks.SettingTasksTaskElementDto;
-import org.palaso.languageforge.client.lex.main.view.NavPanel;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -79,8 +77,6 @@ public class NavPresenter extends
 
 		HasClickHandlers getSettingsClickHandlers();
 
-		HasClickHandlers getContributeClickHandlers();
-
 		void setBoldStyleAddGrammatical(boolean bold);
 
 		void setBoldStyleAddMeaning(boolean bold);
@@ -88,8 +84,6 @@ public class NavPresenter extends
 		void setBoldStyleAddExample(boolean bold);
 
 		void setBoldStyleReviewBrowseEdit(boolean bold);
-
-		// void setBoldStyleGatherFromOtherLanguage(boolean bold);
 
 		void setBoldStyleReviewRecentChanges(boolean bold);
 
@@ -111,10 +105,6 @@ public class NavPresenter extends
 		void setGatherWordsMenuVisible(boolean visible);
 
 		void setGatherWordsMenuExpended(boolean expended);
-
-		void setContributeMenuVisible(boolean visible);
-
-		void setContributeMenuExpended(boolean expended);
 
 		void setConfigureMenuVisible(boolean visible);
 
@@ -257,17 +247,6 @@ public class NavPresenter extends
 			}
 		});
 
-		view.getContributeClickHandlers().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				String newUrl = "http://"
-						+ Window.Location.getHost()
-						+ "/project/subscribe/"
-						+ CurrentEnvironmentDto.getCurrentProject()
-								.getProjectId();
-				// Window.Location.assign(newUrl);
-				topWindowRedirect(newUrl);
-			}
-		});
 		view.getDashboardClickHandlers().addClickHandler(new ClickHandler() {
 
 			@Override
@@ -379,7 +358,6 @@ public class NavPresenter extends
 		view.setAddGrammaticalPanelVisible(false);
 		view.setAddExamplePanelVisible(false);
 		view.setConfigureMenuVisible(false);
-		view.setContributeMenuVisible(false);
 
 		isDashboardMenuVisible = true;
 
@@ -468,7 +446,6 @@ public class NavPresenter extends
 		UserDto user = CurrentEnvironmentDto.getCurrentUser();
 		if (user == null) {
 			ConsoleLog.log("Work with out user logged in!");
-			view.setContributeMenuVisible(true);
 			view.setConfigureMenuVisible(false);
 		} else {
 			ConsoleLog.log("Work with user!");
@@ -479,6 +456,7 @@ public class NavPresenter extends
 				view.setConfigureMenuVisible(true);
 			}
 		}
+		notifyOutsideTasksChanges(tasksDto);
 	}
 
 	protected static native void topWindowRedirect(String url) /*-{
@@ -562,6 +540,17 @@ public class NavPresenter extends
 		exportMenuToJavaScript(jsCallback);
 	}
 
+	
+	protected static native void notifyOutsideTasksChanges(JsArray<SettingTasksTaskElementDto> tasks) /*-{
+		if (typeof($wnd.GWTTaskSettingsChanged) == "function")
+		{
+			$wnd.GWTTaskSettingsChanged(tasks);
+		}else
+		{
+			console.log("window.GWTTaskSettingsChanged(tasks) not defined!");
+		};
+	}-*/;
+	
 	protected static native void exportMenuToJavaScript(
 			JavaScriptObject externalLinkMenuCallBack) /*-{
 		$wnd.openGWTPage = function(pageName) {

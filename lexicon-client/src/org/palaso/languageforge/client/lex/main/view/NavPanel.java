@@ -35,9 +35,6 @@ public class NavPanel extends Composite implements NavPresenter.INavView {
 	@UiField
 	HTMLPanel configurePanel;
 	@UiField
-	HTMLPanel contributePanel;
-
-	@UiField
 	HTMLPanel reviewRecentChangesPanel;
 	@UiField
 	HTMLPanel gatherFromTextsPanel;
@@ -87,10 +84,7 @@ public class NavPanel extends Composite implements NavPresenter.INavView {
 
 	@UiField
 	Anchor settings;
-	
-	@UiField
-	Anchor contribute;
-	
+
 	@UiField
 	Anchor dashBoard;
 	
@@ -103,9 +97,7 @@ public class NavPanel extends Composite implements NavPresenter.INavView {
 	@UiField
 	Element configurePanelLi;
 	
-	@UiField
-	Element contributePanelLi;
-	
+
 	@UiField
 	Element addInformationPanelLi;
 	
@@ -291,10 +283,7 @@ public class NavPanel extends Composite implements NavPresenter.INavView {
 		gatherWordsPanel.setVisible(visible);
 	}
 
-	@Override
-	public void setContributeMenuVisible(boolean visible) {
-		contributePanel.setVisible(visible);
-	}
+
 
 	@Override
 	public void setConfigureMenuVisible(boolean visible) {
@@ -394,19 +383,6 @@ public class NavPanel extends Composite implements NavPresenter.INavView {
 		}		
 	}
 
-	@Override
-	public void setContributeMenuExpended(boolean expended) {
-		if (expended)
-		{
-			if (contributePanelLi.getClassName().indexOf("active")<0)
-			{
-				contributePanelLi.addClassName("active");
-			}
-		}else
-		{
-			contributePanelLi.removeClassName("active");
-		}
-	}
 
 	@Override
 	public void setConfigureMenuExpended(boolean expended) {
@@ -466,10 +442,6 @@ public class NavPanel extends Composite implements NavPresenter.INavView {
 		return configurePanel.isVisible();
 	}
 
-	@Override
-	public HasClickHandlers getContributeClickHandlers() {
-		return contribute;
-	}
 
 	@Override
 	public HasClickHandlers getDashboardClickHandlers() {

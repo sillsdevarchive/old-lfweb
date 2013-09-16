@@ -116,15 +116,6 @@
 						</g:Anchor>
 					</li>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field='contributePanel'  styleName="main_top_menu">
-					<li ui:field='contributePanelLi'>
-					<g:Anchor href="#" styleName="noarrow" ui:field='contribute'>
-							<span class="ico4">
-								<ui:text from="{string.NaviPanel_Contribute}"/>
-							</span>
-						</g:Anchor>
-					</li>
-					</g:HTMLPanel>
 				</ul>
 			</nav>
 		</aside>
