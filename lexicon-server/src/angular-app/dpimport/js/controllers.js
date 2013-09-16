@@ -4,9 +4,9 @@
 
 angular.module(
 	'dpimport.controllers',
-	[ 'lf.services', 'ui.bootstrap', 'dpimport.services']
+	[ 'lf.services', 'ui.bootstrap', 'dpimport.services','vcRecaptcha']
 )
-.controller('UserCtrl', ['$scope', 'depotImportService', '$location', function UserCtrl($scope, depotImportService, $location) {
+.controller('UserCtrl', ['$scope', 'depotImportService', '$location', function UserCtrl($scope, depotImportService, $location, vcRecaptchaService) {
 	$scope.progressstep=0;
 	$scope.showprogressbar = false;
 	$scope.record = {};
