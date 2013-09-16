@@ -5,6 +5,7 @@ require_once(dirname(__FILE__) . '/../Config.php');
 use libraries\lfdictionary\common\AsyncRunner;
 use libraries\lfdictionary\common\HgWrapper;
 use libraries\lfdictionary\environment\LexProject;
+use libraries\lfdictionary\environment\ProjectState;
 use models\ProjectModel;
 
 class LanguageDepotImporter {
@@ -111,11 +112,12 @@ class LanguageDepotImporter {
 			$time -= $increment;
 			if ($this->isComplete()) {
 				$error = $this->error();
+				error_log($error);
 				if ($error) {
-					$projectState->setState(\environment\ProjectStates::Error, $error);
+					$projectState->setState(ProjectStates::Error, $error);
 					break;
 				} else {
-					$projectState->setState(\environment\ProjectStates::Ready);
+					$projectState->setState(ProjectStates::Ready);
 					break;
 				}
 			}

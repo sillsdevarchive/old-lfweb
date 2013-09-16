@@ -31,6 +31,14 @@ angular.module(
 				var stateChecker = function(){
 			    	depotImportService.depotImportStates(record, function(result) {
 			    		if (result.ok) {
+			    			
+			    			if (result.data.haserror==true)
+			    				{
+			    					$scope.success.state = false;
+			    					$scope.success.message = "An error occurred in the import process: " + result.data.code;
+			    					return;
+			    				}
+			    			
 				            if (result.data.succeed==true)
 			            	{ 	//import finished, so return code will be new project ID, and will redirect
 			            		$scope.progressstep=100;

@@ -158,7 +158,9 @@ class HgWrapper {
 			if (strpos($line, "abort") !== false or
 				strpos($line, "invalid") !== false or
 				strpos($line, "/usr/bin/time: not found") !== false or
-				strpos($line, "exited with non-zero status 255") !== false
+				strpos($line, "exited with non-zero status 255") !== false or
+				strpos($line, "exited with non-zero status 127") !== false or
+				strpos($line, "failed to run") !== false
 			) {
 				$result[] = $line;
 			}

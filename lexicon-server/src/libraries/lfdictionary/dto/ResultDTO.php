@@ -12,6 +12,11 @@ class ResultDTO {
 	private $_succeed;
 	
 	/**
+	 * @var boolean
+	 */
+	private $_haserror;
+	
+	/**
 	* @var string
 	*/
 	private $_code;
@@ -19,9 +24,10 @@ class ResultDTO {
 	/**
 	 * @param Boolean $succeed
 	 */
-	public function __construct($succeed, $code = "") {
+	public function __construct($succeed, $code = "", $haserror = false) {
 		$this->_succeed = $succeed;
 		$this->_code = $code;
+		$this->_haserror = $haserror;
 	}
 	
 	/**
@@ -32,6 +38,7 @@ class ResultDTO {
 		return array(
 			'succeed' => $this->_succeed,
 		 	'code' => $this->_code,
+			'haserror'  => $this->_haserror,
 		);
 		
 	}

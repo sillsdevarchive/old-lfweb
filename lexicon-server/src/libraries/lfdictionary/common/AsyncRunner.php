@@ -51,7 +51,7 @@ class AsyncRunner
 	 */
 	public function getOutput($allowUnfinished = false) {
 		if (!$allowUnfinished && !$this->isComplete()) {
-			throw new Exception("Command on '$this->_baseFilePath' not yet complete.");
+			throw new \Exception("Command on '$this->_baseFilePath' not yet complete.");
 		}
 		return file_get_contents($this->getLockFilePath());
 	}
