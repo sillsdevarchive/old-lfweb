@@ -970,6 +970,12 @@ div-no-hide {
 	padding-right: 5px;
 }
 
+.main_top_menu_view {
+	width: 100px;
+	float: left;
+	padding-right: 5px;
+}
+
 .main_top_menu {
 	width: 130px;
 	float: left;
@@ -977,7 +983,7 @@ div-no-hide {
 }
 
 .main_top_menu_group {
-	margin-left: 300px;
+	margin-left: 150px;
 	margin-bottom: 0px !important;
 	z-index: 3;
 	position: absolute;

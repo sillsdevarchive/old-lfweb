@@ -1,28 +1,5 @@
 						<div id="ViewSwitch" class="dic-view-switch">
-							<aside id="sidebar-view-switch">
-								<nav class="accordion accordion_no_bottom_margin">
-									<ul id="view-switch" class="view-switch">
-										<div style="text-align:center;">
-											<div
-												style="display: inline-block; width: 80px; float: left;">
-												<li id="view_button"
-													style="border-radius: 10px 0px 0px 10px;"><a
-													class="view-switch-noarrow" href="#"><span
-														class="ico-view-switch "> View </span> </a>
-												</li>
-											</div>
-											<div
-												style="display: inline-block; width: 80px; float:     left;">
-												<li id="edit_button" class="view-selected"
-													style="border-radius: 0px 10px 10px 0px;"><a
-													class="view-switch-noarrow" href="#"><span
-														class="ico-edit-switch "> Edit </span> </a>
-												</li>
-											</div>
-										</div>
-									</ul>
-								</nav>
-							</aside>
+		
 							<script type="text/javascript">
 	function runToggle(iDuration ,domDiv) {
             $(domDiv).fadeToggle(iDuration,"linear",function() {

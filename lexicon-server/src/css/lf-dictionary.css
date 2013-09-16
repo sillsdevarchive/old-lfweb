@@ -241,52 +241,8 @@ body.loading .view-loading-progress {
 	background: #fefcf9;
 }
 
-.dic-view-switch {
-	height: 50px;
-	padding: 10px 0px 0 0;
-	position: absolute;
-	width: 200px;
-	z-index: 1 !important;
-	margin-left: 135px;
-}
-
-.flexible .sidebar-view-switch {
-	float: left;
-	margin: 0;
-	padding: 0 !important;
-	width: 206px;
-}
-
 .accordion .ico-view-switch {
-	background: url('./../images/lfdictionary/eye.png') no-repeat 2px 3px;
+	background: url('./../images/lfdictionary/eye.png') no-repeat 0px 1px;
 }
 
-.accordion .ico-edit-switch {
-	background: url('./../images/lfdictionary/ico08.gif') no-repeat 2px 3px;
-}
 
-.view-switch
-{
-	margin:0;
-}
-.view-switch-noarrow {
-	color: #3f7ca4;
-	display: block;
-	text-decoration: none;
-	padding: 10px 30px 10px 11px;
-	background: none !important;
-}
-
-.view-switch-noarrow:hover {
-	text-decoration: underline;
-}
-
-.accordion li.view-selected {
-	background: -moz-linear-gradient(center top, #EAE9E9 50%, #FFFFFF 100%)
-		repeat scroll 0 0 transparent;
-}
-
-.accordion_no_bottom_margin
-{
-	margin-bottom:  0px !important;
-}

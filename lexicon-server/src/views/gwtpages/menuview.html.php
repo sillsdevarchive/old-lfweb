@@ -1,5 +1,11 @@
 <nav class="accordion main_top_menu_group">
 	<ul>
+		<div class="main_top_menu_view" style="" id="gwt-div-root-view">
+			<li><a class="noarrow mainNavBarboldTitle" href="#"
+				onClick=""><span class="ico-view-switch">
+						View </span></a></li>
+		</div>
+		
 		<div class="main_top_menu" style="display: none;" id="gwt-div-dashboard">
 			<li><a class="noarrow mainNavBarboldTitle" href="#"
 				onClick="openGWTPage('dashboard')"><span class="ico-dashboard">
