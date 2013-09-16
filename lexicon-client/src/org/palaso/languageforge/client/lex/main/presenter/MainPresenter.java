@@ -248,14 +248,17 @@ public class MainPresenter extends BasePresenter<MainPresenter.IView, MainEventB
 		UserDto user = CurrentEnvironmentDto.getCurrentUser();
 		if (user == null) {
 			ConsoleLog.log("Work with out user logged in!");
+			isConfigureMenuVisible = false;
 			notifyOutsideTasksChanges(MENU_SETTING, false);
 		} else {
 			ConsoleLog.log("Work with user!");
 			notifyOutsideTasksChanges(MENU_SETTING, false);
+			isConfigureMenuVisible = false;
 			if (PermissionManager.getPermission(
 					DomainPermissionType.DOMAIN_PROJECTS,
 					OperationPermissionType.CAN_EDIT_OTHER)) {
 				notifyOutsideTasksChanges(MENU_SETTING, true);
+				isConfigureMenuVisible = true;
 			}
 		}
 	}

@@ -157,8 +157,8 @@ class HgWrapper {
 		foreach ($lines as $line) {
 			if (strpos($line, "abort") !== false or
 				strpos($line, "invalid") !== false or
-				strpos($line, "/usr/bin/time: not found") !== false or
-				strpos($line, "No such") !== false or
+				strpos($line, "not found") !== false or
+				strpos($line, "such file or directory") !== false or
 				strpos($line, "exited with non-zero status 255") !== false or
 				strpos($line, "exited with non-zero status 127") !== false or
 				strpos($line, "failed to run") !== false
