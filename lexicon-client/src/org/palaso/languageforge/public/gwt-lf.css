@@ -24,14 +24,15 @@
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	line-height: 10px;
-	color: #fff;
+	background-image: linear-gradient(to bottom, #B3B3B3, #f3f3f3);
+	color: #333333;
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 }
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
 	cursor: default;
 	border-top: 6px solid #E67345;
-	padding: 12px 5px 0;
+	padding: 13px 5px 0;
 }
 
 .gwt-TabLayoutPanelTab-selected:hover {
