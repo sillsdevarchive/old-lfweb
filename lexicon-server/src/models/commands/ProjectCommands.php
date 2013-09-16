@@ -25,8 +25,9 @@ class ProjectCommands
 		if (!$isNewProject) {
 			$project->read($id);
 		}
+		
 		JsonDecoder::decode($project, $jsonModel);
-		return createOrUpdateProject($project, $userId, $isNewProject);
+		return self::createOrUpdateProject($project, $userId, $isNewProject);
 	}
 	
 	/**
