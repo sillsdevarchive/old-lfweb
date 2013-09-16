@@ -25,16 +25,13 @@ public class LexMainView extends Composite implements LexMainPresenter.ILexMainV
 
 	private static final Binder binder = GWT.create(Binder.class);
 
-	@UiField(provided = true)
-	NavPanel navPanel;
 	@UiField
 	SimplePanel bodyPanel;
 	@UiField
 	FlowPanel messageList;
 
 	@Inject
-	public LexMainView(NavPanel navPanel) {
-		this.navPanel = navPanel;
+	public LexMainView() {
 		initWidget(binder.createAndBindUi(this));
 	}
 
