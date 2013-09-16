@@ -44,6 +44,18 @@ class DepotProjectModel extends \models\mapper\MapperModel
 	 * @var string
 	 */
 	public $projectpassword;
+	
+	/**
+	 *
+	 * @var string
+	 */
+	public $captcha_challenge;
+	
+	/**
+	 *
+	 * @var string
+	 */
+	public $captcha_response;
 }
 
 ?>

@@ -31,6 +31,7 @@ error_reporting ( E_ALL | E_STRICT );
 
 require_once (APPPATH . 'helpers/loader_helper.php');
 require_once (APPPATH . 'libraries/lfdictionary/Config.php');
+require_once(APPPATH . 'libraries/recaptchalib.php');
 
 /**
  * The main json-rpc Lexical API
@@ -594,20 +595,39 @@ class LfDictionary {
 		$result = new \libraries\lfdictionary\dto\ResultDTO ( true, strval ( $wordCount ) );
 		return $result->encode ();
 	}
-	public function depot_begin_import($model) {
+	public function depot_begin_import($model) {		
+		
 		/*
 		 * HERE start the clone only
 		 */
 		$depotproject = new DepotProjectModel ();
 		JsonDecoder::decode ( $depotproject, $model );
-		$lfProjectCode = ProjectModel::makeProjectCode ( "qaa", $depotproject->projectcode, ProjectModel::PROJECT_LIFT );
-		$languageDepotImporter = new LanguageDepotImporter ( $lfProjectCode );
-		$languageDepotImporter->cloneRepository ( $depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode );
-		$projectState = new ProjectState ( $lfProjectCode );
-		$languageDepotImporter->importContinue ( $projectState );
-		$resultDTO = new ResultDTO ( true );
-		return $resultDTO->encode ();
+		
+		
+		//TODO: ---- YOUR Private KEY GOES HERE ----
+		$privatekey = "6LfxQecSAAAAAMjuC5FKBw6zZrGSOF-KBqWdi1IL";
+		$resp = recaptcha_check_answer ($privatekey,
+				$_SERVER["REMOTE_ADDR"],
+				$depotproject->captcha_challenge,
+				$depotproject->captcha_response);
+		
+		if (!$resp->is_valid) {
+			// What happens when the CAPTCHA was entered incorrectly
+			$dto = new ResultDTO(false, "CAPTCHA was entered incorrectly");
+			return $dto->encode();
+		} else {
+		
+			$lfProjectCode = ProjectModel::makeProjectCode ( "qaa", $depotproject->projectcode, ProjectModel::PROJECT_LIFT );
+			$languageDepotImporter = new LanguageDepotImporter ( $lfProjectCode );
+			$languageDepotImporter->cloneRepository ( $depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode );
+			$projectState = new ProjectState ( $lfProjectCode );
+			$languageDepotImporter->importContinue ( $projectState );
+			$resultDTO = new ResultDTO ( true );
+			return $resultDTO->encode ();
+		}		
 	}
+	
+	
 	public function depot_check_import_states($model) {
 		$depotproject = new DepotProjectModel ();
 		JsonDecoder::decode ( $depotproject, $model );

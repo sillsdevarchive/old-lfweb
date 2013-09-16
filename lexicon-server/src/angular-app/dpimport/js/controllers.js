@@ -22,42 +22,56 @@ angular.module(
 	$scope.record.projectpassword = '';
 	
 	$scope.importProject = function(record) {
+		record.captcha_challenge = record.captcha.challenge;
+		record.captcha_response = record.captcha.response;
 		depotImportService.depotImport(record, function(result) {
 			if (result.ok) {
-				$scope.showprogressbar = true;
-				$scope.progressstep=0;
-				$scope.inprogerss=true;
-				record.projectpassword = '';
-				var stateChecker = function(){
-			    	depotImportService.depotImportStates(record, function(result) {
-			    		if (result.ok) {
-			    			
-			    			if (result.data.haserror==true)
-			    				{
-			    					$scope.success.state = false;
-			    					$scope.success.message = "An error occurred in the import process: " + result.data.code;
-			    					return;
-			    				}
-			    			
-				            if (result.data.succeed==true)
-			            	{ 	//import finished, so return code will be new project ID, and will redirect
-			            		$scope.progressstep=100;
-			            		window.location.href="/gwt/main/" + result.data.code;
-			            	}else
-			            	{
-			            		setTimeout(stateChecker,1000);
-			            		$scope.progressstep=parseInt(result.data.code);
-			            	}
-			    		} else {
-			    			$scope.inprogerss=false;
-							$scope.success.state = false;
-							$scope.success.message = "An error occurred in the import process: ";
-						}
-			    	});
-			    
-			        };
+				
+				if (result.data.succeed==true) {
+					$scope.showprogressbar = true;
+					$scope.progressstep=0;
+					$scope.inprogerss=true;
+					record.projectpassword = '';
+					var stateChecker = function(){
+				    	depotImportService.depotImportStates(record, function(result) {
+				    		if (result.ok) {
+				    			
+				    			if (result.data.haserror==true)
+				    				{
+				    					$scope.success.state = false;
+				    					$scope.success.message = "An error occurred in the import process: " + result.data.code;
+				    					return;
+				    				}
+				    			
+					            if (result.data.succeed==true)
+				            	{ 	//import finished, so return code will be new project ID, and will redirect
+				            		$scope.progressstep=100;
+				            		window.location.href="/gwt/main/" + result.data.code;
+				            	}else
+				            	{
+				            		setTimeout(stateChecker,1000);
+				            		$scope.progressstep=parseInt(result.data.code);
+				            	}
+				    		} else {
+				    			$scope.inprogerss=false;
+								$scope.success.state = false;
+								$scope.success.message = "An error occurred in the import process: ";
+							}
+				    	});
+				    
+				        };
 
-			     setTimeout(stateChecker,1000);
+				     setTimeout(stateChecker,1000);
+				} else {
+					//$scope.inprogerss=false;
+					result.data.haserror =true
+					$scope.success.state = false;
+					$scope.success.message = result.data.code;
+					alert(result.data.code);
+					//vcRecaptchaService.reload();
+					return;
+				}
+				
 			} else {
 				$scope.inprogerss=false;
 				$scope.success.state = false;
