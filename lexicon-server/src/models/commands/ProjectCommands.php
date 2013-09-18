@@ -5,6 +5,7 @@ namespace models\commands;
 use models\ProjectModel;
 use models\UserModel;
 use models\rights\Roles;
+use models\commands\ActivityCommands;
 
 
 use libraries\palaso\CodeGuard;
@@ -50,6 +51,7 @@ class ProjectCommands
 		$user->addProject($newProjectId);
 		$user->write();
 	
+		ActivityCommands::addUserToProject($project, $userId);
 		if ($isNewProject) {
 			//ActivityCommands::addProject($project); // TODO: Determine if any other params are needed. RM 2013-08
 		}
