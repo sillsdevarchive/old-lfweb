@@ -9,6 +9,7 @@
 <g:HTMLPanel width="100%" height="100%">	
 	<g:FlowPanel width="100%" height="100%">
 		<g:SimplePanel ui:field="feedback"/> 
+			 <g:Frame ui:field='entryDisplayFrame' width="100%" height="100px" styleName="bowser_edit_entry_display_frame"></g:Frame>
 			 <g:SimplePanel ui:field='buttonControl' visible="true" />
 			<g:ScrollPanel width="100%" styleName="lexbrowse-Edit-View-Scrool-Panel">
 				<g:SimplePanel ui:field='panel' styleName="lexwordeditPanel" />

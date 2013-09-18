@@ -1035,3 +1035,8 @@ div-no-hide {
 table th, table td {
 	border: 0px !important;
 }
+
+.bowser_edit_entry_display_frame
+{
+	border: none;
+}
