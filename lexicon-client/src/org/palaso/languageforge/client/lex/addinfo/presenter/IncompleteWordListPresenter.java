@@ -364,8 +364,8 @@ public class IncompleteWordListPresenter extends
 				.getEntriesRecordCount() : startIndex
 				+ Constants.VISIBLE_WORDS_PER_PAGE_COUNT;
 		if (isScrollbarAdded) {
-			JSNIJQueryWrapper.removeJQueryScrollbars(view.getScrollPanel()
-					.getElement());
+//			JSNIJQueryWrapper.removeJQueryScrollbars(view.getScrollPanel()
+//					.getElement());
 			isScrollbarAdded = false;
 		}
 		if (entriesCount == 0) {
@@ -382,7 +382,7 @@ public class IncompleteWordListPresenter extends
 		result1.setEntryCount(LexService.getEntriesRecordCount());
 		onResultListDTO(result1);
 
-		JSNIJQueryWrapper.addJQueryScrollbars(GWT.getModuleBaseURL());
+//		JSNIJQueryWrapper.addJQueryScrollbars(GWT.getModuleBaseURL());
 		isScrollbarAdded = true;
 
 	}

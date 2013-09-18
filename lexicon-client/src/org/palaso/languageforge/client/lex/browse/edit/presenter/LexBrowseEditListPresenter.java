@@ -266,10 +266,10 @@ public class LexBrowseEditListPresenter extends BasePresenter<LexBrowseEditListP
 		onResultListDTO(wordList);
 
 		if (isScrollBarAdded) {
-			JSNIJQueryWrapper.removeJQueryScrollbars(view.getScrollPanel().getElement());
+			//JSNIJQueryWrapper.removeJQueryScrollbars(view.getScrollPanel().getElement());
 			isScrollBarAdded = false;
 		}
-		JSNIJQueryWrapper.addJQueryScrollbars(GWT.getModuleBaseURL());
+		//JSNIJQueryWrapper.addJQueryScrollbars(GWT.getModuleBaseURL());
 		isScrollBarAdded = true;
 	}
 
