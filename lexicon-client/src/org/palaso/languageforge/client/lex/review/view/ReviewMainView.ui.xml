@@ -17,6 +17,12 @@
 									styleName="review-hearer-label"></g:Label>
 							</div>
 							<div class="lex-dc-column" id="c3LRPadding-1" style="width:40px">
+								<b:Button text="New" width="40px"
+									ui:field="btnAddNew" size="MINI" type="DANGER" icon="PLUS" />
+							</div>
+							<div class="lex-dc-column" id="c3LRPadding-1" style="width:40px">
+							</div>
+							<div class="lex-dc-column" id="c3LRPadding-1" style="width:40px">
 								<b:Button text="{string.ButtonControlView_All}" width="40px"
 									ui:field="btnQuestionAll" size="MINI" type="PRIMARY" />
 							</div>

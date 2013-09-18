@@ -30,12 +30,11 @@ class SaveCommentsCommand {
 	function __construct($fileName,$status,$isStatusReviewed,$isStatusTodo,$type,$parentGuid,$message,$datetime,$author, $isRoot) {
 		if (!file_exists($fileName))
 		{
-			$xml = new DOMDocument();
+			$xml = new \DOMDocument();
 			$xml_notes = $xml->createElement("notes");
 			$xml_notes->setAttribute("version" , 0);
 			$xml->appendChild( $xml_notes );
 			$xml->save($fileName);
-			$this->_logger->logInfoMessage ('A new ChorusNotes file created: ' . $fileName);
 		}
 		$this->_fileName = $fileName;
 		$this->_status = $status;
@@ -68,7 +67,51 @@ class SaveCommentsCommand {
 
 		if ($this->_isRoot=="1")
 		{
-			//TODO: 2012-06 XZ: maybe we also want create new question or conflict
+			$notesNode = $doc->getElementsByTagName('notes')->item(0);
+			$xml_annotation = $doc->createElement("annotation");
+			$xml_annotation->setAttribute("class" , "question");
+			$xml_annotation->setAttribute("ref" , "");
+			$xml_annotation->setAttribute("guid" , $this->_parentGuid);
+			$notesNode->appendChild( $xml_annotation );
+			
+			
+			$newRootMessageNode = $doc->createElement("message");
+			$newRootMessageNode->nodeValue=$this->_message;
+			$newRootMessageNode->setAttribute("author", $this->_author);
+			
+			if  ($this->_status==GetCommentsCommand::$STATUS_CLOSED)
+			{
+				$newRootMessageNode->setAttribute("status", GetCommentsCommand::$STATUS_CLOSED);
+				$newRootMessageNode->setAttribute("status.resolved", "true");
+			}else
+			{
+				$newRootMessageNode->setAttribute("status", "");
+				$newRootMessageNode->setAttribute("status.resolved", "false");
+			}
+			
+			
+			if  ($this->_isStatusReviewed==GetCommentsCommand::$STATUS_REVIEWED)
+			{
+				$newRootMessageNode->setAttribute("status.reviewed", "true");
+			}else
+			{
+				$newRootMessageNode->setAttribute("status.reviewed", "false");
+			}
+			
+			if  ($this->_isStatusTodo==GetCommentsCommand::$STATUS_TODO)
+			{
+				$newRootMessageNode->setAttribute("status.todo", "true");
+			}else
+			{
+				$newRootMessageNode->setAttribute("status.todo", "false");
+			}
+			
+				
+			$newRootMessageNode->setAttribute("date", $this->_datetime);
+			$newNodeGuid=strtolower (\libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php());
+			$newRootMessageNode->setAttribute("guid",  $newNodeGuid);
+			$xml_annotation->appendChild($newRootMessageNode);
+			
 		}else{
 			$entries = $xpath->query('//notes/annotation/message[@guid="' . $this->_parentGuid . '"]');
 			if ($entries->length!=1)

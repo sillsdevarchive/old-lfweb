@@ -3,6 +3,7 @@ package org.palaso.languageforge.client.lex.review.presenter;
 import java.util.Date;
 
 import org.palaso.languageforge.client.lex.common.I18nConstants;
+import org.palaso.languageforge.client.lex.common.UUID;
 import org.palaso.languageforge.client.lex.common.enums.AnnotationMessageStatusType;
 import org.palaso.languageforge.client.lex.common.enums.ConversationAnnotationType;
 import org.palaso.languageforge.client.lex.controls.conversation.ConversationControl;
@@ -53,6 +54,8 @@ public class ReviewMainPresenter extends
 		public HasClickHandlers getConversationRecentChangesClickHandlers();
 
 		public HasClickHandlers getConversationRecentMergesClickHandlers();
+		
+		public HasClickHandlers getConversationQuestionAddNewClickHandlers();
 
 	}
 
@@ -79,11 +82,22 @@ public class ReviewMainPresenter extends
 						.getIsMarked() ? AnnotationMessageStatusType.CLOSED
 						: AnnotationMessageStatusType.UNDEFINED;
 				
-			
+				String rootGuid = "";
+				boolean isRootMessage = false;
+				if (event.getRootConversationItem()==null)
+				{
+					rootGuid =UUID.uuid();
+					isRootMessage = true ;
+				}else
+				{
+					rootGuid = event.getRootConversationItem().getReferencedGuid();
+					isRootMessage = false ;
+				}
+				
 				lexService.saveNewComments(statusType, newConversationItem
 						.isReviewed(), newConversationItem
-						.isTodo(), event.getRootConversationItem().getReferencedGuid(),
-						newConversationItem.getNewCommentHtml(), false,
+						.isTodo(), rootGuid,
+						newConversationItem.getNewCommentHtml(), isRootMessage,
 						new AsyncCallback<ConversationDto>() {
 
 							@Override
@@ -180,6 +194,16 @@ public class ReviewMainPresenter extends
 					}
 				});
 
+		view.getConversationQuestionAddNewClickHandlers().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				ConversationControl convCon= new ConversationControl();
+				convCon.showNewComment(false);
+				view.getConversationControl().addItem(convCon);
+				convCon.setConversationPostClickHandler(newPostClickHandler);
+			}
+		});
 	}
 
 	private void getQuestions(AnnotationMessageStatusType status,

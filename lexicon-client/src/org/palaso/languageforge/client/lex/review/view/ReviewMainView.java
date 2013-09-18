@@ -21,6 +21,9 @@ public class ReviewMainView extends Composite implements IReviewView {
 	ConversationListControl conversationListControl;
 	@UiField
 	ConversationListControl conversationRecentChangeListControl;
+	
+	@UiField
+	Button btnAddNew;
 	@UiField
 	Button btnQuestionAll;
 	@UiField
@@ -40,6 +43,7 @@ public class ReviewMainView extends Composite implements IReviewView {
 
 	public ReviewMainView() {
 		initWidget(binder.createAndBindUi(this));
+		btnAddNew.setVisible(false);
 	}
 
 	@Override
@@ -98,6 +102,12 @@ public class ReviewMainView extends Composite implements IReviewView {
 	public HasClickHandlers getConversationRecentMergesClickHandlers() {
 
 		return btnRecentMerges;
+	}
+	
+	@Override
+	public HasClickHandlers getConversationQuestionAddNewClickHandlers() {
+
+		return btnAddNew;
 	}
 
 }
