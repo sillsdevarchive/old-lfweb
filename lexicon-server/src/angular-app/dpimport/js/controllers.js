@@ -6,14 +6,14 @@ angular.module(
 	'dpimport.controllers',
 	[ 'lf.services', 'ui.bootstrap', 'dpimport.services','vcRecaptcha', 'palaso.ui.typeahead', 'ui.bootstrap']
 )
-.controller('UserCtrl', ['$scope', 'depotImportService', '$location', 'languageService', 'vcRecaptchaService',  function UserCtrl($scope, depotImportService, $location, languageService, vcRecaptchaService) {
+.controller('UserCtrl', ['$scope', 'depotImportService', '$location', 'languageService', 'vcRecaptchaService', 'silNoticeService', function UserCtrl($scope, depotImportService, $location, languageService, vcRecaptchaService, noticeService) {
 	$scope.progressstep=0;
 	$scope.showprogressbar = false;
+	$scope.showbackbtn = false;
+	$scope.showgotoprojectbtn = false;
+	$scope.hideInput = false;
 	$scope.record = {};
-	$scope.success = {
-		'state':false,
-		'message':''
-	};
+	$scope.newprojectid ='';
 	$scope.usernameok = true;
 	$scope.usernameexist = false;
 	$scope.usernameloading = false;
@@ -23,18 +23,28 @@ angular.module(
 	$scope.record.projectusername = '';
 	$scope.record.projectpassword = '';
 	
+	$scope.backToPrePage= function(){
+		window.location.href="/app/dpimport/";
+    };
+
+	$scope.gotoProject= function(){
+		window.location.href="/gwt/main/" + $scope.newprojectid;
+    };
+//	noticeService.push(noticeService.ERROR, 'Oh snap! Change a few things up and try submitting again.');
+//	noticeService.push(noticeService.SUCCESS, 'Well done! You successfully read this important alert message.');
+//	noticeService.push(noticeService.WARN, 'Oh snap! Change a few things up and try submitting again.');
+//	noticeService.push(noticeService.INFO, 'Well done! You successfully read this important alert message.');
 	$scope.importProject = function(record) {
-		$scope.success = {
-				'state':false,
-				'message':''
-			};
+		noticeService.push(noticeService.INFO, 'Starting Depot Project import...');
 		record.captcha_challenge = record.captcha.challenge;
 		record.captcha_response = record.captcha.response;
 		$scope.record.projectlanguagecode = $scope.language.subtag;
+		$scope.hideInput = true;
 		depotImportService.depotImport(record, function(result) {
 			if (result.ok) {
 				
 				if (result.data.succeed==true) {
+					noticeService.push(noticeService.INFO, 'Project import in progress, please wait...');
 					$scope.showprogressbar = true;
 					$scope.progressstep=0;
 					$scope.inprogerss=true;
@@ -45,15 +55,19 @@ angular.module(
 				    			
 				    			if (result.data.haserror==true)
 				    				{
-				    					$scope.success.state = false;
-				    					$scope.success.message = "An error occurred in the import process: " + result.data.code;
+				    					noticeService.push(noticeService.ERROR, 'An error occurred in the import process: ' + result.data.code);
+				    					$scope.showbackbtn = true;
 				    					return;
 				    				}
 				    			
 					            if (result.data.succeed==true)
 				            	{ 	//import finished, so return code will be new project ID, and will redirect
 				            		$scope.progressstep=100;
-				            		window.location.href="/gwt/main/" + result.data.code;
+				            		noticeService.push(noticeService.SUCCESS, 'Project import finished!');
+				            		$scope.showgotoprojectbtn = true;
+				            		$scope.newprojectid = result.data.code;
+				            		$scope.showprogressbar = false;
+				            		//window.location.href="/gwt/main/" + result.data.code;
 				            	}else
 				            	{
 				            		setTimeout(stateChecker,1000);
@@ -61,8 +75,8 @@ angular.module(
 				            	}
 				    		} else {
 				    			$scope.inprogerss=false;
-								$scope.success.state = false;
-								$scope.success.message = "An error occurred in the import process: ";
+								noticeService.push(noticeService.ERROR, 'An error occurred in the import process: ' + result.data.code);
+								$scope.showbackbtn = true;
 							}
 				    	});
 				    
@@ -72,17 +86,16 @@ angular.module(
 				} else {
 					//$scope.inprogerss=false;
 					result.data.haserror =true;
-					$scope.success.state = false;
-					$scope.success.message = result.data.code;
-					alert(result.data.code);
+					noticeService.push(noticeService.ERROR, 'An error occurred in the import process: ' + result.data.code);
 					vcRecaptchaService.reload();
+					$scope.showbackbtn = true;
 					return;
 				}
 				
 			} else {
 				$scope.inprogerss=false;
-				$scope.success.state = false;
-				$scope.success.message = "An error occurred in the import process: ";
+				noticeService.push(noticeService.ERROR, 'An error occurred in the import process: ' + result.data.code);
+				$scope.showbackbtn = true;
 			}
 		});
 		return true;
