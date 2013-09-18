@@ -16,7 +16,7 @@ class gwt extends Base {
 		
 		//some "favicon.ico" pass into here, find it out
 		if (strpos($pid,'.') !== false || strlen($pid)!== 24) {
-			error_log($pid. "is not a valid id");
+			error_log($pid. " is not a valid id");
 	    	return;
 		}
 		$data = array();

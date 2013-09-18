@@ -49,6 +49,7 @@ $route['app/(:any)'] = 'app/view/$1';
 $route['app/(:any)/(:any)'] = 'app/view/$1/$2';
 $route['app/(:any)/(:any)/(:any)'] = 'app/view/$1/$2/$3';
 $route['gwt/(:any)/(:any)'] = 'gwt/view/$1/$2';
+$route['gwtangular/(:any)/(:any)/(:any)'] = 'gwtangular/view/$1/$2/$3';
 $route['(:any)'] = "pages/view/$1";
 
 

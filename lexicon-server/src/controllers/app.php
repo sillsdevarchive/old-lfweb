@@ -12,35 +12,41 @@ class App extends Secure_base {
 			show_404();
 		} else {
 			$data = array();
-			$data['appName'] = $app;
-			
-			$sessionData = array();
-			$sessionData['userId'] = (string)$this->session->userdata('user_id');
-			$role = $this->_user->role;
-			if (empty($role)) {
-				$role = Roles::USER;
-			}
-			$sessionData['userSiteRights'] = Roles::getRightsArray(Realm::SITE, $role);
-			$sessionData['param1'] = $param1;
-			$sessionData['param2'] = $param2;
-			$jsonSessionData = json_encode($sessionData);
-			$data['jsonSession'] = $jsonSessionData;
-
-			$data['jsCommonFiles'] = array();
-			self::addJavascriptFiles("angular-app/common/js", $data['jsCommonFiles']);
-			$data['jsProjectFiles'] = array();
-			self::addJavascriptFiles("angular-app/$app", $data['jsProjectFiles']);
-				
-			$data['title'] = "Language Forge";
+			$data = prepareData($app,$data);
 			$this->_render_page("angular-app", $data);
 		}
 	}
 	
-	private static function ext($filename) {
+	protected function prepareData($app, $data)
+	{
+		$data['appName'] = $app;
+			
+		$sessionData = array();
+		$sessionData['userId'] = (string)$this->session->userdata('user_id');
+		$role = $this->_user->role;
+		if (empty($role)) {
+			$role = Roles::USER;
+		}
+		$sessionData['userSiteRights'] = Roles::getRightsArray(Realm::SITE, $role);
+			$sessionData['param1'] = $param1;
+			$sessionData['param2'] = $param2;
+		$jsonSessionData = json_encode($sessionData);
+		$data['jsonSession'] = $jsonSessionData;
+		
+		$data['jsCommonFiles'] = array();
+		self::addJavascriptFiles("angular-app/common/js", $data['jsCommonFiles']);
+		$data['jsProjectFiles'] = array();
+		self::addJavascriptFiles("angular-app/$app", $data['jsProjectFiles']);
+		
+		$data['title'] = "Language Forge";
+		return $data;
+	}
+	
+	protected static function ext($filename) {
 		return pathinfo($filename, PATHINFO_EXTENSION);
 	}
 	
-	private static function addJavascriptFiles($dir, &$result) {
+	protected static function addJavascriptFiles($dir, &$result) {
 		if (($handle = opendir($dir))) {
 			while ($file = readdir($handle)) {
 				if (is_file($dir . '/' . $file)) {
