@@ -210,13 +210,4 @@ angular.module('activity',
 			}
 		};
 	}])
-	.controller('BreadcrumbCtrl', ['$scope', '$rootScope', 'breadcrumbService', function($scope, $rootScope, breadcrumbService) {
-		$scope.idmap = breadcrumbService.idmap;
-		$rootScope.$on('$routeChangeSuccess', function(event, current) {
-			$scope.breadcrumbs = breadcrumbService.read();
-		});
-		$scope.$watch('idmap', function(oldVal, newVal, scope) {
-			$scope.breadcrumbs = breadcrumbService.read();
-		}, true);
-	}])
 	;
