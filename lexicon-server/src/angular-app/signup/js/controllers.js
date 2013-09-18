@@ -6,7 +6,7 @@ angular.module(
 	'signup.controllers',
 	[ 'lf.services', 'ui.bootstrap','vcRecaptcha' ]
 )
-.controller('UserCtrl', ['$scope', 'userService', function UserCtrl($scope, userService, vcRecaptchaService) {
+.controller('UserCtrl', ['$scope', 'userService', 'vcRecaptchaService', function UserCtrl($scope, userService, vcRecaptchaService) {
 
 	$scope.record = {};
 	$scope.success = {
@@ -19,6 +19,10 @@ angular.module(
 	$scope.record.id = '';
 	$scope.record.password = '';
 	$scope.createUser = function(record) {
+		$scope.success = {
+				'state':false,
+				'message':''
+			};
 		record.captcha_challenge = record.captcha.challenge;
 		record.captcha_response = record.captcha.response;
 		userService.create(record, function(result) {

@@ -617,7 +617,7 @@ class LfDictionary {
 			return $dto->encode();
 		} else {
 		
-			$lfProjectCode = ProjectModel::makeProjectCode ( "qaa", $depotproject->projectcode, ProjectModel::PROJECT_LIFT );
+			$lfProjectCode = ProjectModel::makeProjectCode ( $depotproject->projectlanguagecode, $depotproject->projectname, ProjectModel::PROJECT_LIFT);
 			$languageDepotImporter = new LanguageDepotImporter ( $lfProjectCode );
 			$languageDepotImporter->cloneRepository ( $depotproject->projectusername, $depotproject->projectpassword, $depotproject->projectcode );
 			$projectState = new ProjectState ( $lfProjectCode );
@@ -631,7 +631,7 @@ class LfDictionary {
 	public function depot_check_import_states($model) {
 		$depotproject = new DepotProjectModel ();
 		JsonDecoder::decode ( $depotproject, $model );
-		$lfProjectCode = ProjectModel::makeProjectCode ( "qaa", $depotproject->projectcode, ProjectModel::PROJECT_LIFT );
+		$lfProjectCode = ProjectModel::makeProjectCode ( $depotproject->projectlanguagecode, $depotproject->projectname, ProjectModel::PROJECT_LIFT );
 		$languageDepotImporter = new LanguageDepotImporter ( $lfProjectCode );
 		// LanguageDepotImporter::progress($projectCode);
 		
@@ -642,10 +642,11 @@ class LfDictionary {
 				$resultDTO = new ResultDTO ( true, $languageDepotImporter->error (), true );
 			} else {
 				// create new project
-				$newProjectModel = ProjectModel::createNewProject ( "qaa", $depotproject->projectcode );
+				$newProjectModel = ProjectModel::createNewProject ( $depotproject->projectlanguagecode, $depotproject->projectname );
 				$resultText = ProjectCommands::createOrUpdateProject ( $newProjectModel, $this->_userModel->id->asString (), true );
 				$resultDTO = new ResultDTO ( true, $resultText );
 			}
+			$languageDepotImporter->clear();
 		} else {
 			$resultDTO = new ResultDTO ( false, $languageDepotImporter->progress () );
 		}

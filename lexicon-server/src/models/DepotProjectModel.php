@@ -31,6 +31,18 @@ class DepotProjectModel extends \models\mapper\MapperModel
 	public $id;
 	
 	/**
+	 *
+	 * @var string
+	 */
+	public $projectlanguagecode;
+	
+	/**
+	 *
+	 * @var string
+	 */
+	public $projectname;
+	
+	/**
 	 * @var string
 	 */
 	public $projectcode;
@@ -56,6 +68,7 @@ class DepotProjectModel extends \models\mapper\MapperModel
 	 * @var string
 	 */
 	public $captcha_response;
+
 }
 
 ?>

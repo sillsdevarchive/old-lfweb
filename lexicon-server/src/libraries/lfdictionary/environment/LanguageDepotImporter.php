@@ -97,6 +97,11 @@ class LanguageDepotImporter {
 		return $asyncRunner->isComplete();		
 	}
 	
+	public function clear() {
+		$asyncRunner = $this->createAsyncRunner();
+		return $asyncRunner->cleanUp();
+	}
+	
 	private function createAsyncRunner() {
 		return new AsyncRunner(LexProject::stateFolderPath() .$this->_projectCode);
 	}

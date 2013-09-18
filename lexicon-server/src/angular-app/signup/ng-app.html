@@ -3,7 +3,7 @@
 		<legend>Create an Account</legend>
 
 		<div class="notification errorMessage"
-			ng-show="!success.state && success.message">{{notify.error}}</div>
+			ng-show="!success.state && success.message">{{success.message}}</div>
 		<div ng-hide="success.state" class="span4">
 			<form ng-submit="createUser(record)" name="userForm">
 				<fieldset>
