@@ -9,7 +9,7 @@ angular.module(
 .controller('EntryBlockCtrl', ['$scope', 'entryBlockService', function UserCtrl($scope, entryBlockService) {
 
 	$scope.record = {};
-
+	$scope.jsonData ='Test';
 	$scope.projectid = window.session.param1;
 	$scope.entryid = window.session.param2;
 	console.log($scope.projectid);
@@ -17,13 +17,7 @@ angular.module(
 	$scope.getEntry = function(projectId, entryId) {
 		entryBlockService.getEntryById(projectId, entryId, function(result) {
 			if (result.ok) {
-				if (result.data.succeed==true)
-					{
-
-					}else
-					{
-
-					}
+				$scope.jsonData=result.data;
 			} else {
 
 			}
