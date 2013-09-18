@@ -447,6 +447,8 @@ legend {display:none;}
 
 .lexwordeditPanel {
 	padding: 5px 5px 5px 5px;
+	border-right: 10px solid #BABAB3;
+	border-radius: 0px 10px 10px 0px;
 }
 
 .wordlistselectedRow {
@@ -712,8 +714,14 @@ div-no-hide {
 	border-radius: 10px 10px 10px 10px;
 	margin-bottom: 5px;
 	padding-right: 35px;
+	border-right: 10px solid #BABAB3;
 }
 
+.lex_example_panel
+{
+	border-right: 10px solid #BABAB3;
+	border-radius: 0px 10px 10px 0px;
+}
 .leftText {
 	text-align: left !important;
 }
