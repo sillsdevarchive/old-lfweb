@@ -1,7 +1,5 @@
 <div class="container" ng-app="entryblock" ng-cloak>
 	<div ng-controller="EntryBlockCtrl">
-		<div>
-			{{jsonData}}
-		</div>
+		<div ng-bind-html-unsafe="entryData"></div>
 	</div>
 </div>
