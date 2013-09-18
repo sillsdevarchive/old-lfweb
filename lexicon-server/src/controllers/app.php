@@ -7,7 +7,7 @@ require_once 'secure_base.php';
 
 class App extends Secure_base {
 	
-	public function view($app = 'main') {
+	public function view($app = 'main', $param1 = '', $param2 = '') {
 		if ( ! file_exists("angular-app/$app")) {
 			show_404();
 		} else {
@@ -21,6 +21,8 @@ class App extends Secure_base {
 				$role = Roles::USER;
 			}
 			$sessionData['userSiteRights'] = Roles::getRightsArray(Realm::SITE, $role);
+			$sessionData['param1'] = $param1;
+			$sessionData['param2'] = $param2;
 			$jsonSessionData = json_encode($sessionData);
 			$data['jsonSession'] = $jsonSessionData;
 
@@ -30,7 +32,6 @@ class App extends Secure_base {
 			self::addJavascriptFiles("angular-app/$app", $data['jsProjectFiles']);
 				
 			$data['title'] = "Language Forge";
-			
 			$this->_render_page("angular-app", $data);
 		}
 	}
