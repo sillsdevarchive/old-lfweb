@@ -1,6 +1,7 @@
 <?php
 namespace libraries\lfdictionary\commands;
 require_once(dirname(__FILE__) . '/../Config.php');
+use libraries\lfdictionary\common\LoggerFactory;
 class SaveCommentsCommand {
 
 	//if need to change follow definations, please change client side too.
@@ -29,7 +30,12 @@ class SaveCommentsCommand {
 	function __construct($fileName,$status,$isStatusReviewed,$isStatusTodo,$type,$parentGuid,$message,$datetime,$author, $isRoot) {
 		if (!file_exists($fileName))
 		{
-			throw new \Exception('ChorusNotes file is missing on server: ' . $fileName);
+			$xml = new DOMDocument();
+			$xml_notes = $xml->createElement("notes");
+			$xml_notes->setAttribute("version" , 0);
+			$xml->appendChild( $xml_notes );
+			$xml->save($fileName);
+			$this->_logger->logInfoMessage ('A new ChorusNotes file created: ' . $fileName);
 		}
 		$this->_fileName = $fileName;
 		$this->_status = $status;
