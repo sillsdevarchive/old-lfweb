@@ -68,6 +68,12 @@ angular.module('lf.services', ['jsonRpc'])
 			jsonRpc.call('project_listUsers', [projectId], callback);
 		};
 	}])
+	.service('activityService', ['jsonRpc', function(jsonRpc) {
+		jsonRpc.connect('/api/lf');
+		this.list_activity = function(offset, count, callback) {
+			jsonRpc.call('activity_list_dto', [offset, count], callback);
+		};
+	}])
 	.service('sessionService', function() {
 		this.currentUserId = function() {
 			return window.session.userId;

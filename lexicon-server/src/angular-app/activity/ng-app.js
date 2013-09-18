@@ -7,7 +7,7 @@ angular.module('activity',
 		 'ui.bootstrap',
 		 'activity.filters'
 		])
-	.controller('ActivityCtrl', ['$scope', 'activityPageService', 'linkService', 'sessionService', function($scope, activityService, linkService, sessionService) {
+	.controller('ActivityCtrl', ['$scope', 'activityService', 'linkService', 'sessionService', function($scope, activityService, linkService, sessionService) {
 		
 		$scope.decodeActivityList = function(items) {
 			for (var i =0; i < items.length; i++) {
