@@ -92,7 +92,7 @@ class ActivityCommands
 		$activity->addContent(ActivityModel::TEXT, $textModel->title);
 		return $activity->write();
 	}
-	
+		
 	/**
 	 * @param ProjectModel $projectModel
 	 * @param string $questionId
@@ -153,6 +153,21 @@ class ActivityCommands
 		$activity->addContent(ActivityModel::ANSWER, $answer->content);
 		$activity->addContent(ActivityModel::USER, $user->username);
 		$activity->addContent(ActivityModel::USER, $user2->username);
+		return $activity->write();
+	}
+	
+	/**
+	 * 
+	 * @param ProjectModel $projectModel
+	 * @param Entry $entry
+	 * @param Action $action
+	 * @return string activity id
+	 */
+	public static function writeEntry($projectModel, $entry, $action) {
+	
+		$activity = new ActivityModel($projectModel);
+		$activity->action = ActivityModel::ADD_ENTRY;
+		$activity->addContent(ActivityModel::ENTRY, $entry->getGuid());
 		return $activity->write();
 	}
 }

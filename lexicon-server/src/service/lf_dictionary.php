@@ -26,6 +26,7 @@ use models\rights\Domain;
 use models\ProjectModelFixer;
 use models\DepotProjectModel;
 use models\commands\ProjectCommands;
+use models\commands\ActivityCommands;
 
 error_reporting ( E_ALL | E_STRICT );
 
@@ -204,6 +205,8 @@ class LfDictionary {
 		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray ( $rawEntry );
 		$store = $this->getLexStore ();
 		$store->writeEntry ( $entryDto, $action, $this->_userModel->id, $this->_userModel->username );
+		
+		ActivityCommands::writeEntry($this->_projectModel, $entryDto, $action);
 		$resultDTO = new ResultDTO ( true );
 		return $resultDTO->encode ();
 	}
