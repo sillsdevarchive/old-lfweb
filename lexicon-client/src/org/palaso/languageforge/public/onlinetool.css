@@ -839,8 +839,8 @@ div-no-hide {
 	overflow: scroll-y;
 	position: relative;
 	width: 100%;
-	max-height: 590px;
-	height: 590px;
+	max-height: 490px;
+	height: 490px;
 	margin-top: 10px;
 }
 
@@ -1034,4 +1034,10 @@ div-no-hide {
 
 table th, table td {
 	border: 0px !important;
+}
+
+.bowser_edit_entry_display_panel
+{
+	border: none;
+	border-radius: 5px;
 }

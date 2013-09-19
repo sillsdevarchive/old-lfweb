@@ -7,12 +7,22 @@ import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
+import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
 import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -26,7 +36,7 @@ public class LexBrowseEditPresenter extends
 	 */
 	public interface IView {
 		EntryPresenter.IEntryView createDictionaryView(boolean userAccess);
-
+		Frame getEntryDisplayPanel();
 		void showMessage(String text, boolean success);
 	}
 
@@ -59,6 +69,7 @@ public class LexBrowseEditPresenter extends
 				LexiconEntryDto.createFromSettings(fieldSettings),
 				fieldSettings);
 		isNewEntry = true;
+		view.getEntryDisplayPanel().setVisible(false);
 	}
 
 	/**
@@ -121,6 +132,7 @@ public class LexBrowseEditPresenter extends
 			public void onSuccess(LexiconEntryDto result) {
 				// keep a copy for update check and setting timestamp
 				renderWord(result);
+				showWordOnDispalyPanel(result.getId());
 				eventBus.setUpdateButtonEnable(true);
 				boolean allowDelete=false;
 				if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_DELETE_OTHER)) {
@@ -133,6 +145,14 @@ public class LexBrowseEditPresenter extends
 		});
 	}
 
+	private void showWordOnDispalyPanel(String guid)
+	{
+		view.getEntryDisplayPanel().setVisible(true);
+		String url = "/../../gwtangular/entryblock/" + 
+				CurrentEnvironmentDto.getCurrentProject().getProjectId() +"/" + guid;
+		
+		view.getEntryDisplayPanel().setUrl(url);
+	}
 	/**
 	 * To create a call to json-rpc service to update an entry.
 	 * 

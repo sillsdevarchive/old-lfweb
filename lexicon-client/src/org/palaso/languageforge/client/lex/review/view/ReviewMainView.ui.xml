@@ -37,9 +37,10 @@
 						</div>
 					</div>
 				</g:HTMLPanel>
-				<!-- <g:Frame url="./../../app/sfchecks#/projects"></g:Frame> -->
+				<!-- <g:Frame url="./../../app/sfchecks#/projects"></g:Frame>-->
+				
 				<com:ConversationListControl width="auto"
-					height="370px" ui:field="conversationListControl" />
+					height="10px" ui:field="conversationListControl" />
 				<g:HTMLPanel width="100%">
 					<div class="lex-dc-row">
 						<div id="firefox-bug-fix">

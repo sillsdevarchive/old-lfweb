@@ -47,6 +47,7 @@ $route['api/(:any)'] = 'api/service/$1';
 $route['signup'] = 'signup/view';
 $route['app/(:any)'] = 'app/view/$1';
 $route['gwt/(:any)/(:any)'] = 'gwt/view/$1/$2';
+$route['gwtangular/(:any)/(:any)/(:any)'] = 'gwtangular/view/$1/$2/$3';
 $route['(:any)'] = "pages/view/$1";
 
 
