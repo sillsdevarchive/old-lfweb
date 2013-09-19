@@ -10,6 +10,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -39,6 +40,8 @@ public class LexBrowseEditView extends Composite implements
 	@UiField
 	SimplePanel feedback;
 	
+	@UiField
+	Frame entryDisplayPanel;
 	
 
 	@Inject
@@ -65,6 +68,11 @@ public class LexBrowseEditView extends Composite implements
 			feedback.addStyleName("feedbackError");
 		}
 		feedback.add(new Label(text));
+	}
+
+	@Override
+	public Frame getEntryDisplayPanel() {
+		return entryDisplayPanel;
 	}
 
 }

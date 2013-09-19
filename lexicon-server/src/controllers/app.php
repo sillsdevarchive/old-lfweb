@@ -9,7 +9,7 @@ class App extends Secure_base {
 			show_404 ();
 		} else {
 			$data = array ();
-			$data = prepareData ( $app, $data );
+			$data = $this->prepareData ( $app, $data );
 			$this->_render_page ( "angular-app", $data );
 		}
 	}
