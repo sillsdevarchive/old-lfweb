@@ -40,7 +40,7 @@
 				<!-- <g:Frame url="./../../app/sfchecks#/projects"></g:Frame>-->
 				
 				<com:ConversationListControl width="auto"
-					height="10px" ui:field="conversationListControl" />
+					height="370px" ui:field="conversationListControl" />
 				<g:HTMLPanel width="100%">
 					<div class="lex-dc-row">
 						<div id="firefox-bug-fix">
