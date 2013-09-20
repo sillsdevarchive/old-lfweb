@@ -13,7 +13,7 @@ class QuestionTemplateModelMongoMapper extends \models\mapper\MongoMapper
 	public static function instance() {
 		static $instance = null;
 		if (null === $instance) {
-			$instance = new QuestionTemplateModelMongoMapper(SF_DATABASE, 'questiontemplates');
+			$instance = new QuestionTemplateModelMongoMapper(LF_DATABASE, 'questiontemplates');
 		}
 		return $instance;
 	}

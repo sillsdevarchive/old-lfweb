@@ -44,6 +44,9 @@ public class LexBrowseEditView extends Composite implements
 	Frame entryDisplayPanel;
 	
 	@UiField
+	Frame commentsPanel;
+	
+	@UiField
 	FlowPanel bowserPanel;
 	@UiField
 	FlowPanel commentPanel;
@@ -84,6 +87,11 @@ public class LexBrowseEditView extends Composite implements
 	@Override
 	public TabLayoutPanel getTabPanel() {
 		return tabPanel;
+	}
+
+	@Override
+	public Frame getEntryCommentPanel() {
+		return commentsPanel;
 	}
 
 }

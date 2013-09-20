@@ -39,6 +39,8 @@ public class LexBrowseEditPresenter extends
 
 		Frame getEntryDisplayPanel();
 
+		Frame getEntryCommentPanel();
+		
 		public FlowPanel getBowserPanel();
 
 		public FlowPanel getCommentPanel();
@@ -208,6 +210,14 @@ public class LexBrowseEditPresenter extends
 	 * 
 	 */
 	private void renderWord(final LexiconEntryDto result) {
+		
+		final String projectId = CurrentEnvironmentDto.getCurrentProject()
+				.getProjectId();
+		final String entryGuid = result.getId();
+		String entryUrl = "/../../gwtangular/sfchecks#/project/" + projectId + "/" + entryGuid;
+		
+		view.getEntryCommentPanel().setUrl(entryUrl);
+		
 		boolean allowEdit = false;
 		if (PermissionManager.getPermission(
 				DomainPermissionType.DOMAIN_LEX_ENTRY,
@@ -221,11 +231,11 @@ public class LexBrowseEditPresenter extends
 			@Override
 			public void onClick(ClickEvent event) {
 				// set url to ifream first!
-				String projectId = CurrentEnvironmentDto.getCurrentProject()
-						.getProjectId();
-				String entryGuid = result.getId();
-				Window.alert("Comment: " + projectId + "/" + entryGuid + "/"
-						+ ((Button) event.getSource()).getTarget());
+				
+				String url = "/../../gwtangular/sfchecks#/project/" + projectId + "/" + entryGuid + "/"
+						+ ((Button) event.getSource()).getTarget();
+				
+				view.getEntryCommentPanel().setUrl(url);
 				
 				view.getTabPanel().selectTab(1);
 			}

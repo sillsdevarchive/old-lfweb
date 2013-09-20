@@ -10,7 +10,7 @@ class UserRelationModel extends \models\mapper\MapperModel
 	public static function mapper() {
 		static $instance = null;
 		if (null === $instance) {
-			$instance = new \models\mapper\MongoMapper(SF_DATABASE, 'userrelation');
+			$instance = new \models\mapper\MongoMapper(LF_DATABASE, 'userrelation');
 		}
 		return $instance;
 	}

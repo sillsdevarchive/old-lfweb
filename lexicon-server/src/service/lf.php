@@ -1,6 +1,7 @@
 <?php
 
 use libraries\lfdictionary\dto\ResultDTO;
+use models\UserModel;
 
 use models\dto\ProjectSettingsDto;
 use models\ProjectModel;
@@ -8,13 +9,14 @@ use models\dto\ActivityListDto;
 use models\commands\ActivityCommands;
 use models\AnswerModel;
 use models\QuestionModel;
-use models\UserModel;
+
 use libraries\palaso\CodeGuard;
 use libraries\palaso\JsonRpcServer;
 use models\commands\ProjectCommands;
 use models\commands\QuestionCommands;
 use models\commands\TextCommands;
 use models\commands\UserCommands;
+use models\commands\QuestionTemplateCommands;
 use models\mapper\Id;
 use models\mapper\JsonEncoder;
 use models\mapper\JsonDecoder;
@@ -24,6 +26,7 @@ require_once(APPPATH . 'config/lf_config.php');
 
 require_once(APPPATH . 'models/ProjectModel.php');
 require_once(APPPATH . 'models/QuestionModel.php');
+require_once(APPPATH . 'models/QuestionTemplateModel.php');
 require_once(APPPATH . 'models/TextModel.php');
 require_once(APPPATH . 'models/UserModel.php');
 require_once(APPPATH . 'models/LanguageModel.php');
