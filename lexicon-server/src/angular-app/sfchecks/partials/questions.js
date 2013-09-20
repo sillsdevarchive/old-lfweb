@@ -22,9 +22,9 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/app/sfchecks#/projects', label: 'My Projects'},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
+				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
 				]
 		);
 
@@ -47,7 +47,7 @@ angular.module(
 		});
 
 		// Listview Selection
-		$scope.newQuestionCollapsed = true;
+		$scope.newQuestionCollapsed = false;
 		$scope.selected = [];
 		$scope.updateSelection = function(event, item) {
 			var selectedIndex = $scope.selected.indexOf(item);
@@ -203,10 +203,10 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/app/sfchecks#/projects', label: 'My Projects'},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId + '/Settings', label: 'Settings'},
+				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId + '/Settings', label: 'Settings'},
 				]
 		);
 

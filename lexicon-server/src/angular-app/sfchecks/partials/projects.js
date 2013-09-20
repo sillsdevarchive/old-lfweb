@@ -13,7 +13,7 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/app/sfchecks#/projects', label: 'My Projects'},
+				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
 				]
 		);
 

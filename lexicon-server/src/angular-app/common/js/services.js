@@ -190,7 +190,7 @@ angular.module('lf.services', ['jsonRpc'])
 		};
 		
 		this.project = function(projectId) {
-			return '/gwt/project/' + projectId;
+			return '/app/sfchecks#/project/' + projectId;
 			
 		};
 		
