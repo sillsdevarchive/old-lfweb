@@ -233,4 +233,11 @@ public class EntryPresenter extends
 		}
 		return false;
 	}
+	
+	public void addCommentClickHandler(ClickHandler handler) {
+		wordPresenter.addCommentClickHandler(handler);
+		for (int i = 0; i < sensePresenters.size(); ++i) {
+			sensePresenters.get(i).addCommentClickHandler(handler);
+		}
+	}
 }

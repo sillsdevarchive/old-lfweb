@@ -12,6 +12,7 @@ import org.palaso.languageforge.client.lex.model.Example;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.MultiText;
 
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -104,5 +105,11 @@ public class ExamplePresenter extends
 		if (fieldSettings.value("Translation").getEnabled()) {
 			translationPresenter.updateModel();
 		}
+	}
+	
+
+	public void addCommentClickHandler(ClickHandler handler) {
+		examplePresenter.addCommentClickHandler(handler);
+		translationPresenter.addCommentClickHandler(handler);
 	}
 }

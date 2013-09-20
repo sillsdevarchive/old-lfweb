@@ -71,6 +71,15 @@ public class MultiTextPresenter extends
 	// isTextboxEditable = true;
 	// populateView();
 	// }
+	
+	public void addCommentClickHandler(ClickHandler handler) {
+		JsArrayString keys = model.keys();
+		for (int i = 0, n = keys.length(); i < n; ++i) {
+			String language = keys.get(i);
+			handlers.put(language, view.addCommentClickHandler(language, handler));
+		}
+	}
+	
 	public void addBlurHandler(BlurHandler handler) {
 		JsArrayString keys = model.keys();
 		for (int i = 0, n = keys.length(); i < n; ++i) {

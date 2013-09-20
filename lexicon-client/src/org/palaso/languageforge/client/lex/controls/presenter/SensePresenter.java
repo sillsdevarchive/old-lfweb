@@ -21,7 +21,6 @@ import org.palaso.languageforge.client.lex.model.LexiconPosition;
 import org.palaso.languageforge.client.lex.model.MultiText;
 import org.palaso.languageforge.client.lex.model.Sense;
 
-import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -304,4 +303,11 @@ public class SensePresenter extends
 		return model.getPOSList();
 	}
 
+	public void addCommentClickHandler(ClickHandler handler) {
+		meaningPresenter.addCommentClickHandler(handler);
+		view.getPosCommentClick().addClickHandler(handler);
+		for (int i = 0; i < examplePresenters.size(); ++i) {
+			examplePresenters.get(i).addCommentClickHandler(handler);
+		}
+	}
 }

@@ -27,7 +27,7 @@
 						Comments
 					</g:header>
 					<g:FlowPanel width="auto" height="auto" ui:field="commentPanel"
-						styleName="content-block content-block-tab">
+						styleName="content content-block-tab">
 							<g:Frame ui:field='commentsPanel' width="100%"
 								height="100px" styleName="bowser_edit_entry_display_panel">
 							</g:Frame>

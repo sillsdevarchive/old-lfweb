@@ -6,23 +6,18 @@ import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
+import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
-import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.http.client.URL;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -67,7 +62,7 @@ public class LexBrowseEditPresenter extends
 		eventBus.setUpdateButtonEnable(true);
 		entryPresenter = new EntryPresenter(view.createDictionaryView(false),
 				LexiconEntryDto.createFromSettings(fieldSettings),
-				fieldSettings);
+				fieldSettings, false, false,true, false);
 		isNewEntry = true;
 		view.getEntryDisplayPanel().setVisible(false);
 	}
@@ -214,6 +209,13 @@ public class LexBrowseEditPresenter extends
 		entryPresenter = new EntryPresenter(
 				view.createDictionaryView(allowEdit),
 				result, fieldSettings);
+		entryPresenter.addCommentClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert("Comment");
+			}
+		});
 	}
 	
 
