@@ -182,6 +182,7 @@ class LfDictionary {
 		}
 		$store = $this->getLexStore ();
 		$store->deleteEntry ( $guid, $mercurialSHA );
+		ActivityCommands::deleteEntry($this->_projectModel, $guid);
 		$resultDTO = new ResultDTO ( true );
 		return $resultDTO->encode ();
 	}
@@ -195,6 +196,7 @@ class LfDictionary {
 	 * @return ResultDTO
 	 */
 	function saveEntry($entry, $action) {
+		ConsoleLog.log("-------------------------------------------action ".$action);
 		$this->isReadyOrThrow ();
 		// Check that user has edit privileges on the project
 		if (! $this->_projectModel->hasRight ( $this->_userId, Domain::LEX_ENTRY + Operation::EDIT_OTHER )) {
@@ -205,7 +207,7 @@ class LfDictionary {
 		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray ( $rawEntry );
 		$store = $this->getLexStore ();
 		$store->writeEntry ( $entryDto, $action, $this->_userModel->id, $this->_userModel->username );
-		
+	
 		ActivityCommands::writeEntry($this->_projectModel, $entryDto, $action);
 		$resultDTO = new ResultDTO ( true );
 		return $resultDTO->encode ();

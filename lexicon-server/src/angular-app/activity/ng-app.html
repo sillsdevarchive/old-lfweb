@@ -151,6 +151,56 @@
 					</div>
 				</div> 
 				
+				<div ng-switch-when="add_entry-project" class="span12 activity-row">
+					<hr>
+					<div class="span1 activity-icon">
+					   <i class="icon-user" style="font-size:3em"></i>
+					</div>
+					<div class="span1 activity-date">
+					    {{item.date|relativetime}}
+					</div>
+					<div class="span8 activity-content">
+						<span><a href="{{item.userHref}}">{{item.userRef.username}}</a> entry <i class="icon-quote-left"></i>
+						 <!-- <a href="{{item.questionHref}}"> -->{{item.content.entry}}<!--</a> -->
+						 <i class="icon-quote-right"></i> added to project<a href="{{item.textHref}}">{{item.content.text}}</a>
+						 <a href="{{item.projectHref}}">{{item.content.project}}</a></span>
+						<p class="indented">{{item.content.answer}}</p>
+					</div>
+				</div> 
+				
+				<div ng-switch-when="update_entry-project" class="span12 activity-row">
+					<hr>
+					<div class="span1 activity-icon">
+					   <i class="icon-user" style="font-size:3em"></i>
+					</div>
+					<div class="span1 activity-date">
+					    {{item.date|relativetime}}
+					</div>
+					<div class="span8 activity-content">
+						<span><a href="{{item.userHref}}">{{item.userRef.username}}</a> entry <i class="icon-quote-left"></i>
+						 <!-- <a href="{{item.questionHref}}"> -->{{item.content.entry}}<!--</a> -->
+						 <i class="icon-quote-right"></i> updated in project<a href="{{item.textHref}}">{{item.content.text}}</a>
+						 <a href="{{item.projectHref}}">{{item.content.project}}</a></span>
+						<p class="indented">{{item.content.answer}}</p>
+					</div>
+				</div>  
+				
+				<div ng-switch-when="delete_entry-project" class="span12 activity-row">
+					<hr>
+					<div class="span1 activity-icon">
+					   <i class="icon-user" style="font-size:3em"></i>
+					</div>
+					<div class="span1 activity-date">
+					    {{item.date|relativetime}}
+					</div>
+					<div class="span8 activity-content">
+						<span><a href="{{item.userHref}}">{{item.userRef.username}}</a> entry <i class="icon-quote-left"></i>
+						 <!-- <a href="{{item.questionHref}}"> -->{{item.content.entry}}<!--</a> -->
+						 <i class="icon-quote-right"></i> deleted from project<a href="{{item.textHref}}">{{item.content.text}}</a>
+						 <a href="{{item.projectHref}}">{{item.content.project}}</a></span>
+						<p class="indented">{{item.content.answer}}</p>
+					</div>
+				</div> 
 				
 				<div class="span12 activity-row" ng-switch-default>
 					<hr>

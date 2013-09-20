@@ -45,6 +45,9 @@ class ActivityModel extends \models\mapper\MapperModel
 	const ADD_USER_TO_PROJECT = 'add_user_to_project';
 	const UNKNOWN = 'unknown';
 	const ADD_ENTRY = 'add_entry';
+	const UPDATE_ENTRY = 'update_entry';
+	const DELETE_ENTRY = 'delete_entry';
+	
 	
 	// content types for use with the addContent method
 	const PROJECT = 'project';

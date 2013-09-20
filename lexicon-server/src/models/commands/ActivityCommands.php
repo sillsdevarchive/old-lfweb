@@ -165,9 +165,31 @@ class ActivityCommands
 	 */
 	public static function writeEntry($projectModel, $entry, $action) {
 	
+		
 		$activity = new ActivityModel($projectModel);
-		$activity->action = ActivityModel::ADD_ENTRY;
+		if($action == 'update'){
+			$activity->action = ActivityModel::UPDATE_ENTRY;
+		} else {
+			$activity->action = ActivityModel::ADD_ENTRY;
+		}
+		
 		$activity->addContent(ActivityModel::ENTRY, $entry->getGuid());
+		return $activity->write();
+	}
+	
+	/**
+	 *
+	 * @param ProjectModel $projectModel
+	 * @param Guid $guid
+	 * @return string activity id
+	 */
+	public static function deleteEntry($projectModel, $guid) {
+	
+	
+		$activity = new ActivityModel($projectModel);
+		$activity->action = ActivityModel::DELETE_ENTRY;
+	
+		$activity->addContent(ActivityModel::ENTRY, $guid);
 		return $activity->write();
 	}
 }
