@@ -188,7 +188,7 @@ class QuestionModel extends \models\mapper\MapperModel
 	/**
 	 * @var IdReference - Id of the referring text
 	 */
-	public $textRef;
+	public $entryRef;
 	
 	/**
 	 * @var MapOf<AnswerModel>
@@ -207,11 +207,11 @@ class QuestionModel extends \models\mapper\MapperModel
 class QuestionListModel extends \models\mapper\MapperListModel
 {
 
-	public function __construct($projectModel, $textId)
+	public function __construct($projectModel, $entryRef)
 	{
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'textRef' => MongoMapper::mongoID($textId)),
+			array('title' => array('$regex' => ''), 'entryRef' => $entryRef),
 			array('title')
 		);
 	}
@@ -221,11 +221,11 @@ class QuestionListModel extends \models\mapper\MapperListModel
 class QuestionAnswersListModel extends \models\mapper\MapperListModel
 {
 
-	public function __construct($projectModel, $textId)
+	public function __construct($projectModel, $entryRef)
 	{
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'textRef' => MongoMapper::mongoID($textId)),
+			array('title' => array('$regex' => ''), 'entryRef' => $entryRef),
 			array('title', 'description', 'answers')
 		);
 	}
