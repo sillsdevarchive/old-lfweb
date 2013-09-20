@@ -29,7 +29,9 @@ public class MultiTextPresenter extends
 		HandlerRegistration addBlurHandler(String form, BlurHandler handler);
 
 		HandlerRegistration addCommentClickHandler(String form,
-				ClickHandler handler);
+				ClickHandler handler, String refId);
+		
+		void setCommentButtonRefId (String form, String refId);
 
 		void setTextBoxesEnabled(boolean enabled);
 
@@ -72,11 +74,11 @@ public class MultiTextPresenter extends
 	// populateView();
 	// }
 	
-	public void addCommentClickHandler(ClickHandler handler) {
+	public void addCommentClickHandler(ClickHandler handler, String refId) {
 		JsArrayString keys = model.keys();
 		for (int i = 0, n = keys.length(); i < n; ++i) {
 			String language = keys.get(i);
-			handlers.put(language, view.addCommentClickHandler(language, handler));
+			handlers.put(language, view.addCommentClickHandler(language, handler, refId));
 		}
 	}
 	

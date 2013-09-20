@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
 import org.palaso.languageforge.client.lex.controls.presenter.SensePresenter.ISenseView;
@@ -235,9 +236,9 @@ public class EntryPresenter extends
 	}
 	
 	public void addCommentClickHandler(ClickHandler handler) {
-		wordPresenter.addCommentClickHandler(handler);
+		wordPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.ENTRYLEXICALFORM);
 		for (int i = 0; i < sensePresenters.size(); ++i) {
-			sensePresenters.get(i).addCommentClickHandler(handler);
+			sensePresenters.get(i).addCommentClickHandler(handler,sensePresenters.get(i).getModel().getId());
 		}
 	}
 }

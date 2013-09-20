@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.palaso.languageforge.client.lex.common.ConsoleLog;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.controls.ExtendedComboBox;
 import org.palaso.languageforge.client.lex.controls.presenter.ExamplePresenter.IExampleView;
@@ -21,6 +22,7 @@ import org.palaso.languageforge.client.lex.model.LexiconPosition;
 import org.palaso.languageforge.client.lex.model.MultiText;
 import org.palaso.languageforge.client.lex.model.Sense;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -58,7 +60,7 @@ public class SensePresenter extends
 
 		String getSelectedPOS();
 		
-		HasClickHandlers getPosCommentClick();
+		Button getPosCommentClick();
 		
 		void setPosCommentVisible(boolean visible);
 		
@@ -303,9 +305,10 @@ public class SensePresenter extends
 		return model.getPOSList();
 	}
 
-	public void addCommentClickHandler(ClickHandler handler) {
-		meaningPresenter.addCommentClickHandler(handler);
+	public void addCommentClickHandler(ClickHandler handler, String refId) {
+		meaningPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.DEFINITION);
 		view.getPosCommentClick().addClickHandler(handler);
+		view.getPosCommentClick().setTarget(this.getModel().getId() + "+" +EntryFieldType.POS);
 		for (int i = 0; i < examplePresenters.size(); ++i) {
 			examplePresenters.get(i).addCommentClickHandler(handler);
 		}

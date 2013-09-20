@@ -7,6 +7,7 @@
 
 package org.palaso.languageforge.client.lex.controls.presenter;
 
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
 import org.palaso.languageforge.client.lex.model.Example;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
@@ -109,7 +110,7 @@ public class ExamplePresenter extends
 	
 
 	public void addCommentClickHandler(ClickHandler handler) {
-		examplePresenter.addCommentClickHandler(handler);
-		translationPresenter.addCommentClickHandler(handler);
+		examplePresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.EXAMPLESENTENCE);
+		translationPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.EXAMPLETRANSLATION);
 	}
 }

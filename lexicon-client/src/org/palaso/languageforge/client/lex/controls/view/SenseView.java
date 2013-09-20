@@ -147,7 +147,7 @@ public class SenseView extends Composite implements ISenseView {
 	}
 
 	@Override
-	public HasClickHandlers getPosCommentClick() {
+	public Button getPosCommentClick() {
 		return btnPosComment;
 	}
 

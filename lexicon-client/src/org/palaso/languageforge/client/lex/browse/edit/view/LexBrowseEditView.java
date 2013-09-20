@@ -36,10 +36,7 @@ public class LexBrowseEditView extends Composite implements
 
 	@UiField
 	SimplePanel buttonControl;
-	
-	@UiField
-	SimplePanel feedback;
-	
+		
 	@UiField
 	Frame entryDisplayPanel;
 	
@@ -57,17 +54,6 @@ public class LexBrowseEditView extends Composite implements
 		EntryView view = new EntryView();
 		panel.setWidget(view);
 		return view;
-	}
-
-	@Override
-	public void showMessage(String text, boolean success) {
-		feedback.clear();
-		if (success) {
-			feedback.setStyleName("feedbackSuccess");
-		} else {
-			feedback.addStyleName("feedbackError");
-		}
-		feedback.add(new Label(text));
 	}
 
 	@Override

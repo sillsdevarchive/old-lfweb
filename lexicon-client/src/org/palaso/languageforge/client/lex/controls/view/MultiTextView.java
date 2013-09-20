@@ -57,7 +57,8 @@ public class MultiTextView extends Composite implements
 
 	@Override
 	public HandlerRegistration addCommentClickHandler(String form,
-			ClickHandler handler) {
+			ClickHandler handler, String refId) {
+		setCommentButtonRefId(form, refId);
 		return commentsButtonsMap.get(form).addClickHandler(handler);
 	}
 
@@ -122,6 +123,11 @@ public class MultiTextView extends Composite implements
 		for (Button btn : commentsButtonsMap.values()) {
 			btn.setEnabled(enabled);
 		}
+	}
+
+	@Override
+	public void setCommentButtonRefId(String form, String refId) {
+		commentsButtonsMap.get(form).setTarget(refId + "+" + form);
 	}
 
 }
