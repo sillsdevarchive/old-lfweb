@@ -339,8 +339,45 @@ class Lf
 	public function question_list_dto($projectId, $textId) {
 		return \models\dto\QuestionListDto::encode($projectId, $textId, $this->_userId);
 	}
+	
+	public function answer_vote_up($projectId, $questionId, $answerId) {
+		return QuestionCommands::voteUp($this->_userId, $projectId, $questionId, $answerId);
+	}
+	
+	public function answer_vote_down($projectId, $questionId, $answerId) {
+		return QuestionCommands::voteDown($this->_userId, $projectId, $questionId, $answerId);
+	}
 
-	// ---------------- Activity Feed -----------------
+	//---------------------------------------------------------------
+	// QuestionTemplates API
+	//---------------------------------------------------------------
+
+	public function questionTemplate_update($params) {
+		$questionTemplate = new \models\QuestionTemplateModel();
+		JsonDecoder::decode($questionTemplate, $params);
+		$result = $questionTemplate->write();
+		return $result;
+	}
+
+	public function questionTemplate_read($id) {
+		$questionTemplate = new \models\QuestionTemplateModel($id);
+		return JsonEncoder::encode($questionTemplate);
+	}
+
+	public function questionTemplate_delete($questionTemplateIds) {
+		return QuestionTemplateCommands::deleteQuestionTemplates($questionTemplateIds);
+	}
+
+	public function questionTemplate_list() {
+		$list = new \models\QuestionTemplateListModel();
+		$list->read();
+		return $list;
+	}
+	
+	//---------------------------------------------------------------
+	// Activity Log
+	//---------------------------------------------------------------
+
 	public function activity_list_dto() {
 		return \models\dto\ActivityListDto::getActivityForUser($this->_userId);
 	}

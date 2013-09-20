@@ -5,7 +5,7 @@
 		<g:FlowPanel width="100%" height="100%">
 			<g:TabLayoutPanel width="100%" height="100%"
 				ui:field="tabPanel" barUnit="PX" barHeight="40">
-				<g:tab>
+				<g:tab ui:field="bowserTab">
 					<g:header>
 						Bowser
 					</g:header>
@@ -21,7 +21,7 @@
 							</g:ScrollPanel>
 						</g:FlowPanel>
 				</g:tab>
-				<g:tab>
+				<g:tab ui:field="commentTab">
 					<g:header>
 						Comments
 					</g:header>

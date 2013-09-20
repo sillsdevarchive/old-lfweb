@@ -10,9 +10,12 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TabBar;
+import com.google.gwt.user.client.ui.TabBar.Tab;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -40,7 +43,14 @@ public class LexBrowseEditView extends Composite implements
 	@UiField
 	Frame entryDisplayPanel;
 	
+	@UiField
+	FlowPanel bowserPanel;
+	@UiField
+	FlowPanel commentPanel;
+	@UiField
+	TabLayoutPanel tabPanel;
 
+	
 	@Inject
 	public LexBrowseEditView(ButtonBarControlView buttonControlView) {
 		initWidget(binder.createAndBindUi(this));
@@ -59,6 +69,21 @@ public class LexBrowseEditView extends Composite implements
 	@Override
 	public Frame getEntryDisplayPanel() {
 		return entryDisplayPanel;
+	}
+
+	@Override
+	public FlowPanel getBowserPanel() {
+		return bowserPanel;
+	}
+
+	@Override
+	public FlowPanel getCommentPanel() {
+		return commentPanel;
+	}
+
+	@Override
+	public TabLayoutPanel getTabPanel() {
+		return tabPanel;
 	}
 
 }

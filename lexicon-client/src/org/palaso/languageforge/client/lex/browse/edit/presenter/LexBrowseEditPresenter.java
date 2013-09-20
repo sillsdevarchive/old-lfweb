@@ -18,7 +18,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.TabBar;
+import com.google.gwt.user.client.ui.TabBar.Tab;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -35,6 +39,12 @@ public class LexBrowseEditPresenter extends
 
 		Frame getEntryDisplayPanel();
 
+		public FlowPanel getBowserPanel();
+
+		public FlowPanel getCommentPanel();
+
+		public TabLayoutPanel getTabPanel();
+		
 	}
 
 	@Inject
@@ -214,10 +224,10 @@ public class LexBrowseEditPresenter extends
 				String projectId = CurrentEnvironmentDto.getCurrentProject()
 						.getProjectId();
 				String entryGuid = result.getId();
-				String entryPartGuid = "";
-				String entryPartLanguageGuid = "";
 				Window.alert("Comment: " + projectId + "/" + entryGuid + "/"
 						+ ((Button) event.getSource()).getTarget());
+				
+				view.getTabPanel().selectTab(1);
 			}
 		});
 	}
