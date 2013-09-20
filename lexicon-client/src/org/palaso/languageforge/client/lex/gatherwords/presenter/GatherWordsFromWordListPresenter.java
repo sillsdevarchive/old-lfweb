@@ -206,14 +206,14 @@ public class GatherWordsFromWordListPresenter
 			newWordEntryPresenter = new EntryPresenter(view.getDictEditView(),
 					recentlyAddedLexiconEntry.get(currentLexiconEntryDto
 							.getId()),
-					FieldSettings.fromWindowForrGatherWordFromList(),true,true,false);
+					FieldSettings.fromWindowForrGatherWordFromList(),true,true,false, false);
 			newWordEntryPresenter.getWordPresenter().setEnabled(false);
 		} else {
 			view.setAddWordBtnEnabled(true);
 			newWordEntryPresenter = new EntryPresenter(view.getDictEditView(),
 					LexiconEntryDto.createFromSettings(FieldSettings
 							.fromWindowForrGatherWordFromList()),
-					FieldSettings.fromWindowForrGatherWordFromList(),true,true,false);
+					FieldSettings.fromWindowForrGatherWordFromList(),true,true,false, false);
 			newWordEntryPresenter.getWordPresenter().setEnabled(true);
 		}
 	}

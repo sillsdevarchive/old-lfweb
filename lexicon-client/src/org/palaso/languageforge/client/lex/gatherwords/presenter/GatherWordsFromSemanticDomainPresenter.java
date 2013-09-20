@@ -265,7 +265,7 @@ public class GatherWordsFromSemanticDomainPresenter
 			newWordEntryPresenter = new EntryPresenter(view.getDictEditView(),
 					entry,
 					FieldSettings.fromWindowForrGatherWordFromSemanticDomain(),
-					true, true, false);
+					true, true, false, false);
 			view.setAddWordBtnEnabled(true);
 		}
 		setNavigationButtonStatus();

@@ -21,6 +21,7 @@ import org.palaso.languageforge.client.lex.model.LexiconPosition;
 import org.palaso.languageforge.client.lex.model.MultiText;
 import org.palaso.languageforge.client.lex.model.Sense;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,6 +38,7 @@ public class SensePresenter extends
 	private ArrayList<ExamplePresenter> examplePresenters = new ArrayList<ExamplePresenter>();
 	private boolean singleNewMeaning = false;
 	private boolean singleNewExample = false;
+	private boolean showCommentButton = true;
 	private FieldSettings fieldSettings = FieldSettings.fromWindow();
 
 	/**
@@ -56,7 +58,11 @@ public class SensePresenter extends
 		IMultiTextView getMeaningMultiText();
 
 		String getSelectedPOS();
-
+		
+		HasClickHandlers getPosCommentClick();
+		
+		void setPosCommentVisible(boolean visible);
+		
 		Label getPosLabel();
 
 		Widget getWidget(); // Exposing a Widget to be used by a View not a
@@ -87,10 +93,11 @@ public class SensePresenter extends
 	 */
 	public SensePresenter(ISenseView view, Sense model,
 			FieldSettings fieldSettings, boolean isSingleNewMeaning,
-			boolean isSingleNewExample) {
+			boolean isSingleNewExample, boolean showCommentBtn) {
 		super(view, model);
 		singleNewMeaning = isSingleNewMeaning;
 		singleNewExample = isSingleNewExample;
+		showCommentButton = showCommentBtn;
 		view.setAddNewButtonVisible(false);
 		this.fieldSettings = fieldSettings;
 		MultiText meaningMultiText = MultiText.createFromSettings(fieldSettings
@@ -109,7 +116,7 @@ public class SensePresenter extends
 
 		this.meaningPresenter = new MultiTextPresenter(
 				view.getMeaningMultiText(), model.getDefinition(),
-				meaningLabelMultiText);
+				meaningLabelMultiText, showCommentButton);
 
 		meaningPresenter.setEnabled(!fieldSettings.value("Definition")
 				.isReadonlyField());
@@ -210,7 +217,7 @@ public class SensePresenter extends
 			String exampleLabel, String translationLabel) {
 		final ExamplePresenter presenter = new ExamplePresenter(
 				view.createExampleView(), example, fieldSettings,
-				singleNewExample);
+				singleNewExample, showCommentButton);
 		examplePresenters.add(presenter);
 		view.addExampleAndTranslation(exampleLabel, translationLabel,
 				presenter.getView());
@@ -247,7 +254,7 @@ public class SensePresenter extends
 	private void addPartofSpeech(String label, JsArray<LexiconPosition> list,
 			String value, boolean editable) {
 		ExtendedComboBox partOfSpeechComboBox = view.getPartOfSpeechListBox();
-
+		view.setPosCommentVisible(showCommentButton);
 		if (list == null) {
 			return;
 		}

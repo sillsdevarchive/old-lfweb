@@ -9,21 +9,27 @@ import org.palaso.languageforge.client.lex.model.MultiText;
 
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 
-public class MultiTextPresenter extends ModelPairBase<MultiTextPresenter.IMultiTextView, MultiText> {
+public class MultiTextPresenter extends
+		ModelPairBase<MultiTextPresenter.IMultiTextView, MultiText> {
 
 	MultiText labels = null;
 
 	public interface IMultiTextView {
-		void addNewTextPanel(String form, String value, String label, boolean editable);
+		void addNewTextPanel(String form, String value, String label,
+				boolean editable, boolean showCommentBtn);
 
 		Widget getWidget();
 
 		String getText(String language);
 
 		HandlerRegistration addBlurHandler(String form, BlurHandler handler);
+
+		HandlerRegistration addCommentClickHandler(String form,
+				ClickHandler handler);
 
 		void setTextBoxesEnabled(boolean enabled);
 
@@ -33,18 +39,23 @@ public class MultiTextPresenter extends ModelPairBase<MultiTextPresenter.IMultiT
 
 	HashMap<String, HandlerRegistration> handlers = new HashMap<String, HandlerRegistration>();
 	protected boolean isTextboxEditable = true;
+	protected boolean showCommentButton = true;
 
-	public MultiTextPresenter(IMultiTextView view, MultiText model, MultiText labels, boolean editable) {
+	public MultiTextPresenter(IMultiTextView view, MultiText model,
+			MultiText labels, boolean editable, boolean showCommentBtn) {
 		super(view, model);
 		this.labels = labels;
 		isTextboxEditable = editable;
+		showCommentButton = showCommentBtn;
 		populateView();
 	}
 
-	public MultiTextPresenter(IMultiTextView view, MultiText model, MultiText labels) {
+	public MultiTextPresenter(IMultiTextView view, MultiText model,
+			MultiText labels, boolean showCommentBtn) {
 		super(view, model);
 		this.labels = labels;
 		isTextboxEditable = true;
+		showCommentButton = showCommentBtn;
 		populateView();
 	}
 
@@ -92,17 +103,23 @@ public class MultiTextPresenter extends ModelPairBase<MultiTextPresenter.IMultiT
 	}
 
 	private void addTextRow(String language, String value) {
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
+		if (PermissionManager.getPermission(
+				DomainPermissionType.DOMAIN_LEX_ENTRY,
+				OperationPermissionType.CAN_EDIT_OTHER)) {
 			if (labels != null && labels.value(language) != null) {
-				view.addNewTextPanel(language, value, labels.value(language), isTextboxEditable);
+				view.addNewTextPanel(language, value, labels.value(language),
+						isTextboxEditable, showCommentButton);
 			} else {
-				view.addNewTextPanel(language, value, language, isTextboxEditable);
+				view.addNewTextPanel(language, value, language,
+						isTextboxEditable, showCommentButton);
 			}
 		} else {
 			if (labels != null && labels.value(language) != null) {
-				view.addNewTextPanel(language, value, labels.value(language), false);
+				view.addNewTextPanel(language, value, labels.value(language),
+						false, showCommentButton);
 			} else {
-				view.addNewTextPanel(language, value, language, false);
+				view.addNewTextPanel(language, value, language, false,
+						showCommentButton);
 			}
 		}
 	}

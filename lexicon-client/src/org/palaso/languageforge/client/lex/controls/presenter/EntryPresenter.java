@@ -29,6 +29,7 @@ public class EntryPresenter extends
 	private boolean singleNewMeaning = false;
 	private boolean singleNewExample = false;
 	private boolean wordEndPaddingCell = true;
+	private boolean showCommentButton = true;
 	private FieldSettings fieldSettings = FieldSettings.fromWindow();
 	private MultiTextPresenter wordPresenter;
 
@@ -63,7 +64,7 @@ public class EntryPresenter extends
 	 */
 	public EntryPresenter(IEntryView view, LexiconEntryDto model,
 			FieldSettings fieldSettings) {
-		this(view, model, fieldSettings, false, false,true);
+		this(view, model, fieldSettings, false, false,true, true);
 	}
 
 	/**
@@ -72,13 +73,14 @@ public class EntryPresenter extends
 	 */
 	public EntryPresenter(IEntryView view, LexiconEntryDto model,
 			FieldSettings fieldSettings, boolean isSingleNewMeaning,
-			boolean isSingleNewExample, boolean addWordEndingSpaceCell) {
+			boolean isSingleNewExample, boolean addWordEndingSpaceCell, boolean showCommentBtn) {
 		super(view, model);
 		view.setAddNewButtonVisible(false);
 		this.fieldSettings = fieldSettings;
 		singleNewMeaning = isSingleNewMeaning;
 		singleNewExample = isSingleNewExample;
 		wordEndPaddingCell = addWordEndingSpaceCell;
+		showCommentButton = showCommentBtn;
 		addWord();
 		// Senses
 		if (fieldSettings.value("Definition").getEnabled()) {
@@ -125,7 +127,7 @@ public class EntryPresenter extends
 						.getAbbreviations().get(i));
 			}
 			wordPresenter = new MultiTextPresenter(view.createMultiTextView(),
-					wordMultiText, labelMultiText);
+					wordMultiText, labelMultiText, showCommentButton);
 
 			view.addEntryMultiText(fieldSettings.value("Word").getLabel(),
 					wordPresenter.getView(),wordEndPaddingCell);
@@ -184,7 +186,7 @@ public class EntryPresenter extends
 	private void createSensePresenterInView(Sense sense, String label) {
 		final SensePresenter presenter = new SensePresenter(
 				view.createSenseView(), sense, this.fieldSettings,
-				singleNewMeaning, singleNewExample);
+				singleNewMeaning, singleNewExample, showCommentButton);
 		sensePresenters.add(presenter);
 		presenter.view.getMeaningLabel().setText(label);
 		view.addSense(presenter.getView());

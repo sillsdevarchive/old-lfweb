@@ -54,18 +54,14 @@ public class ExamplePresenter extends
 	 * @param isSingleNewExample
 	 * 
 	 */
-	public ExamplePresenter(IExampleView view, Example model, FieldSettings fieldSettings, boolean isSingleNewExample) {
-		this(
-			view, 
-			model, 
-			new MultiTextPresenter(
-				view.getExampleMultiText(),
+	public ExamplePresenter(IExampleView view, Example model,
+			FieldSettings fieldSettings, boolean isSingleNewExample,
+			boolean showCommentBtn) {
+		this(view, model, new MultiTextPresenter(view.getExampleMultiText(),
 				model.getExample(),
-				MultiText.createLabelFromSettings(fieldSettings.value("Translation"))
-			),
-			fieldSettings,
-			isSingleNewExample
-		);
+				MultiText.createLabelFromSettings(fieldSettings
+						.value("Translation")), showCommentBtn), fieldSettings,
+				isSingleNewExample, showCommentBtn);
 	}
 
 	/**
@@ -75,7 +71,7 @@ public class ExamplePresenter extends
 	 */
 	public ExamplePresenter(IExampleView view, Example model,
 			MultiTextPresenter examplePresenter, FieldSettings fieldSettings,
-			boolean isSingleNewExample) {
+			boolean isSingleNewExample, boolean showCommentBtn) {
 		super(view, model);
 		singleNewExample = isSingleNewExample;
 		this.fieldSettings = fieldSettings;
@@ -84,14 +80,15 @@ public class ExamplePresenter extends
 			translationPresenter = new MultiTextPresenter(
 					view.getTranslationMultiText(), model.getTranslation(),
 					MultiText.createLabelFromSettings(this.fieldSettings
-							.value("Translation")));
-			translationPresenter.setEnabled(!fieldSettings.value("Translation").isReadonlyField());
+							.value("Translation")), showCommentBtn);
+			translationPresenter.setEnabled(!fieldSettings.value("Translation")
+					.isReadonlyField());
 		}
 		view.setRemoveButtonVisible(!singleNewExample);
 
-		examplePresenter.setEnabled(!fieldSettings.value("Example").isReadonlyField());
-		
-		
+		examplePresenter.setEnabled(!fieldSettings.value("Example")
+				.isReadonlyField());
+
 	}
 
 	public HasClickHandlers getRemoveButtonClickHandlers() {

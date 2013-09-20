@@ -45,6 +45,9 @@ public class SenseView extends Composite implements ISenseView {
 	Anchor addMoreExampleLink;
 	@UiField
 	Button btnRemove;
+	
+	@UiField
+	Button btnPosComment;
 
 	public SenseView() {
 		this(new MultiTextView());
@@ -141,5 +144,15 @@ public class SenseView extends Composite implements ISenseView {
 	@Override
 	public void setPartOfSpeechPanelVisible(boolean visible) {
 		partOfSpeechHtmlPanel.setVisible(visible);
+	}
+
+	@Override
+	public HasClickHandlers getPosCommentClick() {
+		return btnPosComment;
+	}
+
+	@Override
+	public void setPosCommentVisible(boolean visible) {
+		btnPosComment.setVisible(visible);
 	}
 }
