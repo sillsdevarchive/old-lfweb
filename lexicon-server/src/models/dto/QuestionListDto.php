@@ -26,14 +26,19 @@ class QuestionListDto
 		$data = array();
 		$data['rights'] = RightsHelper::encode($userModel, $projectModel);
 		$data['count'] = $questionList->count;
+		$data['projectlanguagecode'] = $projectModel->languageCode;
 		$data['entries'] = array();
 		$data['project'] = array(
 				'name' => $projectModel->projectname,
 				'id' => $projectId);
-		$textModel = new TextModel($projectModel, $entryGuid);
+		$entryDto = new EntryDto();
+		$entry =  $entryDto->encode($projectId, $entryGuid);
+		$data['entry'] = $entry;
+		
 		$data['text'] = array(
-				'title' => $textModel->title,
+				'title' =>  $entry["entry"][$projectModel->languageCode],
 				'id' => $entryGuid);
+		
 		foreach ($questionList->entries as $questionData) {
 			// Just want answer count, not whole list
 			$questionData['answerCount'] = count($questionData['answers']);

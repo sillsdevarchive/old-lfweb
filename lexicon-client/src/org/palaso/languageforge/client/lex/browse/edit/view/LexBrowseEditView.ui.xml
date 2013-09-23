@@ -7,7 +7,7 @@
 				ui:field="tabPanel" barUnit="PX" barHeight="40">
 				<g:tab ui:field="bowserTab">
 					<g:header>
-						Bowser
+						Browse
 					</g:header>
 						<g:FlowPanel width="auto" height="auto" ui:field="bowserPanel"
 							styleName="content content-block-tab content_inner">

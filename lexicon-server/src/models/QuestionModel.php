@@ -36,7 +36,7 @@ class QuestionModel extends \models\mapper\MapperModel
 		$this->workflowState = "open"; // default workflow state
 		$this->dateCreated = new \DateTime();
 		$this->dateEdited = new \DateTime();
-		$this->textRef = new IdReference();
+		$this->entryRef = "";
 		$this->answers = new MapOf(
 			function() {
 				return new AnswerModel();

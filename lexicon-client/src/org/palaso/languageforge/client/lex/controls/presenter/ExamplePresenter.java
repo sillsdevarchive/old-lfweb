@@ -18,8 +18,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ExamplePresenter extends
-		ModelPairBase<ExamplePresenter.IExampleView, Example> {
+public class ExamplePresenter extends ModelPairBase<ExamplePresenter.IExampleView, Example> {
 
 	private MultiTextPresenter examplePresenter;
 	private MultiTextPresenter translationPresenter;
@@ -56,13 +55,10 @@ public class ExamplePresenter extends
 	 * @param isSingleNewExample
 	 * 
 	 */
-	public ExamplePresenter(IExampleView view, Example model,
-			FieldSettings fieldSettings, boolean isSingleNewExample,
+	public ExamplePresenter(IExampleView view, Example model, FieldSettings fieldSettings, boolean isSingleNewExample,
 			boolean showCommentBtn) {
-		this(view, model, new MultiTextPresenter(view.getExampleMultiText(),
-				model.getExample(),
-				MultiText.createLabelFromSettings(fieldSettings
-						.value("Translation")), showCommentBtn), fieldSettings,
+		this(view, model, new MultiTextPresenter(view.getExampleMultiText(), model.getExample(),
+				MultiText.createLabelFromSettings(fieldSettings.value("Translation")), showCommentBtn), fieldSettings,
 				isSingleNewExample, showCommentBtn);
 	}
 
@@ -71,25 +67,20 @@ public class ExamplePresenter extends
 	 * as arguments
 	 * 
 	 */
-	public ExamplePresenter(IExampleView view, Example model,
-			MultiTextPresenter examplePresenter, FieldSettings fieldSettings,
-			boolean isSingleNewExample, boolean showCommentBtn) {
+	public ExamplePresenter(IExampleView view, Example model, MultiTextPresenter examplePresenter,
+			FieldSettings fieldSettings, boolean isSingleNewExample, boolean showCommentBtn) {
 		super(view, model);
 		singleNewExample = isSingleNewExample;
 		this.fieldSettings = fieldSettings;
 		this.examplePresenter = examplePresenter;
 		if (this.fieldSettings.value("Translation").getEnabled()) {
-			translationPresenter = new MultiTextPresenter(
-					view.getTranslationMultiText(), model.getTranslation(),
-					MultiText.createLabelFromSettings(this.fieldSettings
-							.value("Translation")), showCommentBtn);
-			translationPresenter.setEnabled(!fieldSettings.value("Translation")
-					.isReadonlyField());
+			translationPresenter = new MultiTextPresenter(view.getTranslationMultiText(), model.getTranslation(),
+					MultiText.createLabelFromSettings(this.fieldSettings.value("Translation")), showCommentBtn);
+			translationPresenter.setEnabled(!fieldSettings.value("Translation").isReadonlyField());
 		}
 		view.setRemoveButtonVisible(!singleNewExample);
 
-		examplePresenter.setEnabled(!fieldSettings.value("Example")
-				.isReadonlyField());
+		examplePresenter.setEnabled(!fieldSettings.value("Example").isReadonlyField());
 
 	}
 
@@ -107,10 +98,13 @@ public class ExamplePresenter extends
 			translationPresenter.updateModel();
 		}
 	}
-	
 
 	public void addCommentClickHandler(ClickHandler handler) {
-		examplePresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.EXAMPLESENTENCE);
-		translationPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.EXAMPLETRANSLATION);
+		if (this.getModel() != null) {
+			examplePresenter.addCommentClickHandler(handler, this.getModel().getId() + "+"
+					+ EntryFieldType.EXAMPLESENTENCE);
+			translationPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+"
+					+ EntryFieldType.EXAMPLETRANSLATION);
+		}
 	}
 }

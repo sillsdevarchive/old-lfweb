@@ -112,7 +112,7 @@ angular.module(
 			console.log("addQuestion()");
 			var model = {};
 			model.id = '';
-			model.textRef = textId;
+			model.entryRef = textId;
 			model.title = $scope.questionTitle;
 			model.description = $scope.questionDescription;
 			questionsService.update(projectId, model, function(result) {

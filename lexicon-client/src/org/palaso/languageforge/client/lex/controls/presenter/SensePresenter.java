@@ -32,8 +32,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SensePresenter extends
-		ModelPairBase<SensePresenter.ISenseView, Sense> {
+public class SensePresenter extends ModelPairBase<SensePresenter.ISenseView, Sense> {
 
 	private MultiTextPresenter meaningPresenter;
 	private ArrayList<ExamplePresenter> examplePresenters = new ArrayList<ExamplePresenter>();
@@ -47,8 +46,7 @@ public class SensePresenter extends
 	 * in view class.
 	 */
 	public interface ISenseView {
-		void addExampleAndTranslation(String exampleLabel,
-				String translatioLabel, IExampleView view);
+		void addExampleAndTranslation(String exampleLabel, String translatioLabel, IExampleView view);
 
 		void removeExampleAndTranslation(IExampleView view);
 
@@ -59,11 +57,11 @@ public class SensePresenter extends
 		IMultiTextView getMeaningMultiText();
 
 		String getSelectedPOS();
-		
+
 		Button getPosCommentClick();
-		
+
 		void setPosCommentVisible(boolean visible);
-		
+
 		Label getPosLabel();
 
 		Widget getWidget(); // Exposing a Widget to be used by a View not a
@@ -92,8 +90,7 @@ public class SensePresenter extends
 	 * arguments
 	 * 
 	 */
-	public SensePresenter(ISenseView view, Sense model,
-			FieldSettings fieldSettings, boolean isSingleNewMeaning,
+	public SensePresenter(ISenseView view, Sense model, FieldSettings fieldSettings, boolean isSingleNewMeaning,
 			boolean isSingleNewExample, boolean showCommentBtn) {
 		super(view, model);
 		singleNewMeaning = isSingleNewMeaning;
@@ -101,26 +98,20 @@ public class SensePresenter extends
 		showCommentButton = showCommentBtn;
 		view.setAddNewButtonVisible(false);
 		this.fieldSettings = fieldSettings;
-		MultiText meaningMultiText = MultiText.createFromSettings(fieldSettings
-				.value("Definition"));
+		MultiText meaningMultiText = MultiText.createFromSettings(fieldSettings.value("Definition"));
 
-		MultiText meaningLabelMultiText = MultiText
-				.createFromSettings(fieldSettings.value("Definition"));
+		MultiText meaningLabelMultiText = MultiText.createFromSettings(fieldSettings.value("Definition"));
 
 		JsArrayString keys = meaningMultiText.keys();
 		for (int j = 0, k = keys.length(); j < k; ++j) {
 			String language = keys.get(j);
-			meaningLabelMultiText
-					.setValue(language, fieldSettings.value("Definition")
-							.getAbbreviations().get(j));
+			meaningLabelMultiText.setValue(language, fieldSettings.value("Definition").getAbbreviations().get(j));
 		}
 
-		this.meaningPresenter = new MultiTextPresenter(
-				view.getMeaningMultiText(), model.getDefinition(),
+		this.meaningPresenter = new MultiTextPresenter(view.getMeaningMultiText(), model.getDefinition(),
 				meaningLabelMultiText, showCommentButton);
 
-		meaningPresenter.setEnabled(!fieldSettings.value("Definition")
-				.isReadonlyField());
+		meaningPresenter.setEnabled(!fieldSettings.value("Definition").isReadonlyField());
 
 		// Part of speech
 		JsArray<LexiconPosition> list = getPOSList();
@@ -130,7 +121,8 @@ public class SensePresenter extends
 			ConsoleLog.log("POS->Visible: True");
 			view.setPartOfSpeechPanelVisible(true);
 			boolean isPartOsSpeechEnabled = true;
-			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY,
+					OperationPermissionType.CAN_EDIT_OTHER)) {
 				isPartOsSpeechEnabled = true;
 			} else {
 				isPartOsSpeechEnabled = false;
@@ -138,30 +130,27 @@ public class SensePresenter extends
 			if (fieldSettings.value("POS").isReadonlyField()) {
 				isPartOsSpeechEnabled = false;
 			}
-			addPartofSpeech(fieldSettings.value("POS").getLabel(), list,
-					model.getPOS(), isPartOsSpeechEnabled);
+			addPartofSpeech(fieldSettings.value("POS").getLabel(), list, model.getPOS(), isPartOsSpeechEnabled);
 		} else {
 			view.setPartOfSpeechPanelVisible(false);
 		}
 		ConsoleLog.log("Example->Enabled: " + fieldSettings.value("Example").getEnabled());
 		if (fieldSettings.value("Example").getEnabled()) {
 			for (int i = 0, n = model.getExampleCount(); i < n; ++i) {
-				createExamplePresenterInView(model.getExample(i),
-						exampleLabel(examplePresenters.size()), fieldSettings
-								.value("Translation").getLabel());
+				createExamplePresenterInView(model.getExample(i), exampleLabel(examplePresenters.size()), fieldSettings
+						.value("Translation").getLabel());
 			}
 		}
 
 		if (fieldSettings.value("NewExample").getEnabled()) {
-			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
+			if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY,
+					OperationPermissionType.CAN_EDIT_OTHER)) {
 				if (!singleNewMeaning) {
 					showNewExampleBlock();
 				} else {
-					Example newExample = Example
-							.createFromSettings(fieldSettings);
+					Example newExample = Example.createFromSettings(fieldSettings);
 					this.getModel().addExample(newExample);
-					createExamplePresenterInView(newExample,
-							fieldSettings.value("NewExample").getLabel(),
+					createExamplePresenterInView(newExample, fieldSettings.value("NewExample").getLabel(),
 							fieldSettings.value("Translation").getLabel());
 				}
 			}
@@ -182,25 +171,21 @@ public class SensePresenter extends
 		// addNewExample(navPresenter);
 		// Add new example event
 		final SensePresenter sensePresenter = this;
-		view.getAddNewExampleClickHandlers().addClickHandler(
-				new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						updateExampleLabelText();
-						Example newExample = Example
-								.createFromSettings(fieldSettings);
-						sensePresenter.getModel().addExample(newExample);
-						createExamplePresenterInView(newExample, fieldSettings
-								.value("NewExample").getLabel(), fieldSettings
-								.value("Translation").getLabel());
-					}
-				});
+		view.getAddNewExampleClickHandlers().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				updateExampleLabelText();
+				Example newExample = Example.createFromSettings(fieldSettings);
+				sensePresenter.getModel().addExample(newExample);
+				createExamplePresenterInView(newExample, fieldSettings.value("NewExample").getLabel(), fieldSettings
+						.value("Translation").getLabel());
+			}
+		});
 	}
 
 	private void updateExampleLabelText() {
 		for (ExamplePresenter examplePresenter : examplePresenters) {
-			examplePresenter.view.getExampleLabel().setText(
-					exampleLabel(examplePresenters.indexOf(examplePresenter)));
+			examplePresenter.view.getExampleLabel().setText(exampleLabel(examplePresenters.indexOf(examplePresenter)));
 		}
 	}
 
@@ -214,28 +199,23 @@ public class SensePresenter extends
 		return fieldSettings.value("Example").getLabel() + " " + (i + 1);
 	}
 
-	private void createExamplePresenterInView(Example example,
-			String exampleLabel, String translationLabel) {
-		final ExamplePresenter presenter = new ExamplePresenter(
-				view.createExampleView(), example, fieldSettings,
+	private void createExamplePresenterInView(Example example, String exampleLabel, String translationLabel) {
+		final ExamplePresenter presenter = new ExamplePresenter(view.createExampleView(), example, fieldSettings,
 				singleNewExample, showCommentButton);
 		examplePresenters.add(presenter);
-		view.addExampleAndTranslation(exampleLabel, translationLabel,
-				presenter.getView());
+		view.addExampleAndTranslation(exampleLabel, translationLabel, presenter.getView());
 		final SensePresenter sensePresenter = this;
-		presenter.getView().setTranslationPanelVisible(
-				fieldSettings.value("Translation").getEnabled());
-		presenter.getRemoveButtonClickHandlers().addClickHandler(
-				new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						examplePresenters.remove(presenter);
-						sensePresenter.model.removeExample(presenter.getModel());
-						view.removeExampleAndTranslation(presenter.getView());
+		presenter.getView().setTranslationPanelVisible(fieldSettings.value("Translation").getEnabled());
+		presenter.getRemoveButtonClickHandlers().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				examplePresenters.remove(presenter);
+				sensePresenter.model.removeExample(presenter.getModel());
+				view.removeExampleAndTranslation(presenter.getView());
 
-						updateExampleLabelText();
-					}
-				});
+				updateExampleLabelText();
+			}
+		});
 	}
 
 	/**
@@ -252,8 +232,7 @@ public class SensePresenter extends
 		}
 	}
 
-	private void addPartofSpeech(String label, JsArray<LexiconPosition> list,
-			String value, boolean editable) {
+	private void addPartofSpeech(String label, JsArray<LexiconPosition> list, String value, boolean editable) {
 		ExtendedComboBox partOfSpeechComboBox = view.getPartOfSpeechListBox();
 		view.setPosCommentVisible(showCommentButton);
 		if (list == null) {
@@ -276,17 +255,16 @@ public class SensePresenter extends
 			view.getPosLabel().setText(label);
 		} else {
 			TextBox textBox = new TextBox();
-			
+
 			if (value == null || value.isEmpty() || value.equalsIgnoreCase("Select")) {
 				// TODO: i18n
 				value = "Undefined";
 			}
-			
+
 			textBox.setValue(value);
 			textBox.setWidth("auto");
 			textBox.setReadOnly(true);
-			partOfSpeechComboBox.getElement().getParentNode()
-					.appendChild(textBox.getElement());
+			partOfSpeechComboBox.getElement().getParentNode().appendChild(textBox.getElement());
 			partOfSpeechComboBox.removeFromParent();
 			view.getPosLabel().setText(label);
 		}
@@ -306,11 +284,14 @@ public class SensePresenter extends
 	}
 
 	public void addCommentClickHandler(ClickHandler handler, String refId) {
-		meaningPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" +EntryFieldType.DEFINITION);
-		view.getPosCommentClick().addClickHandler(handler);
-		view.getPosCommentClick().setTarget(this.getModel().getId() + "+" +EntryFieldType.POS);
+		if (this.getModel() != null) {
+			meaningPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+" + EntryFieldType.DEFINITION);
+			view.getPosCommentClick().addClickHandler(handler);
+			view.getPosCommentClick().setTarget(this.getModel().getId() + "+" + EntryFieldType.POS);
+		}
 		for (int i = 0; i < examplePresenters.size(); ++i) {
 			examplePresenters.get(i).addCommentClickHandler(handler);
 		}
+
 	}
 }

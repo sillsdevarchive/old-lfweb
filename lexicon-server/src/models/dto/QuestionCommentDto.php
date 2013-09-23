@@ -26,7 +26,7 @@ class QuestionCommentDto
 		$questionModel = new QuestionModel($projectModel, $questionId);
 		$question = QuestionCommentDtoEncoder::encode($questionModel);
 		
-		$textId = $questionModel->textRef->asString();
+		$textId = $questionModel->entryRef;
 		$textModel = new TextModel($projectModel, $textId);
 		$usxHelper = new UsxHelper($textModel->content);
 		//echo $usxHelper->toHtml();
