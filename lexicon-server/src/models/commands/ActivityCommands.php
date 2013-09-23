@@ -13,6 +13,15 @@ use models\CommentModel;
 use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
+use libraries\lfdictionary\store\LexStoreType;
+use libraries\lfdictionary\store\LexStoreController;
+
+use models\QuestionAnswersListModel;
+
+
+use libraries\lfdictionary\store\LexStore;
+use libraries\lfdictionary\environment\LexProject;
+use models\ProjectModelFixer;
 
 class ActivityCommands
 {
@@ -163,7 +172,7 @@ class ActivityCommands
 	 * @param Action $action
 	 * @return string activity id
 	 */
-	public static function writeEntry($projectModel, $userId, $entry, $action) {
+	public static function writeEntry($projectModel, $userId, $entryDto, $action) {
 	
 		
 		$activity = new ActivityModel($projectModel);
@@ -173,8 +182,10 @@ class ActivityCommands
 		} else {
 			$activity->action = ActivityModel::ADD_ENTRY;
 		}
-		
-		$activity->addContent(ActivityModel::ENTRY, $entry->getGuid());
+		$entry = $entryDto->getEntry();
+		$multitex = $entry[$projectModel->languageCode];
+		throw new \Exception ('entry'.$multitex);
+		$activity->addContent(ActivityModel::ENTRY, $entryDto->getEntry());
 		return $activity->write();
 	}
 	
@@ -186,13 +197,40 @@ class ActivityCommands
 	 */
 	public static function deleteEntry($projectModel, $userId, $guid) {
 	
-	
+		
 		$activity = new ActivityModel($projectModel);
 		$activity->userRef->id = $userId;
 		$activity->action = ActivityModel::DELETE_ENTRY;
 	
-		$activity->addContent(ActivityModel::ENTRY, $guid);
+		$entryModel = self::getEntry($projectModel->id->asString(), $guid);	
+		$activity->addContent(ActivityModel::ENTRY, $entryModel['entry'][$projectModel->languageCode]);
 		return $activity->write();
+	}
+	
+	public static function getEntry($projectId, $entryGuid) {
+		//throw new \Exception ('projectId ' .$projectId ." entryGuid ".$entryGuid);
+		$projectModel = new ProjectModel ( $projectId );
+		ProjectModelFixer::ensureVLatest ( $projectModel );
+	
+		$lexProject = new LexProject ( $projectModel );
+	
+		$store = new LexStoreController ( LexStoreType::STORE_MONGO, $projectModel->databaseName (), $lexProject );
+		$result = $store->readEntry ( $entryGuid );
+	
+		// Sense Level
+		foreach ( $result->_senses as $sense ) {
+	
+			if (! (isset ( $sense->_id ) && strlen ( trim ( $sense->_id ) ) > 0)) {
+				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
+			}
+			// Example Level
+			foreach ( $sense->_examples as $example ) {
+				if (! (isset ( $example->_id ) && strlen ( trim ( $example->_id ) ) > 0)) {
+					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
+				}
+			}
+		}
+		return $result->encode ();
 	}
 }
 

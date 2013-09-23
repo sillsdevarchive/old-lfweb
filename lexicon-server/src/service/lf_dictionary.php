@@ -165,6 +165,8 @@ class LfDictionary {
 		return $result->encode ();
 	}
 	
+	
+	
 	/**
 	 * Delete a Lexical Entry
 	 *
@@ -180,9 +182,10 @@ class LfDictionary {
 		if (! $this->_projectModel->hasRight ( $this->_userId, Domain::LEX_ENTRY + Operation::DELETE_OTHER )) {
 			throw new UserActionDeniedException ( 'Access Denied For Delete' );
 		}
+		ActivityCommands::deleteEntry($this->_projectModel, $this->_userId, $guid);
 		$store = $this->getLexStore ();
 		$store->deleteEntry ( $guid, $mercurialSHA );
-		ActivityCommands::deleteEntry($this->_projectModel, $this->_userId, $guid);
+		
 		$resultDTO = new ResultDTO ( true );
 		return $resultDTO->encode ();
 	}
