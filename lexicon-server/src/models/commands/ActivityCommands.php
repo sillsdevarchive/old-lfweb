@@ -163,10 +163,11 @@ class ActivityCommands
 	 * @param Action $action
 	 * @return string activity id
 	 */
-	public static function writeEntry($projectModel, $entry, $action) {
+	public static function writeEntry($projectModel, $userId, $entry, $action) {
 	
 		
 		$activity = new ActivityModel($projectModel);
+		$activity->userRef->id = $userId;
 		if($action == 'update'){
 			$activity->action = ActivityModel::UPDATE_ENTRY;
 		} else {
@@ -183,10 +184,11 @@ class ActivityCommands
 	 * @param Guid $guid
 	 * @return string activity id
 	 */
-	public static function deleteEntry($projectModel, $guid) {
+	public static function deleteEntry($projectModel, $userId, $guid) {
 	
 	
 		$activity = new ActivityModel($projectModel);
+		$activity->userRef->id = $userId;
 		$activity->action = ActivityModel::DELETE_ENTRY;
 	
 		$activity->addContent(ActivityModel::ENTRY, $guid);
