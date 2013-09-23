@@ -39,9 +39,10 @@ class QuestionCommands
 	 * @return array Returns an encoded QuestionDTO fragment for the Answer
 	 * @see AnswerModel
 	 */
-	public static function updateAnswer($projectId, $questionId, $answer, $userId) {
+	public static function updateAnswer($projectId, $entryId, $questionKey, $answer, $userId) {
 		$projectModel = new ProjectModel($projectId);
-		$questionModel = new QuestionModel($projectModel, $questionId);
+		$questionModel = new QuestionModel($projectModel);
+		$questionModel->entryRef= $questionKey;
 		$authorId = $userId;
 		if ($answer['id'] != '') {
 			// update existing answer
@@ -50,13 +51,14 @@ class QuestionCommands
 		}
 		$answerModel = new AnswerModel();
 		JsonDecoder::decode($answerModel, $answer);
-		$answerModel->userRef->id = $authorId;
+		$answerModel->userRef->id = $authorId;		
 		$answerId = $questionModel->writeAnswer($answerModel);
 		// Re-read question model to pick up new answer
-		$questionModel->read($questionId);
+		$questionModel->findOneByQuery(array("entryRef" => $questionKey));
+		
 		// TODO log the activity after we confirm that the comment was successfully updated ; cjh 2013-08
 		$newAnswer = $questionModel->readAnswer($answerId);
-		ActivityCommands::updateAnswer($projectModel, $questionId, $newAnswer);
+		//ActivityCommands::updateAnswer($projectModel, $questionKey, $newAnswer);
 		return self::encodeAnswer($newAnswer);
 	}
 	

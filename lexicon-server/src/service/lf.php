@@ -302,8 +302,8 @@ class Lf
 		return $questionListModel;
 	}
 	
-	public function question_update_answer($projectId, $questionId, $answer) {
-		return QuestionCommands::updateAnswer($projectId, $questionId, $answer, $this->_userId);
+	public function question_update_answer($projectId, $entryId,  $questionKey, $answer) {
+		return QuestionCommands::updateAnswer($projectId, $entryId, $questionKey, $answer, $this->_userId);
 	}
 	
 	public function question_update_answer_score($projectId, $questionId, $answerId, $score) {

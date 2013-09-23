@@ -58,16 +58,16 @@ class ActivityCommands
 	 * @param AnswerModel $answerModel
 	 * @return string activity id
 	 */
-	public static function updateAnswer($projectModel, $questionId, $answerModel, $mode = "update") {
+	public static function updateAnswer($projectModel, $questionKey, $answerModel, $mode = "update") {
 		$activity = new ActivityModel($projectModel);
-		$question = new QuestionModel($projectModel, $questionId);
-		$text = new TextModel($projectModel, $question->textRef->asString());
+		$question = new QuestionModel($projectModel);
+		$text = new TextModel($projectModel);
 		$user = new UserModel($answerModel->userRef->asString());
 		
 		$activity->action = ($mode == "update") ? ActivityModel::UPDATE_ANSWER : ActivityModel::ADD_ANSWER;
 		$activity->userRef->id = $answerModel->userRef->asString();
 		$activity->textRef->id = $text->id->asString();
-		$activity->questionRef->id = $questionId;
+		$activity->entryRef = $questionKey;
 		$activity->addContent(ActivityModel::TEXT, $text->title);
 		$activity->addContent(ActivityModel::QUESTION, $question->title);
 		$activity->addContent(ActivityModel::ANSWER, $answerModel->content);

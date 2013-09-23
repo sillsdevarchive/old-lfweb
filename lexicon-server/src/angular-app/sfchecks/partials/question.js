@@ -316,8 +316,8 @@ angular.module(
 			});
 		};
 		
-		$scope.updateAnswer = function(projectId, questionId, answer) {
-			questionService.update_answer(projectId, questionId, answer, function(result) {
+		$scope.updateAnswer = function(projectId, entryId, questionId, answer) {
+			questionService.update_answer(projectId, entryId, questionId, answer, function(result) {
 				if (result.ok) {
 					if (answer.id == '') {
 						notice.push(notice.SUCCESS, "The answer was successfully submitted");
@@ -335,7 +335,7 @@ angular.module(
 				'content': $scope.newAnswer.content,
 				'textHighlight': $scope.newAnswer.textHighlight,
 			};
-			$scope.updateAnswer(projectId, questionId, answer);
+			$scope.updateAnswer(projectId, entryId, questionId, answer);
 			$scope.newAnswer.content = '';
 			$scope.newAnswer.textHighlight = '';
 			$scope.selectedText = '';
@@ -343,7 +343,7 @@ angular.module(
 		
 		$scope.editAnswer = function(answer) {
 			if ($scope.rightsEditOwn(answer.userRef.userid)) {
-				$scope.updateAnswer(projectId, questionId, answer);
+				$scope.updateAnswer(projectId, entryId, questionId, answer);
 			}
 			$scope.hideAnswerEditor();
 		};

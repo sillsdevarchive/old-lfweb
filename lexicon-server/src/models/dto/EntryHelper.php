@@ -12,7 +12,7 @@ class EntryHelper {
 		$senses = $this->_entry["senses"];
 		switch ($type) {
 			case "ENTRYLEXICALFORM" :
-				return $_entry["entry"][$language];
+				return  $this->_entry["entry"][$language];
 			case "DEFINITION" :
 				foreach ($senses as $sense)
 				{
