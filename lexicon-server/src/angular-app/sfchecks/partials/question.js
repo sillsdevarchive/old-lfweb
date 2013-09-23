@@ -29,6 +29,7 @@ angular.module(
 		};
 
 		var projectId = $routeParams.projectId;
+		var entryId = $routeParams.textId;
 		var questionId = $routeParams.questionId;
 
 		// Breadcrumb
@@ -42,8 +43,8 @@ angular.module(
 		);
 		
 		$scope.votes = {};
-		questionService.read(projectId, questionId, function(result) {
-			console.log('questionService.read(', projectId, questionId, ')');
+		questionService.read(projectId, entryId, questionId, function(result) {
+			console.log('questionService.read(', projectId, entryId, questionId, ')');
 			if (result.ok) {
 				$scope.text = result.data.text;
 				$scope.question = result.data.question;

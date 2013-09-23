@@ -103,8 +103,8 @@ angular.module('lf.services', ['jsonRpc'])
 	}])
 	.service('questionService', ['jsonRpc', function(jsonRpc) {
 		jsonRpc.connect('/api/lf');
-		this.read = function(projectId, questionId, callback) {
-			jsonRpc.call('question_comment_dto', [projectId, questionId], callback);
+		this.read = function(projectId, entryId, questionId, callback) {
+			jsonRpc.call('question_comment_dto', [projectId, entryId, questionId], callback);
 		};
 		this.update = function(projectId, model, callback) {
 			jsonRpc.call('question_update', [projectId, model], callback);

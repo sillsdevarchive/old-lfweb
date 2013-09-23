@@ -335,8 +335,8 @@ class Lf
 		return QuestionModel::removeComment($projectModel->databaseName(), $questionId, $answerId, $commentId);
 	}
 	
-	public function question_comment_dto($projectId, $questionId) {
-		return \models\dto\QuestionCommentDto::encode($projectId, $questionId, $this->_userId);
+	public function question_comment_dto($projectId, $entryId, $questionId) {
+		return \models\dto\QuestionCommentDto::encode($projectId, $entryId, $questionId, $this->_userId);
 	}
 	
 	public function question_list_dto($projectId, $entryRef) {
