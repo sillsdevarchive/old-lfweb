@@ -182,10 +182,9 @@ class ActivityCommands
 		} else {
 			$activity->action = ActivityModel::ADD_ENTRY;
 		}
-		$entry = $entryDto->getEntry();
-		$multitex = $entry[$projectModel->languageCode];
-		throw new \Exception ('entry'.$multitex);
-		$activity->addContent(ActivityModel::ENTRY, $entryDto->getEntry());
+		$entry = $entryDto->getEntry()->encode()[$projectModel->languageCode];
+		
+		$activity->addContent(ActivityModel::ENTRY, $entry);
 		return $activity->write();
 	}
 	
