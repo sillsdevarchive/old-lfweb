@@ -36,7 +36,7 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
+				 {href: '/app/projects', label: 'My Projects'},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId + '/' + $routeParams.qusetionId, label: ''},

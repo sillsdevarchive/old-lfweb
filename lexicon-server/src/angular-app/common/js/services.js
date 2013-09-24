@@ -202,8 +202,8 @@ angular.module('lf.services', ['jsonRpc'])
 			return this.project(projectId) + "/" + textId;
 		};
 		
-		this.question = function(projectId, textId, questionId) {
-			return this.text(projectId, textId) + "/" + questionId;
+		this.question = function(projectId, entryId, entryRef) {
+			return '/gwtangular/sfchecks#/project/' + projectId + "/" + entryId + "/" + entryRef;
 		};
 		
 		this.user = function(userId) {

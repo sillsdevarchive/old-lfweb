@@ -22,7 +22,7 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
+				 {href: '/app/projects', label: 'My Projects'},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
 				]
@@ -183,7 +183,7 @@ angular.module(
 		
 		$scope.enhanceDto = function(items) {
 			for (var i in items) {
-				items[i].url = linkService.question(projectId, entryId, items[i].id);
+				items[i].url = linkService.question(projectId, entryId, items[i].entryRef);
 			}
 		};
 
@@ -202,7 +202,7 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
+				 {href: '/app/projects', label: 'My Projects'},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId + '/Settings', label: 'Settings'},

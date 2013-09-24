@@ -236,7 +236,7 @@ class QuestionAnswersListModel extends \models\mapper\MapperListModel
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
 			array('title' => array('$regex' => ''), 'entryId' => $entryId),
-			array('title', 'description', 'answers')
+			array('title', 'description', 'answers', 'entryRef')
 		);
 	}
 
