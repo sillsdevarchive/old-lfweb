@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
+import org.palaso.languageforge.client.lex.common.enums.EntryFieldType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
 import org.palaso.languageforge.client.lex.controls.presenter.MultiTextPresenter.IMultiTextView;
 import org.palaso.languageforge.client.lex.controls.presenter.SensePresenter.ISenseView;
@@ -23,12 +24,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 
-public class EntryPresenter extends
-		ModelPairBase<EntryPresenter.IEntryView, LexiconEntryDto> {
+public class EntryPresenter extends ModelPairBase<EntryPresenter.IEntryView, LexiconEntryDto> {
 	private ArrayList<SensePresenter> sensePresenters = new ArrayList<SensePresenter>();
 	private boolean singleNewMeaning = false;
 	private boolean singleNewExample = false;
 	private boolean wordEndPaddingCell = true;
+	private boolean showCommentButton = true;
 	private FieldSettings fieldSettings = FieldSettings.fromWindow();
 	private MultiTextPresenter wordPresenter;
 
@@ -37,8 +38,7 @@ public class EntryPresenter extends
 	 * in view class.
 	 */
 	public interface IEntryView {
-		void addEntryMultiText(String label,
-				MultiTextPresenter.IMultiTextView view, boolean addEndingSpaceCell);
+		void addEntryMultiText(String label, MultiTextPresenter.IMultiTextView view, boolean addEndingSpaceCell);
 
 		void addSense(ISenseView senseView);
 
@@ -61,33 +61,32 @@ public class EntryPresenter extends
 	 * constructor for EntryPresenter with view and model as arguments
 	 * 
 	 */
-	public EntryPresenter(IEntryView view, LexiconEntryDto model,
-			FieldSettings fieldSettings) {
-		this(view, model, fieldSettings, false, false,true);
+	public EntryPresenter(IEntryView view, LexiconEntryDto model, FieldSettings fieldSettings) {
+		this(view, model, fieldSettings, false, false, true, true);
 	}
 
 	/**
 	 * constructor for EntryPresenter with view and model as arguments
 	 * 
 	 */
-	public EntryPresenter(IEntryView view, LexiconEntryDto model,
-			FieldSettings fieldSettings, boolean isSingleNewMeaning,
-			boolean isSingleNewExample, boolean addWordEndingSpaceCell) {
+	public EntryPresenter(IEntryView view, LexiconEntryDto model, FieldSettings fieldSettings,
+			boolean isSingleNewMeaning, boolean isSingleNewExample, boolean addWordEndingSpaceCell,
+			boolean showCommentBtn) {
 		super(view, model);
 		view.setAddNewButtonVisible(false);
 		this.fieldSettings = fieldSettings;
 		singleNewMeaning = isSingleNewMeaning;
 		singleNewExample = isSingleNewExample;
 		wordEndPaddingCell = addWordEndingSpaceCell;
+		showCommentButton = showCommentBtn;
 		addWord();
 		// Senses
 		if (fieldSettings.value("Definition").getEnabled()) {
 			for (int i = 0, n = model.getSenseCount(); i < n; ++i) {
-				createSensePresenterInView(model.getSense(i),
-						getMeaningLabelText(i));
+				createSensePresenterInView(model.getSense(i), getMeaningLabelText(i));
 			}
 		}
-		
+
 		if ((PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_CREATE))) {
 			if (!singleNewMeaning) {
 				showNewSenseBlock();
@@ -108,11 +107,9 @@ public class EntryPresenter extends
 
 	private void addWord() {
 		if (fieldSettings.value("Word").getEnabled()) {
-			MultiText wordMultiText = MultiText
-					.createFromSettings(fieldSettings.value("Word"));
+			MultiText wordMultiText = MultiText.createFromSettings(fieldSettings.value("Word"));
 
-			MultiText labelMultiText = MultiText
-					.createFromSettings(fieldSettings.value("Word"));
+			MultiText labelMultiText = MultiText.createFromSettings(fieldSettings.value("Word"));
 
 			JsArrayString keys = wordMultiText.keys();
 			for (int i = 0, n = keys.length(); i < n; ++i) {
@@ -121,25 +118,21 @@ public class EntryPresenter extends
 				if (languageValue != null) {
 					wordMultiText.setValue(language, languageValue);
 				}
-				labelMultiText.setValue(language, fieldSettings.value("Word")
-						.getAbbreviations().get(i));
+				labelMultiText.setValue(language, fieldSettings.value("Word").getAbbreviations().get(i));
 			}
-			wordPresenter = new MultiTextPresenter(view.createMultiTextView(),
-					wordMultiText, labelMultiText);
+			wordPresenter = new MultiTextPresenter(view.createMultiTextView(), wordMultiText, labelMultiText,
+					showCommentButton);
 
-			view.addEntryMultiText(fieldSettings.value("Word").getLabel(),
-					wordPresenter.getView(),wordEndPaddingCell);
+			view.addEntryMultiText(fieldSettings.value("Word").getLabel(), wordPresenter.getView(), wordEndPaddingCell);
 
-			wordPresenter.setEnabled(!fieldSettings.value("Word")
-					.isReadonlyField());
+			wordPresenter.setEnabled(!fieldSettings.value("Word").isReadonlyField());
 		}
 	}
 
-	public MultiTextPresenter getWordPresenter()
-	{
+	public MultiTextPresenter getWordPresenter() {
 		return wordPresenter;
 	}
-	
+
 	/**
 	 * To add the new meaning for each sense and create event for create
 	 * multiple meanings
@@ -154,8 +147,7 @@ public class EntryPresenter extends
 			model.addSense(sense);
 			updateMeaningLabelText();
 
-			createSensePresenterInView(sense, fieldSettings.value("NewMeaning")
-					.getLabel());
+			createSensePresenterInView(sense, fieldSettings.value("NewMeaning").getLabel());
 		} else {
 			view.setAddNewButtonVisible(false);
 		}
@@ -164,8 +156,7 @@ public class EntryPresenter extends
 
 	private void updateMeaningLabelText() {
 		for (SensePresenter presenter : sensePresenters) {
-			presenter.view.getMeaningLabel().setText(
-					getMeaningLabelText(sensePresenters.indexOf(presenter)));
+			presenter.view.getMeaningLabel().setText(getMeaningLabelText(sensePresenters.indexOf(presenter)));
 		}
 	}
 
@@ -182,23 +173,21 @@ public class EntryPresenter extends
 	}
 
 	private void createSensePresenterInView(Sense sense, String label) {
-		final SensePresenter presenter = new SensePresenter(
-				view.createSenseView(), sense, this.fieldSettings,
-				singleNewMeaning, singleNewExample);
+		final SensePresenter presenter = new SensePresenter(view.createSenseView(), sense, this.fieldSettings,
+				singleNewMeaning, singleNewExample, showCommentButton);
 		sensePresenters.add(presenter);
 		presenter.view.getMeaningLabel().setText(label);
 		view.addSense(presenter.getView());
 		final EntryPresenter entryPresenter = this;
-		presenter.getRemoveSenseClickHandlers().addClickHandler(
-				new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						sensePresenters.remove(presenter);
-						entryPresenter.model.removeSense(presenter.getModel());
-						view.removeSense(presenter.getView());
-						updateMeaningLabelText();
-					}
-				});
+		presenter.getRemoveSenseClickHandlers().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				sensePresenters.remove(presenter);
+				entryPresenter.model.removeSense(presenter.getModel());
+				view.removeSense(presenter.getView());
+				updateMeaningLabelText();
+			}
+		});
 	}
 
 	/**
@@ -212,23 +201,36 @@ public class EntryPresenter extends
 			sensePresenters.get(i).updateModel();
 		}
 	}
+
 	/**
 	 * a simple validation for check at last we have one word in the word field.
+	 * 
 	 * @return boolean
 	 */
 	public boolean validate() {
 		wordPresenter.updateModel();
 		JsArrayString keys = wordPresenter.getModel().keys();
-		
+
 		for (int i = 0, n = keys.length(); i < n; ++i) {
 			String language = keys.get(i);
 			String value = wordPresenter.getModel().value(language);
-			if (value.trim().length()>0)
-			{
+			if (value.trim().length() > 0) {
 				return true;
 			}
 
 		}
 		return false;
+	}
+
+	public void addCommentClickHandler(ClickHandler handler) {
+		if (this.getModel() != null) {
+			wordPresenter.addCommentClickHandler(handler, this.getModel().getId() + "+"
+					+ EntryFieldType.ENTRYLEXICALFORM);
+		}
+		for (int i = 0; i < sensePresenters.size(); ++i) {
+			if (sensePresenters.get(i).getModel() != null) {
+				sensePresenters.get(i).addCommentClickHandler(handler, sensePresenters.get(i).getModel().getId());
+			}
+		}
 	}
 }

@@ -33,9 +33,10 @@ class QuestionModel extends \models\mapper\MapperModel
 {
 	public function __construct($projectModel, $id = '') {
 		$this->id = new Id();
+		$this->workflowState = "open"; // default workflow state
 		$this->dateCreated = new \DateTime();
 		$this->dateEdited = new \DateTime();
-		$this->textRef = new IdReference();
+		$this->entryRef = "";
 		$this->answers = new MapOf(
 			function() {
 				return new AnswerModel();
@@ -185,25 +186,42 @@ class QuestionModel extends \models\mapper\MapperModel
 	public $dateEdited;
 
 	/**
-	 * @var IdReference - Id of the referring text
+	 * @var EntryDto - a copy of entry
 	 */
-	public $textRef;
+	public $entry;
+	
+	/**
+	 * @var String - Id of the referring entry
+	 */
+	public $entryId;
+	
+	/**
+	 * @var String - Id of the referring text
+	 */
+	public $entryRef;
 	
 	/**
 	 * @var MapOf<AnswerModel>
 	 */
 	public $answers;
 	
+	/**
+	 * 
+	 * @var string
+	 */
+	public $workflowState;
+	
+	
 }
 
 class QuestionListModel extends \models\mapper\MapperListModel
 {
 
-	public function __construct($projectModel, $textId)
+	public function __construct($projectModel, $entryRef)
 	{
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'textRef' => MongoMapper::mongoID($textId)),
+			array('title' => array('$regex' => ''), 'entryRef' => $entryRef),
 			array('title')
 		);
 	}
@@ -213,12 +231,12 @@ class QuestionListModel extends \models\mapper\MapperListModel
 class QuestionAnswersListModel extends \models\mapper\MapperListModel
 {
 
-	public function __construct($projectModel, $textId)
+	public function __construct($projectModel, $entryRef)
 	{
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'textRef' => MongoMapper::mongoID($textId)),
-			array('title', 'answers')
+			array('title' => array('$regex' => ''), 'entryRef' => $entryRef),
+			array('title', 'description', 'answers')
 		);
 	}
 

@@ -6,23 +6,23 @@ import org.palaso.languageforge.client.lex.common.I18nConstants;
 import org.palaso.languageforge.client.lex.common.PermissionManager;
 import org.palaso.languageforge.client.lex.common.enums.DomainPermissionType;
 import org.palaso.languageforge.client.lex.common.enums.OperationPermissionType;
+import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.CurrentEnvironmentDto;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconEntryDto;
 import org.palaso.languageforge.client.lex.model.ResultDto;
-import org.palaso.languageforge.client.lex.controls.presenter.EntryPresenter;
 
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.http.client.URL;
+import com.github.gwtbootstrap.client.ui.Button;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TabBar;
+import com.google.gwt.user.client.ui.TabBar.Tab;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -36,8 +36,17 @@ public class LexBrowseEditPresenter extends
 	 */
 	public interface IView {
 		EntryPresenter.IEntryView createDictionaryView(boolean userAccess);
+
 		Frame getEntryDisplayPanel();
-		void showMessage(String text, boolean success);
+
+		Frame getEntryCommentPanel();
+		
+		public FlowPanel getBowserPanel();
+
+		public FlowPanel getCommentPanel();
+
+		public TabLayoutPanel getTabPanel();
+		
 	}
 
 	@Inject
@@ -46,7 +55,7 @@ public class LexBrowseEditPresenter extends
 	private EntryPresenter entryPresenter = null;
 	private FieldSettings fieldSettings = FieldSettings.fromWindow();
 	private boolean isNewEntry = false;
-	
+
 	public void onStart() {
 	}
 
@@ -67,7 +76,7 @@ public class LexBrowseEditPresenter extends
 		eventBus.setUpdateButtonEnable(true);
 		entryPresenter = new EntryPresenter(view.createDictionaryView(false),
 				LexiconEntryDto.createFromSettings(fieldSettings),
-				fieldSettings);
+				fieldSettings, false, false, true, false);
 		isNewEntry = true;
 		view.getEntryDisplayPanel().setVisible(false);
 	}
@@ -78,35 +87,31 @@ public class LexBrowseEditPresenter extends
 	 */
 	public void onWordDeleted() {
 		// eventBus.showLoadingIndicator();
-		if (entryPresenter==null)
-		{
+		if (entryPresenter == null) {
 			// fail safe
 			return;
 		}
-		LexService.deleteEntry(
-				entryKey, 
-				entryPresenter.getModel().getMercurialSHA(), 
-				new AsyncCallback<ResultDto>() {
+		LexService.deleteEntry(entryKey, entryPresenter.getModel()
+				.getMercurialSHA(), new AsyncCallback<ResultDto>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				// eventBus.hideLoadingIndicator();
 				eventBus.handleError(caught);
-				view.showMessage(I18nConstants.STRINGS
-						.LexBrowseEditPresenter_Entry_delete_failed(), false);
+				eventBus.handleError(new Throwable(I18nConstants.STRINGS
+						.LexBrowseEditPresenter_Entry_delete_failed()));
 			}
 
 			@Override
 			public void onSuccess(ResultDto result) {
-				if (result.isSucceed())
-				{
-				view.showMessage(I18nConstants.STRINGS.LexBrowseEditPresenter_Entry_deleted_successfully(), true);
-				// eventBus.hideLoadingIndicator();
-				eventBus.reloadList();
-				}else
-				{
-					view.showMessage(I18nConstants.STRINGS
-							.LexBrowseEditPresenter_Entry_delete_failed(), false);
+				if (result.isSucceed()) {
+					eventBus.displayMessage(I18nConstants.STRINGS
+							.LexBrowseEditPresenter_Entry_deleted_successfully());
+					// eventBus.hideLoadingIndicator();
+					eventBus.reloadList();
+				} else {
+					eventBus.handleError(new Throwable(I18nConstants.STRINGS
+							.LexBrowseEditPresenter_Entry_delete_failed()));
 				}
 			}
 		});
@@ -134,9 +139,11 @@ public class LexBrowseEditPresenter extends
 				renderWord(result);
 				showWordOnDispalyPanel(result.getId());
 				eventBus.setUpdateButtonEnable(true);
-				boolean allowDelete=false;
-				if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_DELETE_OTHER)) {
-					allowDelete=true;
+				boolean allowDelete = false;
+				if (PermissionManager.getPermission(
+						DomainPermissionType.DOMAIN_LEX_ENTRY,
+						OperationPermissionType.CAN_DELETE_OTHER)) {
+					allowDelete = true;
 				}
 				eventBus.setDeleteButtonVisible(allowDelete);
 				// eventBus.hideLoadingIndicator();
@@ -145,31 +152,31 @@ public class LexBrowseEditPresenter extends
 		});
 	}
 
-	private void showWordOnDispalyPanel(String guid)
-	{
+	private void showWordOnDispalyPanel(String guid) {
 		view.getEntryDisplayPanel().setVisible(true);
-		String url = "/../../gwtangular/entryblock/" + 
-				CurrentEnvironmentDto.getCurrentProject().getProjectId() +"/" + guid;
-		
+		String url = "/../../gwtangular/entryblock/"
+				+ CurrentEnvironmentDto.getCurrentProject().getProjectId()
+				+ "/" + guid;
+
 		view.getEntryDisplayPanel().setUrl(url);
 	}
+
 	/**
 	 * To create a call to json-rpc service to update an entry.
 	 * 
 	 */
 	public void onWordUpdated() {
-		if (entryPresenter==null)
-		{
+		if (entryPresenter == null) {
 			// fail safe
 			return;
 		}
-		
-		if(!entryPresenter.validate())
-		{
-			view.showMessage("You must have last on word in the entry.", false);
+
+		if (!entryPresenter.validate()) {
+			eventBus.handleError(new Throwable(
+					"You must have last on word in the entry."));
 			return;
 		}
-		
+
 		entryPresenter.updateModel();
 		final LexiconEntryDto entryDTO = entryPresenter.getModel();
 		// eventBus.showLoadingIndicator();
@@ -179,24 +186,20 @@ public class LexBrowseEditPresenter extends
 			public void onFailure(Throwable caught) {
 				// eventBus.hideLoadingIndicator();
 				eventBus.handleError(caught);
-				view.showMessage(I18nConstants.STRINGS
-						.LexBrowseEditPresenter_Entry_update_failed(), false);
+				eventBus.handleError(new Throwable(I18nConstants.STRINGS
+						.LexBrowseEditPresenter_Entry_update_failed()));
 			}
 
 			@Override
 			public void onSuccess(ResultDto result) {
 				eventBus.clientDataRefresh(!isNewEntry, false);
 				if (isNewEntry) {
-					view.showMessage(
-							I18nConstants.STRINGS
-									.LexBrowseEditPresenter_Entry_created_successfully(),
-							true);
+					eventBus.displayMessage(I18nConstants.STRINGS
+							.LexBrowseEditPresenter_Entry_created_successfully());
 					isNewEntry = false;
 				} else {
-					view.showMessage(
-							I18nConstants.STRINGS
-									.LexBrowseEditPresenter_Entry_updated_successfully(),
-							true);
+					eventBus.displayMessage(I18nConstants.STRINGS
+							.LexBrowseEditPresenter_Entry_updated_successfully());
 				}
 			}
 		});
@@ -206,16 +209,37 @@ public class LexBrowseEditPresenter extends
 	 * To load the selected entry details values to controls
 	 * 
 	 */
-	private void renderWord(LexiconEntryDto result) {
-		boolean allowEdit=false;
-		if (PermissionManager.getPermission(DomainPermissionType.DOMAIN_LEX_ENTRY, OperationPermissionType.CAN_EDIT_OTHER)) {
-			allowEdit=true;
+	private void renderWord(final LexiconEntryDto result) {
+		
+		final String projectId = CurrentEnvironmentDto.getCurrentProject()
+				.getProjectId();
+		final String entryGuid = result.getId();
+		String entryUrl = "/../../gwtangular/sfchecks#/project/" + projectId + "/" + entryGuid;
+		
+		view.getEntryCommentPanel().setUrl(entryUrl);
+		
+		boolean allowEdit = false;
+		if (PermissionManager.getPermission(
+				DomainPermissionType.DOMAIN_LEX_ENTRY,
+				OperationPermissionType.CAN_EDIT_OTHER)) {
+			allowEdit = true;
 		}
 		entryPresenter = new EntryPresenter(
-				view.createDictionaryView(allowEdit),
-				result, fieldSettings);
-	}
-	
+				view.createDictionaryView(allowEdit), result, fieldSettings);
+		entryPresenter.addCommentClickHandler(new ClickHandler() {
 
+			@Override
+			public void onClick(ClickEvent event) {
+				// set url to ifream first!
+				
+				String url = "/../../gwtangular/sfchecks#/project/" + projectId + "/" + entryGuid + "/"
+						+ ((Button) event.getSource()).getTarget();
+				
+				view.getEntryCommentPanel().setUrl(url);
+				
+				view.getTabPanel().selectTab(1);
+			}
+		});
+	}
 
 }

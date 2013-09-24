@@ -135,6 +135,7 @@ class LfDictionary {
 		$result = $store->readSuggestions ( $field, $search, $indexFrom, $limit );
 		return $result->encode ();
 	}
+
 	
 	/**
 	 * Get a single Lexical Entry

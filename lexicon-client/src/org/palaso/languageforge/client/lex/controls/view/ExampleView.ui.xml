@@ -31,7 +31,7 @@
 							horizontalAlignment="ALIGN_RIGHT"></g:Label>
 					</div>
 					<div class="lex-dc-column" id="c2">
-						<lexmain:MultiTextView width="100%" height="100%"
+						<lexmain:MultiTextView styleName= "example_view_examplepanel_multitext"
 							ui:field="mutTxtTranslation"></lexmain:MultiTextView>
 					</div>
 					<div class="lex-dc-column" id="c3-40PIX">

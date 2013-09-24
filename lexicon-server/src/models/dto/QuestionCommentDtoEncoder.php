@@ -4,8 +4,6 @@ namespace models\dto;
 
 use models\UserModel;
 
-use models\TextModel;
-
 use models\mapper\JsonEncoder;
 
 use models\ProjectModel;

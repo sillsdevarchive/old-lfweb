@@ -611,6 +611,15 @@ div-no-hide {
 	padding: 5px;
 }
 
+
+#c2-pos {
+	width: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 0px;
+	padding-left: 5px;
+}
+
 #c2-nopadding {
 	width: auto;
 }
@@ -623,6 +632,16 @@ div-no-hide {
 	padding-right: 5px;
 	padding-left: 5px;
 }
+
+#c3-pos {
+padding-top: 5px;
+padding-bottom: 5px;
+padding-right: 3px;
+padding-left: 0px;
+max-width: 40px;
+width: 40px;
+}
+
 
 #c3-40PIX {
 	width: 40px;
@@ -839,8 +858,8 @@ div-no-hide {
 	overflow: scroll-y;
 	position: relative;
 	width: 100%;
-	max-height: 490px;
-	height: 490px;
+	max-height: 450px;
+	height: 450px;
 	margin-top: 10px;
 }
 
@@ -996,25 +1015,25 @@ div-no-hide {
 .sense_view_meanpanel_multitext {
 	height: 100%;
 	width: auto;
-	padding-right: 55px;
+	padding-right: 95px;
 }
 
 .example_view_examplepanel_multitext {
 	height: 100%;
 	width: auto;
-	padding-right: 55px;
+	padding-right: 95px;
 }
 
 .word_view_wordpanel_multitext {
 	height: 100%;
 	width: auto;
-	padding-right: 45px;
+	padding-right: 85px;
 }
 
 .add_word_word_list_sample {
 	height: 100%;
 	width: auto;
-	padding-right: 55px;
+	padding-right: 95px;
 }
 
 .aside .add-on {

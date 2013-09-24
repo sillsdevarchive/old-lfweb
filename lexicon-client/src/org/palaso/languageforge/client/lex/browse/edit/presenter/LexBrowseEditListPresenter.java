@@ -5,13 +5,11 @@ import java.util.Collection;
 import org.palaso.languageforge.client.lex.browse.edit.BrowseAndEditEventBus;
 import org.palaso.languageforge.client.lex.browse.edit.view.LexBrowseEditListView;
 import org.palaso.languageforge.client.lex.common.Constants;
-import org.palaso.languageforge.client.lex.controls.JSNIJQueryWrapper;
 import org.palaso.languageforge.client.lex.main.service.ILexService;
 import org.palaso.languageforge.client.lex.model.FieldSettings;
 import org.palaso.languageforge.client.lex.model.LexiconListDto;
 import org.palaso.languageforge.client.lex.model.LexiconListEntry;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

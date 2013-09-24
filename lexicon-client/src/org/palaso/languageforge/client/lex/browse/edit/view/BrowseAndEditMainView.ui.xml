@@ -10,9 +10,7 @@
 			</div>
 		</aside>
 		<section class="content gwt-content-height">
-		<div class="content_inner">
 			<lex:LexBrowseEditView ui:field="lexDBEEditView" />
-			</div>
 		</section>
 	</g:HTMLPanel>
 </ui:UiBinder> 

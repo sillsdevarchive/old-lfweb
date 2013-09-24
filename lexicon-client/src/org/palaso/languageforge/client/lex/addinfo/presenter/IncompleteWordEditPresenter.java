@@ -190,7 +190,7 @@ public class IncompleteWordEditPresenter extends
 		
 		entryPresenter = new EntryPresenter(
 				view.createDictionaryView(allowEdit),
-				result, fieldSettings, true, true, true);
+				result, fieldSettings, true, true, true,false);
 	}
 
 }
