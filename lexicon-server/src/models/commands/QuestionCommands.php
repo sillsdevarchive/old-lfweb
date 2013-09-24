@@ -11,6 +11,8 @@ use models\AnswerModel;
 use models\ProjectModel;
 use models\QuestionModel;
 use models\mapper\JsonDecoder;
+use models\mapper\Id;
+use models\dto\EntryDto;
 
 class QuestionCommands
 {
@@ -40,9 +42,23 @@ class QuestionCommands
 	 * @see AnswerModel
 	 */
 	public static function updateAnswer($projectId, $entryId, $questionKey, $answer, $userId) {
+		error_log("projectId: $projectId / entryId: $entryId / questionKey: $questionKey / answer : $answer, userId: $userId");
 		$projectModel = new ProjectModel($projectId);
+		
+		//in LF question is not exists, it is the entry it self.
+		// so when we add answer, we need create question first.
 		$questionModel = new QuestionModel($projectModel);
-		$questionModel->entryRef= $questionKey;
+		$questionModel->findOneByQuery(array("entryId" =>$entryId , "entryRef" => $questionKey));
+
+		if (Id::isEmpty($questionModel->id))
+		{
+			// new Question.
+			$questionModel->entryRef = $questionKey;
+			$questionModel->entryId = $entryId;
+			$questionModel->entry = json_encode(EntryDto::encode($projectId, $entryId));
+			$questionModel->write();
+		}
+		
 		$authorId = $userId;
 		if ($answer['id'] != '') {
 			// update existing answer
@@ -53,8 +69,9 @@ class QuestionCommands
 		JsonDecoder::decode($answerModel, $answer);
 		$answerModel->userRef->id = $authorId;		
 		$answerId = $questionModel->writeAnswer($answerModel);
+		
 		// Re-read question model to pick up new answer
-		$questionModel->findOneByQuery(array("entryRef" => $questionKey));
+		$questionModel->findOneByQuery(array("entryId" =>$entryId , "entryRef" => $questionKey));
 		
 		// TODO log the activity after we confirm that the comment was successfully updated ; cjh 2013-08
 		$newAnswer = $questionModel->readAnswer($answerId);

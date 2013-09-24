@@ -21,6 +21,7 @@ class CodeGuard {
 		if ($type == 'object') {
 			$type = get_class($var);
 		}
+		error_log($var);
 		throw new \Exception("Type Exception: Expected '" . $expectedType . "' given '" . $type . "'");
 	}
 	

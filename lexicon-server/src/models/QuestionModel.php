@@ -78,11 +78,12 @@ class QuestionModel extends \models\mapper\MapperModel
 				}
 			}
 		}
+		$idString = $this->id->asString();
 		$this->_mapper->write(
 			$answerToWrite, 
 			$id, 
 			MongoMapper::ID_IN_KEY, 
-			$this->id->asString(), 
+			$idString, 
 			'answers'
 		);
 		return $id;
@@ -186,7 +187,17 @@ class QuestionModel extends \models\mapper\MapperModel
 	public $dateEdited;
 
 	/**
-	 * @var IdReference - Id of the referring text
+	 * @var EntryDto - a copy of entry
+	 */
+	public $entry;
+	
+	/**
+	 * @var String - Id of the referring entry
+	 */
+	public $entryId;
+	
+	/**
+	 * @var String - Id of the referring text
 	 */
 	public $entryRef;
 	

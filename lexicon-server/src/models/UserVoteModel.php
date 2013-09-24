@@ -23,8 +23,8 @@ class UserVoteModel extends UserRelationModel
 	 * @param string $projectId
 	 * @param string $questionId
 	 */
-	public function __construct($userId, $projectId, $questionKey) {
-		$this->questionRef = $questionKey;
+	public function __construct($userId, $projectId, $questionId) {
+		$this->questionRef = $questionId;
 		$this->votes = new ArrayOf(ArrayOf::OBJECT, function($data) { return new Vote(); } );
 		parent::__construct('vote', $userId, $projectId);
 		$this->read();

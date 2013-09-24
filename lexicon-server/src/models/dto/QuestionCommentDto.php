@@ -9,7 +9,7 @@ use models\QuestionModel;
 use models\TextModel;
 use models\UserModel;
 use models\mapper\JsonEncoder;
-
+use models\mapper\Id;
 class QuestionCommentDto
 {
 	/**
@@ -30,7 +30,6 @@ class QuestionCommentDto
 		{
 			$partLanguage = $keyParts[2];
 		}
-		error_log("projectId: $projectId / entryId: $entryId / partGuid: $partGuid / partType: $partType / partLanguage: $partLanguage / userId: $userId");
 		
 		$userModel = new UserModel($userId);
 		$projectModel = new ProjectModel($projectId);
@@ -39,21 +38,26 @@ class QuestionCommentDto
 		$entry =  $entryDto->encode($projectId, $entryId);
 		$entryHelper = new EntryHelper($entry);
 		$questionModel = new QuestionModel($projectModel);
-		$questionModel->entryRef = $entryId;
-		$questionModel->title = strtolower($partType) . " / " . 
-								$partLanguage . ": " . $entryHelper->getPartData($partType, $partGuid, $partLanguage);
+		$questionModel->findOneByQuery(array("entryId" =>$entryId , "entryRef" => $questionKey));
+		
+		if (Id::isEmpty($questionModel->id))
+		{
+			// new Question.
+			$questionModel->entryRef = $questionKey;
+			$questionModel->entryId = $entryId;
+			$questionModel->entry = json_encode(EntryDto::encode($projectId, $entryId));
+			$questionModel->title = strtolower($partType) . " / " .
+					$partLanguage . ": " . $entryHelper->getPartData($partType, $partGuid, $partLanguage);
+			$questionModel->write();
+		}
 		$question = QuestionCommentDtoEncoder::encode($questionModel);
+
 		
-		$textId = $questionModel->entryRef;
-		//$textModel = new TextModel($projectModel, $textId);
-		//echo $usxHelper->toHtml();
-		//echo $textModel->content;
-		
-// 		$votes = new UserVoteModel($userId, $projectId, $questionKey);
-// 		$votesDto = array();
-// 		foreach ($votes->votes->data as $vote) {
-// 			$votesDto[$vote->answerRef->id] = true;
-// 		}
+ 		$votes = new UserVoteModel($userId, $projectId, $questionModel->id->asString());
+ 		$votesDto = array();
+ 		foreach ($votes->votes->data as $vote) {
+ 			$votesDto[$vote->answerRef->id] = true;
+ 		}
 		
 		$dto = array();
 		$dto['question'] = $question;
