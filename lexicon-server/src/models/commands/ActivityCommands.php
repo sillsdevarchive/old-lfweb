@@ -157,7 +157,7 @@ class ActivityCommands
 		} else {
 			$activity->action = ActivityModel::ADD_ENTRY;
 		}
-		$entry = $entryDto->getEntry()->encode()[$projectModel->languageCode];
+		$entry = $entryDto->getEntry()->encode();
 		
 		$activity->addContent(ActivityModel::ENTRY, $entry);
 		return $activity->write();

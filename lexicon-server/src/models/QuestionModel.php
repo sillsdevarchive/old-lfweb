@@ -231,11 +231,11 @@ class QuestionListModel extends \models\mapper\MapperListModel
 class QuestionAnswersListModel extends \models\mapper\MapperListModel
 {
 
-	public function __construct($projectModel, $entryRef)
+	public function __construct($projectModel, $entryId)
 	{
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'entryRef' => $entryRef),
+			array('title' => array('$regex' => ''), 'entryId' => $entryId),
 			array('title', 'description', 'answers')
 		);
 	}

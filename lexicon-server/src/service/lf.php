@@ -293,8 +293,8 @@ class Lf
 		return \models\dto\QuestionCommentDto::encode($projectId, $entryId, $questionId, $this->_userId);
 	}
 	
-	public function question_list_dto($projectId, $entryRef) {
-		return \models\dto\QuestionListDto::encode($projectId, $entryRef, $this->_userId);
+	public function question_list_dto($projectId, $entryId) {
+		return \models\dto\QuestionListDto::encode($projectId, $entryId, $this->_userId);
 	}
 	
 	public function answer_vote_up($projectId, $questionId, $answerId) {

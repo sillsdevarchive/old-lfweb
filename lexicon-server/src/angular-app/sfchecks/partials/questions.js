@@ -7,9 +7,9 @@ angular.module(
 	.controller('QuestionsCtrl', ['$scope', 'questionsService', 'questionTemplateService', '$routeParams', 'sessionService', 'linkService', 'breadcrumbService', 'silNoticeService',
 	                              function($scope, questionsService, qts, $routeParams, ss, linkService, breadcrumbService, notice) {
 		var projectId = $routeParams.projectId;
-		var textId = $routeParams.textId;
+		var entryId = $routeParams.entryId;
 		$scope.projectId = projectId;
-		$scope.textId = textId;
+		$scope.entryId = entryId;
 		
 		// Rights
 		$scope.rights = {};
@@ -24,7 +24,7 @@ angular.module(
 				[
 				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
 				]
 		);
 
@@ -47,7 +47,7 @@ angular.module(
 		});
 
 		// Listview Selection
-		$scope.newQuestionCollapsed = false;
+		$scope.newQuestionCollapsed = true;
 		$scope.selected = [];
 		$scope.updateSelection = function(event, item) {
 			var selectedIndex = $scope.selected.indexOf(item);
@@ -65,7 +65,7 @@ angular.module(
 		$scope.questions = [];
 		$scope.queryQuestions = function() {
 			console.log("queryQuestions()");
-			questionsService.list(projectId, textId, function(result) {
+			questionsService.list(projectId, entryId, function(result) {
 				if (result.ok) {
 					$scope.questions = result.data.entries;
 					$scope.questionsCount = result.data.count;
@@ -73,7 +73,7 @@ angular.module(
 					$scope.enhanceDto($scope.questions);
 					$scope.text = result.data.text;
 					$scope.project = result.data.project;
-					$scope.text.url = linkService.text(projectId, textId);
+					$scope.text.url = linkService.text(projectId, entryId);
 					console.log($scope.project.name);
 					console.log($scope.text.title);
 					breadcrumbService.updateCrumb('top', 1, {label: $scope.project.name});
@@ -103,46 +103,44 @@ angular.module(
 				if (result.ok) {
 					$scope.selected = []; // Reset the selection
 					$scope.queryQuestions();
-					// TODO
+					if (questionIds.length == 1) {
+						notice.push(notice.SUCCESS, "The text was removed successfully");
+					} else {
+						notice.push(notice.SUCCESS, "The texts were removed successfully");
+					}
 				}
 			});
 		};
 		// Add question
 		$scope.addQuestion = function() {
-			console.log("addQuestion()");
+			//console.log("addQuestion()");
 			var model = {};
 			model.id = '';
-			model.entryRef = textId;
+			model.entryRef = entryId;
 			model.title = $scope.questionTitle;
 			model.description = $scope.questionDescription;
 			questionsService.update(projectId, model, function(result) {
 				if (result.ok) {
 					$scope.queryQuestions();
-				}
-			});
-		};
-		// Add template
-		$scope.addTemplate = function() {
-			console.log("addTemplate()");
-			var model = {};
-			model.id = '';
-			model.title = $scope.questionTitle;
-			model.description = $scope.questionDescription;
-			qts.update(model, function(result) {
-				if (result.ok) {
-					$scope.queryTemplates();
-					notice.push(notice.SUCCESS, 'Template added.');
+					notice.push(notice.SUCCESS, "'" + model.title + "' was added successfully");
+					if ($scope.saveAsTemplate) {
+						qts.update(model, function(result) {
+							if (result.ok) {
+								$scope.queryTemplates();
+								notice.push(notice.SUCCESS, "'" + model.title + "' was added as a template question");
+							}
+						});
+					}
+					$scope.questionTitle = "";
+					$scope.questionDescription = "";
+					$scope.saveAsTemplate = false;
 				}
 			});
 		};
 		$scope.makeQuestionIntoTemplate = function() {
 			// Expects one, and only one, question to be selected (checked)
 			var l = $scope.selected.length;
-			if (l == 0) {
-				notice.push(notice.ERROR, 'Please select a question to make into a template.');
-				return;
-			} else if (l >= 2) {
-				notice.push(notice.ERROR, 'Please select only one question to make into a template.');
+			if (l != 1) {
 				return;
 			}
 			var model = {};
@@ -152,7 +150,8 @@ angular.module(
 			qts.update(model, function(result) {
 				if (result.ok) {
 					$scope.queryTemplates();
-					notice.push(notice.SUCCESS, 'Template added.');
+					notice.push(notice.SUCCESS, "'" + model.title + "' was added as a template question");
+					$scope.selected = [];
 				}
 			});
 		};
@@ -184,20 +183,20 @@ angular.module(
 		
 		$scope.enhanceDto = function(items) {
 			for (var i in items) {
-				items[i].url = linkService.question(projectId, textId, items[i].id);
+				items[i].url = linkService.question(projectId, entryId, items[i].id);
 			}
 		};
 
 	}])
-	.controller('QuestionsSettingsCtrl', ['$scope', 'textService', 'sessionService', '$routeParams', 'breadcrumbService', 
-	                                      function($scope, textService, ss, $routeParams, breadcrumbService) {
+	.controller('QuestionsSettingsCtrl', ['$scope', 'textService', 'sessionService', '$routeParams', 'breadcrumbService', 'silNoticeService', 
+	                                      function($scope, textService, ss, $routeParams, breadcrumbService, notice) {
 		var projectId = $routeParams.projectId;
-		var textId = $routeParams.textId;
+		var entryId = $routeParams.entryId;
 		var dto;
 		$scope.projectId = projectId;
-		$scope.textId = textId;
+		$scope.entryId = entryId;
 		$scope.editedText = {
-			id: textId,
+			id: entryId,
 		}
 
 		// Breadcrumb
@@ -205,15 +204,15 @@ angular.module(
 				[
 				 {href: '/gwtangular/sfchecks#/projects', label: 'My Projects'},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId + '/Settings', label: 'Settings'},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId + '/Settings', label: 'Settings'},
 				]
 		);
 
 		// Get name from text service. This really should be in the DTO, but this will work for now.
 		// TODO: Move this to the DTO (or BreadcrumbHelper?) so we don't have to do a second server round-trip. RM 2013-08
 		var text;
-		textService.settings_dto($scope.projectId, $scope.textId, function(result) {
+		textService.settings_dto($scope.projectId, $scope.entryId, function(result) {
 			if (result.ok) {
 				$scope.dto = result.data;
 				$scope.textTitle = $scope.dto.text.title;
@@ -233,8 +232,8 @@ angular.module(
 			}
 			textService.update($scope.projectId, newText, function(result) {
 				if (result.ok) {
+					notice.push(notice.SUCCESS, newText.title + " settings successfully updated");
 					$scope.textTitle = newText.title;
-					$scope.showMessage = true;
 				}
 			});
 		}

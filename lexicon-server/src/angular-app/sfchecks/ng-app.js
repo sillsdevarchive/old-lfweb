@@ -13,6 +13,7 @@ angular.module('sfchecks',
 		 'palaso.ui.notice'
 		])
 	.config(['$routeProvider', function($routeProvider) {
+		//--------Do I need them for LF Comments? --->>>
 	    $routeProvider.when(
     		'/projects', 
     		{
@@ -35,19 +36,22 @@ angular.module('sfchecks',
 	    		}
 	    	);
 	    $routeProvider.when(
-    		'/project/:projectId/:textId', 
-    		{
-    			templateUrl: '/angular-app/sfchecks/partials/questions.html', 
-    			controller: 'QuestionsCtrl'
-    		}
-    	);
-	    $routeProvider.when(
 	    		'/project/:projectId/:textId/settings', 
 	    		{
 	    			templateUrl: '/angular-app/sfchecks/partials/questions-settings.html', 
 	    			controller: 'QuestionsSettingsCtrl'
 	    		}
 	    	);
+	  //<<<<--------
+	    
+	    
+	    $routeProvider.when(
+    		'/project/:projectId/:entryId', 
+    		{
+    			templateUrl: '/angular-app/sfchecks/partials/questions.html', 
+    			controller: 'QuestionsCtrl'
+    		}
+    	);
 	    $routeProvider.when(
     		'/project/:projectId/:entryId/:entryRefKey',
     		{
