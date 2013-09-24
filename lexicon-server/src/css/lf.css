@@ -541,6 +541,17 @@ table tbody tr:hover, table tbody tr.altrow:hover {
 }
 
 /* Notifications */
+.alert {
+	margin-top: 8px;
+	margin-bottom: 4px;
+	padding: 7px 10px 7px 35px;
+}
+
+.alert .close {
+	top: 0px;
+	right: 0px;
+}
+
 .notification {
 	position: relative;
 	margin: 0 0 10px;
@@ -549,23 +560,23 @@ table tbody tr:hover, table tbody tr.altrow:hover {
 	font-size: 0.9em;
 }
 
-.errorMessage {
-	background: url(../images/exclamation.png) no-repeat scroll 8px 7px #ffeeee;
+.alert-error {
+	background: url(../images/exclamation.png) no-repeat scroll 8px 8px #ffeeee;
 	border: 1px solid #e47b7b;
 }
 
-.warningMessage {
-	background: url(../images/error.png) no-repeat scroll 8px 7px #FFFDF1;
+.alert-warn {
+	background: url(../images/error.png) no-repeat scroll 8px 8px #FFFDF1;
 	border: 1px solid #FFE578;
 }
 
-.acceptedMessage {
-	background: url(../images/tick.png) no-repeat scroll 8px 7px #f4fff2;
+.alert-success {
+	background: url(../images/tick.png) no-repeat scroll 8px 8px #f4fff2;
 	border: 1px solid #81ca76;
 }
 
-.informationMessage {
-	background: url(../images/information.png) no-repeat scroll 8px 7px #F4FAFF;
+.alert-info {
+	background: url(../images/information.png) no-repeat scroll 8px 8px #F4FAFF;
 	border: 1px solid #AECEEF;
 }
 
@@ -608,59 +619,85 @@ p.applicationContent {
 }
 
 /* icons */
-button i {
+button i, a i {
 	margin-right: 8px;
 }
 
+i.icon-remove {
+	color: #f66
+}
+
+/* Top navigation */
 div.hdrnav {
 	overflow: auto;
+	margin-left: 122px;
 }
 
-div.hdrnav li {
-	background: #f5f5f5;
-	display: block;
-	float: left;
-	margin-top: 2px;
-	margin-right: 7px;
+/*
+div.hdrnav ul {
 }
-
-div.hdrnav li.here {
-	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
-}
-
-div.hdrnav li:hover {
-	background: #F08030;
-}
-
+*/
 div.hdrnav img {
 	margin-right: 12px;
 }
 
-div.hdrnav a {
-	color: #333333;
+ul.topNav > li {
+	background: #777777;
+	display: inline-block;
+	margin-top: 2px;
+	margin-right: 7px;
+}
+
+ul.topNav li:hover, div.hdrnav li.here {
+	background: #0088cc;
+}
+
+ul.topNav a {
+	color: #fff;
 	display: block;
 	padding: 6px 12px 6px 12px;
 	text-decoration: none;
 }
 
-div.sf-breadcrumbs {
-	margin-top: 5px;
+div#logo-small {
+	width: 27px;
+	height: 36px;
+	background: url(../images/sf_logo_small.png) no-repeat;
+}
+
+/* Breadcrumbs */
+.breadcrumb > li .divider {
+	padding: 0 5px;
+	xcolor: #ccc;
+}
+
+ul.topCrumbs {
+	margin: 5px 0 0 0;
 	font-weight:bold;
 	color: gray;
+	padding: 0 0;
+	list-style: none;
+	background-color: #fff;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
 }
 
-div.sf-breadcrumbs a {
+ul.topCrumbs a {
 	color: gray;
-	display: inline;
-	padding: 12px 3px 0 3px;
-	text-decoration: none;
-}
-div.sf-breadcrumbs a:hover {
-	text-decoration: underline;
 }
 
-div.sf-breadcrumbs .here {
+ul.topCrumbs .active {
 	color: #202020;
+}
+
+/* jqte fixes and overrides */
+.jqte_placeholder {
+	display: block;	
+}
+
+.jqte {
+	margin: 20px 0;
 }
 
 /* Question Page */
@@ -689,9 +726,17 @@ div#comments table td {
 	vertical-align: top;
 }
 
+div.scripture-quote {
+	background-color: #dddddd;
+	padding: 5px;
+	font-size: 90%;
+}
+
 div.vote {
 	text-align: center;
 	line-height: 1.0em;
+	margin-right: 16px;
+	margin-top: -8px;
 }
 
 div.vote a {
@@ -700,6 +745,10 @@ div.vote a {
 	color: #999;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+div.vote a.disabled {
+	color: #eee;
 }
 
 div.vote span {

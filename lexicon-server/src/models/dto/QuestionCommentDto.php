@@ -52,15 +52,16 @@ class QuestionCommentDto
 		$question = QuestionCommentDtoEncoder::encode($questionModel);
 
 		
- 		$votes = new UserVoteModel($userId, $projectId, $questionModel->id->asString());
- 		$votesDto = array();
- 		foreach ($votes->votes->data as $vote) {
- 			$votesDto[$vote->answerRef->id] = true;
- 		}
+		$votes = new UserVoteModel($userId, $projectId,  $questionModel->id->asString());
+		$votesDto = array();
+		foreach ($votes->votes->data as $vote) {
+			error_log("has vote");
+			$votesDto[$vote->answerRef->id] = true;
+		}
 		
 		$dto = array();
 		$dto['question'] = $question;
-		//$dto['votes'] = $votesDto;
+		$dto['votes'] = $votesDto;
 		$dto['entry'] = $entry;
 		$dto['text']['title'] = $projectModel->languageCode . ": " . $entry["entry"][$projectModel->languageCode];
 		$dto['project'] = JsonEncoder::encode($projectModel);

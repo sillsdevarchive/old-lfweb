@@ -24,7 +24,7 @@ class UserVoteModel extends UserRelationModel
 	 * @param string $questionId
 	 */
 	public function __construct($userId, $projectId, $questionId) {
-		$this->questionRef = $questionId;
+		$this->questionRef = new IdReference($questionId);
 		$this->votes = new ArrayOf(ArrayOf::OBJECT, function($data) { return new Vote(); } );
 		parent::__construct('vote', $userId, $projectId);
 		$this->read();
@@ -36,7 +36,7 @@ class UserVoteModel extends UserRelationModel
 				'type' => 'vote',
 				'userRef' => MongoMapper::mongoID($this->userRef->asString()),
 				'projectRef' => MongoMapper::mongoID($this->projectRef->asString()),
-				'questionRef' => MongoMapper::mongoID($this->questionRef)
+				'questionRef' => MongoMapper::mongoID($this->questionRef->asString())
 		));
 	}
 	
@@ -81,7 +81,7 @@ class UserVoteModel extends UserRelationModel
 	}
 	
 	/**
-	 * @var String
+	 * @var IdReference
 	 */
 	public $questionRef;
 	

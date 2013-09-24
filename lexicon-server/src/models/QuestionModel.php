@@ -78,12 +78,11 @@ class QuestionModel extends \models\mapper\MapperModel
 				}
 			}
 		}
-		$idString = $this->id->asString();
 		$this->_mapper->write(
 			$answerToWrite, 
 			$id, 
 			MongoMapper::ID_IN_KEY, 
-			$idString, 
+			$this->id->asString(), 
 			'answers'
 		);
 		return $id;
