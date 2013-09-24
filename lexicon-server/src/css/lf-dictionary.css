@@ -264,8 +264,7 @@ body.loading .view-loading-progress {
 	padding: 5px 30px 5px 11px;
 	background: url(./../images/lfdictionary/arrow04.gif) no-repeat 92% 12px;
 }
-.accordion li.active a,
-.accordion li a:hover {background:url(./../images/lfdictionary/arrow05.gif) no-repeat 92% 12px;}
+.accordion li.active a{background:url(./../images/lfdictionary/arrow05.gif) no-repeat 92% 12px;}
 .accordion li a span {
 	display:block;
 	padding:0 0 0 27px;
