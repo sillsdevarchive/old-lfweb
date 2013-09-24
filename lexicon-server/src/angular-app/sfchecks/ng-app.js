@@ -49,7 +49,7 @@ angular.module('sfchecks',
 	    		}
 	    	);
 	    $routeProvider.when(
-    		'/project/:projectId/:textId/:questionId',
+    		'/project/:projectId/:entryId/:entryRefKey',
     		{
     			templateUrl: '/angular-app/sfchecks/partials/question.html', 
     			controller: 'QuestionCtrl'

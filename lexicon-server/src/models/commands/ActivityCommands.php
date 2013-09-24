@@ -29,15 +29,15 @@ class ActivityCommands
 		$activity = new ActivityModel($projectModel);
 		$question = new QuestionModel($projectModel, $questionId);
 		$answer = $question->readAnswer($answerId);
-		$text = new TextModel($projectModel, $question->textRef->asString());
+		//$text = new TextModel($projectModel, $question->textRef->asString());
 		$user = new UserModel($commentModel->userRef->asString());
 		$user2 = new UserModel($answer->userRef->asString());
 		$activity->action = ($mode == 'update') ? ActivityModel::UPDATE_COMMENT : ActivityModel::ADD_COMMENT;
 		$activity->userRef->id = $commentModel->userRef->asString();
 		$activity->userRef2->id = $answer->userRef->asString();
-		$activity->textRef->id = $text->id->asString();
+		//$activity->textRef->id = $text->id->asString();
 		$activity->questionRef->id = $questionId;
-		$activity->addContent(ActivityModel::TEXT, $text->title);
+		//$activity->addContent(ActivityModel::TEXT, $text->title);
 		$activity->addContent(ActivityModel::QUESTION, $question->title);
 		$activity->addContent(ActivityModel::ANSWER, $answer->content);
 		$activity->addContent(ActivityModel::COMMENT, $commentModel->content);
@@ -58,17 +58,17 @@ class ActivityCommands
 	 * @param AnswerModel $answerModel
 	 * @return string activity id
 	 */
-	public static function updateAnswer($projectModel, $questionKey, $answerModel, $mode = "update") {
+	public static function updateAnswer($projectModel, $questionId, $answerModel, $mode = "update") {
 		$activity = new ActivityModel($projectModel);
-		$question = new QuestionModel($projectModel);
-		$text = new TextModel($projectModel);
+		$question = new QuestionModel($projectModel, $questionId);
+		//$text = new TextModel($projectModel, $question->textRef->asString());
 		$user = new UserModel($answerModel->userRef->asString());
 		
 		$activity->action = ($mode == "update") ? ActivityModel::UPDATE_ANSWER : ActivityModel::ADD_ANSWER;
 		$activity->userRef->id = $answerModel->userRef->asString();
-		$activity->textRef->id = $text->id->asString();
-		$activity->entryRef = $questionKey;
-		$activity->addContent(ActivityModel::TEXT, $text->title);
+		//$activity->textRef->id = $text->id->asString();
+		$activity->questionRef->id = $questionId;
+	//	$activity->addContent(ActivityModel::TEXT, $text->title);
 		$activity->addContent(ActivityModel::QUESTION, $question->title);
 		$activity->addContent(ActivityModel::ANSWER, $answerModel->content);
 		$activity->addContent(ActivityModel::USER, $user->username);

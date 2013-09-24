@@ -109,8 +109,8 @@ angular.module('lf.services', ['jsonRpc'])
 		this.update = function(projectId, model, callback) {
 			jsonRpc.call('question_update', [projectId, model], callback);
 		};
-		this.update_answer = function(projectId, entryId, questionId, model, callback) {
-			jsonRpc.call('question_update_answer', [projectId, entryId, questionId, model], callback);
+		this.update_answer = function(projectId, questionId, model, callback) {
+			jsonRpc.call('question_update_answer', [projectId, questionId, model], callback);
 		};
 		this.remove_answer = function(projectId, questionId, answerId, callback) {
 			jsonRpc.call('question_remove_answer', [projectId, questionId, answerId], callback);
