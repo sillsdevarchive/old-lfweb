@@ -6,7 +6,6 @@ use models\UserVoteModel;
 
 use models\ProjectModel;
 use models\QuestionModel;
-use models\TextModel;
 use models\UserModel;
 use models\mapper\JsonEncoder;
 use models\mapper\Id;
@@ -63,7 +62,6 @@ class QuestionCommentDto
 		$dto['question'] = $question;
 		//$dto['votes'] = $votesDto;
 		$dto['entry'] = $entry;
-		//$dto['text'] = JsonEncoder::encode($textModel);
 		$dto['text']['title'] = $projectModel->languageCode . ": " . $entry["entry"][$projectModel->languageCode];
 		$dto['project'] = JsonEncoder::encode($projectModel);
 		$dto['rights'] = RightsHelper::encode($userModel, $projectModel);

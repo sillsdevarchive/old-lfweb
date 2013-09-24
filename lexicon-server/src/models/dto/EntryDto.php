@@ -6,7 +6,6 @@ use libraries\lfdictionary\store\LexStoreType;
 use libraries\lfdictionary\store\LexStoreController;
 use models\ProjectModel;
 use models\QuestionAnswersListModel;
-use models\TextModel;
 use models\UserModel;
 use libraries\lfdictionary\store\LexStore;
 use libraries\lfdictionary\environment\LexProject;

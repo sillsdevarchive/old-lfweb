@@ -2,7 +2,6 @@
 
 namespace models\dto;
 
-use models\TextModel;
 use models\QuestionModel;
 
 use models\mapper\JsonEncoder;
@@ -39,13 +38,6 @@ class ActivityListDtoEncoder extends JsonEncoder {
 						'id' => $user->id->asString(),
 						'avatar_ref' => $user->avatar_ref,
 						'username' => $user->username);
-			} else {
-				return '';
-			}
-		} else if ($key == 'textRef') {
-			$text = new TextModel($this->_project);
-			if ($text->exists($model->asString())) {
-				return $model->asString();
 			} else {
 				return '';
 			}

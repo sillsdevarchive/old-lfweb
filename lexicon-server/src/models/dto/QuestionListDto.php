@@ -4,7 +4,6 @@ namespace models\dto;
 
 use models\ProjectModel;
 use models\QuestionAnswersListModel;
-use models\TextModel;
 use models\UserModel;
 
 class QuestionListDto
@@ -19,7 +18,6 @@ class QuestionListDto
 	public static function encode($projectId, $entryGuid, $userId) {
 		$userModel = new UserModel($userId);
 		$projectModel = new ProjectModel($projectId);
-		//$textModel = new TextModel($projectModel, $textId);
 		$questionList = new QuestionAnswersListModel($projectModel, $entryGuid);
 		$questionList->read();
 

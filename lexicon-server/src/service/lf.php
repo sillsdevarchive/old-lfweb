@@ -14,7 +14,6 @@ use libraries\palaso\CodeGuard;
 use libraries\palaso\JsonRpcServer;
 use models\commands\ProjectCommands;
 use models\commands\QuestionCommands;
-use models\commands\TextCommands;
 use models\commands\UserCommands;
 use models\commands\QuestionTemplateCommands;
 use models\mapper\Id;
@@ -27,7 +26,6 @@ require_once(APPPATH . 'config/lf_config.php');
 require_once(APPPATH . 'models/ProjectModel.php');
 require_once(APPPATH . 'models/QuestionModel.php');
 require_once(APPPATH . 'models/QuestionTemplateModel.php');
-require_once(APPPATH . 'models/TextModel.php');
 require_once(APPPATH . 'models/UserModel.php');
 require_once(APPPATH . 'models/LanguageModel.php');
 require_once(APPPATH . 'libraries/recaptchalib.php');
@@ -222,50 +220,6 @@ class Lf
 	}
 
 
-	//---------------------------------------------------------------
-	// TEXT API
-	//---------------------------------------------------------------
-	
-	public function text_update($projectId, $object) {
-		$projectModel = new \models\ProjectModel($projectId);
-		$textModel = new \models\TextModel($projectModel);
-		$isNewText = ($object['id'] == '');
-		if (!$isNewText) {
-			$textModel->read($object['id']);
-		}
-		JsonDecoder::decode($textModel, $object);
-		$textId = $textModel->write();
-		if ($isNewText) {
-			ActivityCommands::addText($projectModel, $textId, $textModel);
-		}
-		return $textId;
-	}
-	
-	public function text_read($projectId, $textId) {
-		$projectModel = new \models\ProjectModel($projectId);
-		$textModel = new \models\TextModel($projectModel, $textId);
-		return JsonEncoder::encode($textModel);
-	}
-	
-	public function text_delete($projectId, $textIds) {
-		return TextCommands::deleteTexts($projectId, $textIds);
-	}
-	
-	public function text_list($projectId) {
-		$projectModel = new \models\ProjectModel($projectId);
-		$textListModel = new \models\TextListModel($projectModel);
-		$textListModel->read();
-		return $textListModel;
-	}
-	
-	public function text_list_dto($projectId) {
-		return \models\dto\TextListDto::encode($projectId, $this->_userId);
-	}
-
-	public function text_settings_dto($projectId, $textId) {
-		return \models\dto\TextSettingsDto::encode($projectId, $textId, $this->_userId);
-	}
-	
 	//---------------------------------------------------------------
 	// Question / Answer / Comment API
 	//---------------------------------------------------------------
