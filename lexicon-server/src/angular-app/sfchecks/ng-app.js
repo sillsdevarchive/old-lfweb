@@ -4,8 +4,6 @@
 angular.module('sfchecks', 
 		[
 		 'ngSanitize',
-		 'sfchecks.projects',
-		 'sfchecks.project',
 		 'sfchecks.questions',
 		 'sfchecks.question',
 		 'sfchecks.filters',
@@ -17,31 +15,17 @@ angular.module('sfchecks',
 	    $routeProvider.when(
     		'/projects', 
     		{
-    			templateUrl: '/angular-app/sfchecks/partials/projects.html', 
-    			controller: 'ProjectsCtrl'
+    			templateUrl: '/angular-app/sfchecks/partials/questions.html', 
+    			controller: 'QuestionsCtrl'
     		}
 	    );
 	    $routeProvider.when(
     		'/project/:projectId', 
     		{
-    			templateUrl: '/angular-app/sfchecks/partials/project.html', 
-    			controller: 'ProjectCtrl'
+    			templateUrl: '/angular-app/sfchecks/partials/questions.html', 
+    			controller: 'QuestionsCtrl'
     		}
     	);
-	    $routeProvider.when(
-	    		'/project/:projectId/settings', 
-	    		{
-	    			templateUrl: '/angular-app/sfchecks/partials/project-settings.html', 
-	    			controller: 'ProjectSettingsCtrl'
-	    		}
-	    	);
-	    $routeProvider.when(
-	    		'/project/:projectId/:textId/settings', 
-	    		{
-	    			templateUrl: '/angular-app/sfchecks/partials/questions-settings.html', 
-	    			controller: 'QuestionsSettingsCtrl'
-	    		}
-	    	);
 	  //<<<<--------
 	    
 	    

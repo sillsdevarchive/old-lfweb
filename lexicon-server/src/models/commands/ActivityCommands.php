@@ -91,7 +91,6 @@ class ActivityCommands
 	public static function addQuestion($projectModel, $questionId, $questionModel) {
 		$activity = new ActivityModel($projectModel);
 		$activity->action = ActivityModel::ADD_QUESTION;
-		$activity->textRef->id = $questionModel->textRef->asString();
 		$activity->questionRef->id = $questionId;
 		$activity->addContent(ActivityModel::QUESTION, $questionModel->title);
 		return $activity->write();

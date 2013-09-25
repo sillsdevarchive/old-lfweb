@@ -10,7 +10,7 @@ class Domain {
 	const ANSWERS		= 140;
 	const COMMENTS		= 150;
 	const LEX_ENTRY		= 160;
-	
+	const TEMPLATES		= 170;
 }
 
 ?>

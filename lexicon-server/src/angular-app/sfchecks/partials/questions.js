@@ -4,10 +4,14 @@ angular.module(
 		'sfchecks.questions',
 		[ 'lf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap', 'sgw.ui.breadcrumb' ]
 	)
-	.controller('QuestionsCtrl', ['$scope', 'questionsService', 'questionTemplateService', '$routeParams', 'sessionService', 'linkService', 'breadcrumbService', 'silNoticeService',
-	                              function($scope, questionsService, qts, $routeParams, ss, linkService, breadcrumbService, notice) {
+	.controller('QuestionsCtrl', ['$scope', 'questionsService', 'questionTemplateService', '$routeParams', 'sessionService', 'linkService', 'linkServiceGwt', 'breadcrumbService', 'silNoticeService',
+	                              function($scope, questionsService, qts, $routeParams, ss, linkService, linkServiceGwt, breadcrumbService, notice) {
 		var projectId = $routeParams.projectId;
 		var entryId = $routeParams.entryId;
+		if (entryId==undefined)
+		{
+			entryId='';			
+		}
 		$scope.projectId = projectId;
 		$scope.entryId = entryId;
 		
@@ -20,14 +24,23 @@ angular.module(
 		$scope.rights.showControlBar = $scope.rights.deleteOther || $scope.rights.create || $scope.rights.createTemplate || $scope.rights.editOther;
 		
 		// Breadcrumb
-		breadcrumbService.set('top',
-				[
-				 {href: '/app/projects', label: 'My Projects'},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
-				]
-		);
-
+		if (entryId!=''){
+			breadcrumbService.set('top',
+					[
+					 {href: '/gwtangular/projects', label: 'My Projects'},
+					 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
+					 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
+					]
+			);
+		}else
+			{
+			breadcrumbService.set('top',
+					[
+					 {href: '/gwtangular/projects', label: 'My Projects'},
+					 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
+					]
+			);
+			}
 		// Question templates
 		$scope.templates = [];
 		$scope.queryTemplates = function() {
@@ -64,20 +77,24 @@ angular.module(
 		// Listview Data
 		$scope.questions = [];
 		$scope.queryQuestions = function() {
-			console.log("queryQuestions()");
 			questionsService.list(projectId, entryId, function(result) {
 				if (result.ok) {
 					$scope.questions = result.data.entries;
 					$scope.questionsCount = result.data.count;
 
 					$scope.enhanceDto($scope.questions);
-					$scope.text = result.data.text;
 					$scope.project = result.data.project;
-					$scope.text.url = linkService.text(projectId, entryId);
-					console.log($scope.project.name);
-					console.log($scope.text.title);
+
 					breadcrumbService.updateCrumb('top', 1, {label: $scope.project.name});
-					breadcrumbService.updateCrumb('top', 2, {label: $scope.text.title});
+					if (entryId!=''){
+						$scope.text = result.data.text;
+						$scope.text.url = linkServiceGwt.text(projectId, entryId);
+						breadcrumbService.updateCrumb('top', 2, {label: $scope.text.title});
+					}else
+					{
+						$scope.text = new Object();
+						$scope.text.title = $scope.project.name;
+					}
 
 					var rights = result.data.rights;
 					$scope.rights.deleteOther = ss.hasRight(rights, ss.domain.QUESTIONS, ss.operation.DELETE_OTHER); 
@@ -183,10 +200,9 @@ angular.module(
 		
 		$scope.enhanceDto = function(items) {
 			for (var i in items) {
-				items[i].url = linkService.question(projectId, entryId, items[i].entryRef);
+				items[i].url = linkServiceGwt.question(projectId, items[i].entryId, items[i].entryRef);
 			}
 		};
-
 	}])
 	.controller('QuestionsSettingsCtrl', ['$scope', 'textService', 'sessionService', '$routeParams', 'breadcrumbService', 'silNoticeService', 
 	                                      function($scope, textService, ss, $routeParams, breadcrumbService, notice) {

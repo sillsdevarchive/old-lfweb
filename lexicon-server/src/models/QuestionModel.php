@@ -233,11 +233,19 @@ class QuestionAnswersListModel extends \models\mapper\MapperListModel
 
 	public function __construct($projectModel, $entryId)
 	{
+		$selectedFiled = array('title', 'description', 'answers', 'entryRef', 'entryId');
+		if ($entryId!='')
+		{
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'entryId' => $entryId),
-			array('title', 'description', 'answers', 'entryRef')
+			array('title' => array('$regex' => ''), 'entryId' => $entryId), $selectedFiled
 		);
+		}else {
+		parent::__construct(
+			QuestionModelMongoMapper::connect($projectModel->databaseName()),
+			array('title' => array('$regex' => '')), $selectedFiled
+		);
+		}
 	}
 
 }

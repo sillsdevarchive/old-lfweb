@@ -18,6 +18,12 @@ class QuestionListDto
 	public static function encode($projectId, $entryGuid, $userId) {
 		$userModel = new UserModel($userId);
 		$projectModel = new ProjectModel($projectId);
+		error_log($entryGuid);
+		if ($entryGuid===null || strtolower($entryGuid)=='null')
+		{
+			$entryGuid = '';
+		}
+		
 		$questionList = new QuestionAnswersListModel($projectModel, $entryGuid);
 		$questionList->read();
 
@@ -29,13 +35,17 @@ class QuestionListDto
 		$data['project'] = array(
 				'name' => $projectModel->projectname,
 				'id' => $projectId);
-		$entryDto = new EntryDto();
-		$entry =  $entryDto->encode($projectId, $entryGuid);
-		$data['entry'] = $entry;
-		
-		$data['text'] = array(
-				'title' =>  $entry["entry"][$projectModel->languageCode],
-				'id' => $entryGuid);
+		if ($entryGuid!='')
+		{
+			$entryDto = new EntryDto();
+			$entry =  $entryDto->encode($projectId, $entryGuid);
+			$data['entry'] = $entry;
+			
+			$data['text'] = array(
+					'title' =>  $entry["entry"][$projectModel->languageCode],
+					'id' => $entryGuid);
+		}
+
 		
 		foreach ($questionList->entries as $questionData) {
 			// Just want answer count, not whole list

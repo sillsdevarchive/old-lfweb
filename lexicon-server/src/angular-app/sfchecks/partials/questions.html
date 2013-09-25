@@ -6,7 +6,7 @@
 <button ng-show="rights.createTemplate" ng-disabled="selected.length == 0 || selected.length > 1" class="btn" ng-click="makeQuestionIntoTemplate()"><i class="icon-pushpin"></i>Make Template</button>
 </form>
 <div class="new-item" collapse="newQuestionCollapsed">
-	<form class="well span12">
+	<form class="well span8" style="width: 670px;">
 	<fieldset class="span4">
 	<label>Question</label>
 	<input type="text" ng-model="questionTitle" class="span4" rows="4" placeholder="the question"></textarea>
@@ -21,7 +21,7 @@
 	</fieldset>
 	</form>
 </div>
-<hr />
+
 <div listview hide-if-empty="true" search="queryQuestions()" items="questions" visible-items="visibleQuestions" select="">
 <div ng-repeat="question in visibleQuestions" class="details-row">
 	<ul class="inline" ng-class="{active: isSelected(question)}">
@@ -42,5 +42,6 @@
 		<li><a href="#">{{getUnreadComments(question)}} unread comments</a></li>
 	</ul>
 	<hr />
+<hr />
 </div>
 </div>

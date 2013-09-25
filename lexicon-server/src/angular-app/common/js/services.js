@@ -164,7 +164,8 @@ angular.module('lf.services', ['jsonRpc'])
 				TEXTS:     function() { return 130;},
 				QUESTIONS: function() { return 140;},
 				ANSWERS:   function() { return 150;},
-				COMMENTS:  function() { return 160;}
+				COMMENTS:  function() { return 160;},
+				TEMPLATES: function() { return 170;}
 		};
 		this.operation = {
 				CREATE:       function() { return 1;},
@@ -202,12 +203,28 @@ angular.module('lf.services', ['jsonRpc'])
 			return this.project(projectId) + "/" + textId;
 		};
 		
-		this.question = function(projectId, entryId, entryRef) {
-			return '/gwtangular/sfchecks#/project/' + projectId + "/" + entryId + "/" + entryRef;
+		this.question = function(projectId, textId, questionId) {
+			return this.text(projectId, textId) + "/" + questionId;
 		};
 		
 		this.user = function(userId) {
 			return '/app/userprofile/' + userId;
 		};
+	})	
+	.service('linkServiceGwt', function() {
+		this.project = function(projectId) {
+			return '/gwtangular/sfchecks#/project/' + projectId;
+			
+		};
+		this.projectSettings = function(projectId) {
+			return '/gwtangular/projects#/project/' + projectId + '/settings';
+			
+		};
+		this.text = function(projectId, textId) {
+			return this.project(projectId) + "/" + textId;
+		};
+		this.question = function(projectId, textId, questionId) {
+			return this.text(projectId, textId) + "/" + questionId;
+		};	
 	})
 	;

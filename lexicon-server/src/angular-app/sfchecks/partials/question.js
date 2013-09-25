@@ -38,8 +38,8 @@ angular.module(
 				[
 				 {href: '/app/projects', label: 'My Projects'},
 				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
-				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId + '/' + $routeParams.qusetionId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId, label: ''},
+				 {href: '/gwtangular/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.entryId + '/' + $routeParams.qusetionId, label: ''},
 				]
 		);
 		
