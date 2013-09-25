@@ -205,7 +205,6 @@ class MongoMapper
 		}
 		// TODO Check this out on nested sub docs > 1
 		$data = $data[$property][$id];
-		error_log(var_export($data, true));
 		MongoDecoder::decode($model, $data, $id);
 	}
 	

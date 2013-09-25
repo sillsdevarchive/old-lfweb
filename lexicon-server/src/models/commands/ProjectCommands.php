@@ -47,7 +47,7 @@ class ProjectCommands
 		}
 	
 		$newProjectId = $project->write();
-		error_log("New Project ID: " . $newProjectId);
+		//error_log("New Project ID: " . $newProjectId);
 		$user->addProject($newProjectId);
 		$user->write();
 	

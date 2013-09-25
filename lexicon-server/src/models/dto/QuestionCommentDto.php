@@ -55,7 +55,6 @@ class QuestionCommentDto
 		$votes = new UserVoteModel($userId, $projectId,  $questionModel->id->asString());
 		$votesDto = array();
 		foreach ($votes->votes->data as $vote) {
-			error_log("has vote");
 			$votesDto[$vote->answerRef->id] = true;
 		}
 		

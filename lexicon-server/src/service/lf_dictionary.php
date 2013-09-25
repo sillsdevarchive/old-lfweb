@@ -42,7 +42,6 @@ require_once(APPPATH . 'libraries/recaptchalib.php');
  * additional info to Lexical Entries.
  */
 
-\libraries\lfdictionary\common\ErrorHandler::register ();
 class LfDictionary {
 	
 	/**
@@ -63,6 +62,7 @@ class LfDictionary {
 	 */
 	private $_userModel;
 	public function __construct($controller) {
+		\libraries\lfdictionary\common\ErrorHandler::register ();
 		$this->_userId = ( string ) $controller->session->userdata ( 'user_id' );
 		$this->_projectId = null;
 		

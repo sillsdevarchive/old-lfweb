@@ -18,7 +18,6 @@ class QuestionListDto
 	public static function encode($projectId, $entryGuid, $userId) {
 		$userModel = new UserModel($userId);
 		$projectModel = new ProjectModel($projectId);
-		error_log($entryGuid);
 		if ($entryGuid===null || strtolower($entryGuid)=='null')
 		{
 			$entryGuid = '';
