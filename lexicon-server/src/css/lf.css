@@ -648,8 +648,12 @@ ul.topNav > li {
 	margin-right: 7px;
 }
 
-ul.topNav li:hover, div.hdrnav li.here {
-	background: #0088cc;
+ul.topNav li:hover {
+	background: #F08030;
+}
+
+ul.topNav li.here {
+	background-image: url(http://languageforge.local/images/lf_header-bar-bkg.png);
 }
 
 ul.topNav a {
@@ -683,7 +687,7 @@ ul.topCrumbs {
 	border-radius: 0px;
 }
 
-ul.topCrumbs a {
+div.topCrumbs a {
 	color: gray;
 }
 
