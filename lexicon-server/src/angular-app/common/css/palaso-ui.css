@@ -123,3 +123,16 @@ ul#strength {
     position:fixed;
     bottom:5px;
 }
+
+form.multitext .control-group {
+	margin-bottom: 10px;
+}
+
+form.multitext label {
+	font-weight:bold;
+}
+
+form.multitext .wsid {
+	margin-left:5px;
+	font-style:italic;
+}

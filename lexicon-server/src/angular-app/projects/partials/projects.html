@@ -4,8 +4,8 @@
 	<button class="btn" ng-click="newProjectCollapsed = !newProjectCollapsed"><i class="icon-plus"></i>Create New Project</button>
 </form>
 <div class="new-item" collapse="newProjectCollapsed">
-	<form class="well ">
-	<input type="text" ng-model="projectName" placeholder="Project Name"/>
+	<form name="newprojectform" class="well">
+	<input type="text" ng-model="projectName" required placeholder="Project Name"/>
 	<label>Project Language</label>
 	<typeahead class="typeahead" items="languages" term="typeahead.langName" search="queryLanguages" select="selectLanguage">
 		<ul>
@@ -16,7 +16,7 @@
 		</ul>
 	</typeahead>
 	<label></label>
-	<button type="submit" class="btn" ng-enabled="projectName and language" ng-click="addProject(); newProjectCollapsed = true"><i class="icon-plus"></i>Add Project</button>
+	<button type="submit" class="btn" ng-enabled="projectName && language" ng-click="addProject(); newProjectCollapsed = true"><i class="icon-plus"></i>Add Project</button>
 	</form>
 </div>
 <hr />
