@@ -2,61 +2,14 @@
 
 namespace models\commands;
 
+use libraries\palaso\CodeGuard;
+use models\mapper\JsonDecoder;
+use models\rights\Roles;
 use models\ProjectModel;
 use models\UserModel;
-use models\rights\Roles;
-use models\commands\ActivityCommands;
-
-
-use libraries\palaso\CodeGuard;
-use models\mapper\JsonEncoder;
-use models\mapper\JsonDecoder;
 
 class ProjectCommands
 {
-	/**
-	 * Create/Update a Project for RPC call
-	 * @param json array $jsonModel
-	 * @return string Id of written object
-	 */
-	public static function createProject($jsonModel, $userId) {
-		$project = new \models\ProjectModel();
-		$id = $jsonModel['id'];
-		$isNewProject = ($id == '');
-		if (!$isNewProject) {
-			$project->read($id);
-		}
-		
-		JsonDecoder::decode($project, $jsonModel);
-		return self::createOrUpdateProject($project, $userId, $isNewProject);
-	}
-	
-	/**
-	 * Create/Update a Project for internal
-	 * @param ProjectModel $project
-	 * @return string Id of written object
-	 */
-	public static function createOrUpdateProject($project, $userId, $isNewProject) {
-		CodeGuard::checkTypeAndThrow($project, 'models\ProjectModel');
-		if ($isNewProject) {
-			$user = new \models\UserModel($userId);
-			$user->read($userId);
-				
-			$project->addUser($userId, Roles::PROJECT_ADMIN);
-			$project->projectCode = ProjectModel::makeProjectCode($project->languageCode, $project->projectname, ProjectModel::PROJECT_LIFT);
-		}
-	
-		$newProjectId = $project->write();
-		//error_log("New Project ID: " . $newProjectId);
-		$user->addProject($newProjectId);
-		$user->write();
-	
-		ActivityCommands::addUserToProject($project, $userId);
-		if ($isNewProject) {
-			//ActivityCommands::addProject($project); // TODO: Determine if any other params are needed. RM 2013-08
-		}
-		return $newProjectId;
-	}
 	
 	/**
 	 * @param array $projectIds
@@ -74,6 +27,46 @@ class ProjectCommands
 		return $count;
 	}
 
+	/**
+	 * Update the user role in the project
+	 * @param string $projectId
+	 * @param array $params
+	 * @return unknown|string
+	 */
+	public static function updateUserRole($projectId, $params) {
+		CodeGuard::checkNotFalseAndThrow($projectId, '$projectId');
+		CodeGuard::checkNotFalseAndThrow($params['id'], 'id');
+		
+		// Add the user to the project
+		$role = array_key_exists('role', $params) && $params['role'] != '' ? $params['role'] : Roles::USER;
+		$userId = $params['id'];
+		$user = new UserModel($userId);
+		$project = new ProjectModel($projectId);
+		$project->addUser($userId, $role);
+		$user->addProject($projectId);
+		$project->write();
+		$user->write();
+		ActivityCommands::addUserToProject($project, $userId);
+		
+		return $userId;
+	}
+	
+	/**
+	 * Removes users from the project (two-way unlink)
+	 * @param Id $projectId
+	 * @param array $userIds array<string>
+	 */
+	public static function removeUsers($projectId, $userIds) {
+		$project = new ProjectModel($projectId);
+		foreach ($userIds as $userId) {
+			$user = new UserModel($userId);
+			$project->removeUser($user->id->asString());
+			$user->removeProject($project->id->asString());
+			$project->write();
+			$user->write();
+		}
+	}
+	
 	public static function renameProject($projectId, $oldName, $newName) {
 		// TODO: Write this. (Move renaming logic over from sf->project_update). RM 2013-08
 	}

@@ -28,9 +28,9 @@ class PasswordModel extends MapperModel
 		$this->id = new Id();
 		parent::__construct(PasswordModel_MongoMapper::instance(), $id);
 	}
-	
-	public static function remove($id)
-	{
+
+        // TODO Review: Why do we have remove on this? CP 2013-11
+	public static function remove($id) {
 		PasswordModel_MongoMapper::instance()->remove($id);
 	}
 

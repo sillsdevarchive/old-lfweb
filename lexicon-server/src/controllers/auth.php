@@ -76,12 +76,15 @@ class Auth extends Base {
 				
 				$referer = $this->session->userdata('referer_url');
 				$this->session->unset_userdata('referer_url');
-				if ($referer && strpos($referer, "/auth") === false) {
+				if ($referer && strpos($referer, "/app") !== false) {
 					redirect($referer, 'location');
-				} 
+				}
 				else
 				{
-					redirect('/', 'location');
+					$user = new \models\UserModel((string)$this->session->userdata('user_id'));
+					$projects = $user->listProjects();
+					$firstProjectId = $projects->entries[0]['id'];
+					redirect("/app/lfdictionary#/project/$firstProjectId", 'location');
 				}
 			}
 			else
@@ -213,13 +216,13 @@ class Auth extends Base {
 				'id' => 'email',
 			);
 
-			if ( $this->config->item('identity', 'ion_auth') == 'username' ){
-				$this->data['identity_label'] = $this->lang->line('forgot_password_username_identity_label');
-			}
-			else
-			{
+// 			if ( $this->config->item('identity', 'ion_auth') == 'username' ){
+// 				$this->data['identity_label'] = $this->lang->line('forgot_password_username_identity_label');
+// 			}
+// 			else
+// 			{
 				$this->data['identity_label'] = $this->lang->line('forgot_password_email_identity_label');
-			}
+// 			}
 
 			//set any errors and display the form
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -303,7 +306,7 @@ class Auth extends Base {
 			else
 			{
 				// do we have a valid request?
-				if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id'))
+				if (/*$this->_valid_csrf_nonce() === FALSE ||*/$user->id != $this->input->post('user_id'))
 				{
 
 					//something fishy might be up

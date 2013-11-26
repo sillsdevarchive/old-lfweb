@@ -7,7 +7,7 @@ class AllTests extends TestSuite {
     function __construct() {
         parent::__construct();
  		$this->addFile(TEST_PATH . 'AllTests_NoApi.php');
-		//$this->addFile(TEST_PATH . 'api/AllTests.php');
+		$this->addFile(TEST_PATH . 'api/AllTests.php');
     }
 }
 ?>

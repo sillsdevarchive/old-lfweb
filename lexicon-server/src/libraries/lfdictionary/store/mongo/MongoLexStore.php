@@ -36,7 +36,7 @@ class MongoLexStore implements ILexStore
 	 * @param string $databaseName
 	 */
 	private function __construct($databaseName) {
-		CodeGuard::checkEmptyAndThrow($databaseName, 'databaseName');
+		CodeGuard::checkNotFalseAndThrow($databaseName, 'databaseName');
 		if (self::$_mongo == null) {
 			self::$_mongo = new \Mongo();
 		}

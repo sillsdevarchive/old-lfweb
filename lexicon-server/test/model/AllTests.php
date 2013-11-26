@@ -10,10 +10,12 @@ class AllModelTests extends TestSuite {
  		$this->addFile(TEST_PATH . 'model/ProjectModel_Test.php');
  		$this->addFile(TEST_PATH . 'model/MultipleModel_Test.php');
  		$this->addFile(TEST_PATH . 'model/PasswordModel_Test.php');
- 		//$this->addFile(TEST_PATH . 'model/QuestionModel_Test.php');
- 		//$this->addFile(TEST_PATH . 'model/AnswerModel_Test.php');
- 		//$this->addFile(TEST_PATH . 'model/CommentModel_Test.php');
+ 		$this->addFile(TEST_PATH . 'model/QuestionModel_Test.php');
+ 		$this->addFile(TEST_PATH . 'model/AnswerModel_Test.php');
+ 		$this->addFile(TEST_PATH . 'model/CommentModel_Test.php');
  		$this->addFile(TEST_PATH . 'model/Roles_Test.php');
+ 		$this->addFile(TEST_PATH . 'model/UserVoteModel_Test.php');
+ 		$this->addFile(TEST_PATH . 'model/UserUnreadModel_Test.php');
     }
 
 }

@@ -11,6 +11,18 @@ class MapperModel
 	 * @var MongoMapper
 	 */
 	protected $_mapper;
+	
+	/**
+	 * 
+	 * @var \DateTime
+	 */
+	public $dateModified;
+	
+	/**
+	 * 
+	 * @var \DateTime
+	 */
+	public $dateCreated;
 
 	/**
 	 * 
@@ -19,14 +31,16 @@ class MapperModel
 	 */
 	protected function __construct($mapper, $id = '') {
 		$this->_mapper = $mapper;
+		$this->dateModified = new \DateTime();
+		$this->dateCreated = new \DateTime();
 		CodeGuard::checkTypeAndThrow($id, 'string');
 		if (!empty($id)) {
 			$this->read($id);
 		}
 	}
 	
-	public function findOneByQuery($query, $fields = array())
-	{
+        // TODO Would be nice to deprecate this. Should be removed. Derived models should do their own query, or have methods that do the right query not elsewhere in app code. CP 2013-11
+	public function findOneByQuery($query, $fields = array()) {
 		return $this->_mapper->findOneByQuery($this, $query, $fields = array());
 	}
 	
@@ -35,7 +49,7 @@ class MapperModel
 	 * @param string $id
 	 * @see MongoMapper::read()
 	 */
-	function read($id) {
+	public function read($id) {
 		return $this->_mapper->read($this, $id);
 	}
 	
@@ -45,7 +59,7 @@ class MapperModel
 	 * @param string $value
 	 * @return boolean
 	 */
-	function readByProperty($property, $value) {
+	public function readByProperty($property, $value) {
 		return $this->_mapper->readByProperty($this, $property, $value);
 	}
 	
@@ -54,8 +68,12 @@ class MapperModel
 	 * @return string The unique id of the object written
 	 * @see MongoMapper::write()
 	 */
-	function write() {
+	public function write() {
 		CodeGuard::checkTypeAndThrow($this->id, 'models\mapper\Id');
+		$this->dateModified = new \DateTime();
+		if (Id::isEmpty($this->id)) {
+			$this->dateCreated = new \DateTime();
+		}
 		$this->id->id = $this->_mapper->write($this, $this->id->id);
 		return $this->id->id;
 	}
@@ -65,9 +83,17 @@ class MapperModel
 	 * @param string $id
 	 * @return bool
 	 */
-	function exists($id) {
+	public function exists($id) {
 		$idExists = $this->_mapper->exists($id);
 		return $idExists;
+	}
+
+	/**
+	 * Returns the database name
+	 * @return string
+	 */
+	public function databaseName() {
+		return $this->_mapper->databaseName();
 	}
 }
 

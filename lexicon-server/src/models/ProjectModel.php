@@ -2,6 +2,8 @@
 
 namespace models;
 
+use models\mapper\ArrayOf;
+
 use libraries\palaso\CodeGuard;
 use models\rights\Realm;
 use models\rights\Roles;
@@ -11,6 +13,8 @@ use models\mapper\MongoMapper;
 use models\mapper\MongoStore;
 use models\mapper\ReferenceList;
 use models\mapper\Id;
+use models\UserList_ProjectModel;
+use models\sms\SmsSettings;
 
 class ProjectModel extends \models\mapper\MapperModel
 {
@@ -22,9 +26,52 @@ class ProjectModel extends \models\mapper\MapperModel
 		$this->users = new MapOf(function($data) {
 			return new ProjectRoleModel();
 		});
+		$this->userProperties = new ProjectUserPropertiesSettings();
 		parent::__construct(ProjectModelMongoMapper::instance(), $id);
 	}
 	
+	/**
+	 * @param string $domainName
+	 * @return \models\ProjectModel
+	 */
+	public static function createFromDomain($domainName) {
+		$projectCode = self::domainToProjectCode($domainName);
+		$project = new ProjectModel();
+		if (!$project->readByProperty('projectCode', $projectCode)) {
+			return null;
+		}
+		return $project;
+	}
+	
+	/**
+	 * Reads the model from the mongo collection
+	 * Ensures that the required pick lists exist even if not present in the database
+	 * @param string $id
+	 * @see MapperModel::read()
+	 */
+	public function read($id) {
+		$result = parent::read($id);
+		$this->userProperties->ensurePickListsExist();
+		return $result;
+	}
+	
+	
+	/**
+	 * @param string $domainName
+	 * @return string
+	 */
+	public static function domainToProjectCode($domainName) {
+		$uriParts = explode('.', $domainName);
+		if ($uriParts[0] == 'www') {
+			array_shift($uriParts);
+		}
+		return $uriParts[0];
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see \models\mapper\MapperModel::databaseName()
+	 */
 	public function databaseName() {
 		if ($this->projectCode) {
 			$name = $this->projectCode;
@@ -37,6 +84,7 @@ class ProjectModel extends \models\mapper\MapperModel
 
 	}
 	
+	// TODO These 2 fns are probably in commands somewhere and are better off there. They should be removed from here CP 2013-11
 	public static function createNewProject($languageCode, $projectName, $projectType = ProjectModel::PROJECT_LIFT) {
 		$projectModel = new ProjectModel();
 		$projectModel->languageCode = $languageCode;
@@ -47,9 +95,9 @@ class ProjectModel extends \models\mapper\MapperModel
 	}
 	
 	public static function makeProjectCode($languageCode, $projectName, $projectType) {
-		CodeGuard::checkEmptyAndThrow($languageCode, 'languageCode');
-		CodeGuard::checkEmptyAndThrow($projectName, 'projectName');
-		CodeGuard::checkEmptyAndThrow($projectType, 'projectType');
+		CodeGuard::checkNotFalseAndThrow($languageCode, 'languageCode');
+		CodeGuard::checkNotFalseAndThrow($projectName, 'projectName');
+		CodeGuard::checkNotFalseAndThrow($projectType, 'projectType');
 		$projectCode = $languageCode . '-' . strtolower(str_replace(' ', '_', $projectName)) . '-' . $projectType;
 		return $projectCode;
 	}
@@ -97,7 +145,7 @@ class ProjectModel extends \models\mapper\MapperModel
 			}
 			$userList->entries[$i]['role'] = $this->users->data[$userId]->role;
 		}
-		return $userList;
+ 		return $userList;
 	}
 	
 	/**
@@ -141,11 +189,6 @@ class ProjectModel extends \models\mapper\MapperModel
 	/**
 	 * @var string
 	 */
-	public $projectCode;
-	
-	/**
-	 * @var string
-	 */
 	public $projectname;
 	
 	/**
@@ -158,15 +201,51 @@ class ProjectModel extends \models\mapper\MapperModel
 	 */
 	public $users;
 	
+	/**
+	 * A string representing exactly this project from external sources. Typically some part of the URL.
+	 * @var string
+	 */
+	public $projectCode;
 	
 	/**
-	* @var string
-	*/
+	 * Flag to indicated if this project is featured on the website 
+	 * @var boolean
+	 */
+	public $featured;
+
+	/**
+	 * @var ProjectUserPropertiesSettings
+	 */
+	public $userProperties;
+
+	/**
+	 * @var string
+	 */
 	public $title;
-	
+
 	// What else needs to be in the model?
-	
 }
+
+/**
+ * This class is separate from the ProjectModel to protect the smsSettings and emailSettings which are managed
+ * by the site administrator only.
+ */
+class ProjectSettingsModel extends ProjectModel
+{
+	public function __construct($id = '') {
+		$this->emailSettings = new EmailSettings();
+		parent::__construct($id);
+	}
+
+
+	/**
+	 * @var EmailSettings
+	 */
+	public $emailSettings;
+
+}
+
+	
 
 
 ?>

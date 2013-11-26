@@ -3,14 +3,15 @@ namespace models\rights;
 
 class Domain {
 
-	const ANY			= 100;
-	const USERS			= 110;
-	const PROJECTS		= 120;
-	const QUESTIONS		= 130;
-	const ANSWERS		= 140;
-	const COMMENTS		= 150;
-	const LEX_ENTRY		= 160;
-	const TEMPLATES		= 170;
+	const ANY			= 1000;
+	const USERS			= 1100;
+	const PROJECTS		= 1200;
+	const QUESTIONS		= 1300;
+	const ANSWERS		= 1400;
+	const COMMENTS		= 1500;
+	const LEX_ENTRY		= 1600;
+	const TEMPLATES		= 1700;
+	const TAGS              = 1800;
 }
 
 ?>

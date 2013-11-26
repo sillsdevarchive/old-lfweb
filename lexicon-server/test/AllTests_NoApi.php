@@ -8,8 +8,9 @@ class AllTestsNoApi extends TestSuite {
         parent::__construct();
  		$this->addFile(TEST_PATH . 'model/AllTests.php');
  		$this->addFile(TEST_PATH . 'mapper/AllTests.php');
- 		//$this->addFile(TEST_PATH . 'commands/AllTests.php');
- 		//$this->addFile(TEST_PATH . 'dto/AllTests.php');
+ 		$this->addFile(TEST_PATH . 'commands/AllTests.php');
+ 		$this->addFile(TEST_PATH . 'communicate/AllTests.php');
+ 		$this->addFile(TEST_PATH . 'dto/AllTests.php');
     }
 }
 ?>

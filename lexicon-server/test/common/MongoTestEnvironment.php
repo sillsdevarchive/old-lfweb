@@ -10,8 +10,7 @@ class MongoTestEnvironment
 	 */
 	private $_db;
 	
-	public function __construct()
-	{
+	public function __construct() {
 		$this->_db = \models\mapper\MongoStore::connect(LF_DATABASE);
 	}
 
@@ -19,15 +18,11 @@ class MongoTestEnvironment
 	 * Removes all the collections from the mongo database.
 	 * Hopefully this is only ever called on the scriptureforge_test database.
 	 */
-	public function clean()
-	{
+	public function clean() {
 		foreach ($this->_db->listCollections() as $collection)
 		{
 			$collection->drop();
 		}
-		$projectModel = new MockProjectModel();
-		$projectDb = \models\mapper\MongoStore::connect($projectModel->databaseName());
-		$projectDb->drop();
 	}
 
 	/**
@@ -66,8 +61,25 @@ class MongoTestEnvironment
 	public function createProject($name) {
 		$projectModel = new models\ProjectModel();
 		$projectModel->projectname = $name;
+		$this->cleanProjectEnvironment($projectModel);
 		$projectModel->write();
 		return $projectModel;
+	}
+	
+	public function createProjectSettings($name) {
+		$projectModel = new models\ProjectSettingsModel();
+		$projectModel->projectname = $name;
+		$this->cleanProjectEnvironment($projectModel);
+		$projectModel->write();
+		return $projectModel;
+	}
+	
+	private function cleanProjectEnvironment($projectModel) {
+		// clean out old db if it is present
+		$projectDb = \models\mapper\MongoStore::connect($projectModel->databaseName());
+		foreach ($projectDb->listCollections() as $collection) {
+			$collection->drop();
+		}
 	}
 	
 	/**
@@ -89,3 +101,5 @@ class MongoTestEnvironment
 	}
 		
 }
+
+?>
