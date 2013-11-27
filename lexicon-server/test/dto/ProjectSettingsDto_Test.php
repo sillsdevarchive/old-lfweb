@@ -18,7 +18,7 @@ class TestProjectSettingsDto extends UnitTestCase {
 		$user = new UserModel($userId);
 		$user->role = Roles::USER;
 
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		
 		$project->addUser($userId, Roles::USER);
@@ -35,7 +35,7 @@ class TestProjectSettingsDto extends UnitTestCase {
 		$this->assertEqual($dto['entries'][0]['role'], Roles::USER);
 		$this->assertTrue(count($dto['rights']) > 0, "No rights in dto");
 		$this->assertEqual($dto['bcs']['op'], 'settings');
-		$this->assertEqual($dto['bcs']['project'], array('id' => $projectId, 'crumb' => SF_TESTPROJECT));
+		$this->assertEqual($dto['bcs']['project'], array('id' => $projectId, 'crumb' => LF_TESTPROJECT));
 		$this->assertFalse(isset($dto['project']['users']));
 		$this->assertEqual($dto['project']['id'], $projectId);
 	}

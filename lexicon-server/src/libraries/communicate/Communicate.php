@@ -132,7 +132,9 @@ class Communicate
 			$unreadModel->markUnread($messageId);
 			$unreadModel->write();
 		}
-		SmsQueue::processQueue($project->databaseName());
+		if (isset($project->smsSettings)) {
+			SmsQueue::processQueue($project->databaseName());
+		}
 		
 		return $messageId;
 	}
@@ -166,7 +168,7 @@ class Communicate
 		}
 		
 		// Prepare the sms message if required
-		if ($project->smsSettings->hasValidCredentials()) {
+		if (isset($project->smsSettings) && $project->smsSettings->hasValidCredentials()) {
 			if ($user->communicate_via == UserModel::COMMUNICATE_VIA_SMS || $user->communicate_via == UserModel::COMMUNICATE_VIA_BOTH) {
 				$databaseName = $project->databaseName();
 				$sms = new SmsModel($databaseName);
@@ -174,12 +176,12 @@ class Communicate
 				$sms->to = $user->mobile_phone;
 				$sms->from = $project->smsSettings->fromNumber;
 				$vars = array(
-					'user' => $user,
-					'project' => $project
+						'user' => $user,
+						'project' => $project
 				);
 				$t = CommunicateHelper::templateFromString($smsTemplate);
 				$sms->message = $t->render($vars);
-				
+		
 				CommunicateHelper::deliverSMS($sms, $delivery);
 			}
 		}
@@ -201,7 +203,7 @@ class Communicate
 		$html = $t->render($vars);
 
 		CommunicateHelper::deliverEmail(
-			array(SF_DEFAULT_EMAIL => SF_DEFAULT_EMAIL_NAME),
+			array(LF_DEFAULT_EMAIL => LF_DEFAULT_EMAIL_NAME),
 			array($userModel->emailPending => $userModel->name),
 			'ScriptureForge account signup validation',
 			$html,
@@ -228,7 +230,7 @@ class Communicate
 		$html = $t->render($vars);
 
 		CommunicateHelper::deliverEmail(
-			array(SF_DEFAULT_EMAIL => SF_DEFAULT_EMAIL_NAME),
+			array(LF_DEFAULT_EMAIL => LF_DEFAULT_EMAIL_NAME),
 			array($toUserModel->emailPending => $toUserModel->name),
 			'ScriptureForge account signup validation',
 			$html,
@@ -255,7 +257,7 @@ class Communicate
 		$html = $t->render($vars);
 	
 		CommunicateHelper::deliverEmail(
-			array(SF_DEFAULT_EMAIL => SF_DEFAULT_EMAIL_NAME),
+			array(LF_DEFAULT_EMAIL => LF_DEFAULT_EMAIL_NAME),
 			array($toUserModel->email => $toUserModel->name),
 			'ScriptureForge new user login for project',
 			$html,

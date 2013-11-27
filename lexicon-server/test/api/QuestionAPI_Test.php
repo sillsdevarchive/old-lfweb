@@ -54,7 +54,7 @@ class TestQuestionAPI extends UnitTestCase {
 	
 	function testQuestionCRUD_CRUDOK() {
 		$e = new QuestionAPITestEnvironment();
-		$projectId = $e->createProject(SF_TESTPROJECT);
+		$projectId = $e->createProject(LF_TESTPROJECT);
 		$textId = $e->createText($projectId, 'Test Text 1');
 		$api = new jsonRPCClient("http://scriptureforge.local/api/sf", false);
 		

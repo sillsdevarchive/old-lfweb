@@ -26,18 +26,18 @@ class TestQuestionModel extends UnitTestCase {
 
 	function testCRUD_Works() {
 		$e = new MongoTestEnvironment();
-		$textRef = MongoTestEnvironment::mockId();
+		$entryRef = MongoTestEnvironment::mockId();
 		$projectModel = new MockProjectModel();
 		
 		// List
-		$list = new QuestionListModel($projectModel, $textRef);
+		$list = new QuestionListModel($projectModel, $entryRef);
 		$list->read();
 		$this->assertEqual(0, $list->count);
 		
 		// Create
 		$question = new QuestionModel($projectModel);
 		$question->title = "SomeQuestion";
-		$question->textRef->id = $textRef;
+		$question->entryRef->id = $entryRef;
 		$id = $question->write();
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
@@ -47,7 +47,7 @@ class TestQuestionModel extends UnitTestCase {
 		$otherQuestion = new QuestionModel($projectModel, $id);
 		$this->assertEqual($id, $otherQuestion->id->asString());
 		$this->assertEqual('SomeQuestion', $otherQuestion->title);
-		$this->assertEqual($textRef, $otherQuestion->textRef->id);
+		$this->assertEqual($entryRef, $otherQuestion->entryRef->id);
 		
 		// Update
 		$otherQuestion->title = 'OtherQuestion';
@@ -70,23 +70,23 @@ class TestQuestionModel extends UnitTestCase {
 		
 	}
 
-	function testTextReference_NullRefValidRef_AllowsNullRef() {
+	function testEntryReference_NullRefValidRef_AllowsNullRef() {
 		$projectModel = new MockProjectModel();
 		$mockTextRef = (string)new \MongoId();
 		
-		// Test create with null textRef
+		// Test create with null entryRef
 		$question = new QuestionModel($projectModel);
 		$id = $question->write();
 		
 		$otherQuestion = new QuestionModel($projectModel, $id);
-		$this->assertEqual('', $otherQuestion->textRef->id);
+		$this->assertEqual('', $otherQuestion->entryRef->id);
 		
-		// Test update with textRef
-		$question->textRef->id = $mockTextRef;
+		// Test update with entryRef
+		$question->entryRef->id = $mockTextRef;
 		$question->write();
 		
 		$otherQuestion = new QuestionModel($projectModel, $id);
-		$this->assertEqual($mockTextRef, $otherQuestion->textRef->id);
+		$this->assertEqual($mockTextRef, $otherQuestion->entryRef->id);
 		
 	}
 

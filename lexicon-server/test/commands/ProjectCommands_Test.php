@@ -16,7 +16,7 @@ class TestProjectCommands extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		
 		ProjectCommands::deleteProjects(array($projectId));
@@ -29,7 +29,7 @@ class TestProjectCommands extends UnitTestCase {
 		// setup parameters: user, project and params
 		$userId = $e->createUser("existinguser", "Existing Name", "existing@example.com");
 		$user = new UserModel($userId);
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		$params = array(
 				'id' => $user->id->asString(),
@@ -49,7 +49,7 @@ class TestProjectCommands extends UnitTestCase {
 		$projectUser = $sameProject->listUsers()->entries[0];
 		$this->assertEqual($projectUser['name'], "Existing Name");
 		$userProject = $updatedUser->listProjects()->entries[0];
-		$this->assertEqual($userProject['projectname'], SF_TESTPROJECT);
+		$this->assertEqual($userProject['projectname'], LF_TESTPROJECT);
 	}
 	
 	function testUpdateUserRole_JoinTwice_JoinedOnce() {
@@ -57,7 +57,7 @@ class TestProjectCommands extends UnitTestCase {
 		$e->clean();
 		
 		// setup user and project
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		$userId = $e->createUser("existinguser", "Existing Name", "existing@example.com");
 		$params = array(
@@ -92,7 +92,7 @@ class TestProjectCommands extends UnitTestCase {
 		$e->clean();
 		
 		// setup parameters: project and users
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		$userIds = array();
 		
@@ -108,7 +108,7 @@ class TestProjectCommands extends UnitTestCase {
 		$e->clean();
 
 		// setup project and users
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		$user1Id = $e->createUser("user1name", "User1 Name", "user1@example.com");
 		$user2Id = $e->createUser("user2name", "User2 Name", "user2@example.com");
@@ -135,11 +135,11 @@ class TestProjectCommands extends UnitTestCase {
 		
 		// each user in project, project has each user
 		$user1Project = $otherUser1->listProjects()->entries[0];
-		$this->assertEqual($user1Project['projectname'], SF_TESTPROJECT);
+		$this->assertEqual($user1Project['projectname'], LF_TESTPROJECT);
 		$user2Project = $otherUser1->listProjects()->entries[0];
-		$this->assertEqual($user2Project['projectname'], SF_TESTPROJECT);
+		$this->assertEqual($user2Project['projectname'], LF_TESTPROJECT);
 		$user3Project = $otherUser1->listProjects()->entries[0];
-		$this->assertEqual($user3Project['projectname'], SF_TESTPROJECT);
+		$this->assertEqual($user3Project['projectname'], LF_TESTPROJECT);
 		$projectUser1 = $otherProject->listUsers()->entries[0];
 		$this->assertEqual($projectUser1['username'], "user1name");
 		$projectUser2 = $otherProject->listUsers()->entries[1];

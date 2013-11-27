@@ -43,7 +43,7 @@ class TestCommunicate extends UnitTestCase {
 		$userId = $e->createUser("User", "Name", "name@example.com");
 		$user = new UserModel($userId);
 		$user->communicate_via = UserModel::COMMUNICATE_VIA_EMAIL;
-		$project = $e->createProjectSettings(SF_TESTPROJECT);
+		$project = $e->createProjectSettings(LF_TESTPROJECT);
 		$subject = 'TestSubject';
 		$project->emailSettings->fromAddress = 'projectName@scriptureforge.org';
 		$project->emailSettings->fromName = 'ScriptureForge ProjectName';
@@ -69,7 +69,7 @@ class TestCommunicate extends UnitTestCase {
 		$userId = $e->createUser("User", "Name", "name@example.com");
 		$user = new UserModel($userId);
 		$user->communicate_via = UserModel::COMMUNICATE_VIA_EMAIL;
-		$project = $e->createProjectSettings(SF_TESTPROJECT);
+		$project = $e->createProjectSettings(LF_TESTPROJECT);
 		$subject = 'TestSubject';
 		$project->emailSettings->fromAddress = 'projectName@scriptureforge.org';
 		$project->emailSettings->fromName = 'ScriptureForge ProjectName';
@@ -99,7 +99,7 @@ class TestCommunicate extends UnitTestCase {
 		Communicate::sendSignup($userModel, $delivery);
 		
 		// What's in the delivery?
-		$expectedFrom = array(SF_DEFAULT_EMAIL => SF_DEFAULT_EMAIL_NAME);
+		$expectedFrom = array(LF_DEFAULT_EMAIL => LF_DEFAULT_EMAIL_NAME);
 		$expectedTo = array($userModel->emailPending => $userModel->name);
 		$this->assertEqual($expectedFrom, $delivery->from);
 		$this->assertEqual($expectedTo, $delivery->to);
@@ -109,33 +109,34 @@ class TestCommunicate extends UnitTestCase {
 	}
 
 	function testCommunicateToUser_SendSms_PropertiesToFromMessageProviderInfoOk() {
-		$e = new MongoTestEnvironment();
-		$e->clean();
-		$userId = $e->createUser("User", "Name", "name@example.com");
-		$user = new UserModel($userId);
-		$user->communicate_via = UserModel::COMMUNICATE_VIA_SMS;
-		$user->mobile_phone = '+66837610205';
-		$project = $e->createProjectSettings(SF_TESTPROJECT);
-		$project->smsSettings->fromNumber = '13852904211';
-		$project->smsSettings->accountId = 'ACc03c2767c2c9c138bde0aa0b30ac9d6e';
-		$project->smsSettings->authToken = 'be77f02cd3b6b13d3b42d8a64050fd35';
-		$subject = '';
-		$smsTemplate = 'Test message';
-		$emailTemplate = '';
-		$delivery = new MockCommunicateDelivery();
-	
-		Communicate::communicateToUser($user, $project, $subject, $smsTemplate, $emailTemplate, $delivery);
-	
-		// What's in the delivery?
-		$expectedTo = $user->mobile_phone;
-		$expectedFrom = $project->smsSettings->fromNumber;
-		$expectedProviderInfo = $project->smsSettings->accountId . '|' . $project->smsSettings->authToken;
-		$this->assertEqual($expectedTo, $delivery->smsModel->to);
-		$this->assertEqual($expectedFrom, $delivery->smsModel->from);
-		$this->assertEqual($smsTemplate, $delivery->smsModel->message);
-		$this->assertEqual(SmsModel::SMS_TWILIO, $delivery->smsModel->provider);  // expected to be set by default
-		$this->assertEqual($expectedProviderInfo, $delivery->smsModel->providerInfo);
-	
+		if (isset($project->smsSettings)) {
+			$e = new MongoTestEnvironment();
+			$e->clean();
+			$userId = $e->createUser("User", "Name", "name@example.com");
+			$user = new UserModel($userId);
+			$user->communicate_via = UserModel::COMMUNICATE_VIA_SMS;
+			$user->mobile_phone = '+66837610205';
+			$project = $e->createProjectSettings(LF_TESTPROJECT);
+			$project->smsSettings->fromNumber = '13852904211';
+			$project->smsSettings->accountId = 'ACc03c2767c2c9c138bde0aa0b30ac9d6e';
+			$project->smsSettings->authToken = 'be77f02cd3b6b13d3b42d8a64050fd35';
+			$subject = '';
+			$smsTemplate = 'Test message';
+			$emailTemplate = '';
+			$delivery = new MockCommunicateDelivery();
+		
+			Communicate::communicateToUser($user, $project, $subject, $smsTemplate, $emailTemplate, $delivery);
+		
+			// What's in the delivery?
+			$expectedTo = $user->mobile_phone;
+			$expectedFrom = $project->smsSettings->fromNumber;
+			$expectedProviderInfo = $project->smsSettings->accountId . '|' . $project->smsSettings->authToken;
+			$this->assertEqual($expectedTo, $delivery->smsModel->to);
+			$this->assertEqual($expectedFrom, $delivery->smsModel->from);
+			$this->assertEqual($smsTemplate, $delivery->smsModel->message);
+			$this->assertEqual(SmsModel::SMS_TWILIO, $delivery->smsModel->provider);  // expected to be set by default
+			$this->assertEqual($expectedProviderInfo, $delivery->smsModel->providerInfo);
+		}	
 	}
 	
 	function testSendNewUserInProject_PropertiesFromToBodyOk() {
@@ -145,13 +146,13 @@ class TestCommunicate extends UnitTestCase {
 		$toUser = new UserModel($toUserId);
 		$newUserName = 'newusername';
 		$newUserPassword = 'password';
-		$project = $e->createProjectSettings(SF_TESTPROJECT);
+		$project = $e->createProjectSettings(LF_TESTPROJECT);
 		$delivery = new MockCommunicateDelivery();
 		
 		Communicate::sendNewUserInProject($toUser, $newUserName, $newUserPassword, $project, $delivery);
 		
 		// What's in the delivery?
-		$expectedFrom = array(SF_DEFAULT_EMAIL => SF_DEFAULT_EMAIL_NAME);
+		$expectedFrom = array(LF_DEFAULT_EMAIL => LF_DEFAULT_EMAIL_NAME);
 		$expectedTo = array($toUser->email => $toUser->name);
 		$this->assertEqual($expectedFrom, $delivery->from);
 		$this->assertEqual($expectedTo, $delivery->to);

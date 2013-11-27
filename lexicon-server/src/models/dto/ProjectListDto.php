@@ -4,7 +4,6 @@ namespace models\dto;
 
 use models\ProjectList_UserModel;
 use models\ProjectModel;
-use models\TextListModel;
 use models\UserModel;
 use models\rights\Operation;
 use models\rights\Domain;
@@ -33,10 +32,10 @@ class ProjectListDto
 		$data['entries'] = array();
 		foreach ($projectList->entries as $entry) {
 			$projectModel = new ProjectModel($entry['id']);
-			$textList = new TextListModel($projectModel);
-			$textList->read();
-			// Just want text count, not whole list
-			$entry['textCount'] = $textList->count;
+// 			$textList = new TextListModel($projectModel);
+// 			$textList->read();
+// 			// Just want text count, not whole list
+// 			$entry['textCount'] = $textList->count;
 
 			$data['entries'][] = $entry;
 		}

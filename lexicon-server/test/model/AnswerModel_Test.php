@@ -26,13 +26,13 @@ class TestAnswerModel extends UnitTestCase {
 
 	function testAnswerCRUD_Works() {
 		$e = new MongoTestEnvironment();
-		$textRef = MongoTestEnvironment::mockId();
+		$entryRef = MongoTestEnvironment::mockId();
 		$projectModel = new MockProjectModel();
 
 		// Create Question
 		$question = new QuestionModel($projectModel);
 		$question->title = "Some Question";
-		$question->textRef->id = $textRef;
+		$question->entryRef->id = $entryRef;
 		$questionId = $question->write();
 		
 		// List

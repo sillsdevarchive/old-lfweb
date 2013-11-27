@@ -2,24 +2,20 @@
 
 namespace models\commands;
 
-use models\mapper\IdReference;
-
 use models\ActivityModel;
-
 use models\CommentModel;
-
 use models\ProjectModel;
+use models\ProjectModelFixer;
 use models\QuestionModel;
+use models\QuestionAnswersListModel;
 use models\UserModel;
+use models\UnreadActivityModel;
+use models\UnreadAnswerModel;
+use models\mapper\IdReference;
 use libraries\lfdictionary\store\LexStoreType;
 use libraries\lfdictionary\store\LexStoreController;
-
-use models\QuestionAnswersListModel;
-
-
 use libraries\lfdictionary\store\LexStore;
 use libraries\lfdictionary\environment\LexProject;
-use models\ProjectModelFixer;
 
 class ActivityCommands
 {
@@ -73,7 +69,11 @@ class ActivityCommands
 		$activity->addContent(ActivityModel::QUESTION, $question->title);
 		$activity->addContent(ActivityModel::ANSWER, $answerModel->content);
 		$activity->addContent(ActivityModel::USER, $user->username);
-		return $activity->write();
+//		return $activity->write();
+		$activityId = $activity->write();
+		UnreadActivityModel::markUnreadForProjectMembers($activityId, $projectModel);
+		UnreadAnswerModel::markUnreadForProjectMembers($answerModel->id->asString(), $projectModel, $questionId, $answerModel->userRef->asString());
+		return $activityId;
 	}
 	
 	public static function addAnswer($projectModel, $questionId, $answerModel) {

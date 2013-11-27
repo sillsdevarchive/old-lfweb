@@ -50,7 +50,7 @@ class TestUserCommands extends UnitTestCase {
 
 		// setup parameters: username and project
 		$userName = 'username';
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		
 		// create user
@@ -66,7 +66,7 @@ class TestUserCommands extends UnitTestCase {
 		$projectUser = $sameProject->listUsers()->entries[0];
 		$this->assertEqual($projectUser['username'], "username");
 		$userProject = $user->listProjects()->entries[0];
-		$this->assertEqual($userProject['projectname'], SF_TESTPROJECT);
+		$this->assertEqual($userProject['projectname'], LF_TESTPROJECT);
 	}
 	
 	function testRegister_WithProjectCode_UserInProjectAndProjectHasUser() {
@@ -74,7 +74,7 @@ class TestUserCommands extends UnitTestCase {
 		$e->clean();
 	
 		$projectDomain = 'someprojectcode.example.com';
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$project->projectCode = ProjectModel::domainToProjectCode($projectDomain);
 		$project->write();
 		$validCode = 'validCode';
@@ -239,7 +239,7 @@ class TestUserCommands extends UnitTestCase {
 		$inviterUserId = $e->createUser("inviteruser", "Inviter Name", "inviter@example.com");
 		$inviterUser = new UserModel($inviterUserId);
 		$toEmail = 'someone@example.com';
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$project->projectCode = 'someProjectCode';
 		$project->write();
 		$delivery = new MockUserCommandsDelivery();
@@ -248,7 +248,7 @@ class TestUserCommands extends UnitTestCase {
 	
 		// What's in the delivery?
 		$toUser = new UserModel($toUserId);
-		$expectedFrom = array(SF_DEFAULT_EMAIL => SF_DEFAULT_EMAIL_NAME);
+		$expectedFrom = array(LF_DEFAULT_EMAIL => LF_DEFAULT_EMAIL_NAME);
 		$expectedTo = array($toUser->emailPending => $toUser->name);
 		$this->assertEqual($expectedFrom, $delivery->from);
 		$this->assertEqual($expectedTo, $delivery->to);

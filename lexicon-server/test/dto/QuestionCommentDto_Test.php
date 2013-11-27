@@ -34,13 +34,13 @@ class TestQuestionCommentDto extends UnitTestCase {
 	function testEncode_FullQuestionWithAnswersAndComments_DtoReturnsExpectedData() {
 		$e = new MongoTestEnvironment();
 		
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		
-		$text = new TextModel($project);
-		$text->title = "Text 1";
-		$usx = MongoTestEnvironment::usxSample();
-		$text->content = $usx;
-		$textId = $text->write();
+// 		$text = new TextModel($project);
+// 		$text->title = "Text 1";
+// 		$usx = MongoTestEnvironment::usxSample();
+// 		$text->content = $usx;
+// 		$textId = $text->write();
 		
 		$user1Id = $e->createUser("user1", "user1", "user1@email.com");
 		$user2Id = $e->createUser("user2", "user2", "user2@email.com");
@@ -50,7 +50,7 @@ class TestQuestionCommentDto extends UnitTestCase {
 		$question = new QuestionModel($project);
 		$question->title = "the question";
 		$question->description = "question description";
-		$question->textRef->id = $textId;
+// 		$question->textRef->id = $textId;
 		$questionId = $question->write();
 		
 		// Then to add an answer to a question
@@ -79,7 +79,7 @@ class TestQuestionCommentDto extends UnitTestCase {
 		$cid1 = $comment1Id;
 		$cid2 = $comment2Id;
 		$this->assertEqual($dto['project']['id'], $project->id);
-		//$this->assertEqual($dto['text']['content'], $text->content);
+// 		$this->assertEqual($dto['text']['content'], $text->content);
 		$this->assertEqual($dto['question']['id'], $questionId);
 		$this->assertEqual($dto['question']['title'], 'the question');
 		$this->assertEqual($dto['question']['description'], 'question description');

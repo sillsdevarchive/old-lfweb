@@ -6,7 +6,7 @@ require_once(APPPATH . "angular-app/$appName/ng-app.html");
 window.session = <?php echo $jsonSession; ?>;
 </script>
 	
-<?php if (SF_USE_MINIFIED_JS): ?>
+<?php if (LF_USE_MINIFIED_JS): ?>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-sanitize.min.js"></script>
@@ -27,7 +27,7 @@ window.session = <?php echo $jsonSession; ?>;
 	<script src="/js/lib/moment-2.1.0-min.js"></script>
 	
 
-<?php if (SF_USE_MINIFIED_JS): ?>
+<?php if (LF_USE_MINIFIED_JS): ?>
 	<script src="/js/lib/scriptureforge.min.js"></script>
 <?php else: ?>
 	<?php foreach($jsCommonFiles as $filename): ?>

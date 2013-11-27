@@ -43,7 +43,7 @@ class UserVoteTestEnvironment {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		
-		$this->project = $e->createProject(SF_TESTPROJECT);
+		$this->project = $e->createProject(LF_TESTPROJECT);
 		$this->question = new QuestionModel($this->project);
 		$this->question->write();
 		
@@ -73,7 +73,7 @@ class TestQuestionCommands extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 				
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$projectId = $project->id->asString();
 		$question = new QuestionModel($project);
 		$question->write();
@@ -149,7 +149,7 @@ class TestQuestionCommands extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$question = new QuestionModel($project);
 		$questionId = $question->write();
 		
@@ -174,7 +174,7 @@ class TestQuestionCommands extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 
-		$project = $e->createProject(SF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT);
 		$question = new QuestionModel($project);
 		$questionId = $question->write();
 		
