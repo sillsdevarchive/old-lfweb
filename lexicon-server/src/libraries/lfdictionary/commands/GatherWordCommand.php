@@ -1,14 +1,16 @@
 <?php
-
 namespace libraries\lfdictionary\commands;
+
+use models\lex\EntryDTO;
+use models\lex\MultiText;
+use libraries\lfdictionary\common\UUIDGenerate;
+use libraries\lfdictionary\common\WordsParser;
+use libraries\lfdictionary\mapper\LiftUpdater;
+
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use libraries\lfdictionary\dto\EntryDTO;
-use libraries\lfdictionary\dto\MultiText;
+class GatherWordCommand {
 
-
-class GatherWordCommand
-{
 	/**
 	 * @var String
 	 */
@@ -54,7 +56,6 @@ class GatherWordCommand
 		$this->exitWordsArr = $exitWordsArr;
 		$this->lang = $language;
 		$this->_lexStore = $lexStore;
-
 	}
 
 	function execute() {
@@ -66,19 +67,18 @@ class GatherWordCommand
 	function processFile() {
 		$this->gatherWords=urldecode($this->gatherWords);
 		// remove exist
-		$this->newWordsArr=array_diff(\libraries\lfdictionary\common\WordsParser::parsingToArray($this->gatherWords) ,$this->exitWordsArr);
+		$this->newWordsArr=array_diff(WordsParser::parsingToArray($this->gatherWords) ,$this->exitWordsArr);
 
-		if (count($this->newWordsArr)>0){
-
-			$now = \libraries\lfdictionary\mapper\LiftUpdater::now();
-			$filePath = \libraries\lfdictionary\mapper\LiftUpdater::updateFilePath($this->_filePath, $now);
+		if (count($this->newWordsArr)>0) {
+			$now = LiftUpdater::now();
+			$filePath = LiftUpdater::updateFilePath($this->_filePath, $now);
 			$rootXml = new \SimpleXMLElement('<lift />');
 			// loop words array to add text
 			foreach ($this->newWordsArr as $results) {
-				if ($wordEntry=trim($results)!=""){
+				if ($wordEntry=trim($results)!="") {
 					$entryXml = $rootXml->addChild('entry');
 					$entryXml['dateCreated'] = $entryXml['dateModified'] = gmdate("Y-m-d\TH:i:s\Z");
-					$entryXml['guid'] = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php();
+					$entryXml['guid'] = UUIDGenerate::uuid_generate_php();
 					$entryXml['id'] = $results . "_" . $entryXml['guid'];
 
 					$ChildUnitXml=$entryXml->addChild('lexical-unit');
@@ -93,15 +93,14 @@ class GatherWordCommand
 		}
 	}
 
-	function saveIntoDatabase($lang, $word)
-	{
-		if (isset($this->_lexStore))
-		{
-			$entryDTO = EntryDTO::create(\libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php());
+	function saveIntoDatabase($lang, $word) {
+		if (isset($this->_lexStore)) {
+			$entryDTO = EntryDTO::create(UUIDGenerate::uuid_generate_php());
 			$entryDTO->setEntry(MultiText::create($lang, $word));
 			$this->_lexStore->writeEntry($entryDTO, 'new');
 		}
 	}
+	
 };
 
 ?>

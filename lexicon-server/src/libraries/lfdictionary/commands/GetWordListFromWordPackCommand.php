@@ -1,10 +1,16 @@
 <?php
-
 namespace libraries\lfdictionary\commands;
-require_once(dirname(__FILE__) . '/../Config.php');
 
 use dto\ListDTO;
 use libraries\lfdictionary\common\LoggerFactory;
+use libraries\lfdictionary\dto\EntryListDTO;
+use models\lex\EntryDTO;
+use models\lex\MultiText;
+use models\lex\Sense;
+use models\lex\Example;
+
+require_once(dirname(__FILE__) . '/../Config.php');
+
 class GetWordListFromWordPackCommand
 {
 	/**
@@ -28,13 +34,12 @@ class GetWordListFromWordPackCommand
 		$this->existWordList = $listDTO;
 		$this->sourceFile = $sourceLifeFile;
 
-		if (!file_exists($this->sourceFile))
-		{
+		if (!file_exists($this->sourceFile)) {
 			throw new \Exception('Lift file is missing on server: ' . $this->sourceFile);
 				
 		}
 
-		$this->_dto = new \libraries\lfdictionary\dto\EntryListDTO();
+		$this->_dto = new EntryListDTO();
 	}
 
 	function execute() {
@@ -82,7 +87,6 @@ class GetWordListFromWordPackCommand
 
 		LoggerFactory::getLogger()->logDebugMessage(count($NewWordXMLdatas));
 		$this->_dto->entryCount = count($NewWordXMLdatas);
-
 	}
 
 	function processModelFromNode($node) {
@@ -90,7 +94,7 @@ class GetWordListFromWordPackCommand
 		$entry = null;
 		$lexicalForms = $node->{'lexical-unit'};
 		if ($lexicalForms) {
-			$entry = \libraries\lfdictionary\dto\EntryDTO::create((string)$node['guid']);
+			$entry = EntryDTO::create((string)$node['guid']);
 			$entry->setEntry($this->readMultiText($lexicalForms));
 			if(isset($node->{'sense'})) {
 				foreach ($node->{'sense'} as $sense) {
@@ -107,7 +111,7 @@ class GetWordListFromWordPackCommand
 	}
 
 	function readMultiText($node) {
-		$multiText = new \libraries\lfdictionary\dto\MultiText();
+		$multiText = new MultiText();
 		foreach ($node->{'form'} as $form) {
 			$multiText->addForm((string)$form['lang'], (string)$form->{'text'});
 		}
@@ -115,7 +119,7 @@ class GetWordListFromWordPackCommand
 	}
 
 	function readSense($node) {
-		$sense = new \libraries\lfdictionary\dto\Sense();
+		$sense = new Sense();
 
 		//Definition
 		$definition = $node->{'definition'};
@@ -147,8 +151,7 @@ class GetWordListFromWordPackCommand
 	}
 
 	function readExample($node) {
-
-		$example = new \dto\Example();
+		$example = new Example();
 
 		// Example multitext
 		$exampleXml = $node;
@@ -164,7 +167,6 @@ class GetWordListFromWordPackCommand
 		}
 		return $example;
 	}
-
 
 };
 

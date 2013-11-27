@@ -1,5 +1,5 @@
 <?php
-namespace libraries\lfdictionary\dto;
+namespace models\lex;
 
 // TODO This is really the LexEntryModel CP 2013-11
 class EntryDTO {

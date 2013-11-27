@@ -1,5 +1,5 @@
 <?php
-namespace libraries\lfdictionary\dto;
+namespace models\lex;
 
 class Example {
 

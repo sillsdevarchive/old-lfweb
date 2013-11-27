@@ -1,10 +1,12 @@
 <?php
+
 use libraries\lfdictionary\store\LexStoreType;
 use libraries\lfdictionary\store\LexStoreController;
 use libraries\lfdictionary\environment\ProjectStates;
 use libraries\lfdictionary\common\AsyncRunner;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\common\UserActionDeniedException;
+use libraries\lfdictionary\common\UUIDGenerate;
 use libraries\lfdictionary\dashboardtool\HistoricalHgDataFetcher;
 use libraries\lfdictionary\dto\ListDTO;
 use libraries\lfdictionary\dto\ProjectStateDTO;
@@ -27,6 +29,7 @@ use models\ProjectModelFixer;
 use models\DepotProjectModel;
 use models\commands\ProjectCommands;
 use models\commands\ActivityCommands;
+use models\lex\EntryDTO;
 
 error_reporting ( E_ALL | E_STRICT );
 
@@ -141,7 +144,7 @@ class LfDictionary {
 	 * Get a single Lexical Entry
 	 *
 	 * @param unknown_type $guid        	
-	 * @return dto\EntryDTO
+	 * @return EntryDTO
 	 */
 	function getEntry($guid) {
 		$this->isReadyOrThrow ();
@@ -153,12 +156,12 @@ class LfDictionary {
 		foreach ( $result->_senses as $sense ) {
 			
 			if (! (isset ( $sense->_id ) && strlen ( trim ( $sense->_id ) ) > 0)) {
-				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
+				$sense->_id = UUIDGenerate::uuid_generate_php ();
 			}
 			// Example Level
 			foreach ( $sense->_examples as $example ) {
 				if (! (isset ( $example->_id ) && strlen ( trim ( $example->_id ) ) > 0)) {
-					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
+					$example->_id = UUIDGenerate::uuid_generate_php ();
 				}
 			}
 		}
@@ -208,7 +211,7 @@ class LfDictionary {
 		}
 		// Save Entry
 		$rawEntry = json_decode ( $entry, true );
-		$entryDto = \libraries\lfdictionary\dto\EntryDTO::createFromArray ( $rawEntry );
+		$entryDto = EntryDTO::createFromArray ( $rawEntry );
 		$store = $this->getLexStore ();
 		$store->writeEntry ( $entryDto, $action, $this->_userModel->id, $this->_userModel->username );
 	
@@ -604,6 +607,7 @@ class LfDictionary {
 		$result = new \libraries\lfdictionary\dto\ResultDTO ( true, strval ( $wordCount ) );
 		return $result->encode ();
 	}
+	
 	public function depot_begin_import($model) {		
 		
 		/*
@@ -636,7 +640,6 @@ class LfDictionary {
 		}		
 	}
 	
-	
 	public function depot_check_import_states($model) {
 		$depotproject = new DepotProjectModel ();
 		JsonDecoder::decode ( $depotproject, $model );
@@ -662,6 +665,7 @@ class LfDictionary {
 		
 		return $resultDTO->encode ();
 	}
+	
 }
 
 ?>

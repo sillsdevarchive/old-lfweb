@@ -1,12 +1,12 @@
 <?php
 
-use \libraries\lfdictionary\dto\Example;
-use \libraries\lfdictionary\dto\EntryDTO;
-use \libraries\lfdictionary\dto\MultiText;
-use \libraries\lfdictionary\dto\Sense;
+use \models\lex\EntryDTO;
+use \models\lex\Example;
+use \models\lex\MultiText;
+use \models\lex\Sense;
+
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfEntryDTO extends UnitTestCase {
 
@@ -59,8 +59,6 @@ class TestOfEntryDTO extends UnitTestCase {
 		$this->assertEqual(array('fr' => 'translation1'), $v->_senses[0]->_examples[0]->_translation->getAll());
 		$this->assertEqual('semantic-domain-ddp4', $v->_senses[0]->_semanticDomainName);
 		$this->assertEqual('2.1 Body', $v->_senses[0]->_semanticDomainValue);
-				
-		
 	}
 
 }

@@ -16,6 +16,7 @@ class AllModelTests extends TestSuite {
  		$this->addFile(TEST_PATH . 'model/Roles_Test.php');
  		$this->addFile(TEST_PATH . 'model/UserVoteModel_Test.php');
  		$this->addFile(TEST_PATH . 'model/UserUnreadModel_Test.php');
+  		$this->addFile(TEST_PATH . 'model/lex/AllTests.php');
     }
 
 }

@@ -1,11 +1,10 @@
 <?php
 
-use \libraries\lfdictionary\dto\Example;
-use \libraries\lfdictionary\dto\MultiText;
+use \models\lex\Example;
+use \models\lex\MultiText;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "Loader.php");
 
 class TestOfExample extends UnitTestCase {
 
@@ -20,20 +19,19 @@ class TestOfExample extends UnitTestCase {
 	}
 
 	function testCreate_ExampleAndTranslation_Correct() {
-		$v = \dto\Example::create(MultiText::create('en', 'text1'), MultiText::create('fr', 'text2'));
+		$v = Example::create(MultiText::create('en', 'text1'), MultiText::create('fr', 'text2'));
 		$this->assertEqual(array('en' => 'text1'), $v->_example->getAll());
 		$this->assertEqual(array('fr' => 'text2'), $v->_translation->getAll());
 	}
 	
 	function testCreateFromArray_ExampleAndTranslation_Correct() {
-		$src = \dto\Example::create(MultiText::create('en', 'text1'), MultiText::create('fr', 'text2'));
+		$src = Example::create(MultiText::create('en', 'text1'), MultiText::create('fr', 'text2'));
 		$value = $src->encode();
 		
-		$v = \dto\Example::createFromArray($value);
+		$v = Example::createFromArray($value);
 		$this->assertEqual(array('en' => 'text1'), $v->_example->getAll());
 		$this->assertEqual(array('fr' => 'text2'), $v->_translation->getAll());
 	}
-	
 	
 }
 
