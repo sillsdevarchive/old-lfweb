@@ -1,10 +1,10 @@
 <?php
 
 use \libraries\lfdictionary\dto\EntryListDTO;
-use \libraries\lfdictionary\dto\MultiText;
-use \libraries\lfdictionary\dto\EntryDTO;
-use \libraries\lfdictionary\dto\Sense;
-use \libraries\lfdictionary\dto\Example;
+use models\lex\EntryDTO;
+use models\lex\Example;
+use models\lex\MultiText;
+use models\lex\Sense;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');

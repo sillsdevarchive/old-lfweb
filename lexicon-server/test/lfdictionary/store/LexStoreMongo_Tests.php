@@ -1,10 +1,10 @@
 <?php
 use libraries\lfdictionary\environment\MissingInfoType; 
 use store\mongo\MongoLexStore;
-use libraries\lfdictionary\dto\EntryDTO;
-use libraries\lfdictionary\dto\Sense;
-use libraries\lfdictionary\dto\Example;
-use libraries\lfdictionary\dto\MultiText;
+use models\lex\EntryDTO;
+use models\lex\Example;
+use models\lex\MultiText;
+use models\lex\Sense;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');

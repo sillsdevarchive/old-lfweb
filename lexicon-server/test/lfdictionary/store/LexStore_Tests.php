@@ -2,10 +2,10 @@
 use libraries\lfdictionary\environment\MissingInfoType;
 use libraries\lfdictionary\store\LexStoreController;
 use libraries\lfdictionary\store\LexStoreType;
-use libraries\lfdictionary\dto\EntryDTO;
-use libraries\lfdictionary\dto\Sense;
-use libraries\lfdictionary\dto\Example;
-use libraries\lfdictionary\dto\MultiText;
+use models\lex\EntryDTO;
+use models\lex\Example;
+use models\lex\MultiText;
+use models\lex\Sense;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');

@@ -43,7 +43,7 @@ class Sense {
 	function __construct() {
 		$this->_id = "";
 		$this->_examples = array();
-		$this->_definition = \libraries\lfdictionary\dto\MultiText::create();
+		$this->_definition = MultiText::create();
 		$this->_partOfSpeech = '';
 		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
 	}
@@ -168,7 +168,7 @@ class Sense {
 		if (isset( $value['id'])){
 			$this->_id = $value['id'];
 		}
-		$this->_definition = \libraries\lfdictionary\dto\MultiText::createFromArray($value['definition']);
+		$this->_definition = MultiText::createFromArray($value['definition']);
 		$this->_partOfSpeech = $value['POS'];
 
 		if (isset( $value['SemDomValue'])){
