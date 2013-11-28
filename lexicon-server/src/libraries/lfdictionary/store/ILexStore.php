@@ -10,14 +10,14 @@ interface ILexStore
 
 	/**
 	 * Writes the Lexical Entry to the Store.
-	 * @param EntryDTO $entry
+	 * @param LexEntryModel $entry
 	 */
 	public function writeEntry($entry);
 
 	/**
 	 * Reads a Lexical Entry from the Store
 	 * @param string $guid
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	public function readEntry($guid);
 

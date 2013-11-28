@@ -1,10 +1,11 @@
 <?php
+
 namespace models\lex;
 
 /**
  * This class contains metadata for entry element and it sub-elements
  */
-class EntryMetadataDTO {
+class AuthorInfoModel {
 
 	/**
 	 * user's UUID in string
@@ -68,7 +69,7 @@ class EntryMetadataDTO {
 	}
 	
 	static function createFromArray($value) {
-		$result = new EntryMetadataDTO();
+		$result = new AuthorInfoModel();
 		$result->decode($value);
 		return $result;
 	}

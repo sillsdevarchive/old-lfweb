@@ -10,7 +10,7 @@ class EntryListDTO {
 	/**
 	 *
 	 * Enter description here ...
-	 * @var array<EntryDTO>
+	 * @var array<LexEntryModel>
 	 */
 	var $_entries;
 

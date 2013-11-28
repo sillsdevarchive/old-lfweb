@@ -1,8 +1,8 @@
 <?php
+
 namespace models\lex;
 
-// TODO This is really the LexEntryModel CP 2013-11
-class EntryDTO {
+class LexEntryModel {
 
 	/**
 	 *
@@ -29,7 +29,7 @@ class EntryDTO {
 
 	/**
 	 *
-	 * @var EntryMetadataDTO
+	 * @var AuthorInfoModel
 	 */
 	var $_metadata;
 
@@ -37,7 +37,7 @@ class EntryDTO {
 		$this->_guid = $guid;
 		$this->_entry = new MultiText();
 		$this->_senses = array();
-		$this->_metadata = new EntryMetadataDTO();
+		$this->_metadata = new AuthorInfoModel();
 	}
 
 	/**
@@ -123,20 +123,20 @@ class EntryDTO {
 	}
 
 	/**
-	 * Decodes the given mixed object into a new EntryDTO
+	 * Decodes the given mixed object into a new LexEntryModel
 	 * @param mixed $value
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	function decode($value) {
 		if ($value == null) {
 			return;
 		}
-		$this->_metadata = new EntryMetadataDTO();
+		$this->_metadata = new AuthorInfoModel();
 		$this->_guid = $value['guid'];
 		$this->mercurialSHA = $value['mercurialSHA'];
 		$this->_entry = MultiText::createFromArray($value['entry']);
 		if (isset($value['metadata'])) {
-			$this->_metadata = EntryMetadataDTO::createFromArray($value['metadata']);
+			$this->_metadata = AuthorInfoModel::createFromArray($value['metadata']);
 		}
 
 		foreach ($value['senses'] as $senseValue) {
@@ -146,17 +146,17 @@ class EntryDTO {
 	}
 
 	/**
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	static function create($guid) {
-		return new EntryDTO($guid);
+		return new LexEntryModel($guid);
 	}
 
 	/**
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	static function createFromArray($value) {
-		$result = new EntryDTO();
+		$result = new LexEntryModel();
 		$result->decode($value);
 		return $result;
 	}

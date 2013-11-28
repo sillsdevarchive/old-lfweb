@@ -1,7 +1,7 @@
 <?php
 
 use libraries\lfdictionary\store\mongo\MongoLexStore;
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\Example;
 use models\lex\MultiText;
 use models\lex\Sense;
@@ -71,7 +71,7 @@ class MongoTestEnvironment {
 	}
 
 	private static function createTestEntry($guid, $id, $senseCount = 1, $exampleCount = 1) {
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$word = "Word $id";
 		$entry->setEntry(MultiText::create('fr', $word));
 		for ($i = 0; $i < $senseCount; $i++) {

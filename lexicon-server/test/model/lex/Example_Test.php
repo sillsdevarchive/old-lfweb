@@ -15,7 +15,7 @@ class TestOfExample extends UnitTestCase {
 		
 		$result = json_encode($v->encode());
 		
-		$this->assertEqual('{"example":{"en":"example1"},"translation":{"fr":"translation1"}}', $result);
+		$this->assertEqual('{"id":"","example":{"en":"example1"},"translation":{"fr":"translation1"},"metadata":{"crid":"","crname":"","modid":"","modname":"","crdate":0,"moddate":0}}', $result);
 	}
 
 	function testCreate_ExampleAndTranslation_Correct() {

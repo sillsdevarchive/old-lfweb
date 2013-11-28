@@ -1,14 +1,14 @@
 <?php
+
 use libraries\lfdictionary\environment\MissingInfoType; 
-use store\mongo\MongoLexStore;
-use models\lex\EntryDTO;
+use libraries\lfdictionary\store\mongo\MongoLexStore;
+use models\lex\LexEntryModel;
 use models\lex\Example;
 use models\lex\MultiText;
 use models\lex\Sense;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
-
 require_once('MongoTestEnvironment.php');
 
 class TestOfLexStoreMongo extends UnitTestCase {
@@ -26,7 +26,7 @@ class TestOfLexStoreMongo extends UnitTestCase {
 	function testConnect_TypeAndSameReference_ReturnsLexStoreMongo() {
 		$e = MongoTestEnvironment::create();
 		$result1 = $e->testStore();
-		$this->assertIsA($result1, 'MongoLexStore');
+		$this->assertIsA($result1, 'libraries\lfdictionary\store\mongo\MongoLexStore');
 		$result2 = $e->testStore();
 		$this->assertReference($result1, $result2);
 	}
@@ -35,7 +35,7 @@ class TestOfLexStoreMongo extends UnitTestCase {
 		$e = MongoTestEnvironment::create();
 		$store = $e->testStore();
 		$guid = MongoTestEnvironment::guid();
-		$entry1 = EntryDTO::create($guid);
+		$entry1 = LexEntryModel::create($guid);
 		
 		// Write the Entry
 		$store->writeEntry($entry1);
@@ -50,7 +50,7 @@ class TestOfLexStoreMongo extends UnitTestCase {
 		$e = MongoTestEnvironment::create();
 		$store = $e->testStore();
 		$guid = MongoTestEnvironment::guid();
-		$entry1 = EntryDTO::create($guid);
+		$entry1 = LexEntryModel::create($guid);
 		$sense = Sense::create();
 		$example = Example::create(
 			MultiText::create('en', 'example'),
@@ -170,7 +170,7 @@ class TestOfLexStoreMongo extends UnitTestCase {
 		$e->ensureEntries(2);
 		
 		$guid = MongoTestEnvironment::guid();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('fr', 'word'));
 		$sense = Sense::create();
 		$sense->setPartOfSpeech('n');
@@ -193,7 +193,7 @@ class TestOfLexStoreMongo extends UnitTestCase {
 		$e->ensureEntries(2);
 				
 		$guid = MongoTestEnvironment::guid();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('fr', 'word'));
 		$sense = Sense::create();
 // 		$sense->setPartOfSpeech('');
@@ -216,7 +216,7 @@ class TestOfLexStoreMongo extends UnitTestCase {
 		$e->ensureEntries(2);
 				
 		$guid = MongoTestEnvironment::guid();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('fr', 'word'));
 		$sense = Sense::create();
 		$sense->setPartOfSpeech('n');

@@ -4,7 +4,7 @@ namespace libraries\lfdictionary\commands;
 use dto\ListDTO;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\dto\EntryListDTO;
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\MultiText;
 use models\lex\Sense;
 use models\lex\Example;
@@ -94,7 +94,7 @@ class GetWordListFromWordPackCommand
 		$entry = null;
 		$lexicalForms = $node->{'lexical-unit'};
 		if ($lexicalForms) {
-			$entry = EntryDTO::create((string)$node['guid']);
+			$entry = LexEntryModel::create((string)$node['guid']);
 			$entry->setEntry($this->readMultiText($lexicalForms));
 			if(isset($node->{'sense'})) {
 				foreach ($node->{'sense'} as $sense) {

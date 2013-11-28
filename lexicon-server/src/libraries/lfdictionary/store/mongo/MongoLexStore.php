@@ -11,7 +11,7 @@ use libraries\lfdictionary\dto\AutoListEntry;
 use libraries\lfdictionary\dto\EntryListDTO;
 use libraries\lfdictionary\dto\ListDTO;
 use libraries\lfdictionary\dto\ListEntry;
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\MultiText;
 
 class MongoLexStore implements ILexStore
@@ -67,7 +67,7 @@ class MongoLexStore implements ILexStore
 
 	/**
 	 * Writes the Lexical Entry to the Store.
-	 * @param EntryDTO $entry
+	 * @param LexEntryModel $entry
 	 */
 	public function writeEntry($entry) {
 		$collection = $this->_mongoDB->Entries;
@@ -81,7 +81,7 @@ class MongoLexStore implements ILexStore
 	/**
 	 * Reads a Lexical Entry from the Store
 	 * @param string $guid
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	public function readEntry($guid) {
 		$collection = $this->_mongoDB->Entries;
@@ -90,7 +90,7 @@ class MongoLexStore implements ILexStore
 		{
 			return null;
 		}
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->decode($result);
 		return $entry;
 	}
@@ -270,7 +270,7 @@ class MongoLexStore implements ILexStore
 		foreach ($cursor as $entry) {
 			$entryPart = $entry['entry'];
 			if (array_key_exists($lang, $entryPart) && $transliterationFilter->isWordStartWithTitleLetter($titleLetter,$entryPart[$lang], $lang)){
-				$entryDto = EntryDTO::create($entry['guid']);
+				$entryDto = LexEntryModel::create($entry['guid']);
 				$entryDto->decode($entry);
 				$dto->addEntry($entryDto);
 			}
@@ -284,7 +284,7 @@ class MongoLexStore implements ILexStore
 		$dtoList = new EntryListDTO();
 		foreach ($cursor as $entry) {
 			$entryPart = $entry['entry'];
-			$entryDto = EntryDTO::create($entry['guid']);
+			$entryDto = LexEntryModel::create($entry['guid']);
 			$entryDto->decode($entry);
 			$dtoList->addEntry($entryDto);
 		}

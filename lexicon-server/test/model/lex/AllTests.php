@@ -6,7 +6,7 @@ class AllModelLexTests extends TestSuite {
 	
 	function __construct() {
 		parent::__construct();
-		$this->addFile(TEST_PATH . 'model/lex/EntryDTO_Test.php');
+		$this->addFile(TEST_PATH . 'model/lex/LexEntryModel_Test.php');
 		$this->addFile(TEST_PATH . 'model/lex/Example_Test.php');
 		$this->addFile(TEST_PATH . 'model/lex/MultiText_Test.php');
 		$this->addFile(TEST_PATH . 'model/lex/Sense_Test.php');

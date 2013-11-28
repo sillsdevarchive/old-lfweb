@@ -2,7 +2,7 @@
 use libraries\lfdictionary\environment\MissingInfoType;
 use libraries\lfdictionary\store\LexStoreController;
 use libraries\lfdictionary\store\LexStoreType;
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\Example;
 use models\lex\MultiText;
 use models\lex\Sense;
@@ -53,7 +53,7 @@ class TestOfLexStore extends UnitTestCase {
 		$e = MongoTestEnvironment::create();
 		$store = $this->getStore($e->database);
 		$guid = MongoTestEnvironment::guid();
-		$entry1 =  EntryDTO::create($guid);
+		$entry1 =  LexEntryModel::create($guid);
 		
 		// Write the Entry
 		$store->writeEntry($entry1, '');
@@ -68,7 +68,7 @@ class TestOfLexStore extends UnitTestCase {
 		$e = MongoTestEnvironment::create();
 		$store = $this->getStore($e->database);
 		$guid = MongoTestEnvironment::guid();
-		$entry1 =  EntryDTO::create($guid);
+		$entry1 =  LexEntryModel::create($guid);
 		$sense = Sense::create();
 		$example = Example::create(
 			MultiText::create('en', 'example'),
@@ -188,7 +188,7 @@ class TestOfLexStore extends UnitTestCase {
 		$e->ensureEntries(2);
 		
 		$guid = MongoTestEnvironment::guid();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('fr', 'word'));
 		$sense = Sense::create();
 		$sense->setPartOfSpeech('n');
@@ -211,7 +211,7 @@ class TestOfLexStore extends UnitTestCase {
 		$e->ensureEntries(2);
 				
 		$guid = MongoTestEnvironment::guid();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('fr', 'word'));
 		$sense = Sense::create();
 // 		$sense->setPartOfSpeech('');
@@ -234,7 +234,7 @@ class TestOfLexStore extends UnitTestCase {
 		$e->ensureEntries(2);
 				
 		$guid = MongoTestEnvironment::guid();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('fr', 'word'));
 		$sense = Sense::create();
 		$sense->setPartOfSpeech('n');

@@ -29,7 +29,7 @@ use models\ProjectModelFixer;
 use models\DepotProjectModel;
 use models\commands\ProjectCommands;
 use models\commands\ActivityCommands;
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 
 error_reporting ( E_ALL | E_STRICT );
 
@@ -144,7 +144,7 @@ class LfDictionary {
 	 * Get a single Lexical Entry
 	 *
 	 * @param unknown_type $guid        	
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	function getEntry($guid) {
 		$this->isReadyOrThrow ();
@@ -197,7 +197,7 @@ class LfDictionary {
 	/**
 	 * Create / Update a single Lexical Entry
 	 *
-	 * @param EntryDTO $entry        	
+	 * @param LexEntryModel $entry        	
 	 * @param string $action        	
 	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
 	 * @return ResultDTO
@@ -211,7 +211,7 @@ class LfDictionary {
 		}
 		// Save Entry
 		$rawEntry = json_decode ( $entry, true );
-		$entryDto = EntryDTO::createFromArray ( $rawEntry );
+		$entryDto = LexEntryModel::createFromArray ( $rawEntry );
 		$store = $this->getLexStore ();
 		$store->writeEntry ( $entryDto, $action, $this->_userModel->id, $this->_userModel->username );
 	

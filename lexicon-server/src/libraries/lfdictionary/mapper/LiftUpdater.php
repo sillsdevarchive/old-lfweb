@@ -20,7 +20,7 @@ class LiftUpdater {
 	
 	/**
 	 * @param SimpleXmlElement $entryXml
-	 * @param EntryDTO $entryDto
+	 * @param LexEntryModel $entryDto
 	 */
 	static function mergeEntry($entryXml, $entryDto) {
 		// Paranoid check that the xml guid == dto guid

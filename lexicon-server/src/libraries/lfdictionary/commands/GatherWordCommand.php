@@ -1,7 +1,7 @@
 <?php
 namespace libraries\lfdictionary\commands;
 
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\MultiText;
 use libraries\lfdictionary\common\UUIDGenerate;
 use libraries\lfdictionary\common\WordsParser;
@@ -95,7 +95,7 @@ class GatherWordCommand {
 
 	function saveIntoDatabase($lang, $word) {
 		if (isset($this->_lexStore)) {
-			$entryDTO = EntryDTO::create(UUIDGenerate::uuid_generate_php());
+			$entryDTO = LexEntryModel::create(UUIDGenerate::uuid_generate_php());
 			$entryDTO->setEntry(MultiText::create($lang, $word));
 			$this->_lexStore->writeEntry($entryDTO, 'new');
 		}

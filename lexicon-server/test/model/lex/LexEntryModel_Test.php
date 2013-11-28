@@ -1,6 +1,6 @@
 <?php
 
-use \models\lex\EntryDTO;
+use \models\lex\LexEntryModel;
 use \models\lex\Example;
 use \models\lex\MultiText;
 use \models\lex\Sense;
@@ -8,10 +8,10 @@ use \models\lex\Sense;
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
-class TestOfEntryDTO extends UnitTestCase {
+class TestLexEntryModel extends UnitTestCase {
 
 	function testEncode_EntryAndSense_JsonCorrect() {
-		$entry = EntryDTO::create("guid0");
+		$entry = LexEntryModel::create("guid0");
 		$entry->setEntry(MultiText::create('fr', 'form1'));
 		
 		$sense = new Sense();
@@ -31,7 +31,7 @@ class TestOfEntryDTO extends UnitTestCase {
 	}
 	
 	function testCreateFromArray_Sample_Correct() {
-		$entry = EntryDTO::create("guid0");
+		$entry = LexEntryModel::create("guid0");
 		$entry->setEntry(MultiText::create('fr', 'form1'));
 		
 		$sense = new Sense();
@@ -48,7 +48,7 @@ class TestOfEntryDTO extends UnitTestCase {
 				
 		$value = $entry->encode();
 		
-		$v = EntryDTO::createFromArray($value);
+		$v = LexEntryModel::createFromArray($value);
 		
 		$this->assertEqual('guid0', $v->_guid);
 		$this->assertEqual(array('fr' => 'form1'), $v->_entry->getAll());

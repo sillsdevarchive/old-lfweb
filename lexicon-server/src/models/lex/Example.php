@@ -1,4 +1,5 @@
 <?php
+
 namespace models\lex;
 
 class Example {
@@ -19,7 +20,7 @@ class Example {
 
 	/**
 	 *
-	 * @var EntryMetadataDTO
+	 * @var AuthorInfoModel
 	 */
 	var $_metadata;
 
@@ -33,7 +34,7 @@ class Example {
 		$this->_id = "";
 		$this->_example = new MultiText();
 		$this->_translation = new MultiText();
-		$this->_metadata = new EntryMetadataDTO();
+		$this->_metadata = new AuthorInfoModel();
 	}
 
 	/**
@@ -85,14 +86,14 @@ class Example {
 	}
 
 	function decode($value) {
-		$this->_metadata = new EntryMetadataDTO();
+		$this->_metadata = new AuthorInfoModel();
 		if (isset( $value['id'])){
 			$this->_id = $value['id'];
 		}
 		$this->_example = MultiText::createFromArray($value['example']);
 		$this->_translation = MultiText::createFromArray($value['translation']);
 		if (isset($value['metadata'])){
-			$this->_metadata = EntryMetadataDTO::createFromArray($value['metadata']);
+			$this->_metadata = AuthorInfoModel::createFromArray($value['metadata']);
 		}
 	}
 

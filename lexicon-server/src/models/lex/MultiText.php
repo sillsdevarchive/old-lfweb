@@ -1,4 +1,5 @@
 <?php
+
 namespace models\lex;
 
 class MultiText {

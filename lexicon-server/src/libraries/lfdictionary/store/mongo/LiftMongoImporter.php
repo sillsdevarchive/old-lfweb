@@ -57,7 +57,7 @@ class LiftMongoImporter implements ILiftImporter
 	
 	/**
 	 * Updates a single $entry in the LexMongoStore according to the given $policy.
-	 * @param \dto\EntryDTO $entry
+	 * @param LexEntryModel $entry
 	 * @param LiftMongoImporterUpdatePolicy $policy
 	 */
 	public function updateEntry($entry, $policy) {

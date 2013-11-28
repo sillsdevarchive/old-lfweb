@@ -1,6 +1,6 @@
 <?php
 
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\Example;
 use models\lex\MultiText;
 use models\lex\Sense;
@@ -285,7 +285,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'updated form'));
 		$sense = Sense::create();
 		$sense->setDefinition(MultiText::create('en', 'updated definition'));
@@ -325,7 +325,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'updated form'));
 		$sense = Sense::create();
 		$sense->setDefinition(MultiText::create('en', 'updated definition'));
@@ -361,7 +361,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'updated form'));
 		
 		LiftUpdater::mergeEntry($srcXml, $entry);
@@ -385,7 +385,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'new form'));
 		
 		LiftUpdater::mergeEntry($srcXml, $entry);

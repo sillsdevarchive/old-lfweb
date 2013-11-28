@@ -1,7 +1,7 @@
 <?php
 namespace libraries\lfdictionary\store;
 
-use models\lex\EntryDTO;
+use models\lex\LexEntryModel;
 use models\lex\Sense;
 use libraries\lfdictionary\common\UUIDGenerate;
 use models\lex\Example;
@@ -71,16 +71,16 @@ class LiftScanner {
 	}
 	
 	/**
-	 * Reads a EntryDTO from the XmlNode $node
+	 * Reads a LexEntryModel from the XmlNode $node
 	 * @param XmlNode $node
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	public function readEntry($node) {
 		$entry = null;
 		$lexicalForms = $node->{'lexical-unit'};
 		if ($lexicalForms) {
 			$guid = (string)$node['guid'];
-			$entry = EntryDTO::create($guid);
+			$entry = LexEntryModel::create($guid);
 			$entry->setGuid((string)$node['guid']);
 			$entry->setEntry($this->readMultiText($lexicalForms));
 			if(isset($node->{'sense'})) {

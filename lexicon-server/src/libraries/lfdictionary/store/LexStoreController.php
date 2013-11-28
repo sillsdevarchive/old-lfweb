@@ -4,8 +4,8 @@ namespace libraries\lfdictionary\store;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\dto\ListDTO;
 use libraries\lfdictionary\environment\LexProject;
-use models\lex\EntryDTO;
-use models\lex\EntryMetadataDTO;
+use models\lex\LexEntryModel;
+use models\lex\AuthorInfoModel;
 use models\lex\Example;
 use models\lex\Sense;
 
@@ -49,7 +49,7 @@ class LexStoreController {
 
 	/**
 	 * Writes the Lexical Entry to the Store.
-	 * @param EntryDTO $entry
+	 * @param LexEntryModel $entry
 	 * @param string $action
 	 */
 	public function writeEntry($entry, $action, $userId, $userName) {
@@ -59,7 +59,7 @@ class LexStoreController {
 	/**
 	 * Reads a Lexical Entry from the Store
 	 * @param string $guid
-	 * @return EntryDTO
+	 * @return LexEntryModel
 	 */
 	public function readEntry($guid) {
 		return $this->_lexStore->readEntry($guid);
@@ -137,7 +137,7 @@ class LexStoreController {
 	}
 
 
-	private function entryMetadataUpdater(EntryDTO $entry, $userId, $userName) {
+	private function entryMetadataUpdater(LexEntryModel $entry, $userId, $userName) {
 		
 		$date = new \DateTime();
 		$unixTimeStamp = $date->getTimestamp();
@@ -172,8 +172,8 @@ class LexStoreController {
 			//check and update exists Entry
 
 			//clone
-			$newEntryCopy = EntryDTO::createFromArray(unserialize(serialize($entry->encode())));
-			$originalEntryCopy = EntryDTO::createFromArray(unserialize(serialize($original->encode())));
+			$newEntryCopy = LexEntryModel::createFromArray(unserialize(serialize($entry->encode())));
+			$originalEntryCopy = LexEntryModel::createFromArray(unserialize(serialize($original->encode())));
 
 			$copyOfSenses = $newEntryCopy->_senses;
 			$copyOfOriginalSenses = $originalEntryCopy->_senses;
@@ -181,8 +181,8 @@ class LexStoreController {
 			//remove non-need part
 			$newEntryCopy->_senses = Array();
 			$originalEntryCopy->_senses = Array();
-			$newEntryCopy->_metadata =  new EntryMetadataDTO();
-			$originalEntryCopy->_metadata =  new EntryMetadataDTO();
+			$newEntryCopy->_metadata =  new AuthorInfoModel();
+			$originalEntryCopy->_metadata =  new AuthorInfoModel();
 
 			//compare
 			if (strcmp(json_encode($newEntryCopy->encode()), json_encode($originalEntryCopy->encode()))!=0) {
@@ -217,8 +217,8 @@ class LexStoreController {
 					//remove non-need part
 					$newSenseCopy->_examples = Array();
 					$originalSenseCopy->_examples = Array();
-					$newSenseCopy->_metadata =  new EntryMetadataDTO();
-					$originalSenseCopy->_metadata =  new EntryMetadataDTO();
+					$newSenseCopy->_metadata =  new AuthorInfoModel();
+					$originalSenseCopy->_metadata =  new AuthorInfoModel();
 
 					//compare
 					LoggerFactory::getLogger()->logDebugMessage("Compare senses...");
@@ -263,8 +263,8 @@ class LexStoreController {
 						$originalExampleCopy = Example::createFromArray(unserialize(serialize($originalExample->encode())));
 
 						//remove non-need part
-						$newExampleCopy->_metadata =  new EntryMetadataDTO();
-						$originalExampleCopy->_metadata =  new EntryMetadataDTO();
+						$newExampleCopy->_metadata =  new AuthorInfoModel();
+						$originalExampleCopy->_metadata =  new AuthorInfoModel();
 
 						//compare
 						LoggerFactory::getLogger()->logDebugMessage("Compare Examples...");
