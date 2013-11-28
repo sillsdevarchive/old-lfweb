@@ -4,6 +4,7 @@ namespace models\lex;
 
 use models\mapper\Id;
 use models\ProjectModel;
+use models\mapper\ArrayOf;
 
 class LexEntryModelMongoMapper extends \models\mapper\MongoMapper {
 
@@ -35,6 +36,9 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	{
 		$this->id = new Id();
 		$this->_projectModel = $projectModel;
+		$this->senses = new ArrayOf(ArrayOf::OBJECT, function($data) {
+			return new Sense();
+		});
 		$databaseName = $projectModel->databaseName();
 		parent::__construct(LexEntryModelMongoMapper::connect($databaseName), $id);
 	}
@@ -57,7 +61,7 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	public $lexeme; // TODO Renamed $_entry to $lexeme, remove this comment when stitched in IJH 2013-11
 
 	/**
-	 * @var array<Sense>
+	 * @var ArrayOf ArrayOf<Sense>
 	 */
 	public $senses;
 
@@ -74,94 +78,11 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	
 	/**
 	 * Remove this LexEntry from the collection
-	 * @param unknown $databaseName
 	 * @param unknown $id
 	 */
 	public static function remove($id) {
 		$databaseName = $_projectModel->databaseName();
 		LexEntryModelMongoMapper::connect($databaseName)->remove($id);
-	}
-
-// TODO all the following functions are deprecated, remove when stiched in IJH 2013-11	
-	
-	/**
-	 * @param string $guid
-	 */
-	function setGuid($guid) {
-		$this->_guid = $guid;
-	}
-
-	/**
-	 * @return string
-	 */
-	function getGuid() {
-		return $this->_guid;
-	}
-
-	/**
-	 * @param string $mercurialSHA
-	 */
-	function setMercurialSHA($mercurialSHA) {
-		$this->mercurialSHA = $mercurialSHA;
-	}
-
-	/**
-	 * @return string
-	 */
-	function getMercurialSHA() {
-		return $this->mercurialSHA;
-	}
-
-	/**
-	 * @param MultiText $multitext
-	 */
-	function setEntry($multitext) {
-		$this->_entry = $multitext;
-	}
-
-	/**
-	 * @return MultiText
-	 */
-	function getEntry() {
-		return $this->_entry;
-	}
-
-	/**
-	 * @param Sense $sense
-	 */
-	function addSense($sense) {
-		$this->_senses[] = $sense;
-	}
-
-	/**
-	 * @return int
-	 */
-	function senseCount() {
-		return count($this->_senses);
-	}
-
-	/**
-	 * @param int $index
-	 * @return Sense
-	 */
-	function getSense($index) {
-		return $this->_senses[$index];
-	}
-
-	/**
-	 * @return LexEntryModel
-	 */
-	static function create($guid) {
-		return new LexEntryModel($guid);
-	}
-
-	/**
-	 * @return LexEntryModel
-	 */
-	static function createFromArray($value) {
-		$result = new LexEntryModel();
-		$result->decode($value);
-		return $result;
 	}
 
 }

@@ -2,18 +2,47 @@
 
 namespace models\lex;
 
+use models\mapper\Id;
+use models\mapper\ArrayOf;
+
+class TextEntry
+{
+	/**
+	 * @var string
+	 */
+	public $language;
+	
+	/**
+	 * @var string
+	 */
+	public $text;
+	
+}
+
 class MultiText {
 
+	public function __construct() {
+		$this->entries = new ArrayOf(
+			ArrayOf::OBJECT, 
+			function($data) {
+				return new PickItem();
+			}
+		);
+		$this->_multitext = array();
+	}
+
+	/**
+	 * Array of language => text key value pairs
+	 * @var ArrayOf ArrayOf<TextEntry>
+	 */
+	public $entries;
+	
 	/**
 	 * Array of language => text key value pairs
 	 * @var array
 	 */
-	private  $_multitext;
+	private $_multitext;
 	
-	public function __construct() {
-		$this->_multitext = array();
-	}
-
 	public function addForm($language, $text) {
 		$this->_multitext[$language] = $text;
 	}
@@ -34,30 +63,12 @@ class MultiText {
 		return $this->_multitext;
 	}
 	
-	public function encode() {
-		return $this->_multitext;
-	}
-	
-	public function decode($value) {
-		foreach ($value as $language => $text) {
-			if ($text) {
-				$this->addForm($language, $text);
-			}
-		}
-	}
-	
 	public static function create($language = '', $text = '') {
 		$multitext = new MultiText();
 		if ($language) {
 			$multitext->addForm($language, $text);
 		}
 		return $multitext;
-	}
-	
-	public static function createFromArray($value) {
-		$result = new MultiText();
-		$result->decode($value);
-		return $result;
 	}
 	
 }
