@@ -3,9 +3,9 @@ namespace libraries\lfdictionary\store;
 
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\dto\ListDTO;
-use libraries\lfdictionary\dto\EntryMetadataDTO;
 use libraries\lfdictionary\environment\LexProject;
 use models\lex\EntryDTO;
+use models\lex\EntryMetadataDTO;
 use models\lex\Example;
 use models\lex\Sense;
 

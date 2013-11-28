@@ -1,5 +1,5 @@
 <?php
-namespace libraries\lfdictionary\dto;
+namespace models\lex;
 
 /**
  * This class contains metadata for entry element and it sub-elements
@@ -43,7 +43,6 @@ class EntryMetadataDTO {
 	var $_modifiedDate;
 	
 	public function __construct() {
-
 		$this->_createdbyId = "";
 		$this->_createdby = "";
 		$this->_createdDate = 0;
@@ -75,7 +74,6 @@ class EntryMetadataDTO {
 	}
 	
 	public function decode($value) {
-
 		$this->_createdbyId = $value['crid'];
 		$this->_createdby = $value['crname'];
 		$this->_createdDate = $value['crdate'];

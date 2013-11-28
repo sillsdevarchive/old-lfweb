@@ -33,7 +33,7 @@ class Example {
 		$this->_id = "";
 		$this->_example = new MultiText();
 		$this->_translation = new MultiText();
-		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
+		$this->_metadata = new EntryMetadataDTO();
 	}
 
 	/**
@@ -85,14 +85,14 @@ class Example {
 	}
 
 	function decode($value) {
-		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
+		$this->_metadata = new EntryMetadataDTO();
 		if (isset( $value['id'])){
 			$this->_id = $value['id'];
 		}
 		$this->_example = MultiText::createFromArray($value['example']);
 		$this->_translation = MultiText::createFromArray($value['translation']);
 		if (isset($value['metadata'])){
-			$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);
+			$this->_metadata = EntryMetadataDTO::createFromArray($value['metadata']);
 		}
 	}
 

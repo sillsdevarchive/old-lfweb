@@ -45,7 +45,7 @@ class Sense {
 		$this->_examples = array();
 		$this->_definition = MultiText::create();
 		$this->_partOfSpeech = '';
-		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
+		$this->_metadata = new EntryMetadataDTO();
 	}
 
 
@@ -164,7 +164,7 @@ class Sense {
 	}
 
 	function decode($value) {
-		$this->_metadata = new \libraries\lfdictionary\dto\EntryMetadataDTO();
+		$this->_metadata = new EntryMetadataDTO();
 		if (isset( $value['id'])){
 			$this->_id = $value['id'];
 		}
@@ -180,7 +180,7 @@ class Sense {
 		}
 		
 		if (isset($value['metadata'])){
-			$this->_metadata = \libraries\lfdictionary\dto\EntryMetadataDTO::createFromArray($value['metadata']);
+			$this->_metadata = EntryMetadataDTO::createFromArray($value['metadata']);
 		}
 		
 		foreach ($value['examples'] as $exampleValue) {
