@@ -2,44 +2,88 @@
 
 namespace models\lex;
 
-class LexEntryModel {
+use models\mapper\Id;
+use models\ProjectModel;
 
+class LexEntryModelMongoMapper extends \models\mapper\MongoMapper {
+
+	/**
+	 * @var LexEntryModelMongoMapper[]
+	 */
+	private static $_pool = array();
+	
+	/**
+	 * @param string $databaseName
+	 * @return LexEntryModelMongoMapper
+	 */
+	public static function connect($databaseName) {
+		if (!isset(static::$_pool[$databaseName])) {
+			static::$_pool[$databaseName] = new LexEntryModelMongoMapper($databaseName, 'texts');
+		}
+		return static::$_pool[$databaseName];
+	}
+	
+}
+
+class LexEntryModel extends \models\mapper\MapperModel {
+
+	/**
+	 * @param ProjectModel $projectModel
+	 * @param string $id
+	 */
+	public function __construct($projectModel, $id = '')
+	{
+		$this->id = new Id();
+		$this->_projectModel = $projectModel;
+		$databaseName = $projectModel->databaseName();
+		parent::__construct(LexEntryModelMongoMapper::connect($databaseName), $id);
+	}
+	
+	/**
+	 * @var IdReference
+	 */
+	public $id;
+	
 	/**
 	 *
 	 * @var string
 	 */
-	var $_guid;
-
-	/**
-	 *
-	 * @var string
-	 */
-	var $mercurialSHA;
+	public $mercurialSHA;
 
 	/**
 	 * This is a single LF domain
 	 * @var MultiText
 	 */
-	var $_entry; // TODO Rename 'lexeme'
+	public $lexeme; // TODO Renamed $_entry to $lexeme, remove this comment when stitched in IJH 2013-11
 
 	/**
 	 * @var array<Sense>
 	 */
-	var $_senses;
+	public $senses;
 
 	/**
 	 *
 	 * @var AuthorInfoModel
 	 */
-	var $_metadata;
+	public $authorInfo; // TODO Renamed $_metadata to $authorInfo, remove this comment when stitched in IJH 2013-11
 
-	private function __construct($guid=null) {
-		$this->_guid = $guid;
-		$this->_entry = new MultiText();
-		$this->_senses = array();
-		$this->_metadata = new AuthorInfoModel();
+	/**
+	 * @var ProjectModel;
+	 */
+	private $_projectModel;
+	
+	/**
+	 * Remove this LexEntry from the collection
+	 * @param unknown $databaseName
+	 * @param unknown $id
+	 */
+	public static function remove($id) {
+		$databaseName = $_projectModel->databaseName();
+		LexEntryModelMongoMapper::connect($databaseName)->remove($id);
 	}
 
+// TODO all the following functions are deprecated, remove when stiched in IJH 2013-11	
+	
 	/**
 	 * @param string $guid
 	 */
@@ -105,47 +149,6 @@ class LexEntryModel {
 	}
 
 	/**
-	 * Encodes the object into a php array, suitable for use with json_encode
-	 * @return mixed
-	 */
-	function encode() {
-		$senses = array();
-		foreach ($this->_senses as $sense) {
-			$senses[] = $sense->encode();
-		}
-		return array(
-				"guid" => $this->_guid,
-				"mercurialSHA" => $this->mercurialSHA,
-				"entry" => $this->_entry->encode(),
-				"senses" => $senses,
-				"metadata" => $this->_metadata->encode()
-		);
-	}
-
-	/**
-	 * Decodes the given mixed object into a new LexEntryModel
-	 * @param mixed $value
-	 * @return LexEntryModel
-	 */
-	function decode($value) {
-		if ($value == null) {
-			return;
-		}
-		$this->_metadata = new AuthorInfoModel();
-		$this->_guid = $value['guid'];
-		$this->mercurialSHA = $value['mercurialSHA'];
-		$this->_entry = MultiText::createFromArray($value['entry']);
-		if (isset($value['metadata'])) {
-			$this->_metadata = AuthorInfoModel::createFromArray($value['metadata']);
-		}
-
-		foreach ($value['senses'] as $senseValue) {
-			$sense = Sense::createFromArray($senseValue);
-			$this->addSense($sense);
-		}
-	}
-
-	/**
 	 * @return LexEntryModel
 	 */
 	static function create($guid) {
@@ -159,6 +162,18 @@ class LexEntryModel {
 		$result = new LexEntryModel();
 		$result->decode($value);
 		return $result;
+	}
+
+}
+
+class LexEntryListModel extends \models\mapper\MapperListModel {
+
+	public function __construct($projectModel) {
+		parent::__construct(
+				LexEntryModelMongoMapper::connect($projectModel->databaseName()),
+				array('lexeme' => array('$regex' => '')),
+				array('lexeme')
+		);
 	}
 
 }
