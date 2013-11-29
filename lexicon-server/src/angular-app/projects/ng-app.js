@@ -3,6 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('lfprojects', 
 		[
+		 'ngRoute',
 		 'lfprojects.projects',
 		 'lfprojects.project',
 		 'lfprojects.filters',
