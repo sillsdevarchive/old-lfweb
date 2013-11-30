@@ -2,10 +2,13 @@
 
 namespace models\lex;
 
-use models\mapper\Id;
 use models\mapper\MapOf;
 
 class FormEntry {
+	
+	public function __construct($text = '') {
+		$this->text = $text;
+	}
 	
 	/**
 	 * @var string
@@ -14,40 +17,34 @@ class FormEntry {
 	
 }
 
-class MultiText {
+class MultiText extends MapOf {
 
 	public function __construct() {
-		$this->entries = new MapOf(
+		parent::__construct(
 			function($data) {
 				return new FormEntry();
 			}
 		);
 	}
 
-	/**
-	 * Map of language => text key value pairs
-	 * @var MapOf MapOf<TextEntry>
-	 */
-	public $entries;
-	
 	public function updateForm($language, $text) {
-		$this->entries->data[$language] = $text;
+		$this->data[$language] = new FormEntry($text);
 	}
 	
 	public function hasForm($language) {
-		return key_exists($language, $this->entries->data);
+		return key_exists($language, $this->data);
 	}
 	
 	public function getForm($language) {
-		return $this->entries->data[$language];
+		return $this->data[$language]->text;
 	}
 	
 	public function getAllLanguages() {
-		return array_keys($this->entries->data);
+		return array_keys($this->data);
 	}
 	
 	public function getAll() {
-		return $this->entries->data;
+		return $this->data;
 	}
 	
 	public static function create($language = '', $text = '') {

@@ -14,7 +14,7 @@ class Sense {
 		$this->examples = new ArrayOf(ArrayOf::OBJECT, function($data) {
 			return new Example();
 		});
-		$this->authorInfo = new AuthorInfoModel();
+		$this->authorInfo = new AuthorInfo();
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Sense {
 
 	/**
 	 *
-	 * @var AuthorInfoModel
+	 * @var AuthorInfo
 	 */
 	public $authorInfo;
 

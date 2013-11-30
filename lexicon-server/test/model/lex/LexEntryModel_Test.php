@@ -42,7 +42,11 @@ class TestLexEntryModel extends UnitTestCase {
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
 		$this->assertEqual($id, $entry->id->asString());
-	
+		
+		echo "<pre>";
+// 		var_dump($entry);
+		echo "</pre>";
+				
 		// Read back
 		$otherEntry = new LexEntryModel($project, $id);
 		$this->assertEqual($id, $otherEntry->id->asString());

@@ -32,8 +32,7 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	 * @param ProjectModel $projectModel
 	 * @param string $id
 	 */
-	public function __construct($projectModel, $id = '')
-	{
+	public function __construct($projectModel, $id = '') {
 		$this->id = new Id();
 		$this->_projectModel = $projectModel;
 		$this->senses = new ArrayOf(ArrayOf::OBJECT, function($data) {
@@ -67,7 +66,7 @@ class LexEntryModel extends \models\mapper\MapperModel {
 
 	/**
 	 *
-	 * @var AuthorInfoModel
+	 * @var AuthorInfo
 	 */
 	public $authorInfo; // TODO Renamed $_metadata to $authorInfo, remove this comment when stitched in IJH 2013-11
 

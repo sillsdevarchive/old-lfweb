@@ -10,7 +10,7 @@ class Example {
 		$this->id = new Id();
 		$this->example = new MultiText();
 		$this->translation = new MultiText();
-		$this->authorInfo = new AuthorInfoModel();
+		$this->authorInfo = new AuthorInfo();
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Example {
 	public $translation;
 
 	/**
-	 * @var AuthorInfoModel
+	 * @var AuthorInfo
 	 */
 	public $authorInfo;
 

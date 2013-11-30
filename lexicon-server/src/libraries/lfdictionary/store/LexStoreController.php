@@ -5,7 +5,7 @@ use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\dto\ListDTO;
 use libraries\lfdictionary\environment\LexProject;
 use models\lex\LexEntryModel;
-use models\lex\AuthorInfoModel;
+use models\lex\AuthorInfo;
 use models\lex\Example;
 use models\lex\Sense;
 
@@ -181,8 +181,8 @@ class LexStoreController {
 			//remove non-need part
 			$newEntryCopy->_senses = Array();
 			$originalEntryCopy->_senses = Array();
-			$newEntryCopy->_metadata =  new AuthorInfoModel();
-			$originalEntryCopy->_metadata =  new AuthorInfoModel();
+			$newEntryCopy->_metadata =  new AuthorInfo();
+			$originalEntryCopy->_metadata =  new AuthorInfo();
 
 			//compare
 			if (strcmp(json_encode($newEntryCopy->encode()), json_encode($originalEntryCopy->encode()))!=0) {
@@ -217,8 +217,8 @@ class LexStoreController {
 					//remove non-need part
 					$newSenseCopy->_examples = Array();
 					$originalSenseCopy->_examples = Array();
-					$newSenseCopy->_metadata =  new AuthorInfoModel();
-					$originalSenseCopy->_metadata =  new AuthorInfoModel();
+					$newSenseCopy->_metadata =  new AuthorInfo();
+					$originalSenseCopy->_metadata =  new AuthorInfo();
 
 					//compare
 					LoggerFactory::getLogger()->logDebugMessage("Compare senses...");
@@ -263,8 +263,8 @@ class LexStoreController {
 						$originalExampleCopy = Example::createFromArray(unserialize(serialize($originalExample->encode())));
 
 						//remove non-need part
-						$newExampleCopy->_metadata =  new AuthorInfoModel();
-						$originalExampleCopy->_metadata =  new AuthorInfoModel();
+						$newExampleCopy->_metadata =  new AuthorInfo();
+						$originalExampleCopy->_metadata =  new AuthorInfo();
 
 						//compare
 						LoggerFactory::getLogger()->logDebugMessage("Compare Examples...");
