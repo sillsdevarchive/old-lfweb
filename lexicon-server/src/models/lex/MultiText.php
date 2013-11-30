@@ -3,14 +3,9 @@
 namespace models\lex;
 
 use models\mapper\Id;
-use models\mapper\ArrayOf;
+use models\mapper\MapOf;
 
-class TextEntry
-{
-	/**
-	 * @var string
-	 */
-	public $language;
+class FormEntry {
 	
 	/**
 	 * @var string
@@ -22,51 +17,43 @@ class TextEntry
 class MultiText {
 
 	public function __construct() {
-		$this->entries = new ArrayOf(
-			ArrayOf::OBJECT, 
+		$this->entries = new MapOf(
 			function($data) {
-				return new PickItem();
+				return new FormEntry();
 			}
 		);
-		$this->_multitext = array();
 	}
 
 	/**
-	 * Array of language => text key value pairs
-	 * @var ArrayOf ArrayOf<TextEntry>
+	 * Map of language => text key value pairs
+	 * @var MapOf MapOf<TextEntry>
 	 */
 	public $entries;
 	
-	/**
-	 * Array of language => text key value pairs
-	 * @var array
-	 */
-	private $_multitext;
-	
-	public function addForm($language, $text) {
-		$this->_multitext[$language] = $text;
+	public function updateForm($language, $text) {
+		$this->entries->data[$language] = $text;
 	}
 	
 	public function hasForm($language) {
-		return key_exists($language, $this->_multitext);
+		return key_exists($language, $this->entries->data);
 	}
 	
 	public function getForm($language) {
-		return $this->_multitext[$language];
+		return $this->entries->data[$language];
 	}
 	
 	public function getAllLanguages() {
-		return array_keys($this->_multitext);
+		return array_keys($this->entries->data);
 	}
 	
 	public function getAll() {
-		return $this->_multitext;
+		return $this->entries->data;
 	}
 	
 	public static function create($language = '', $text = '') {
 		$multitext = new MultiText();
 		if ($language) {
-			$multitext->addForm($language, $text);
+			$multitext->updateForm($language, $text);
 		}
 		return $multitext;
 	}
