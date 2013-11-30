@@ -19,7 +19,7 @@ class LexEntryModelMongoMapper extends \models\mapper\MongoMapper {
 	 */
 	public static function connect($databaseName) {
 		if (!isset(static::$_pool[$databaseName])) {
-			static::$_pool[$databaseName] = new LexEntryModelMongoMapper($databaseName, 'texts');
+			static::$_pool[$databaseName] = new LexEntryModelMongoMapper($databaseName, 'lexEntries');
 		}
 		return static::$_pool[$databaseName];
 	}
