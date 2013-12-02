@@ -19,7 +19,7 @@ class LexEntryModelMongoMapper extends \models\mapper\MongoMapper {
 	 */
 	public static function connect($databaseName) {
 		if (!isset(static::$_pool[$databaseName])) {
-			static::$_pool[$databaseName] = new LexEntryModelMongoMapper($databaseName, 'lexEntries');
+			static::$_pool[$databaseName] = new LexEntryModelMongoMapper($databaseName, 'lex');
 		}
 		return static::$_pool[$databaseName];
 	}
@@ -35,9 +35,11 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	public function __construct($projectModel, $id = '') {
 		$this->id = new Id();
 		$this->_projectModel = $projectModel;
+		$this->lexeme = new MultiText();
 		$this->senses = new ArrayOf(ArrayOf::OBJECT, function($data) {
 			return new Sense();
 		});
+		$this->authorInfo = new AuthorInfo();
 		$databaseName = $projectModel->databaseName();
 		parent::__construct(LexEntryModelMongoMapper::connect($databaseName), $id);
 	}
@@ -77,10 +79,11 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	
 	/**
 	 * Remove this LexEntry from the collection
+	 * @param ProjectModel $projectModel
 	 * @param unknown $id
 	 */
-	public static function remove($id) {
-		$databaseName = $_projectModel->databaseName();
+	public static function remove($projectModel, $id) {
+		$databaseName = $projectModel->databaseName();
 		LexEntryModelMongoMapper::connect($databaseName)->remove($id);
 	}
 
@@ -91,8 +94,8 @@ class LexEntryListModel extends \models\mapper\MapperListModel {
 	public function __construct($projectModel) {
 		parent::__construct(
 				LexEntryModelMongoMapper::connect($projectModel->databaseName()),
-				array('lexeme' => array('$regex' => '')),
-				array('lexeme')
+				array(),
+				array('lexeme', 'senses')
 		);
 	}
 

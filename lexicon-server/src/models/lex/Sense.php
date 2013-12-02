@@ -8,8 +8,7 @@ use models\mapper\ArrayOf;
 class Sense {
 
 	function __construct() {
-		$this->id = new Id();
-		$this->definition = MultiText::create();
+		$this->definition = new MultiText();
 		$this->partOfSpeech = '';
 		$this->examples = new ArrayOf(ArrayOf::OBJECT, function($data) {
 			return new Example();
@@ -17,12 +16,6 @@ class Sense {
 		$this->authorInfo = new AuthorInfo();
 	}
 
-	/**
-	 *
-	 * @var String
-	 */
-	public $id;
-	
 	/**
 	 * @var MultiText
 	 */

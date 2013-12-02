@@ -7,17 +7,10 @@ use models\mapper\Id;
 class Example {
 
 	function __construct() {
-		$this->id = new Id();
 		$this->example = new MultiText();
 		$this->translation = new MultiText();
 		$this->authorInfo = new AuthorInfo();
 	}
-
-	/**
-	 *
-	 * @var String
-	 */
-	public $id;
 
 	/**
 	 * @var MultiText

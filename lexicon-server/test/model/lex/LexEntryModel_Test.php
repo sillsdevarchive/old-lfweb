@@ -33,26 +33,28 @@ class TestLexEntryModel extends UnitTestCase {
 		$sense->definition = MultiText::create('en', 'Some definition');
 		$sense->semanticDomainName = 'semantic-domain-ddp4';
 		$sense->semanticDomainValue = '2.1 Body';
-		$sense->examples->append(Example::create(
+		$example = Example::create(
 			MultiText::create('en', 'Some example'),
 			MultiText::create('fr', 'Some translation')
-		));
+		);
+		$sense->examples->append($example);
 		$entry->senses->append($sense);
 		$id = $entry->write();
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
 		$this->assertEqual($id, $entry->id->asString());
-		
+
 		echo "<pre>";
 // 		var_dump($entry);
 		echo "</pre>";
-				
+		
 		// Read back
 		$otherEntry = new LexEntryModel($project, $id);
 		$this->assertEqual($id, $otherEntry->id->asString());
-		$this->assertEqual($lexeme1, $otherEntry->lexeme);
-		$this->assertEqual($sense, $otherEntry->senses[0]);
-	
+		$this->assertEqual($lexeme1->getForm('fr'), $otherEntry->lexeme->getForm('fr'));
+		$this->assertEqual($sense->definition->getForm('en'), $otherEntry->senses->data[0]->definition->getForm('en'));
+		$this->assertEqual($example->translation->getForm('fr'), $otherEntry->senses->data[0]->examples->data[0]->translation->getForm('fr'));
+		
 		// Update
 		$lexeme2 = MultiText::create('fr', 'Other form');
 		$otherEntry->lexeme = $lexeme2;
@@ -60,14 +62,14 @@ class TestLexEntryModel extends UnitTestCase {
 	
 		// Read back
 		$otherEntry = new LexEntryModel($project, $id);
-		$this->assertEqual($lexeme2, $otherEntry->lexeme);
+		$this->assertEqual($lexeme2->getForm('fr'), $otherEntry->lexeme->getForm('fr'));
 	
 		// List
 		$list->read();
 		$this->assertEqual(1, $list->count);
 	
 		// Delete
-		LexEntryModel::remove($id);
+		LexEntryModel::remove($project, $id);
 	
 		// List
 		$list->read();
