@@ -6,6 +6,7 @@ use models\mapper\MapOf;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
+require_once(TEST_PATH . 'common/MongoTestEnvironment.php');
 
 class TestMongoMapOfModel {
 	function __construct() {
@@ -17,9 +18,6 @@ class TestMongoMapOfModel {
 
 class TestMongoMapOfMapper extends UnitTestCase {
 
-	function __construct() {
-	}
-	
 	function testEncodeDecode_Same() {
 		$model = new TestMongoMapOfModel();
 		$model->values['key1'] = '1';
@@ -34,6 +32,39 @@ class TestMongoMapOfMapper extends UnitTestCase {
 		$otherModel = new TestMongoMapOfModel();
 		MongoDecoder::decode($otherModel, $encoded);
 		$this->assertEqual($model->values, $otherModel->values);
+	}
+	
+	function testOffsetSet_IndexWithInt_ExceptionExpected() {
+		$e = new MongoTestEnvironment();
+		$model = new TestMongoMapOfModel();
+		$model->values['key1'] = 'value1';
+		
+		$e->inhibitErrorDisplay();
+		$this->expectException();
+ 		$model->values[0] = 'update1';
+		$e->restoreErrorDisplay();
+	}
+	
+	function testOffsetSet_IndexWithNull_ExceptionExpected() {
+		$e = new MongoTestEnvironment();
+		$model = new TestMongoMapOfModel();
+		$model->values['key1'] = 'value1';
+		
+		$e->inhibitErrorDisplay();
+		$this->expectException();
+		$model->values[] = 'value2';
+		$e->restoreErrorDisplay();
+	}
+	
+	function testOffsetGet_IndexWithInt_ExceptionExpected() {
+		$e = new MongoTestEnvironment();
+		$model = new TestMongoMapOfModel();
+		$model->values['key1'] = 'value1';
+		
+		$e->inhibitErrorDisplay();
+		$this->expectException();
+ 		$result = $model->values[0];
+		$e->restoreErrorDisplay();
 	}
 	
 }

@@ -1,6 +1,8 @@
 <?php
 namespace models\mapper;
 
+use libraries\palaso\CodeGuard;
+
 class MapOf extends \ArrayObject {
 	
 	/**
@@ -24,6 +26,16 @@ class MapOf extends \ArrayObject {
 	
 	public function hasGenerator() {
 		return $this->_generator != null;
+	}
+	
+	public function offsetGet($index) {
+		CodeGuard::checkTypeAndThrow($index, 'string');
+		parent::offsetGet($index);
+	}
+	
+	public function offsetSet($index, $newval) {
+		CodeGuard::checkTypeAndThrow($index, 'string');
+		parent::offsetSet($index, $newval);
 	}
 	
 }

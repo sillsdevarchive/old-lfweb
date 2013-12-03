@@ -17,9 +17,6 @@ class TestJsonArrayOfModel {
 
 class TestJsonArrayOfMapper extends UnitTestCase {
 
-	function __construct() {
-	}
-	
 	function testEncodeDecode_Same() {
 		$model = new TestJsonArrayOfModel();
 		$model->values[] = '1';
@@ -31,9 +28,6 @@ class TestJsonArrayOfMapper extends UnitTestCase {
 		$otherModel = new TestJsonArrayOfModel();
 		JsonDecoder::decode($otherModel, $encoded);
 		$this->assertEqual($model->values, $otherModel->values);
-		
-// 		var_dump($iso8601);
-		
 	}
 	
 }
