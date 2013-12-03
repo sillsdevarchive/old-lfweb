@@ -3,8 +3,8 @@
 namespace models\lex;
 
 use models\mapper\Id;
-use models\ProjectModel;
 use models\mapper\ArrayOf;
+use models\ProjectModel;
 
 class LexEntryModelMongoMapper extends \models\mapper\MongoMapper {
 

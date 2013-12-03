@@ -8,11 +8,9 @@ namespace models\lex;
 class AuthorInfo {
 
 	public function __construct() {
-		$this->createdbyId = "";
-		$this->createdby = "";
+		$this->createdByIdRef = "";
 		$this->createdDate = 0;
-		$this->modifiedById = "";
-		$this->modifiedBy = "";
+		$this->modifiedByIdRef = "";
 		$this->modifiedDate = 0;
 	}
 	
@@ -20,13 +18,7 @@ class AuthorInfo {
 	 * user's Id as string
 	 * @var String
 	 */
-	public $createdbyId;
-	
-	/**
-	 * user's name as string
-	 * @var String
-	 */
-	public $createdby;
+	public $createdByIdRef;
 	
 	/**
 	 *	datetime as timestamp
@@ -38,13 +30,7 @@ class AuthorInfo {
 	 * user's Id as string
 	 * @var String
 	 */
-	public $modifiedById;
-	
-	/**
-	 * user's name as string
-	 * @var String
-	 */
-	public $modifiedBy;
+	public $modifiedByIdRef;
 	
 	/**
 	 * datetime as timestamp

@@ -5,12 +5,11 @@ use models\lex\LexEntryListModel;
 use models\lex\Example;
 use models\lex\MultiText;
 use models\lex\Sense;
+use models\mapper\MongoStore;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 require_once(TEST_PATH . 'common/MongoTestEnvironment.php');
-
-require_once(SourcePath . "models/ProjectModel.php");
 require_once(SourcePath . "models/lex/LexEntryModel.php");
 
 class TestLexEntryModel extends UnitTestCase {
@@ -24,7 +23,7 @@ class TestLexEntryModel extends UnitTestCase {
 		$list = new LexEntryListModel($project);
 		$list->read();
 		$this->assertEqual(0, $list->count);
-	
+
 		// Create
 		$entry = new LexEntryModel($project);
 		$lexeme1 = MultiText::create('fr', 'Some form');
@@ -45,7 +44,7 @@ class TestLexEntryModel extends UnitTestCase {
 		$this->assertEqual($id, $entry->id->asString());
 
 		echo "<pre>";
-// 		var_dump($entry);
+ 		var_dump($entry);
 		echo "</pre>";
 		
 		// Read back
@@ -75,28 +74,29 @@ class TestLexEntryModel extends UnitTestCase {
 		$list->read();
 		$this->assertEqual(0, $list->count);
 	}
+
+	function testUpdateThenRemove_NewProject_CreatesThenRemovesProjectDatabase() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
 	
-/*
-	function testEncode_EntryAndSense_JsonCorrect() {
-		$entry = LexEntryModel::create("guid0");
-		$entry->setEntry(MultiText::create('fr', 'form1'));
-		
-		$sense = new Sense();
-		$sense->setDefinition(MultiText::create('en', 'definition1'));
-		$sense->setSemanticDomainName('semantic-domain-ddp4');
-		$sense->setSemanticDomainValue('2.1 Body');
-		$sense->addExample(Example::create(
-			MultiText::create('en', 'example1'),
-			MultiText::create('fr', 'translation1')
-		));
-		
-		$entry->addSense($sense);
-		
-		$result = json_encode($entry->encode());
-		
-		$this->assertEqual('{"guid":"guid0","mercurialSHA":null,"entry":{"fr":"form1"},"senses":[{"definition":{"en":"definition1"},"POS":"","examples":[{"example":{"en":"example1"},"translation":{"fr":"translation1"}}],"SemDomValue":"2.1 Body","SemDomName":"semantic-domain-ddp4"}]}', $result);
+		$project = $e->createProject(LF_TESTPROJECT);
+		$databaseName = $project->databaseName();
+	
+		$project->remove();
+		$this->assertFalse(MongoStore::hasDB($databaseName));
+			
+		$entry = new LexEntryModel($project);
+		$entry->lexeme = MultiText::create('fr', 'Some form');
+		$entry->write();
+	
+		$this->assertTrue(MongoStore::hasDB($databaseName));
+	
+		$project->remove();
+	
+		$this->assertFalse(MongoStore::hasDB($databaseName));
 	}
 	
+/*
 	function testCreateFromArray_Sample_Correct() {
 		$entry = LexEntryModel::create("guid0");
 		$entry->setEntry(MultiText::create('fr', 'form1'));

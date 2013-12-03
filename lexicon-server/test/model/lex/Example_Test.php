@@ -6,33 +6,24 @@ use \models\lex\MultiText;
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
-class TestOfExample extends UnitTestCase {
+class TestExample extends UnitTestCase {
 
+	function testCreate_ExampleAndTranslation_Correct() {
+		$v = Example::create(MultiText::create('en', 'example1'), MultiText::create('fr', 'translation1'));
+		$this->assertEqual('example1', $v->example->getForm('en'));
+		$this->assertEqual('translation1', $v->translation->getForm('fr'));
+	}
+/*	
 	function testEncode_ExampleAndTranslation_JsonCorrect() {
 		$v = new Example();
-		$v->setExample(MultiText::create('en', 'example1'));
-		$v->setTranslation(MultiText::create('fr', 'translation1'));
+		$v->example = MultiText::create('en', 'example1');
+		$v->translation = MultiText::create('fr', 'translation1');
 		
-		$result = json_encode($v->encode());
+		$result = json_encode($v);
 		
 		$this->assertEqual('{"id":"","example":{"en":"example1"},"translation":{"fr":"translation1"},"metadata":{"crid":"","crname":"","modid":"","modname":"","crdate":0,"moddate":0}}', $result);
 	}
-
-	function testCreate_ExampleAndTranslation_Correct() {
-		$v = Example::create(MultiText::create('en', 'text1'), MultiText::create('fr', 'text2'));
-		$this->assertEqual(array('en' => 'text1'), $v->_example->getAll());
-		$this->assertEqual(array('fr' => 'text2'), $v->_translation->getAll());
-	}
-	
-	function testCreateFromArray_ExampleAndTranslation_Correct() {
-		$src = Example::create(MultiText::create('en', 'text1'), MultiText::create('fr', 'text2'));
-		$value = $src->encode();
-		
-		$v = Example::createFromArray($value);
-		$this->assertEqual(array('en' => 'text1'), $v->_example->getAll());
-		$this->assertEqual(array('fr' => 'text2'), $v->_translation->getAll());
-	}
-	
+*/
 }
 
 ?>
