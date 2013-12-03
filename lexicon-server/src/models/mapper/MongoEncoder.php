@@ -83,7 +83,7 @@ class MongoEncoder {
 	 */
 	public function encodeArrayOf($model) {
 		$result = array();
-		foreach ($model->data as $item) {
+		foreach ($model as $item) {
 			if (is_object($item)) {
 				$result[] = $this->_encode($item, true);
 			} else {

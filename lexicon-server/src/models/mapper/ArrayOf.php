@@ -1,34 +1,20 @@
 <?php
 namespace models\mapper;
 
-class ArrayOf {
-	
-	/**
-	 * @var array<Of>
-	 */
-	public $data;
-	
-	/**
-	 * 
-	 * @var string
-	 */
-	private $_type;
+class ArrayOf extends \ArrayObject {
 	
 	/**
 	 * @var function The function <object> function($data = null) returns an instance of the object.
 	 */
 	private $_generator;
 	
-	const VALUE = 'value';
-	const OBJECT = 'object';
+	private $data; // This is here to force client code using the older implementation to have a fatal error allowing us to identify code that needs upgradeing. CP 2013-12
 	
 	/**
 	 * @param string Either ArrayOf::VALUE or ArrayOf::OBJECT
 	 * @param function The function <object> function($data = null) returns an instance of the object.
 	 */
-	public function __construct($type, $generator = null) {
-		$this->data = array();
-		$this->_type = $type;
+	public function __construct($generator = null) {
 		$this->_generator = $generator;
 	}
 	
@@ -37,32 +23,10 @@ class ArrayOf {
 		return $function($data);
 	}
 	
-	public function getType() {
-		return $this->_type;
+	public function hasGenerator() {
+		return $this->_generator != null;
 	}
 	
-	public function append($var) {
-		$this->data[] = $var;
-	}
-	
-	public function count() {
-		return count($this->data);
-	}
-	
-	public function getById($id) {
-		if ($this->_type == ArrayOf::OBJECT) {
-			try {
-				foreach ($this->data as $obj) {
-					if ($obj->id == $id) {
-						return $obj;
-					}
-				}
-			} catch (Exception $e) {
-				// don't throw if $obj->id doesn't exist
-			}
-		}
-		return $this->generate();
-	}
 }
 
 ?>
