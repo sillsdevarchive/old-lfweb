@@ -8,6 +8,7 @@ class AllMapperMongoTests extends TestSuite {
         parent::__construct();
  		$this->addFile(TEST_PATH . 'mapper/mongo/Date_Test.php');
  		$this->addFile(TEST_PATH . 'mapper/mongo/ArrayOf_Test.php');
+ 		$this->addFile(TEST_PATH . 'mapper/mongo/MapOf_Test.php');
     }
 
 }

@@ -85,17 +85,16 @@ class MongoDecoder extends JsonDecoder {
 		if (!is_array($data)) {
 			throw new \Exception("Bad data when array expected. '$data'");
 		}
-		$model->data = array();
 		foreach ($data as $itemKey => $item) {
 			if ($model->hasGenerator()) {
 				$object = $model->generate($item);
 				$this->_decode($object, $item, $itemKey);
-				$model->data[$itemKey] = $object;
+				$model[$itemKey] = $object;
 			} else {
 				if (is_array($item)) {
 					throw new \Exception("Must not decode array for value type '$key'");
 				}
-				$model->data[$itemKey] = $item;
+				$model[$itemKey] = $item;
 			}
 		}
 	}

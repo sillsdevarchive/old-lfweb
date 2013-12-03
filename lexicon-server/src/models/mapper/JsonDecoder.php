@@ -97,6 +97,7 @@ class JsonDecoder {
 	}
 	
 	/**
+	 * @param string $key
 	 * @param ArrayOf $model
 	 * @param array $data
 	 * @throws \Exception
@@ -118,23 +119,23 @@ class JsonDecoder {
 	}
 	
 	/**
+	 * @param string $key
 	 * @param MapOf $model
 	 * @param array $data
 	 * @throws \Exception
 	 */
 	public function decodeMapOf($key, $model, $data) {
 		CodeGuard::checkTypeAndThrow($data, 'array');
-		$model->data = array();
 		foreach ($data as $itemKey => $item) {
 			if ($model->hasGenerator()) {
 				$object = $model->generate($item);
 				$this->_decode($object, $item, false);
-				$model->data[$itemKey] = $object;
+				$model[$itemKey] = $object;
 			} else {
 				if (is_array($item)) {
 					throw new \Exception("Must not decode array for value type '$key'");
 				}
-				$model->data[$itemKey] = $item;
+				$model[$itemKey] = $item;
 			}
 		}
 	}

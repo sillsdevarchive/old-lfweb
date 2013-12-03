@@ -111,7 +111,7 @@ class JsonEncoder {
 	public function encodeMapOf($key, $model) {
 		$result = array();
 		$count = 0;
-		foreach ($model->data as $itemKey => $item) {
+		foreach ($model as $itemKey => $item) {
 			if (is_object($item)) {
 				$result[$itemKey] = $this->_encode($item);
 			} else {
