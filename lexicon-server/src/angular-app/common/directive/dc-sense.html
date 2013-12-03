@@ -1,0 +1,23 @@
+<div ng-repeat="field in config.fields">
+    <ng-switch on="config.definitions[field].type">
+        <div ng-switch-when="optionlist">
+            <dc-optionlist definition="config.definitions[field]" model="model[field]"></dc-optionlist>
+        </div>
+        <div ng-switch-when="multitext">
+            <dc-multitext definition="config.definitions[field]" model="model[field]"></multitext>
+        </div>
+        <div ng-switch-when="config">
+            <ng-switch on="field">
+                <div ng-switch-when="examples">
+                    <dc-example config="config.definitions[field]" model="model[field]"></dc-example>
+                </div>
+                <div ng-switch-default>
+                    unsupported config field: {{field}}
+                </div>
+            </ng-switch>
+        </div>
+        <div ng-switch-default>
+            unsupported type {{config.definitions[field].type}} for field {{field}}
+        </div>
+    </ng-switch>
+</div>

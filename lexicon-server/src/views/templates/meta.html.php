@@ -8,10 +8,12 @@
 		<link rel="stylesheet" media="screen" href="/css/superfish.css" />
 		<link rel="stylesheet" media="screen" href="/css/slides.css" />
 		<link rel="stylesheet" media="screen" href="/css/jquery.fileupload-ui.css" />
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<link rel="stylesheet" href="/css/lf-dictionary.css" />
 		<link rel="stylesheet" href="/css/lf.css" />
 		<link rel="stylesheet" href="/css/lexiquepro.css" />
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<!--
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  -->
 		<script src="/js/lib/jquery-1.8.3.min.js"></script>
