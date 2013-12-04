@@ -30,7 +30,7 @@ class ArrayOf extends \ArrayObject {
 	
 	public function offsetGet($index) {
 		CodeGuard::checkTypeAndThrow($index, 'integer');
-		parent::offsetGet($index);
+		return parent::offsetGet($index);
 	}
 	
 	public function offsetSet($index, $newval) {

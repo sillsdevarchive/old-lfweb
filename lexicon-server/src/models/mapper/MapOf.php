@@ -30,7 +30,7 @@ class MapOf extends \ArrayObject {
 	
 	public function offsetGet($index) {
 		CodeGuard::checkTypeAndThrow($index, 'string');
-		parent::offsetGet($index);
+		return parent::offsetGet($index);
 	}
 	
 	public function offsetSet($index, $newval) {

@@ -34,6 +34,12 @@ class TestMongoArrayOfMapper extends UnitTestCase {
 		$this->assertEqual($model->values, $otherModel->values);
 	}
 	
+	function testOffsetSetAndGet_Create_Read() {
+		$model = new TestMongoArrayOfModel();
+		$model->values[] = 'value1';
+		$this->assertEqual($model->values[0], 'value1');
+	}
+	
 	function testOffsetSet_IndexWithString_ExceptionExpected() {
 		$e = new MongoTestEnvironment();
 		$model = new TestMongoArrayOfModel();
