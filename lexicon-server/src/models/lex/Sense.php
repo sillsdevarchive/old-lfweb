@@ -10,9 +10,11 @@ class Sense {
 	function __construct() {
 		$this->definition = new MultiText();
 		$this->partOfSpeech = '';
-		$this->examples = new ArrayOf(ArrayOf::OBJECT, function($data) {
-			return new Example();
-		});
+		$this->examples = new ArrayOf(
+			function($data) {
+				return new Example();
+			}
+		);
 		$this->authorInfo = new AuthorInfo();
 	}
 

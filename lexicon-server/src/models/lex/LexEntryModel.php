@@ -36,9 +36,11 @@ class LexEntryModel extends \models\mapper\MapperModel {
 		$this->id = new Id();
 		$this->_projectModel = $projectModel;
 		$this->lexeme = new MultiText();
-		$this->senses = new ArrayOf(ArrayOf::OBJECT, function($data) {
-			return new Sense();
-		});
+		$this->senses = new ArrayOf(
+			function($data) {
+				return new Sense();
+			}
+		);
 		$this->authorInfo = new AuthorInfo();
 		$databaseName = $projectModel->databaseName();
 		parent::__construct(LexEntryModelMongoMapper::connect($databaseName), $id);

@@ -1,51 +1,52 @@
 <?php
 
-use \models\lex\MultiText;
+use models\lex\MultiText;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
 class TestMultiText extends UnitTestCase {
 
-	function testCRUandGetAll_HasCorrectForm() {
+	function testCRUD_Works() {
 		// Create
-		$v = MultiText::create('en', 'text1');
+		$v = new MultiText();
+		$v['en'] = 'text1';
 		
 		// Read
-		$this->assertEqual('text1', $v->getForm('en'));
+		$this->assertEqual($v['en'], 'text1');
 		
 		// Update
-		$v->updateForm('en', 'text2');
-		$this->assertEqual('text2', $v->getForm('en'));
+		$v['en'] = 'text2';
+		$this->assertEqual($v['en'], 'text2');
 		
-		// Get All
-		$v->updateForm('fr', 'text3');
+		// Delete
+		$v['fr'] = 'text3';
 		$this->assertEqual($v->count(), 2);
-		$this->assertEqual($v->data, $v->getAll());
-
-		// Get All Languages
-		$this->assertEqual(array('en', 'fr'), $v->getAllLanguages());
-	}
-/*	
-	function testEncode_MultiTextSingleEntry_JsonDictionary() {
-		$v = new MultiText();
-		$v->updateForm('en', 'text');
-		
-		$result = json_encode($v);
-		
-		$this->assertEqual('{"en":"text"}', $result);
+		unset($v['en']);
+		$this->assertEqual($v->count(), 1);
+		$this->assertEqual($v['fr'], 'text3');
 	}
 
-	function testEncode_MultiTextMultiEntry_JsonDictionary() {
+	function testOffsetExists_Read_HasCorrectForm() {
 		$v = new MultiText();
-		$v->updateForm('en', 'text1');
-		$v->updateForm('fr', 'text2');
-		
-		$result = json_encode($v);
-		
-		$this->assertEqual('{"en":"text1","fr":"text2"}', $result);
+		$v['en'] = 'text1';
+		$this->assertTrue($v->offsetExists('en'));
+		$this->assertFalse($v->offsetExists('fr'));
+		$v['fr'] = 'text2';
+		$this->assertTrue($v->offsetExists('fr'));
 	}
-*/	
+
+	function testGetAllLanguages_Read_HasCorrectForm() {
+		$v = new MultiText();
+		$v['en'] = 'text1';
+		$v['fr'] = 'text2';
+		$this->assertEqual($v->getAllLanguages(), array('en', 'fr'));
+
+		echo "<pre>";
+// 		var_dump($v);
+		echo "</pre>";
+	}
+
 }
 
 ?>

@@ -1,31 +1,39 @@
 <?php
 
-use \models\lex\Example;
-use \models\lex\MultiText;
-use \models\lex\Sense;
+use models\lex\Sense;
+use models\lex\Example;
+use models\lex\MultiText;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
 
-class TestOfSense extends UnitTestCase {
-/*
-	function testEncode_DefinitionPOSAndExample_JsonCorrect() {
+class TestSense extends UnitTestCase {
+
+	function testCreate_Sense_Correct() {
 		$sense = new Sense();
-		$sense->definition = MultiText::create('en', 'definition1');
-		$sense->partOfSpeech = 'Noun';
+		$definition = new MultiText();
+		$definition['en'] = 'Some definition';
+		$sense->definition = $definition;
 		$sense->semanticDomainName = 'semantic-domain-ddp4';
 		$sense->semanticDomainValue = '2.1 Body';
-		$example = Example::create(
-			MultiText::create('en', 'example1'), 
-			MultiText::create('fr', 'translation1')
-		);
-		$sense->examples->append($example);
+		$example = new MultiText();
+		$example['en'] = 'example1';
+		$translation = new MultiText();
+		$translation['fr'] = 'translation1';
+		$lexExample = new Example();
+		$lexExample->example = $example;
+		$lexExample->translation = $translation;
+		$sense->examples->append($lexExample);
 		
-		$result = json_encode($sense);
-		
-		$this->assertEqual('{"definition":{"en":"definition1"},"POS":"Noun","examples":[{"example":{"en":"example1"},"translation":{"fr":"translation1"}}],"SemDomValue":"2.1 Body","SemDomName":"semantic-domain-ddp4"}', $result);
+		$this->assertEqual($sense->definition['en'], 'Some definition');
+		$this->assertEqual($sense->examples[0]->example['en'], 'example1');
+		$this->assertEqual($sense->examples[0]->translation['fr'], 'translation1');
+
+		echo "<pre>";
+//   		var_dump($sense);
+		echo "</pre>";
 	}
-*/
+		
 }
 
 ?>

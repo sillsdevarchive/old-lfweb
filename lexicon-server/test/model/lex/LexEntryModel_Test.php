@@ -18,7 +18,7 @@ class TestLexEntryModel extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		$project = $e->createProject(LF_TESTPROJECT);
-	
+		
 		// List
 		$list = new LexEntryListModel($project);
 		$list->read();
@@ -26,17 +26,23 @@ class TestLexEntryModel extends UnitTestCase {
 
 		// Create
 		$entry = new LexEntryModel($project);
-		$lexeme1 = MultiText::create('fr', 'Some form');
+		$lexeme1 = new MultiText();
+		$lexeme1['fr'] = 'Some form';
 		$entry->lexeme = $lexeme1;
 		$sense = new Sense();
-		$sense->definition = MultiText::create('en', 'Some definition');
+		$definition = new MultiText();
+		$definition['en'] = 'Some definition';
+		$sense->definition = $definition;
 		$sense->semanticDomainName = 'semantic-domain-ddp4';
 		$sense->semanticDomainValue = '2.1 Body';
-		$example = Example::create(
-			MultiText::create('en', 'Some example'),
-			MultiText::create('fr', 'Some translation')
-		);
-		$sense->examples->append($example);
+		$example = new MultiText();
+		$example['en'] = 'example1';
+		$translation = new MultiText();
+		$translation['fr'] = 'translation1';
+		$lexExample = new Example();
+		$lexExample->example = $example;
+		$lexExample->translation = $translation;
+		$sense->examples->append($lexExample);
 		$entry->senses->append($sense);
 		$id = $entry->write();
 		$this->assertNotNull($id);
@@ -44,24 +50,25 @@ class TestLexEntryModel extends UnitTestCase {
 		$this->assertEqual($id, $entry->id->asString());
 
 		echo "<pre>";
- 		var_dump($entry);
+//  		var_dump($entry);
 		echo "</pre>";
 		
 		// Read back
 		$otherEntry = new LexEntryModel($project, $id);
 		$this->assertEqual($id, $otherEntry->id->asString());
-		$this->assertEqual($lexeme1->getForm('fr'), $otherEntry->lexeme->getForm('fr'));
-		$this->assertEqual($sense->definition->getForm('en'), $otherEntry->senses->data[0]->definition->getForm('en'));
-		$this->assertEqual($example->translation->getForm('fr'), $otherEntry->senses->data[0]->examples->data[0]->translation->getForm('fr'));
+		$this->assertEqual($lexeme1['fr'], $otherEntry->lexeme['fr']);
+		$this->assertEqual($sense->definition['en'], $otherEntry->senses[0]->definition['en']);
+		$this->assertEqual($lexExample->translation['fr'], $otherEntry->senses[0]->examples[0]->translation['fr']);
 		
 		// Update
-		$lexeme2 = MultiText::create('fr', 'Other form');
+		$lexeme2 = new MultiText();
+		$lexeme2['fr'] = 'Other form';
 		$otherEntry->lexeme = $lexeme2;
 		$otherEntry->write();
 	
 		// Read back
 		$otherEntry = new LexEntryModel($project, $id);
-		$this->assertEqual($lexeme2->getForm('fr'), $otherEntry->lexeme->getForm('fr'));
+		$this->assertEqual($lexeme2['fr'], $otherEntry->lexeme['fr']);
 	
 		// List
 		$list->read();
@@ -86,7 +93,9 @@ class TestLexEntryModel extends UnitTestCase {
 		$this->assertFalse(MongoStore::hasDB($databaseName));
 			
 		$entry = new LexEntryModel($project);
-		$entry->lexeme = MultiText::create('fr', 'Some form');
+		$lexeme = new MultiText();
+		$lexeme['fr'] = 'Some form';
+		$entry->lexeme = $lexeme;
 		$entry->write();
 	
 		$this->assertTrue(MongoStore::hasDB($databaseName));
@@ -96,38 +105,6 @@ class TestLexEntryModel extends UnitTestCase {
 		$this->assertFalse(MongoStore::hasDB($databaseName));
 	}
 	
-/*
-	function testCreateFromArray_Sample_Correct() {
-		$entry = LexEntryModel::create("guid0");
-		$entry->setEntry(MultiText::create('fr', 'form1'));
-		
-		$sense = new Sense();
-		$sense->setDefinition(MultiText::create('en', 'definition1'));
-		$sense->setPartOfSpeech('Noun');
-		$sense->setSemanticDomainName('semantic-domain-ddp4');
-		$sense->setSemanticDomainValue('2.1 Body');
-		$sense->addExample(Example::create(
-			MultiText::create('en', 'example1'),
-			MultiText::create('fr', 'translation1')
-		));
-		
-		$entry->addSense($sense);
-				
-		$value = $entry->encode();
-		
-		$v = LexEntryModel::createFromArray($value);
-		
-		$this->assertEqual('guid0', $v->_guid);
-		$this->assertEqual(array('fr' => 'form1'), $v->_entry->getAll());
-		$this->assertEqual(array('en' => 'definition1'), $v->_senses[0]->_definition->getAll());
-		$this->assertEqual('Noun', $v->_senses[0]->_partOfSpeech);
-		$this->assertEqual(1, count($v->_senses[0]->_examples));
-		$this->assertEqual(array('en' => 'example1'), $v->_senses[0]->_examples[0]->_example->getAll());
-		$this->assertEqual(array('fr' => 'translation1'), $v->_senses[0]->_examples[0]->_translation->getAll());
-		$this->assertEqual('semantic-domain-ddp4', $v->_senses[0]->_semanticDomainName);
-		$this->assertEqual('2.1 Body', $v->_senses[0]->_semanticDomainValue);
-	}
-*/
 }
 
 ?>

@@ -27,18 +27,6 @@ class Example {
 	 */
 	public $authorInfo;
 
-	/**
-	 * Create a new Example with the given example and translation.
-	 * @param MultiText $example
-	 * @param MultiText $translation
-	 */
-	static function create($example, $translation) {
-		$result = new Example();
-		$result->example = $example;
-		$result->translation = $translation;
-		return $result;
-	}
-
 }
 
 ?>
