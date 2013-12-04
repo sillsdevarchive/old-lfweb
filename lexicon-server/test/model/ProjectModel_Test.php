@@ -66,9 +66,9 @@ class TestProjectModel extends UnitTestCase {
 		$projectModel->write();
 		$userModel->write();
 		
-		$this->assertTrue(array_key_exists($userId, $projectModel->users->data), "'$userId' not found in project.");
+		$this->assertTrue($projectModel->users->offsetExists($userId), "'$userId' not found in project.");
 		$otherProject = new ProjectModel($projectId);
-		$this->assertTrue(array_key_exists($userId, $otherProject->users->data), "'$userId' not found in other project.");
+		$this->assertTrue($otherProject->users->offsetExists($userId), "'$userId' not found in other project.");
 	}
 	
 	
@@ -90,9 +90,9 @@ class TestProjectModel extends UnitTestCase {
 		$userModel->write();
 		
 		// assert the reference is there		
-		$this->assertTrue(array_key_exists($userId, $projectModel->users->data), "'$userId' not found in project.");
+		$this->assertTrue($projectModel->users->offsetExists($userId), "'$userId' not found in project.");
 		$otherProject = new ProjectModel($projectId);
-		$this->assertTrue(array_key_exists($userId, $otherProject->users->data), "'$userId' not found in other project.");
+		$this->assertTrue($otherProject->users->offsetExists($userId), "'$userId' not found in other project.");
 		
 		// remove the reference
 		$projectModel->removeUser($userId);
@@ -101,9 +101,9 @@ class TestProjectModel extends UnitTestCase {
 		$userModel->write();
 		
 		// testing
-		$this->assertFalse(array_key_exists($userId, $projectModel->users->data), "'$userId' not found in project.");
+		$this->assertFalse($projectModel->users->offsetExists($userId), "'$userId' not found in project.");
 		$otherProject = new ProjectModel($this->_someProjectId);
-		$this->assertFalse(array_key_exists($userId, $otherProject->users->data), "'$userId' not found in other project.");
+		$this->assertFalse($otherProject->users->offsetExists($userId), "'$userId' not found in other project.");
 		$project = new ProjectModel($this->_someProjectId);
 	}
 	
@@ -118,9 +118,9 @@ class TestProjectModel extends UnitTestCase {
 		$projectId = $projectModel->id;
 		
 		$projectModel->addUser($userId, Roles::USER);
-		$this->assertEqual(1, count($projectModel->users));
+		$this->assertEqual(1, $projectModel->users->count());
 		$projectModel->addUser($userId, Roles::USER);
-		$this->assertEqual(1, count($projectModel->users));
+		$this->assertEqual(1, $projectModel->users->count());
 	}
 	
 	function testProjectListUsers_TwoUsers_ListHasDetails() {

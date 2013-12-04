@@ -157,14 +157,14 @@ class TestUserUnreadModel extends UnitTestCase {
 		$otherUnreadModel = new UnreadActivityModel($userId1);
 		
 		$unreadItems = $otherUnreadModel->unreadItems();
-		$this->assertEqual(count($unreadItems), 2);
+		$this->assertEqual(2, count($unreadItems));
 		
 		$otherUnreadModel->markRead($activityId1);
 		$otherUnreadModel->write();
 		
 		$unreadModel->read();
 		$unreadItems = $unreadModel->unreadItems();
-		$this->assertEqual(count($unreadItems), 1);
+		$this->assertEqual(1, count($unreadItems));
 	}
 	
 	function testUnreadQuestionModel_markAllRead_unreadItems_noUnreadItems() {
@@ -275,41 +275,41 @@ class TestUserUnreadModel extends UnitTestCase {
 		
 		// the answer author does NOT get their answer marked as unread
 		$unreadModel = new UnreadAnswerModel($userId1, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 1);
+		$this->assertEqual(1, count($unreadModel->unreadItems()));
 		
 		// the answer author does NOT get their answer marked as unread
 		$unreadModel = new UnreadAnswerModel($userId2, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 1);
+		$this->assertEqual(1, count($unreadModel->unreadItems()));
 		
 		$unreadModel = new UnreadAnswerModel($userId3, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 2);
+		$this->assertEqual(2, count($unreadModel->unreadItems()));
 		
 		// user1 visits question page
 		$pageDto = QuestionCommentDto::encode($projectId, $questionId, $userId1);
 		$unreadModel = new UnreadAnswerModel($userId1, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 0);
+		$this->assertEqual(0, count($unreadModel->unreadItems()));
 		$unreadModel = new UnreadAnswerModel($userId2, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 1);
+		$this->assertEqual(1, count($unreadModel->unreadItems()));
 		$unreadModel = new UnreadAnswerModel($userId3, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 2);
+		$this->assertEqual(2, count($unreadModel->unreadItems()));
 		
 		// user2 visits question page
 		$pageDto = QuestionCommentDto::encode($projectId, $questionId, $userId2);
 		$unreadModel = new UnreadAnswerModel($userId1, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 0);
+		$this->assertEqual(0, count($unreadModel->unreadItems()));
 		$unreadModel = new UnreadAnswerModel($userId2, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 0);
+		$this->assertEqual(0, count($unreadModel->unreadItems()));
 		$unreadModel = new UnreadAnswerModel($userId3, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 2);
+		$this->assertEqual(2, count($unreadModel->unreadItems()));
 		
 		// user2 visits question page
 		$pageDto = QuestionCommentDto::encode($projectId, $questionId, $userId3);
 		$unreadModel = new UnreadAnswerModel($userId1, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 0);
+		$this->assertEqual(0, count($unreadModel->unreadItems()));
 		$unreadModel = new UnreadAnswerModel($userId2, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 0);
+		$this->assertEqual(0, count($unreadModel->unreadItems()));
 		$unreadModel = new UnreadAnswerModel($userId3, $projectId, $questionId);
-		$this->assertEqual(count($unreadModel->unreadItems()), 0);
+		$this->assertEqual(0, count($unreadModel->unreadItems()));
 	}
 }
 

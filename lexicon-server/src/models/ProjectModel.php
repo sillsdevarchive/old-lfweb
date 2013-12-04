@@ -81,7 +81,6 @@ class ProjectModel extends \models\mapper\MapperModel
 		}
 
 		return 'lf_' . $name;
-
 	}
 	
 	// TODO These 2 fns are probably in commands somewhere and are better off there. They should be removed from here CP 2013-11
@@ -122,7 +121,7 @@ class ProjectModel extends \models\mapper\MapperModel
 //		$ProjectModelMongoMapper::mongoID($userId)
 		$model = new ProjectRoleModel();
 		$model->role = $role;
-		$this->users->data[$userId] = $model; 
+		$this->users[$userId] = $model; 
 	}
 	
 	/**
@@ -130,7 +129,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @param string $userId
 	 */
 	public function removeUser($userId) {
-		unset($this->users->data[$userId]);
+		unset($this->users[$userId]);
 	}
 
 	public function listUsers() {
@@ -138,12 +137,12 @@ class ProjectModel extends \models\mapper\MapperModel
 		$userList->read();
 		for ($i = 0, $l = count($userList->entries); $i < $l; $i++) {
 			$userId = $userList->entries[$i]['id'];
-			if (!key_exists($userId, $this->users->data)) {
+			if (!key_exists($userId, $this->users)) {
 				$projectId = $this->id->asString();
 				error_log("User $userId is not a member of project $projectId");
 				continue;
 			}
-			$userList->entries[$i]['role'] = $this->users->data[$userId]->role;
+			$userList->entries[$i]['role'] = $this->users[$userId]->role;
 		}
  		return $userList;
 	}
@@ -155,7 +154,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @return bool
 	 */
 	public function hasRight($userId, $right) {
-		$role = $this->users->data[$userId]->role;
+		$role = $this->users[$userId]->role;
 		$result = Roles::hasRight(Realm::PROJECT, $role, $right);
 		return $result;
 	}
@@ -167,10 +166,10 @@ class ProjectModel extends \models\mapper\MapperModel
 	 */
 	public function getRightsArray($userId) {
 		CodeGuard::checkTypeAndThrow($userId, 'string');
-		if (!key_exists($userId, $this->users->data)) {
+		if (!key_exists($userId, $this->users)) {
 			$result = array();
 		} else {
-			$role = $this->users->data[$userId]->role;
+			$role = $this->users[$userId]->role;
 			$result = Roles::getRightsArray(Realm::PROJECT, $role);
 		}
 		return $result;
@@ -244,8 +243,5 @@ class ProjectSettingsModel extends ProjectModel
 	public $emailSettings;
 
 }
-
-	
-
 
 ?>

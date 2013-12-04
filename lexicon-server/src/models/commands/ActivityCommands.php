@@ -125,7 +125,7 @@ class ActivityCommands
 	public static function updateScore($projectModel, $questionId, $answerId, $userId, $mode = 'increase') {
 		$activity = new ActivityModel($projectModel);
 		$question = new QuestionModel($projectModel, $questionId);
-		$answer = $question->answers->data[$answerId];
+		$answer = $question->answers[$answerId];
 		$user = new UserModel($userId);
 		$user2 = new UserModel($answer->userRef->asString());
 		$activity = new ActivityModel($projectModel);

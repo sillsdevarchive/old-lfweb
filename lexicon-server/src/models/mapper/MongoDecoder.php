@@ -56,12 +56,12 @@ class MongoDecoder extends JsonDecoder {
 	 */
 	public function decodeArrayOf($key, $model, $data) {
 		if ($data == null) {
-			$model->exchangeArray(array());
-			return;
+			$data = array();
 		}
 		if (!is_array($data)) {
 			throw new \Exception("Bad data when array expected. '$data'");
 		}
+		$model->exchangeArray(array());
 		foreach ($data as $item) {
 			if ($model->hasGenerator()) {
 				$object = $model->generate($item);
@@ -82,9 +82,13 @@ class MongoDecoder extends JsonDecoder {
 	 * @throws \Exception
 	 */
 	public function decodeMapOf($key, $model, $data) {
+		if ($data == null) {
+			$data = array();
+		}
 		if (!is_array($data)) {
 			throw new \Exception("Bad data when array expected. '$data'");
 		}
+		$model->exchangeArray(array());
 		foreach ($data as $itemKey => $item) {
 			if ($model->hasGenerator()) {
 				$object = $model->generate($item);

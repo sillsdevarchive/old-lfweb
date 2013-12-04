@@ -39,8 +39,8 @@ class ProjectUserPropertiesSettings
 	}
 	
 	private function ensurePickListExists($key, $name) {
-		if (!isset($this->userProfilePickLists->data[$key])) {
-			$this->userProfilePickLists->data[$key] = new PickList($name);
+		if (!isset($this->userProfilePickLists[$key])) {
+			$this->userProfilePickLists[$key] = new PickList($name);
 		}
 	}
 	
