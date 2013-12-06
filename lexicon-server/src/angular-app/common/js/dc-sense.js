@@ -8,10 +8,17 @@ angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.multitext', 'palaso.ui.dc.op
 				config : "=",
 				model : "=",
 			},
+			controller: ['$scope', function($scope) {
+				$scope.makeValidModel = function() {
+					if (!$scope.model) {
+						$scope.model = {};
+					}
+				};
+			}],
 			link : function(scope, element, attrs, controller) {
-				if (!scope.model) {
-					scope.model = {};
-				}
+				scope.$watch('model', function() {
+					scope.makeValidModel();
+				});
 			}
 		};
   }])

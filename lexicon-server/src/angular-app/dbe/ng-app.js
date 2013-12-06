@@ -1,6 +1,6 @@
 'use strict';
 
-function dbeCtrl($scope, userService, sessionService) {
+function dbeCtrl($scope, userService, sessionService, $window) {
 	
 	// see http://alistapart.com/article/expanding-text-areas-made-elegant
 	// for an idea on expanding text areas
@@ -8,7 +8,7 @@ function dbeCtrl($scope, userService, sessionService) {
 	
  
 	
-	/*
+	/* this is what an entry looks like
 	$scope.entry = {
 		'id': '1234',
 		'lexeme': { 'en': '', 'th': '' },
@@ -20,8 +20,34 @@ function dbeCtrl($scope, userService, sessionService) {
 	};
 	*/
 	
-	$scope.entry = {};
+	$scope.entry = undefined;
 	
+	$scope.entryTitle = function() {
+		if ($scope.entry && $scope.entry.lexeme) {
+			var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
+			return $scope.entry.lexeme[lexemeWritingSystem];
+		}
+		return "";
+	};
+	
+	$scope.entries = [];
+	
+	$scope.editEntry = function(index) {
+		$scope.entry = $scope.entries[index];
+	};
+	
+	$scope.addEntry = function() {
+		var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
+		var lexeme = {};
+		lexeme[lexemeWritingSystem] = '[blank]';
+		$scope.entries.push({'id':"", 'lexeme': lexeme});
+	};
+	
+	$scope.deleteEntry = function(index) {
+		if ($window.confirm("Are you sure you want to delete entry #" + (index+1) + " ?")) {
+			$scope.entries.splice(index, 1);
+		}
+	};
 	
 	$scope.config = {
 		'writingsystems': {
@@ -101,5 +127,5 @@ function dbeCtrl($scope, userService, sessionService) {
 
 
 angular.module('dbe', ['jsonRpc', 'ui.bootstrap', 'lf.services', 'palaso.ui.dc.entry']).
-controller('dbeCtrl', ['$scope', 'userService', 'sessionService', dbeCtrl])
+controller('dbeCtrl', ['$scope', 'userService', 'sessionService', '$window', dbeCtrl])
 ;

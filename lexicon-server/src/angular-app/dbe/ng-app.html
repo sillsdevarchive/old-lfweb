@@ -1,12 +1,32 @@
-<div class="container" ng-app="dbe" ng-cloak>
-	<div ng-controller="dbeCtrl">
+<div class="container" ng-app="dbe" ng-cloak ng-controller="dbeCtrl">
+	<div class="row">
+	    <div class="span10">
+        <h2>---</h2>
         <h2>Dictionary Browse and Edit</h2>
+    	    <button class="btn" ng-click="addEntry()">New Entry</button>
+	    </div>
+	</div>
+	<div class="row" style="margin-top:20px">
+        <div class="span3">
+            <table class="table table-condensed table-hover">
+                <tbody>
+                    <tr ng-show="entries.length > 0"><td><input width="4" type="text" class="input-medium search-query" ng-model="searchText"></td></tr>
+                    <tr ng-repeat="entry in entries | filter:searchText">
+                        <td ng-click="editEntry($index)">{{entry.lexeme.th}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h4>Test Record #{{entry.id}}</h4>
-        record = <pre>{{entry|json}}</pre>
-        
-        <h2>Entry Directive</h2>
-        <dc-entry config="config" model="entry"></dc-entry>
-        
+        <div class="span6" ng-show="entry && entries.length > 0">
+            <h4>{{entryTitle()}}</h4>
+	    <button class="btn" ng-click="deleteEntry($index)">Delete This Entry</button>
+            <dc-entry config="config" model="entry"></dc-entry>
+        </div>
+
+        <div class="span3">
+            <pre>{{entries|json}}</pre>
+            <pre>{{entry|json}}</pre>
+        </div>
 	</div>
 </div>
