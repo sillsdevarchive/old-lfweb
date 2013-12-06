@@ -13,8 +13,8 @@ angular.module('palaso.ui.dc.multitext', [])
 				// if the model doesn't exist, create an object for it based upon the definition
 				if (!scope.model) {
 					scope.model = {};
-					for (ws in scope.definition.writingsystems) {
-						scope.model[ws] = "";
+					for (var i=0; i<scope.definition.writingsystems.length; i++) {
+						scope.model[scope.definition.writingsystems[i]] = "";
 					}
 				}
 			}

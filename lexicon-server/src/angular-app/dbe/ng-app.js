@@ -5,15 +5,6 @@ function dbeCtrl($scope, userService, sessionService) {
 	// see http://alistapart.com/article/expanding-text-areas-made-elegant
 	// for an idea on expanding text areas
 	
-	$scope.definition = {
-		'label': 'word',
-		'writingsystems': {
-			'en': 'English',
-			'th': 'Thai'
-		},
-		'width': 20
-	};
-	
 	
  
 	
@@ -33,29 +24,32 @@ function dbeCtrl($scope, userService, sessionService) {
 	
 	
 	$scope.config = {
+		'writingsystems': {
+			'type': 'map',
+			'map': {
+				'th': 'Thai',
+				'en': 'English',
+				'my': 'Burmese'
+			}
+		},
 		'entry': {
-			'type': 'config',
+			'type': 'fields',
 			'fields': ['lexeme', 'senses'],
 			'definitions': {
 				'lexeme': {
 					'type': 'multitext',
 					'label': 'Word',
-					'writingsystems': {
-						'th': 'Thai',
-					},
+					'writingsystems': ['th'],
 					'width': 20
 				},
 				'senses': {
-					'type': 'config',
+					'type': 'fields',
 					'fields': ['definition', 'partOfSpeech', 'semanticDomainValue', 'examples'],
 					'definitions': {
 						'definition': {
 							'type': 'multitext',
 							'label': 'Meaning',
-							'writingsystems': {
-								'my': 'Burmese',
-								'en': 'English'
-							},
+							'writingsystems': ['my', 'en'],
 							'width': 20
 						},
 						'partOfSpeech': {
@@ -79,23 +73,19 @@ function dbeCtrl($scope, userService, sessionService) {
 							'width': 20
 						},
 						'examples': {
-							'type': 'config',
+							'type': 'fields',
 							'fields': ['example', 'translation'],
 							'definitions': {
 								'example': {
 									'type': 'multitext',
 									'label': 'example',
-									'writingsystems': {
-										'th': 'Thai'
-									},
+									'writingsystems': ['th'],
 									'width': 20
 								},
 								'translation': {
 									'type': 'multitext',
 									'label': 'translation',
-									'writingsystems': {
-										'en': 'English',
-									},
+									'writingsystems': ['en'],
 									'width': 20
 								}
 							}
@@ -106,13 +96,6 @@ function dbeCtrl($scope, userService, sessionService) {
 		}
 	};
 
-	
-	$scope.emptyRecord = {
-		'entry': {
-			'word': {},
-			'senses': []
-		}
-	};
 	
 }
 

@@ -6,7 +6,7 @@
         <div ng-switch-when="multitext">
             <dc-multitext definition="config.definitions[field]" model="model[field]"></multitext>
         </div>
-        <div ng-switch-when="config">
+        <div ng-switch-when="fields">
             <ng-switch on="field">
                 <div ng-switch-when="examples">
                     <dc-example config="config.definitions[field]" model="model[field]"></dc-example>

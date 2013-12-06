@@ -8,6 +8,17 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multit
 				config : "=",
 				model : "=",
 			},
+			controller: ["$scope", "$window", function($scope, $window) {
+				$scope.addSense = function() {
+					$scope.model.senses.push({});
+				};
+				
+				$scope.deleteSense = function(index) {
+					if ($window.confirm("Are you sure you want to delete this sense?")) {
+						$scope.model.senses.splice(index, 1);
+					}
+				};
+			}],
 			link : function(scope, element, attrs, controller) {
 				if (!scope.model) {
 					scope.model = {};
