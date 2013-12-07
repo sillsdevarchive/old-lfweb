@@ -64,6 +64,7 @@ class LfDictionary {
 	 * @var UserModel
 	 */
 	private $_userModel;
+	
 	public function __construct($controller) {
 		\libraries\lfdictionary\common\ErrorHandler::register ();
 		$this->_userId = ( string ) $controller->session->userdata ( 'user_id' );
@@ -139,18 +140,20 @@ class LfDictionary {
 		return $result->encode ();
 	}
 
-	
 	/**
 	 * Get a single Lexical Entry
 	 *
-	 * @param unknown_type $guid        	
+	 * @param string $guid        	
 	 * @return LexEntryModel
 	 */
-	function getEntry($guid) {
-		$this->isReadyOrThrow ();
+	function getEntry($id) {
+		$this->isReadyOrThrow();
 		
-		$store = $this->getLexStore ();
-		$result = $store->readEntry ( $guid );
+		$entry = new LexEntryModel($this->_projectModel, $id);
+		return JsonEncoder::encode($entry);
+/*		
+		$store = $this->getLexStore();
+		$result = $store->readEntry($id);
 		
 		// Sense Level
 		foreach ( $result->_senses as $sense ) {
@@ -167,57 +170,67 @@ class LfDictionary {
 		}
 		
 		return $result->encode ();
+*/		
 	}
-	
-	
 	
 	/**
 	 * Delete a Lexical Entry
 	 *
-	 * @param string $guid        	
+	 * @param string $id        	
 	 * @param string $mercurialSHA        	
 	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
 	 * @return ResultDTO
 	 */
-	function deleteEntry($guid, $mercurialSHA) {
-		$this->isReadyOrThrow ();
+	function deleteEntry($id, $mercurialSHA) {
+		$this->isReadyOrThrow();
 		
 		// Error Validtion for User having access to Delete the project
-		if (! $this->_projectModel->hasRight ( $this->_userId, Domain::LEX_ENTRY + Operation::DELETE_OTHER )) {
-			throw new UserActionDeniedException ( 'Access Denied For Delete' );
+		if (! $this->_projectModel->hasRight($this->_userId, Domain::LEX_ENTRY + Operation::DELETE_OTHER)) {
+			throw new UserActionDeniedException('Access Denied For Delete');
 		}
-		ActivityCommands::deleteEntry($this->_projectModel, $this->_userId, $guid);
-		$store = $this->getLexStore ();
-		$store->deleteEntry ( $guid, $mercurialSHA );
-		
-		$resultDTO = new ResultDTO ( true );
-		return $resultDTO->encode ();
+		ActivityCommands::deleteEntry($this->_projectModel, $this->_userId, $id);
+		LexEntryModel::remove($this->_projectModel, $id);
+/*		
+		$store = $this->getLexStore();
+		$store->deleteEntry($id, $mercurialSHA);
+*/		
+		$resultDTO = new ResultDTO(true);
+		return $resultDTO->encode();
 	}
 	
 	/**
-	 * Create / Update a single Lexical Entry
+	 * Create/Update a single Lexical Entry
 	 *
 	 * @param LexEntryModel $entry        	
 	 * @param string $action        	
 	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
 	 * @return ResultDTO
 	 */
-	function saveEntry($entry, $action) {
-		
-		$this->isReadyOrThrow ();
+	function saveEntry($params, $action) {
+		$this->isReadyOrThrow();
 		// Check that user has edit privileges on the project
-		if (! $this->_projectModel->hasRight ( $this->_userId, Domain::LEX_ENTRY + Operation::EDIT_OTHER )) {
-			throw new UserActionDeniedException ( 'Access Denied For Update' );
+		if (! $this->_projectModel->hasRight($this->_userId, Domain::LEX_ENTRY + Operation::EDIT_OTHER)) {
+			throw new UserActionDeniedException('Access Denied For Update');
 		}
 		// Save Entry
-		$rawEntry = json_decode ( $entry, true );
+		$entry = new LexEntryModel($this->_projectModel);
+		if ($params['id']) {
+			$entry->read($params['id']);
+		}
+		JsonDecoder::decode($entry, $params);
+		$result = $entry->write();
+		ActivityCommands::writeEntry($this->_projectModel, $this->_userId, $entry, $action);
+		return $result;
+/*		
+		$rawEntry = json_decode ( $params, true );
 		$entryDto = LexEntryModel::createFromArray ( $rawEntry );
 		$store = $this->getLexStore ();
 		$store->writeEntry ( $entryDto, $action, $this->_userModel->id, $this->_userModel->username );
 	
 		ActivityCommands::writeEntry($this->_projectModel, $this->_userId, $entryDto, $action);
-		$resultDTO = new ResultDTO ( true );
-		return $resultDTO->encode ();
+		$resultDTO = new ResultDTO(true);
+		return $resultDTO->encode();
+*/		
 	}
 	
 	/**
@@ -545,6 +558,7 @@ class LfDictionary {
 	 * @var LexStore
 	 */
 	private $_lexStore;
+	
 	private function getLexStore() {
 		if (! isset ( $this->_lexStore )) {
 			$this->_lexStore = new LexStoreController ( LexStoreType::STORE_MONGO, $this->_projectModel->databaseName (), $this->_lexProject );
