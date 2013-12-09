@@ -4,23 +4,34 @@
         <h2>---</h2>
         <h2>Dictionary Browse and Edit</h2>
     	    <button class="btn" ng-click="addEntry()"><i class="icon-plus"></i> New Word</button>
-            <button style="margin-left:40px" ng-show="entry && entries.length > 0" class="btn btn-small" ng-click="deleteEntry(entry)"><i class="icon-remove"></i>Delete Word</button>
 	    </div>
 	</div>
 	<div class="row" style="margin-top:20px">
-        <div class="span3">
-            <table class="table table-condensed table-hover">
+        <div class="span4">
+            <div style="margin-bottom:10px" ng-show="entries.length > 0">
+                <input width="4" placeholder="search filter" type="text" class="input-medium search-query" ng-model="searchText" />
+                <span style="margin-left:10px" title="Clear Filter" ng-click="searchText = ''" ng-show="searchText && searchText != ''">
+                    <i class="icon-remove" style="color:black"></i>
+                </span>
+            </div>
+            <table id="entrylist" class="table table-condensed table-hover">
                 <tbody>
-                    <tr ng-show="entries.length > 0"><td><input width="4" placeholder="search filter" type="text" class="input-medium search-query" ng-model="searchText"></td></tr>
-                    <tr ng-repeat="e in entries | filter:searchText">
+                    <tr ng-class="{selected: e.id == entry.id}" ng-repeat="e in entries | filter:searchText">
                         <td ng-click="editEntry(e.id)">{{entryTitle(e)}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="span9" ng-show="entry && entries.length > 0">
-            <h4>{{entryTitle()}} </h4> 
+        <div class="span8" ng-show="entry.hasOwnProperty('id')">
+            <div class="row">
+                <div class="span5">
+                    <span style="font-size:20px; font-weight:bold">{{entryTitle()}}</span>
+                </div> 
+                <div class="span3" style="text-align:right">
+                    <button ng-show="entry && entries.length > 0" class="btn btn-small" ng-click="deleteEntry(entry)"><i class="icon-remove"></i>Delete Word</button>
+                </div> 
+            </div>
             <dc-entry config="config" model="entry"></dc-entry>
         </div>
 

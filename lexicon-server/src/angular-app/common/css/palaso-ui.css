@@ -136,3 +136,7 @@ form.multitext .wsid {
 	margin-left:5px;
 	font-style:italic;
 }
+
+#entrylist .selected {
+	background-color: #CCFFDB;
+}

@@ -9,7 +9,13 @@
         <div ng-switch-when="fields">
             <ng-switch on="field">
                 <div ng-switch-when="examples">
-                    <dc-example config="config.definitions[field]" model="model[field]"></dc-example>
+                    <div ng-repeat="example in model.examples" class="row">
+                        <div class="span1"><button class="btn btn-small" ng-click="deleteExample($index)" title="Delete Example Sentence"><i class="icon-remove"></i></button></div>
+                        <div class="span5">
+                            <dc-example config="config.definitions[examples]" model="examples"></dc-example>
+                        </div>
+                    </div>
+                    <button class="btn btn-small" ng-click="addExample()"><i class="icon-plus"></i> Add Example</button>
                 </div>
                 <div ng-switch-default>
                     unsupported config field: {{field}}

@@ -20,12 +20,12 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 	};
 	*/
 	
-	$scope.entry = undefined;
+	$scope.entry = {};
 	
 	$scope.entryTitle = function(entry) {
 		entry = entry || $scope.entry;
 		var title = "[new word]";
-		if (entry && entry.lexeme) {
+		if (entry.lexeme) {
 			var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
 			if (entry.lexeme[lexemeWritingSystem]) {
 				title = entry.lexeme[lexemeWritingSystem];
@@ -90,6 +90,7 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 	$scope.deleteEntry = function(entry) {
 		if ($window.confirm("Are you sure you want to delete " + $scope.entryTitle(entry) + " (id " + entry.id + ") ?")) {
 			$scope.entries.splice($scope.getEntryIndexById(entry.id), 1);
+			$scope.entry = {};
 		}
 	};
 	

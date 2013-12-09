@@ -14,6 +14,16 @@ angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.multitext', 'palaso.ui.dc.op
 						$scope.model = {};
 					}
 				};
+
+				$scope.addExample = function() {
+					$scope.model.examples.push({});
+				};
+				
+				$scope.deleteExample = function(index) {
+					if ($window.confirm("Are you sure you want to delete example #" + (index+1) + " ?")) {
+						$scope.model.examples.splice(index, 1);
+					}
+				};
 			}],
 			link : function(scope, element, attrs, controller) {
 				scope.$watch('model', function() {

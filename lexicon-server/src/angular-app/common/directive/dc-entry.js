@@ -17,9 +17,11 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multit
 					if (!$scope.model) {
 						$scope.model = {};
 					}
+					/*
 					if (!$scope.model.id) {
 						$scope.model.id = 0;
 					}
+					*/
 					if (!$scope.model.senses) {
 						$scope.model.senses = [{}];
 					}
@@ -31,6 +33,17 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multit
 					if ($window.confirm("Are you sure you want to delete sense #" + (index+1) + " ?")) {
 						$scope.model.senses.splice(index, 1);
 					}
+				};
+				
+				$scope.getSenseTitle = function(sense) {
+					var title = "[new meaning]";
+					if (sense && sense.definition) {
+						var definitionWritingSystem = $scope.config.entry.definitions.senses.definitions.definition.writingsystems[0];
+						if (sense.definition[definitionWritingSystem]) {
+							title = sense.definition[definitionWritingSystem];
+						}
+					}
+					return title;
 				};
 			}],
 			link : function(scope, element, attrs, controller) {
