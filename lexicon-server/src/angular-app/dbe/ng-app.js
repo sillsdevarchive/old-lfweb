@@ -22,30 +22,74 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 	
 	$scope.entry = undefined;
 	
-	$scope.entryTitle = function() {
-		if ($scope.entry && $scope.entry.lexeme) {
+	$scope.entryTitle = function(entry) {
+		entry = entry || $scope.entry;
+		var title = "[new word]";
+		if (entry && entry.lexeme) {
 			var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
-			return $scope.entry.lexeme[lexemeWritingSystem];
+			if (entry.lexeme[lexemeWritingSystem]) {
+				title = entry.lexeme[lexemeWritingSystem];
+			}
 		}
-		return "";
+		return title;
 	};
 	
 	$scope.entries = [];
 	
-	$scope.editEntry = function(index) {
-		$scope.entry = $scope.entries[index];
+	$scope.editEntry = function(id) {
+		$scope.entry = $scope.entries[$scope.getEntryIndexById(id)];
+	};
+	
+	$scope.getNewId = function() {
+		var newId = 0;
+		for (var i=0; i<$scope.entries.length; i++) {
+			var e = $scope.entries[i];
+			if (e.id >= newId) {
+				newId = e.id + 1;
+			}
+		}
+		return newId;
+	};
+	
+	$scope.getEntryIndexById = function(id) {
+		var index = undefined;
+		for (var i=0; i<$scope.entries.length; i++) {
+			var e = $scope.entries[i];
+			if (e.id == id) {
+				index = i;
+				break;
+			}
+		}
+		return index;
+	};
+	
+	$scope.getEntryById = function(id) {
+		var entry = undefined;
+		for (var i=0; i<$scope.entries.length; i++) {
+			var e = $scope.entries[i];
+			if (e.id == id) {
+				entry = e;
+				break;
+			}
+		}
+		return entry;
 	};
 	
 	$scope.addEntry = function() {
+		var newId = $scope.getNewId();
+		/*
 		var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
 		var lexeme = {};
 		lexeme[lexemeWritingSystem] = '[blank]';
-		$scope.entries.push({'id':"", 'lexeme': lexeme});
+		$scope.entries.push({'id': newId, 'lexeme': lexeme});
+		*/
+		$scope.entries.push({'id': newId});
+		$scope.editEntry(newId);
 	};
 	
-	$scope.deleteEntry = function(index) {
-		if ($window.confirm("Are you sure you want to delete entry #" + (index+1) + " ?")) {
-			$scope.entries.splice(index, 1);
+	$scope.deleteEntry = function(entry) {
+		if ($window.confirm("Are you sure you want to delete " + $scope.entryTitle(entry) + " (id " + entry.id + ") ?")) {
+			$scope.entries.splice($scope.getEntryIndexById(entry.id), 1);
 		}
 	};
 	

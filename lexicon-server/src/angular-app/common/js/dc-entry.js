@@ -18,7 +18,7 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multit
 						$scope.model = {};
 					}
 					if (!$scope.model.id) {
-						$scope.model.id = "";
+						$scope.model.id = 0;
 					}
 					if (!$scope.model.senses) {
 						$scope.model.senses = [{}];
