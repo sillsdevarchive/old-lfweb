@@ -140,15 +140,13 @@ class ActivityCommands
 	}
 	
 	/**
-	 * 
 	 * @param ProjectModel $projectModel
-	 * @param Entry $entry
+	 * @param string $userId
+	 * @param LexEntryModel $entry
 	 * @param Action $action
-	 * @return string activity id
+	 * @return string
 	 */
-	public static function writeEntry($projectModel, $userId, $entryDto, $action) {
-	
-		
+	public static function writeEntry($projectModel, $userId, $entry, $action) {
 		$activity = new ActivityModel($projectModel);
 		$activity->userRef->id = $userId;
 		if($action == 'update'){
@@ -156,7 +154,6 @@ class ActivityCommands
 		} else {
 			$activity->action = ActivityModel::ADD_ENTRY;
 		}
-		$entry = $entryDto->getEntry()->encode();
 		
 		$activity->addContent(ActivityModel::ENTRY, $entry);
 		return $activity->write();
@@ -169,8 +166,6 @@ class ActivityCommands
 	 * @return string activity id
 	 */
 	public static function deleteEntry($projectModel, $userId, $guid) {
-	
-		
 		$activity = new ActivityModel($projectModel);
 		$activity->userRef->id = $userId;
 		$activity->action = ActivityModel::DELETE_ENTRY;

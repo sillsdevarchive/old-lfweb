@@ -1,8 +1,5 @@
 <?php
 
-use libraries\lfdictionary\store\LexStoreType;
-use libraries\lfdictionary\store\LexStoreController;
-use libraries\lfdictionary\environment\ProjectStates;
 use libraries\lfdictionary\common\AsyncRunner;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\common\UserActionDeniedException;
@@ -17,19 +14,23 @@ use libraries\lfdictionary\environment\LanguageDepotImporter;
 use libraries\lfdictionary\environment\EnvironmentMapper;
 use libraries\lfdictionary\environment\LexProject;
 use libraries\lfdictionary\environment\ProjectState;
-use libraries\lfdictionary\store\LexStoreMissingInfo;
+use libraries\lfdictionary\environment\ProjectStates;
 use libraries\lfdictionary\store\LexStore;
+use libraries\lfdictionary\store\LexStoreController;
+use libraries\lfdictionary\store\LexStoreMissingInfo;
+use libraries\lfdictionary\store\LexStoreType;
 use libraries\palaso\CodeGuard;
+use models\commands\ActivityCommands;
+use models\commands\LexEntryCommands;
+use models\commands\ProjectCommands;
+use models\DepotProjectModel;
+use models\lex\LexEntryModel;
 use models\mapper\JsonDecoder;
-use models\UserModel;
 use models\ProjectModel;
+use models\ProjectModelFixer;
 use models\rights\Operation;
 use models\rights\Domain;
-use models\ProjectModelFixer;
-use models\DepotProjectModel;
-use models\commands\ProjectCommands;
-use models\commands\ActivityCommands;
-use models\lex\LexEntryModel;
+use models\UserModel;
 
 error_reporting ( E_ALL | E_STRICT );
 
@@ -141,40 +142,29 @@ class LfDictionary {
 	}
 
 	/**
-	 * Get a single Lexical Entry
-	 *
-	 * @param string $guid        	
-	 * @return LexEntryModel
+	 * Create/Update a single Lexical Entry
+	 * @param LexEntryModel $params        	
+	 * @param Action $action        	
+	 * @return string Id
 	 */
-	function getEntry($id) {
+	function entryUpdate($params, $action) {
 		$this->isReadyOrThrow();
-		
-		$entry = new LexEntryModel($this->_projectModel, $id);
-		return JsonEncoder::encode($entry);
-/*		
-		$store = $this->getLexStore();
-		$result = $store->readEntry($id);
-		
-		// Sense Level
-		foreach ( $result->_senses as $sense ) {
-			
-			if (! (isset ( $sense->_id ) && strlen ( trim ( $sense->_id ) ) > 0)) {
-				$sense->_id = UUIDGenerate::uuid_generate_php ();
-			}
-			// Example Level
-			foreach ( $sense->_examples as $example ) {
-				if (! (isset ( $example->_id ) && strlen ( trim ( $example->_id ) ) > 0)) {
-					$example->_id = UUIDGenerate::uuid_generate_php ();
-				}
-			}
-		}
-		
-		return $result->encode ();
-*/		
+		return LexEntryCommands::updateEntry($params, $action, $this->_projectModel, $this->_userId);
 	}
 	
 	/**
-	 * Delete a Lexical Entry
+	 * Read a single lexical entry
+	 * @param string $id        	
+	 * @return LexEntryModel
+	 */
+	function entryRead($id) {
+		$this->isReadyOrThrow();
+		$entry = new LexEntryModel($this->_projectModel, $id);
+		return JsonEncoder::encode($entry);
+	}
+	
+	/**
+	 * Delete lexical entries
 	 *
 	 * @param string $id        	
 	 * @param string $mercurialSHA        	
@@ -196,41 +186,6 @@ class LfDictionary {
 */		
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();
-	}
-	
-	/**
-	 * Create/Update a single Lexical Entry
-	 *
-	 * @param LexEntryModel $entry        	
-	 * @param string $action        	
-	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
-	 * @return ResultDTO
-	 */
-	function saveEntry($params, $action) {
-		$this->isReadyOrThrow();
-		// Check that user has edit privileges on the project
-		if (! $this->_projectModel->hasRight($this->_userId, Domain::LEX_ENTRY + Operation::EDIT_OTHER)) {
-			throw new UserActionDeniedException('Access Denied For Update');
-		}
-		// Save Entry
-		$entry = new LexEntryModel($this->_projectModel);
-		if ($params['id']) {
-			$entry->read($params['id']);
-		}
-		JsonDecoder::decode($entry, $params);
-		$result = $entry->write();
-		ActivityCommands::writeEntry($this->_projectModel, $this->_userId, $entry, $action);
-		return $result;
-/*		
-		$rawEntry = json_decode ( $params, true );
-		$entryDto = LexEntryModel::createFromArray ( $rawEntry );
-		$store = $this->getLexStore ();
-		$store->writeEntry ( $entryDto, $action, $this->_userModel->id, $this->_userModel->username );
-	
-		ActivityCommands::writeEntry($this->_projectModel, $this->_userId, $entryDto, $action);
-		$resultDTO = new ResultDTO(true);
-		return $resultDTO->encode();
-*/		
 	}
 	
 	/**
