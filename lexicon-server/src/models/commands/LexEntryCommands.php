@@ -25,11 +25,10 @@ class LexEntryCommands {
 	 * @param LexEntryModel $params
 	 * @param Action $action
 	 * @throws UserActionDeniedException
-	 * @return string $Id
+	 * @return string $entryId
 	 */
 	public static function updateEntry($params, $action, $project, $userId) {
 		CodeGuard::checkTypeAndThrow($params, 'array');
-		CodeGuard::checkTypeAndThrow($action, 'string');
 		CodeGuard::checkTypeAndThrow($userId, 'string');
 		
 		// Check that user has edit privileges on the project
@@ -43,22 +42,22 @@ class LexEntryCommands {
 			$entry->read($params['id']);
 		}
 		JsonDecoder::decode($entry, $params);
-		$result = $entry->write();
+		$entryId = $entry->write();
 		ActivityCommands::writeEntry($project, $userId, $entry, $action);
-		return $result;
+		return $entryId;
 	}
 	
 	/**
-	 * @param array $userIds
-	 * @return int Total number of users removed.
+	 * @param ProjectModel $project
+	 * @param array $entryIds
+	 * @return int Total number of entries removed.
 	 */
-	public static function deleteUsers($userIds) {
-		CodeGuard::checkTypeAndThrow($userIds, 'array');
+	public static function deleteEntries($project, $entryIds) {
+		CodeGuard::checkTypeAndThrow($entryIds, 'array');
 		$count = 0;
-		foreach ($userIds as $userId) {
- 			CodeGuard::checkTypeAndThrow($userId, 'string');
-			$userModel = new UserModel($userId);
-			$userModel->remove();
+		foreach ($entryIds as $entryId) {
+ 			CodeGuard::checkTypeAndThrow($entryId, 'string');
+			LexEntryModel::remove($project, $entryId);
 			$count++;
 		}
 		return $count;
