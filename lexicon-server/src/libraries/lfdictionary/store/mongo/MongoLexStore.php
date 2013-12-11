@@ -14,6 +14,7 @@ use libraries\lfdictionary\dto\ListEntry;
 use models\lex\LexEntryModel;
 use models\lex\MultiText;
 
+// TODO This file can be deleted, its replaced by the new MongoMapper. CP 2013-12
 class MongoLexStore implements ILexStore
 {
 
@@ -193,7 +194,7 @@ class MongoLexStore implements ILexStore
 	 * @return \dto\ListDTO
 	 */
 	public function readMissingInfo($field, $language = null) {
-		// TODO Implement the $language feature. i.e. Where $language is set, then check for
+		// TODO_OLD Implement the $language feature. i.e. Where $language is set, then check for
 		// only that language missing in the given $field. CP 2012-11
 		$query = null;
 		switch ($field) {
@@ -258,7 +259,6 @@ class MongoLexStore implements ILexStore
 	 */
 	public function searchEntriesAsWordList($lang, $titleLetter, $startFrom, $maxEntryCount) {
 		$transliterationFilter = new WordTransliterationFilter();
-		//TODO ZX 2013-4 how to filter data by query not code
 		$query = array();
 		$dto = new \libraries\lfdictionary\dto\EntryListDTO();
 		$dto->entryCount = $this->entryCount();

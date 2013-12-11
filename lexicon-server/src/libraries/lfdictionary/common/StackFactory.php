@@ -2,6 +2,8 @@
 
 namespace libraries\lfdictionary\common;
 
+// TODO Delete. See ErrorHandler
+
 /**
  * Factory for OutputLogger
  *

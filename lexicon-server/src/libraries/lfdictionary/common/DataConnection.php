@@ -3,6 +3,7 @@ namespace libraries\lfdictionary\common;
 
 /**
  * Implements a data connection to a MySQL database.
+ * TODO Delete.
  */
 class DataConnection {
 

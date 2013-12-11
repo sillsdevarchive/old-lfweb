@@ -6,6 +6,7 @@ require_once (dirname ( __FILE__ ) . '/../Config.php');
 
 use libraries\lfdictionary\common\LoggerFactory;
 
+// TODO Delete. This is superceded by the Q&A components from SF. CP 2013-12
 class GetCommentsCommand {
 	
 	// if need to change follow definations, please change client side too.
@@ -105,7 +106,6 @@ class GetCommentsCommand {
 					$childDto->setDate ( strtotime ( $childNode->getAttributeNode ( "date" )->value ) );
 					$childDto->setComment ( $childNode->nodeValue );
 					$childDto->setStatus ( $childNode->getAttributeNode ( "status" )->value );
-					// TODO cyu check for null
 					// $childDto->setStatusResolved($childNode->getAttributeNode ("status.resolved")->value);
 					// $childDto->setStatusReviewed($childNode->getAttributeNode ("status.reviewed")->value);
 					// $childDto->setStatusTodo($childNode->getAttributeNode ("status.todo")->value);

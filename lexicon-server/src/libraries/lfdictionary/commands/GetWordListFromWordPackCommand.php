@@ -11,6 +11,15 @@ use models\lex\Example;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
+/**
+ * TODO Rename / Move. This looks like a model to me. The execute is all about reading persisted data (from file) into the model. CP 2013-12
+ * TODO Enhance. The separate dto would use JsonEncoder on this 'model'
+ */
+/**
+ * GetWordListFromWordPackCommand
+ * REVIEWED CP 2013-12: Much of the code is ok. This is a model that must read an existing xml data file. That's fine. However,
+ * I suspect that the real 'dto' that needs to be returned is much larger and this is just a subset.
+ */
 class GetWordListFromWordPackCommand
 {
 	/**

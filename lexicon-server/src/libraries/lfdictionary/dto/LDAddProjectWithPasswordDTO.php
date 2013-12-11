@@ -4,6 +4,7 @@ namespace libraries\lfdictionary\dto;
 /**
  * Add Project With Password DTO for use with Language Depot API method
  */
+// TODO Unused? CP 2013-12
 class LDAddProjectWithPasswordDTO {
 	
 	/*

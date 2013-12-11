@@ -8,6 +8,10 @@ use libraries\lfdictionary\environment\LexProject;
 use libraries\lfdictionary\environment\ProjectState;
 use models\ProjectModel;
 
+/**
+ * The LanguageDepotImporter imports a mercurial Lift repository from some other, possibly remote, source.
+ * Currently the importer does not import to the mongo database. 
+ */
 class LanguageDepotImporter {
 	
 	
@@ -33,8 +37,7 @@ class LanguageDepotImporter {
 	 * @param string $projectId Project ID on LanguageDepot
 	 * @return AsyncRunner
 	 */
-	public function cloneRepository($user, $password, $projectSlug) {
-		// TODO Add support for private repo? CP 2012-08
+	public function cloneRepository($user, $password, $projectCode) {
 		$asyncRunner = $this->createAsyncRunner();
 		if ($asyncRunner->isRunning()) {
 			// The lock file exists, so we may be still running, or complete.

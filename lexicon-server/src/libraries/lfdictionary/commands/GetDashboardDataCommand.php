@@ -7,6 +7,10 @@ use libraries\lfdictionary\dashboardtool\DashboardDbType;
 use libraries\lfdictionary\dashboardtool\DashboardToolFactory;
 use libraries\lfdictionary\common\LoggerFactory;
 use libraries\lfdictionary\dto\EntryListDTO;
+
+/**
+ * TODO Rename. This looks like a DTO to me. The execute is all about preparing data to return, rename that to encode, call it a dto and move into the dto folder. CP 2013-12
+ */
 class GetDashboardDataCommand {
 	
 	var $_store = NULL;

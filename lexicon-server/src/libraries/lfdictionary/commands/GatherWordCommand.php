@@ -9,6 +9,11 @@ use libraries\lfdictionary\mapper\LiftUpdater;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
+/**
+ * GatherWordCommand imports data from a text file into the Lift file *and* saves it into the mongo database.
+ * TODO Rename. GatherWordsImportFromFile (or text it could do both). CP 2013-12
+ * TODO Enhance. No need to save direct to lift.  We will need a general mongo -> lift writer which should handle this. CP 2013-12
+ */
 class GatherWordCommand {
 
 	/**

@@ -206,7 +206,11 @@ class LfDictionary {
 	
 	// Gather words from Text box
 	function getGatherWords($words, $filename) {
-		$this->isReadyOrThrow();
+		// NOTE: This is the gather words from text (or file) api.
+		// TODO Rename. This would be better named gatherWordsFromText(...). CP 2013-12
+		// TODO Enhance. This should all be in a command. CP 2013-12
+		// TODO Enhance. The file upload should be implemented as per SF file uploads.  The post upload command should be called from there, not here. CP 2013-12
+		$this->isReadyOrThrow ();
 		
 		$languageCode = $this->_projectModel->language;
 		
@@ -455,8 +459,7 @@ class LfDictionary {
 	
 	/**
 	 *
-	 * @param string $type
-	 *        	'LanguageDepot'
+	 * @param string $type 'LanguageDepot'
 	 * @param string $soruceURI        	
 	 * @param string $sourceCredentials        	
 	 * @return ProjectStateDTO

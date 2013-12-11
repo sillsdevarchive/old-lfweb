@@ -1,7 +1,7 @@
 <?php
 namespace libraries\lfdictionary\common;
 
-
+// TODO Delete. See ErrorHandler
 class LoggerFactory
 {
 	static function getLogger()
