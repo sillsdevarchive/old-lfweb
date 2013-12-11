@@ -66,16 +66,16 @@ class TestUserCommands extends UnitTestCase {
 		$projectUser = $sameProject->listUsers()->entries[0];
 		$this->assertEqual($projectUser['username'], "username");
 		$userProject = $user->listProjects()->entries[0];
-		$this->assertEqual($userProject['projectname'], LF_TESTPROJECT);
+		$this->assertEqual($userProject['projectName'], LF_TESTPROJECT);
 	}
 	
-	function testRegister_WithProjectCode_UserInProjectAndProjectHasUser() {
+	function testRegister_WithProjectDomain_UserInProjectAndProjectHasUser() {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 	
-		$projectDomain = 'someprojectcode.example.com';
+		$projectDomain = 'someProjectDomain.example.com';
 		$project = $e->createProject(LF_TESTPROJECT);
-		$project->projectCode = ProjectModel::domainToProjectCode($projectDomain);
+		$project->projectDomain = ProjectModel::domainToProjectDomain($projectDomain);
 		$project->write();
 		$validCode = 'validCode';
 		$params = array(
@@ -87,10 +87,10 @@ class TestUserCommands extends UnitTestCase {
 				'captcha' => $validCode
 		);
 		$captcha_info = array('code' => $validCode);
-		$projectCode = $project->projectCode;
+		$projectDomain = $project->projectDomain;
 		$delivery = new MockUserCommandsDelivery();
 		
-		$userId = UserCommands::register($params, $captcha_info, $projectCode, $delivery);
+		$userId = UserCommands::register($params, $captcha_info, $projectDomain, $delivery);
 		
 		$user = new UserModel($userId);
 		$this->assertEqual($user->username, $params['username']);
@@ -98,7 +98,7 @@ class TestUserCommands extends UnitTestCase {
 		$this->assertEqual($user->listProjects()->count, 1);
 	}
 	
-	function testRegister_NoProjectCode_UserInNoProjects() {
+	function testRegister_NoprojectDomain_UserInNoProjects() {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 	
@@ -240,11 +240,11 @@ class TestUserCommands extends UnitTestCase {
 		$inviterUser = new UserModel($inviterUserId);
 		$toEmail = 'someone@example.com';
 		$project = $e->createProject(LF_TESTPROJECT);
-		$project->projectCode = 'someProjectCode';
+		$project->projectDomain = 'someProjectDomain';
 		$project->write();
 		$delivery = new MockUserCommandsDelivery();
 	
-		$toUserId = UserCommands::sendInvite($inviterUser, $toEmail, $project->id->asString(), $project->projectCode, $delivery);
+		$toUserId = UserCommands::sendInvite($inviterUser, $toEmail, $project->id->asString(), $project->projectDomain, $delivery);
 	
 		// What's in the delivery?
 		$toUser = new UserModel($toUserId);
@@ -265,16 +265,16 @@ class TestUserCommands extends UnitTestCase {
 		$inviterUser = new UserModel($inviterUserId);
 		$toEmail = 'someone@example.com';
 		$projectId = '';
-		$hostName = 'someProjectCode.scriptureforge.org';
+		$hostName = 'someProjectDomain.scriptureforge.org';
 		$delivery = new MockUserCommandsDelivery();
 	
 		$e->inhibitErrorDisplay();
-		$this->expectException(new \Exception("Cannot send invitation for unknown project 'someProjectCode'"));
+		$this->expectException(new \Exception("Cannot send invitation for unknown project 'someProjectDomain'"));
 		$toUserId = UserCommands::sendInvite($inviterUser, $toEmail, $projectId, $hostName, $delivery);
 		$e->restoreErrorDisplay();
 	}
 	
-	function testSendInvite_NoProjectContextNoProjectCode_ThrowException() {
+	function testSendInvite_NoProjectContextNoProjectDomain_ThrowException() {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 	

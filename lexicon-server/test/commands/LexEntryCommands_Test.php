@@ -104,7 +104,7 @@ class TestLexEntryCommands extends UnitTestCase {
 		$e->clean();
 		
 		// create entry and list
-		$project = $e->createProject(LF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT, 'en');
 		$userId = $e->createUser('somename', 'Some Name', 'somename@example.com');
 		$user = new UserModel($userId);
 		$project->addUser($userId, Roles::USER);

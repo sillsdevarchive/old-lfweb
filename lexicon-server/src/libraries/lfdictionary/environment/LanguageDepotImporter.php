@@ -14,15 +14,15 @@ class LanguageDepotImporter {
 	/**
 	 * @var String
 	 */
-	private $_projectCode;
+	private $_projectSlug;
 		
 	/**
-	 * @param String $projectCode
+	 * @param String $projectSlug
 	 * @param String $projectAdminUserId
 	 * @param LexProject $lexProject
 	 */
-	public function __construct($projectCode) {
-		$this->_projectCode = $projectCode;
+	public function __construct($projectSlug) {
+		$this->_projectSlug = $projectSlug;
 	}
 
 	
@@ -33,7 +33,7 @@ class LanguageDepotImporter {
 	 * @param string $projectId Project ID on LanguageDepot
 	 * @return AsyncRunner
 	 */
-	public function cloneRepository($user, $password, $projectCode) {
+	public function cloneRepository($user, $password, $projectSlug) {
 		// TODO Add support for private repo? CP 2012-08
 		$asyncRunner = $this->createAsyncRunner();
 		if ($asyncRunner->isRunning()) {
@@ -44,8 +44,8 @@ class LanguageDepotImporter {
 				return $asyncRunner;
 			}
 		}
-		$url = "http://$user:$password@hg-public.languagedepot.org/$projectCode";
-		$hg = new HgWrapper(LexProject::defaultWorkFolderPath(). $this->_projectCode .'/');
+		$url = "http://$user:$password@hg-public.languagedepot.org/$projectSlug";
+		$hg = new HgWrapper(LexProject::defaultWorkFolderPath(). $this->_projectSlug .'/');
 		$hg->cloneRepository($url, $asyncRunner);
 		return $asyncRunner;
 	}
@@ -59,7 +59,7 @@ class LanguageDepotImporter {
 		// Analyze the output of the async file and return an appropriate progress indicator.
 		$asyncRunner = $this->createAsyncRunner();
 		if (!$asyncRunner->isRunning()) {
-			throw new \Exception("Process '" . LexProject::stateFolderPath() . $this->_projectCode . "' not running");
+			throw new \Exception("Process '" . LexProject::stateFolderPath() . $this->_projectSlug . "' not running");
 		}
 		if ($asyncRunner->isComplete()) {
 			return 100;
@@ -103,7 +103,7 @@ class LanguageDepotImporter {
 	}
 	
 	private function createAsyncRunner() {
-		return new AsyncRunner(LexProject::stateFolderPath() .$this->_projectCode);
+		return new AsyncRunner(LexProject::stateFolderPath() .$this->_projectSlug);
 	}
 	
 	/**

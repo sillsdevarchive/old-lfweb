@@ -35,14 +35,47 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @return \models\ProjectModel
 	 */
 	public static function createFromDomain($domainName) {
-		$projectCode = self::domainToProjectCode($domainName);
+		// TODO Remove. Can't create projects this way in LF. CP 2013-12
+		$projectDomain = self::domainToProjectDomain($domainName);
 		$project = new ProjectModel();
-		if (!$project->readByProperty('projectCode', $projectCode)) {
+		if (!$project->readByProperty('projectDomain', $projectDomain)) {
 			return null;
 		}
 		return $project;
 	}
 	
+	// REVIEWED CP 2013-12: Ok. This is a 'constructor' function.
+	/**
+	 * Create project (constructor)
+	 * @param string $projectName
+	 * @param string $languageCode
+	 * @param string $projectType
+	 * @return ProjectModel
+	 */
+	public static function create($projectName, $languageCode, $projectType = ProjectModel::PROJECT_LIFT) {
+		$projectModel = new ProjectModel();
+		$projectModel->languageCode = $languageCode;
+		$projectModel->projectName = $projectName;
+		$projectModel->projectType = $projectType;
+		$projectModel->projectSlug = self::makeProjectSlug($languageCode, $projectName, $projectType);
+		return $projectModel;
+	}
+	
+	/**
+	 * Makes the immutable project id
+	 * @param string $languageCode
+	 * @param string $projectName
+	 * @param string $projectType
+	 * @return string 
+	 */
+	public static function makeProjectSlug($languageCode, $projectName, $projectType) {
+		CodeGuard::checkNotFalseAndThrow($languageCode, 'languageCode');
+		CodeGuard::checkNotFalseAndThrow($projectName, 'projectName');
+		CodeGuard::checkNotFalseAndThrow($projectType, 'projectType');
+		$projectSlug = $languageCode . '-' . strtolower(str_replace(' ', '_', $projectName)) . '-' . $projectType;
+		return $projectSlug;
+	}
+
 	/**
 	 * Reads the model from the mongo collection
 	 * Ensures that the required pick lists exist even if not present in the database
@@ -60,7 +93,7 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @param string $domainName
 	 * @return string
 	 */
-	public static function domainToProjectCode($domainName) {
+	public static function domainToProjectDomain($domainName) {
 		$uriParts = explode('.', $domainName);
 		if ($uriParts[0] == 'www') {
 			array_shift($uriParts);
@@ -73,34 +106,12 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @see \models\mapper\MapperModel::databaseName()
 	 */
 	public function databaseName() {
-		if ($this->projectCode) {
-			$name = $this->projectCode;
-		} else {
-			$name = strtolower($this->projectname);
-			$name = str_replace(' ', '_', $name);
+		if (!$this->projectSlug) {
+			$this->projectSlug = self::makeProjectSlug($this->languageCode, $this->projectName, $this->projectType);
 		}
-
-		return 'lf_' . $name;
+		return 'lf_' . $this->projectSlug;
 	}
 	
-	// TODO These 2 fns are probably in commands somewhere and are better off there. They should be removed from here CP 2013-11
-	public static function createNewProject($languageCode, $projectName, $projectType = ProjectModel::PROJECT_LIFT) {
-		$projectModel = new ProjectModel();
-		$projectModel->languageCode = $languageCode;
-		$projectModel->projectname = $projectName;
-		$projectModel->projectType = $projectType;
-		$projectCode = self::makeProjectCode($languageCode, $projectName, $projectType);
-		return $projectModel;
-	}
-	
-	public static function makeProjectCode($languageCode, $projectName, $projectType) {
-		CodeGuard::checkNotFalseAndThrow($languageCode, 'languageCode');
-		CodeGuard::checkNotFalseAndThrow($projectName, 'projectName');
-		CodeGuard::checkNotFalseAndThrow($projectType, 'projectType');
-		$projectCode = $languageCode . '-' . strtolower(str_replace(' ', '_', $projectName)) . '-' . $projectType;
-		return $projectCode;
-	}
-
 	/**
 	 * Removes this project from the collection.
 	 * User references to this project are also removed
@@ -187,8 +198,9 @@ class ProjectModel extends \models\mapper\MapperModel
 	
 	/**
 	 * @var string
+	 * // TODO Rename. $projectName.
 	 */
-	public $projectname;
+	public $projectName;
 	
 	/**
 	 * @var string
@@ -201,10 +213,16 @@ class ProjectModel extends \models\mapper\MapperModel
 	public $users;
 	
 	/**
-	 * A string representing exactly this project from external sources. Typically some part of the URL.
+	 * A string representing exactly this project from external sources. Typically some part of the URL, just a partial domain, not necessarily FQDN.
 	 * @var string
 	 */
-	public $projectCode;
+	public $projectDomain;
+	
+	/**
+	 * The immutable project id, used by databaseName.
+	 * @var string
+	 */
+	public $projectSlug;
 	
 	/**
 	 * Flag to indicated if this project is featured on the website 
@@ -222,7 +240,6 @@ class ProjectModel extends \models\mapper\MapperModel
 	 */
 	public $title;
 
-	// What else needs to be in the model?
 }
 
 /**
@@ -235,7 +252,6 @@ class ProjectSettingsModel extends ProjectModel
 		$this->emailSettings = new EmailSettings();
 		parent::__construct($id);
 	}
-
 
 	/**
 	 * @var EmailSettings

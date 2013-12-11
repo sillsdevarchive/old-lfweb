@@ -19,16 +19,16 @@ class TestOfLexProjectFixer extends UnitTestCase {
 		$e = new LexProjectTestEnvironment();
 		$lexProject = $e->lexProject;
 		$this->assertFileNotExist($e->getProjectPath());
-		$this->assertFileNotExist($e->getProjectPath() . $e->projectCode . ".lift");
+		$this->assertFileNotExist($e->getProjectPath() . $e->projectSlug . ".lift");
 		LexProjectFixer::fixProjectVLatest($lexProject);
 		$this->assertFileExists($e->getProjectPath());
-		$this->assertFileExists($e->getProjectPath() . $e->projectCode . ".lift");
+		$this->assertFileExists($e->getProjectPath() . $e->projectSlug . ".lift");
 	}
 	
 	function testFixProjectVLatest_projectButNoConfig_configCopied() {
 		$e = new LexProjectTestEnvironment();
 		$lexProject = $e->lexProject;
-		$lexProject->createNewProject();
+		$lexProject->create();
 		$configFile = $e->lexProject->projectDefaultSettingsFilePath();
 		unlink($configFile);
 		$this->assertFileNotExist($configFile);
@@ -39,8 +39,8 @@ class TestOfLexProjectFixer extends UnitTestCase {
 	function testFixProjectVLatest_projectButNoLift_liftCreated() {
 		$e = new LexProjectTestEnvironment();
 		$lexProject = $e->lexProject;
-		$lexProject->createNewProject();
-		$liftFile = $e->lexProject->projectPath . $e->projectCode . ".lift";
+		$lexProject->create();
+		$liftFile = $e->lexProject->projectPath . $e->projectSlug . ".lift";
 		unlink($liftFile);
 		$this->assertFileNotExist($liftFile);
 		LexProjectFixer::fixProjectVLatest($lexProject);
@@ -50,7 +50,7 @@ class TestOfLexProjectFixer extends UnitTestCase {
 	function testFixProjectVLatest_projectButNoWS_wsCreated() {
 		$e = new LexProjectTestEnvironment();
 		$lexProject = $e->lexProject;
-		$lexProject->createNewProject();
+		$lexProject->create();
 		$writingSystemFile = $lexProject->writingSystemsFolderPath() . "en.ldml";
 		LexProjectTestEnvironment::recursiveDelete($lexProject->writingSystemsFolderPath());
 		$this->assertFileNotExist($writingSystemFile);

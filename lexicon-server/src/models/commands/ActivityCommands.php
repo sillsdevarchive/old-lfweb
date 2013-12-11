@@ -169,8 +169,8 @@ class ActivityCommands
 		$activity->userRef->id = $userId;
 		$activity->action = ActivityModel::DELETE_ENTRY;
 	
-		$entry = self::getEntry($projectModel->id->asString(), $id);	
-		$activity->addContent(ActivityModel::ENTRY, $entry['lexeme'][$projectModel->languageCode]);
+		$entry = self::getEntry($projectModel->id->asString(), $id);
+		$activity->addContent(ActivityModel::ENTRY, $entry->lexeme[$projectModel->languageCode]);
 		return $activity->write();
 	}
 	

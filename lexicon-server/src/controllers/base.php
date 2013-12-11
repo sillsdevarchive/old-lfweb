@@ -38,11 +38,11 @@ class Base extends CI_Controller {
 				$this->_user->write();
 			}
 		}
-		$projectCode = ProjectModel::domainToProjectCode($_SERVER['HTTP_HOST']);
-		if ($projectCode == 'languageforge' || $projectCode == 'dev') {
+		$projectDomain = ProjectModel::domainToProjectDomain($_SERVER['HTTP_HOST']);
+		if ($projectDomain == 'languageforge' || $projectDomain == 'dev') {
 			$this->_project = 'languageforge';
 		} else {
-			$this->_project = $projectCode;
+			$this->_project = $projectDomain;
 		}
 		
 	}

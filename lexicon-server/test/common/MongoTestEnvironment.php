@@ -1,5 +1,7 @@
 <?php
 
+use models\ProjectModel;
+
 require_once(TEST_PATH . 'common/MockProjectModel.php');
 
 class MongoTestEnvironment
@@ -58,9 +60,8 @@ class MongoTestEnvironment
 	 * @param string $name
 	 * @return ProjectModel
 	 */
-	public function createProject($name) {
-		$projectModel = new models\ProjectModel();
-		$projectModel->projectname = $name;
+	public function createProject($projectName, $languageCode = 'qaa', $projectType = ProjectModel::PROJECT_LIFT) {
+		$projectModel = ProjectModel::create($projectName, $languageCode, $projectType);
 		$this->cleanProjectEnvironment($projectModel);
 		$projectModel->write();
 		return $projectModel;
@@ -68,7 +69,7 @@ class MongoTestEnvironment
 	
 	public function createProjectSettings($name) {
 		$projectModel = new models\ProjectSettingsModel();
-		$projectModel->projectname = $name;
+		$projectModel->projectName = $name;
 		$this->cleanProjectEnvironment($projectModel);
 		$projectModel->write();
 		return $projectModel;

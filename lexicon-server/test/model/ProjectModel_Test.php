@@ -27,7 +27,7 @@ class TestProjectModel extends UnitTestCase {
 	function testWrite_ReadBackSame() {
 		$model = new ProjectModel();
 		$model->languageCode = "SomeLanguage";
-		$model->projectname = "SomeProject";
+		$model->projectName = "SomeProject";
 		//$model->users->refs = array('1234');
 		$id = $model->write();
 		$this->assertNotNull($id);
@@ -36,7 +36,7 @@ class TestProjectModel extends UnitTestCase {
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
 		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
-		$this->assertEqual('SomeProject', $otherModel->projectname);
+		$this->assertEqual('SomeProject', $otherModel->projectName);
 		//$this->assertEqual(array('1234'), $otherModel->users->refs);
 		
 		$this->_someProjectId = $id;
@@ -184,7 +184,7 @@ class TestProjectModel extends UnitTestCase {
 	
 	function testDatabaseName_Ok() {
 		$project = new ProjectModel();
-		$project->projectname = 'Some Project';
+		$project->projectName = 'Some Project';
 		$result = $project->databaseName();
 		$this->assertEqual('lf_some_project', $result);
 	}
@@ -206,24 +206,24 @@ class TestProjectModel extends UnitTestCase {
 		$this->assertTrue(in_array(Domain::QUESTIONS + Operation::CREATE, $result));
 	}
 
-	function testCreateFromDomain_3Projects_MatchingProjectCodeSelected() {
+	function testCreateFromDomain_3Projects_MatchingProjectDomainSelected() {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 	
 		$project1 = $e->createProject('Project1Name');
-		$project1->projectCode = ProjectModel::domainToProjectCode('dev.languageforge.org');
+		$project1->projectDomain = ProjectModel::domainToProjectDomain('dev.languageforge.org');
 		$project1->write();
 		$project2 = $e->createProject('Project2Name');
-		$project2->projectCode = ProjectModel::domainToProjectCode('jamaicanpsalms.languageforge.org');
+		$project2->projectDomain = ProjectModel::domainToProjectDomain('jamaicanpsalms.languageforge.org');
 		$project2->write();
 		$project3 = $e->createProject('Project3Name');
-		$project3->projectCode = ProjectModel::domainToProjectCode('languageforge.local');
+		$project3->projectDomain = ProjectModel::domainToProjectDomain('languageforge.local');
 		$project3->write();
 		$projectDomain = 'jamaicanpsalms.local';
 	
 		$project = ProjectModel::createFromDomain($projectDomain);
 	
-		$this->assertEqual($project->projectCode, ProjectModel::domainToProjectCode($projectDomain));
+		$this->assertEqual($project->projectDomain, ProjectModel::domainToProjectDomain($projectDomain));
 	}
 	
 }

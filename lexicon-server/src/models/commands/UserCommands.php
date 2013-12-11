@@ -75,12 +75,12 @@ class UserCommands
 	 * Register a new user, add to project if in context
 	 * @param array $params
 	 * @param string $captcha_info
-	 * @param string $projectCode
+	 * @param string $projectDomain
 	 * @param IDelivery $delivery
 	 * @throws \Exception
 	 * @return string $userId
 	 */
-	public static function register($params, $captcha_info, $projectCode, IDelivery $delivery = null) {
+	public static function register($params, $captcha_info, $projectDomain, IDelivery $delivery = null) {
 		if (strtolower($captcha_info['code']) != strtolower($params['captcha'])) {
 			return false;  // captcha does not match
 		}
@@ -107,10 +107,10 @@ class UserCommands
 		$userPassword->write();
 
 		// if signup from project page then add user to project
-		if ($projectCode) {
-			$project = ProjectModel::createFromDomain($projectCode);
+		if ($projectDomain) {
+			$project = ProjectModel::createFromDomain($projectDomain);
 			if (!$project) {
-				error_log("Error: Could not create project from project code '$projectCode'");
+				error_log("Error: Could not create project from project code '$projectDomain'");
 			} else {
 				$project->addUser($user->id->asString(), $user->role);
 				$user->addProject($project->id->asString());
@@ -152,11 +152,11 @@ class UserCommands
 			Communicate::sendInvite($inviterUser, $newUser, $project, $delivery);
 			return $userId;
 		} else {
-				$projectCode = ProjectModel::domainToProjectCode($hostName);
-			if ($projectCode == 'scriptureforge') {
+				$projectDomain = ProjectModel::domainToProjectDomain($hostName);
+			if ($projectDomain == 'scriptureforge') {
 				throw new \Exception("Sending an invitation without a project context is not supported.");
 			} else {
-				throw new \Exception("Cannot send invitation for unknown project '$projectCode'");
+				throw new \Exception("Cannot send invitation for unknown project '$projectDomain'");
 			}
 		}
     }
