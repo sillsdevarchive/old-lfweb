@@ -105,6 +105,12 @@ class TestLexEntryCommands extends UnitTestCase {
 		
 		// create entry and list
 		$project = $e->createProject(LF_TESTPROJECT);
+		$userId = $e->createUser('somename', 'Some Name', 'somename@example.com');
+		$user = new UserModel($userId);
+		$project->addUser($userId, Roles::USER);
+		$project->write();
+		$user->addProject($project->id->asString());
+		$user->write();
 		$entry = new LexEntryModel($project);
 		$lexeme = new MultiText();
 		$lexeme['en'] = 'Some form';
@@ -115,7 +121,7 @@ class TestLexEntryCommands extends UnitTestCase {
 		$this->assertEqual(1, $entryList->count);
 		
 		// delete entry
-		$count = LexEntryCommands::deleteEntries($project, array($entryId));
+		$count = LexEntryCommands::deleteEntries($project, $userId, array($entryId));
 		
 		// check entry is deleted
 		$this->assertEqual(1, $count);

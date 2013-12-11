@@ -52,12 +52,20 @@ class LexEntryCommands {
 	 * @param array $entryIds
 	 * @return int Total number of entries removed.
 	 */
-	public static function deleteEntries($project, $entryIds) {
+	public static function deleteEntries($project, $userId, $entryIds) {
+		CodeGuard::checkTypeAndThrow($userId, 'string');
 		CodeGuard::checkTypeAndThrow($entryIds, 'array');
+
+		// Error Validtion for User having access to Delete the project
+		if (! $project->hasRight($userId, Domain::LEX_ENTRY + Operation::DELETE_OTHER)) {
+			throw new UserActionDeniedException('Access Denied For Delete');
+		}
+		
 		$count = 0;
 		foreach ($entryIds as $entryId) {
  			CodeGuard::checkTypeAndThrow($entryId, 'string');
-			LexEntryModel::remove($project, $entryId);
+			ActivityCommands::deleteEntry($project, $userId, $entryId);
+ 			LexEntryModel::remove($project, $entryId);
 			$count++;
 		}
 		return $count;

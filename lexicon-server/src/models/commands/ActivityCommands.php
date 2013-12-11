@@ -2,8 +2,14 @@
 
 namespace models\commands;
 
+use libraries\lfdictionary\environment\LexProject;
+use libraries\lfdictionary\store\LexStoreType;
+use libraries\lfdictionary\store\LexStoreController;
+use libraries\lfdictionary\store\LexStore;
 use models\ActivityModel;
 use models\CommentModel;
+use models\lex\LexEntryModel;
+use models\mapper\IdReference;
 use models\ProjectModel;
 use models\ProjectModelFixer;
 use models\QuestionModel;
@@ -11,11 +17,6 @@ use models\QuestionAnswersListModel;
 use models\UserModel;
 use models\UnreadActivityModel;
 use models\UnreadAnswerModel;
-use models\mapper\IdReference;
-use libraries\lfdictionary\store\LexStoreType;
-use libraries\lfdictionary\store\LexStoreController;
-use libraries\lfdictionary\store\LexStore;
-use libraries\lfdictionary\environment\LexProject;
 
 class ActivityCommands
 {
@@ -79,8 +80,6 @@ class ActivityCommands
 	public static function addAnswer($projectModel, $questionId, $answerModel) {
 		return ActivityCommands::updateAnswer($projectModel, $questionId, $answerModel, 'add');
 	}
-	
-
 		
 	/**
 	 * @param ProjectModel $projectModel
@@ -144,7 +143,7 @@ class ActivityCommands
 	 * @param string $userId
 	 * @param LexEntryModel $entry
 	 * @param Action $action
-	 * @return string
+	 * @return string activity id
 	 */
 	public static function writeEntry($projectModel, $userId, $entry, $action) {
 		$activity = new ActivityModel($projectModel);
@@ -160,46 +159,34 @@ class ActivityCommands
 	}
 	
 	/**
-	 *
 	 * @param ProjectModel $projectModel
-	 * @param Guid $guid
+	 * @param string $userId
+	 * @param string entry id
 	 * @return string activity id
 	 */
-	public static function deleteEntry($projectModel, $userId, $guid) {
+	public static function deleteEntry($projectModel, $userId, $id) {
 		$activity = new ActivityModel($projectModel);
 		$activity->userRef->id = $userId;
 		$activity->action = ActivityModel::DELETE_ENTRY;
 	
-		$entryModel = self::getEntry($projectModel->id->asString(), $guid);	
-		$activity->addContent(ActivityModel::ENTRY, $entryModel['entry'][$projectModel->languageCode]);
+		$entry = self::getEntry($projectModel->id->asString(), $id);	
+		$activity->addContent(ActivityModel::ENTRY, $entry['lexeme'][$projectModel->languageCode]);
 		return $activity->write();
 	}
 	
-	public static function getEntry($projectId, $entryGuid) {
-		//throw new \Exception ('projectId ' .$projectId ." entryGuid ".$entryGuid);
-		$projectModel = new ProjectModel ( $projectId );
-		ProjectModelFixer::ensureVLatest ( $projectModel );
-	
-		$lexProject = new LexProject ( $projectModel );
-	
-		$store = new LexStoreController ( LexStoreType::STORE_MONGO, $projectModel->databaseName (), $lexProject );
-		$result = $store->readEntry ( $entryGuid );
-	
-		// Sense Level
-		foreach ( $result->_senses as $sense ) {
-	
-			if (! (isset ( $sense->_id ) && strlen ( trim ( $sense->_id ) ) > 0)) {
-				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
-			}
-			// Example Level
-			foreach ( $sense->_examples as $example ) {
-				if (! (isset ( $example->_id ) && strlen ( trim ( $example->_id ) ) > 0)) {
-					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
-				}
-			}
-		}
-		return $result->encode ();
+	/**
+	 * @param string $projectId
+	 * @param string entry id
+	 * @return LexEntryModel
+	 */
+	public static function getEntry($projectId, $id) {
+		$project = new ProjectModel($projectId);
+		ProjectModelFixer::ensureVLatest($project);
+		
+		$entry = new LexEntryModel($project, $id);
+		return $entry;
 	}
+	
 }
 
 ?>
