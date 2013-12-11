@@ -88,9 +88,9 @@ class LexStoreController {
 	/**
 	 * Deletes an entry from the Store
 	 * @param string $guid
-	 * @param string $mercurialSHA
+	 * @param string $mercurialSha
 	 */
-	public function deleteEntry($guid, $mercurialSHA) {
+	public function deleteEntry($guid, $mercurialSha) {
 		return $this->_lexStore->deleteEntry($guid);
 	}
 

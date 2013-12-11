@@ -167,11 +167,11 @@ class LfDictionary {
 	 * Delete lexical entries
 	 *
 	 * @param string $id        	
-	 * @param string $mercurialSHA        	
+	 * @param string $mercurialSha        	
 	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
 	 * @return ResultDTO
 	 */
-	function deleteEntry($id, $mercurialSHA) {
+	function deleteEntry($id, $mercurialSha) {
 		$this->isReadyOrThrow();
 		
 		// Error Validtion for User having access to Delete the project
@@ -182,7 +182,7 @@ class LfDictionary {
 		LexEntryModel::remove($this->_projectModel, $id);
 /*		
 		$store = $this->getLexStore();
-		$store->deleteEntry($id, $mercurialSHA);
+		$store->deleteEntry($id, $mercurialSha);
 */		
 		$resultDTO = new ResultDTO(true);
 		return $resultDTO->encode();

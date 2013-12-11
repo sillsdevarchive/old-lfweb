@@ -57,7 +57,7 @@ class LexEntryModel extends \models\mapper\MapperModel {
 	 *
 	 * @var string
 	 */
-	public $mercurialSHA;
+	public $mercurialSha;
 
 	/**
 	 * This is a single LF domain

@@ -180,14 +180,14 @@ class LiftUpdater {
 	/**
 	 * @param string $filePath
 	 * @param string $timeStamp
-	 * @param string $mercurialSHA
+	 * @param string $mercurialSha
 	 * @return string
 	 */
-	static function updateFilePath($filePath, $timeStamp, $mercurialSHA="") {
-		if ($mercurialSHA==""){
+	static function updateFilePath($filePath, $timeStamp, $mercurialSha="") {
+		if ($mercurialSha==""){
 			return $filePath . '-' . $timeStamp . '.liftupdate';
 		}else{
-			return $filePath . '-' . $timeStamp . '-' . $mercurialSHA . '.liftupdate';
+			return $filePath . '-' . $timeStamp . '-' . $mercurialSha . '.liftupdate';
 		}
 	}
 }
