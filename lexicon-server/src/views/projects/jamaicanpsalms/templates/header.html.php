@@ -28,7 +28,7 @@
 							<li><a href="/app/sfchecks#/projects">My Projects</a>
 								<ul>
 								<?php foreach($projects as $project): ?>
-									<li><a href="<?php echo "/app/sfchecks#/project/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+									<li><a href="<?php echo "/app/sfchecks#/project/" . $project['id']; ?>"><?php echo $project['projectName']; ?></a></li>
 								<?php endforeach;?>
 								</ul>
 							</li>

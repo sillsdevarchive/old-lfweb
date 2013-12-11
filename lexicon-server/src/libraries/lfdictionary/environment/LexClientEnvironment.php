@@ -39,7 +39,7 @@ class LexClientEnvironment
 		LexProjectFixer::fixProjectVLatest($this->_lexProject);
 		
 		LoggerFactory::getLogger()->logInfoMessage(sprintf('LexClientEnvironment P=%s (%s) U=%s (%s)',
-			$this->_projectModel->projectname,
+			$this->_projectModel->projectName,
 			$projectId,
 			$this->_userModel->username,
 			$this->_userModel->id->asString()

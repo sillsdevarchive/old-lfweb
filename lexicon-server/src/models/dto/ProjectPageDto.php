@@ -33,7 +33,7 @@ class ProjectPageDto
 		$data = array();
 		$data['rights'] = RightsHelper::encode($userModel, $projectModel);
 		$data['project'] = array(
-				'name' => $projectModel->projectname,
+				'name' => $projectModel->projectName,
 				'id' => $projectId);
 		$data['texts'] = array();
 		foreach ($textList->entries as $entry) {

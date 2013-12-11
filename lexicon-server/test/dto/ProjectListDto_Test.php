@@ -38,7 +38,7 @@ class TestProjectListDto extends UnitTestCase {
 		$this->assertEqual($dto['count'], 1);
 		$this->assertIsA($dto['entries'], 'array');
 		$this->assertEqual($dto['entries'][0]['id'], $projectId);
-		$this->assertEqual($dto['entries'][0]['projectname'], LF_TESTPROJECT);
+		$this->assertEqual($dto['entries'][0]['projectName'], LF_TESTPROJECT);
 		$this->assertEqual($dto['entries'][0]['textCount'], 2);
 	}
 */
@@ -66,9 +66,9 @@ class TestProjectListDto extends UnitTestCase {
 		$this->assertEqual($dto['count'], 2);
 		$this->assertIsA($dto['entries'], 'array');
 		$this->assertEqual($dto['entries'][0]['id'], $projectId1);
-		$this->assertEqual($dto['entries'][0]['projectname'], $project1Name);
+		$this->assertEqual($dto['entries'][0]['projectName'], $project1Name);
 		$this->assertEqual($dto['entries'][1]['id'], $projectId2);
-		$this->assertEqual($dto['entries'][1]['projectname'], $project2Name);
+		$this->assertEqual($dto['entries'][1]['projectName'], $project2Name);
 	}
 	
 	function testEncode_UserOf1Project2Projects_DtoReturnsProjectCount1() {
@@ -95,7 +95,7 @@ class TestProjectListDto extends UnitTestCase {
 		$this->assertEqual($dto['count'], 1);
 		$this->assertIsA($dto['entries'], 'array');
 		$this->assertEqual($dto['entries'][0]['id'], $projectId1);
-		$this->assertEqual($dto['entries'][0]['projectname'], $project1Name);
+		$this->assertEqual($dto['entries'][0]['projectName'], $project1Name);
 	}
 
 }

@@ -40,7 +40,7 @@ class DepotProjectModel extends \models\mapper\MapperModel
 	 *
 	 * @var string
 	 */
-	public $projectname;
+	public $projectName;
 	
 	/**
 	 * @var string

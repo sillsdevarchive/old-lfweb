@@ -32,7 +32,7 @@ class QuestionListDto
 		$data['projectlanguagecode'] = $projectModel->languageCode;
 		$data['entries'] = array();
 		$data['project'] = array(
-				'name' => $projectModel->projectname,
+				'name' => $projectModel->projectName,
 				'id' => $projectId);
 		if ($entryGuid!='')
 		{

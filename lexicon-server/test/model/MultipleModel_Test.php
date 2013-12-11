@@ -35,14 +35,14 @@ class TestMultipleModel extends UnitTestCase {
 
 		$model = new ProjectModel();
 		$model->languageCode = "SomeLanguage";
-		$model->projectname = "SomeProject";
+		$model->projectName = "SomeProject";
 		$id = $model->write();
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
 		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
-		$this->assertEqual('SomeProject', $otherModel->projectname);
+		$this->assertEqual('SomeProject', $otherModel->projectName);
 	}
 
 	function testUserList_HadOnlyUsers()
@@ -61,7 +61,7 @@ class TestMultipleModel extends UnitTestCase {
 		$model->read();
 		
 		foreach ($model->entries as $entry) {
-			$this->assertTrue(array_key_exists("projectname", $entry));
+			$this->assertTrue(array_key_exists("projectName", $entry));
 		}
 	}
 }

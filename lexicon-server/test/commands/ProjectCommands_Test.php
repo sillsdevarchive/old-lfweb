@@ -49,7 +49,7 @@ class TestProjectCommands extends UnitTestCase {
 		$projectUser = $sameProject->listUsers()->entries[0];
 		$this->assertEqual($projectUser['name'], "Existing Name");
 		$userProject = $updatedUser->listProjects()->entries[0];
-		$this->assertEqual($userProject['projectname'], LF_TESTPROJECT);
+		$this->assertEqual($userProject['projectName'], LF_TESTPROJECT);
 	}
 	
 	function testUpdateUserRole_JoinTwice_JoinedOnce() {
@@ -135,11 +135,11 @@ class TestProjectCommands extends UnitTestCase {
 		
 		// each user in project, project has each user
 		$user1Project = $otherUser1->listProjects()->entries[0];
-		$this->assertEqual($user1Project['projectname'], LF_TESTPROJECT);
+		$this->assertEqual($user1Project['projectName'], LF_TESTPROJECT);
 		$user2Project = $otherUser1->listProjects()->entries[0];
-		$this->assertEqual($user2Project['projectname'], LF_TESTPROJECT);
+		$this->assertEqual($user2Project['projectName'], LF_TESTPROJECT);
 		$user3Project = $otherUser1->listProjects()->entries[0];
-		$this->assertEqual($user3Project['projectname'], LF_TESTPROJECT);
+		$this->assertEqual($user3Project['projectName'], LF_TESTPROJECT);
 		$projectUser1 = $otherProject->listUsers()->entries[0];
 		$this->assertEqual($projectUser1['username'], "user1name");
 		$projectUser2 = $otherProject->listUsers()->entries[1];

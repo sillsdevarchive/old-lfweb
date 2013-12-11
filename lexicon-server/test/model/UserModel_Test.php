@@ -104,11 +104,11 @@ class TestUserModel extends UnitTestCase {
 		$this->assertEqual(
 			array(
 				array(
-		          'projectname' => 'p1',
+		          'projectName' => 'p1',
 		          'id' => $p1
 				),
 				array(
-		          'projectname' => 'p2',
+		          'projectName' => 'p2',
 		          'id' => $p2
 				)
 			), $result->entries

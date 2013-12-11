@@ -25,7 +25,7 @@ class ProjectDTO {
 	function encode() {
 		return array(
 			'id' => $this->_projectModel->id->asString(),
-			'name' => $this->_projectModel->projectname,
+			'name' => $this->_projectModel->projectName,
 			'title' => $this->_projectModel->title,
 			'type' => "dictionary",
 			'lang' => $this->_projectModel->languageCode

@@ -69,14 +69,14 @@ class DashboardCounterExtracter
 			
 			try {
 				$this->projectModel = new ProjectModel($this->projectId);
-				$this->projectPath = PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectname;
-				$liftFilePath = glob(PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectname."/*.lift");
+				$this->projectPath = PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectName;
+				$liftFilePath = glob(PROJECTS_HG_ROOT_FOLDER. $this->projectModel->projectName."/*.lift");
 					
 				if (count($liftFilePath) >= 1) {
 					$this->liftFilePath = $liftFilePath[0];
 			
 				} else {
-					throw new \Exception("No lift file found in: ".PROJECTS_HG_ROOT_FOLDER . $this->projectModel->projectname);
+					throw new \Exception("No lift file found in: ".PROJECTS_HG_ROOT_FOLDER . $this->projectModel->projectName);
 				}
 					
 			} catch (Exception $e) {
@@ -161,9 +161,9 @@ class DashboardCounterExtracter
 		
 		try {
 			$this->projectModel = new ProjectModel($this->projectId);
-			$projectPath = LexProject::workFolderPath() . $this->projectModel->projectCode;
+			$projectPath = LexProject::workFolderPath() . $this->projectModel->projectSlug;
 		
-			$filePath = glob(LexProject::workFolderPath() . $this->projectModel->projectname."/*.lift");
+			$filePath = glob(LexProject::workFolderPath() . $this->projectModel->projectName."/*.lift");
 			
 			if (count($filePath) >= 1) {
 				
@@ -188,7 +188,7 @@ class DashboardCounterExtracter
 				
 				$this->readAndInsertCounters($this->liftFilePath, $timestamp, null);
 			} else {
-				throw new \Exception("No lift file found in: " . LexProject::workFolderPath() . $this->projectModel->projectname);
+				throw new \Exception("No lift file found in: " . LexProject::workFolderPath() . $this->projectModel->projectName);
 			}
 		
 		} catch (Exception $e) {
