@@ -11,6 +11,9 @@ use models\mapper\Id;
 use models\ProjectModel;
 use models\rights\Roles;
 use models\UserModel;
+use models\lex\LexEntryIds;
+use models\lex\LexEntryId;
+use models\mapper\JsonEncoder;
 
 require_once(dirname(__FILE__) . '/../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
@@ -39,11 +42,11 @@ class TestLexEntryCommands extends UnitTestCase {
 		// create entry, exception expected
 		$e->inhibitErrorDisplay();
 		$this->expectException();
-		$entryId = LexEntryCommands::updateEntry($params, $action, $project, $userId);
+		$id = LexEntryCommands::updateEntry($params, $action, $project, $userId);
 		$e->restoreErrorDisplay();
 	}
 	
-	function testUpdateEntry_CreateAndUpdateEntry_EntryCreatedAndUpdated() {
+	function testUpdateEntryAndDeleteEntries_CRUD_Works() {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		
@@ -53,7 +56,7 @@ class TestLexEntryCommands extends UnitTestCase {
 			'lexeme' => array('en' => 'Some form'),
 		);
 		$action = ActivityModel::ADD_ENTRY;
-		$project = $e->createProject(LF_TESTPROJECT);
+		$project = $e->createProject(LF_TESTPROJECT, 'en');
 		$userId = $e->createUser('somename', 'Some Name', 'somename@example.com');
 		$user = new UserModel($userId);
 		$project->addUser($userId, Roles::USER);
@@ -69,64 +72,64 @@ class TestLexEntryCommands extends UnitTestCase {
 		$activityList->read();
 		$this->assertEqual(0, $activityList->count);
 		
-		// create entry
-		$entryId = LexEntryCommands::updateEntry($params, $action, $project, $userId);
+		// Create entry
+		$id = LexEntryCommands::updateEntry($params, $action, $project, $userId);
 		
-		// read from disk, entry created, list
-		$entry = new LexEntryModel($project, $entryId);
+		// Read from disk, entry created, list
+		$entry = new LexEntryModel($project, $id);
 		$this->assertEqual('Some form', $entry->lexeme['en']);
 		$entryList->read();
 		$this->assertEqual(1, $entryList->count);
 		$activityList->read();
 		$this->assertEqual(1, $activityList->count);
 		
-		// update parameters: params and action
-		$params['id'] = $entryId;
+		// Update parameters: params and action
+		$params['id'] = $id;
 		$params['lexeme'] = array('fr' => 'Other form');
 		$action = ActivityModel::UPDATE_ENTRY;
 		
-		// update entry
-		$entryId = LexEntryCommands::updateEntry($params, $action, $project, $userId);
+		// Update entry
+		$id = LexEntryCommands::updateEntry($params, $action, $project, $userId);
 		
-		// read from disk, entry updated, list
-		$entry->read($entryId);
-		$this->assertEqual($params['id'], $entryId);
+		// Read from disk, entry updated
+		$entry->read($id);
+		$this->assertEqual($params['id'], $id);
 		$this->assertEqual('Some form', $entry->lexeme['en']);
 		$this->assertEqual('Other form', $entry->lexeme['fr']);
+		
+		// List
 		$entryList->read();
 		$this->assertEqual(1, $entryList->count);
 		$activityList->read();
 		$this->assertEqual(2, $activityList->count);
-	}
-	
-	function testDeleteEntries_DeleteEntry_DeletedNoThrow() {
-		$e = new MongoTestEnvironment();
-		$e->clean();
 		
-		// create entry and list
-		$project = $e->createProject(LF_TESTPROJECT, 'en');
-		$userId = $e->createUser('somename', 'Some Name', 'somename@example.com');
-		$user = new UserModel($userId);
-		$project->addUser($userId, Roles::USER);
-		$project->write();
-		$user->addProject($project->id->asString());
-		$user->write();
-		$entry = new LexEntryModel($project);
-		$lexeme = new MultiText();
-		$lexeme['en'] = 'Some form';
-		$entry->lexeme = $lexeme;
-		$entryId = $entry->write();
-		$entryList = new LexEntryListModel($project);
-		$entryList->read();
-		$this->assertEqual(1, $entryList->count);
+		// Delete entry
+		$entryIds = new LexEntryIds();
+		$entryId = new LexEntryId();
+		$entryId->id = $id;
+		$entryId->mercurialSha = '';
+		$entryIds->append($entryId);
+		$jsonIds = JsonEncoder::encode($entryIds);
+		echo "<pre>";
+		var_dump($entryIds);
+		var_dump($jsonIds);
+		$jsonIds = array(
+			array(
+				'id' => $id,
+				'mercurialSha' => ''
+			)
+		);
+		var_dump($jsonIds);
+		echo "</pre>";
 		
-		// delete entry
-		$count = LexEntryCommands::deleteEntries($project, $userId, array($entryId));
+		$count = LexEntryCommands::deleteEntries($project, $userId, $jsonIds);
 		
-		// check entry is deleted
+		// List
 		$this->assertEqual(1, $count);
 		$entryList->read();
 		$this->assertEqual(0, $entryList->count);
+		$activityList->read();
+		$this->assertEqual(3, $activityList->count);
 	}
 	
 }

@@ -8,10 +8,12 @@ use models\commands\ActivityCommands;
 use models\mapper\JsonEncoder;
 use models\mapper\JsonDecoder;
 use models\lex\LexEntryModel;
+use models\lex\LexEntryIds;
 use models\rights\Domain;
 use models\rights\Operation;
 use models\UserModel;
 use models\mapper\ArrayOf;
+use models\lex\LexEntryId;
 
 class LexEntryCommands {
 
@@ -47,38 +49,41 @@ class LexEntryCommands {
 		ActivityCommands::writeEntry($project, $userId, $entry, $action);
 		return $entryId;
 	}
+
 	/**
 	 * @param ProjectModel $project
-	 * @param array $entryIds
+	 * @param string $userId
+	 * @param array $jsonIds
+	 * @throws UserActionDeniedException
 	 * @return int Total number of entries removed.
 	 */
-	public static function deleteEntries($project, $userId, $entryIds) {
+	public static function deleteEntries($project, $userId, $jsonIds) {
 		CodeGuard::checkTypeAndThrow($userId, 'string');
-		CodeGuard::checkTypeAndThrow($entryIds, 'array');
-
-		// TODO Add. class to include passing in mecurial SHA during delete. IJH 2013-12	
-/*		class LexEntryId
-		{
-		public $id;
-		public $mercurialSha;
-		}
-		
-		$x = new ArrayOf(function($data) {
-			return new LexEntryId();
-		});
-		JsonDecoder::decode($x, $entryIds);
-*/
+		CodeGuard::checkTypeAndThrow($jsonIds, 'array');
 
 		// Error Validtion for User having access to Delete the project
 		if (! $project->hasRight($userId, Domain::LEX_ENTRY + Operation::DELETE_OTHER)) {
 			throw new UserActionDeniedException('Access Denied For Delete');
 		}
 		
+		// TODO Add. class to include passing in mecurial SHA during delete. IJH 2013-12	
+		$entryIds = new LexEntryIds();
+// 		$entryIds = new ArrayOf(
+// 			function($data) {
+// 				return new LexEntryId();
+// 			}
+// 		);
+		JsonDecoder::decode($entryIds, $jsonIds);
+
+		echo "<pre>";
+		var_dump($entryIds);
+		echo "</pre>";
+		
 		$count = 0;
 		foreach ($entryIds as $entryId) {
- 			CodeGuard::checkTypeAndThrow($entryId, 'string');
- 			ActivityCommands::deleteEntry($project, $userId, $entryId);
-			LexEntryModel::remove($project, $entryId);
+ 			CodeGuard::checkTypeAndThrow($entryId->id, 'string');
+ 			ActivityCommands::deleteEntry($project, $userId, $entryId->id);
+			LexEntryModel::remove($project, $entryId->id);
 			$count++;
 		}
 		return $count;
