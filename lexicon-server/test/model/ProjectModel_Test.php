@@ -25,25 +25,23 @@ class TestProjectModel extends UnitTestCase {
 	}
 	
 	function testWrite_ReadBackSame() {
-		$model = new ProjectModel();
-		$model->languageCode = "SomeLanguage";
-		$model->projectName = "SomeProject";
+		$e = new MongoTestEnvironment();
+		$model = $e->createProject(LF_TESTPROJECT, "SomeLanguage");
 		//$model->users->refs = array('1234');
-		$id = $model->write();
+		$id = $model->id->asString();
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
 		$this->assertEqual($id, $model->id->asString());
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
 		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
-		$this->assertEqual('SomeProject', $otherModel->projectName);
+		$this->assertEqual(LF_TESTPROJECT, $otherModel->projectName);
 		//$this->assertEqual(array('1234'), $otherModel->users->refs);
 		
 		$this->_someProjectId = $id;
 	}
 
-	function testProjectList_HasCountAndEntries()
-	{
+	function testProjectList_HasCountAndEntries() {
 		$model = new models\ProjectListModel();
 		$model->read();
 		
@@ -172,7 +170,6 @@ class TestProjectModel extends UnitTestCase {
 	}
 	
 	function testRemove_RemovesProject() {
-		$e = new MongoTestEnvironment();
 		$project = new ProjectModel($this->_someProjectId);
 		
 		$this->assertTrue($project->exists($this->_someProjectId));
@@ -183,15 +180,16 @@ class TestProjectModel extends UnitTestCase {
 	}
 	
 	function testDatabaseName_Ok() {
-		$project = new ProjectModel();
-		$project->projectName = 'Some Project';
+		$e = new MongoTestEnvironment();
+		$project = $e->createProject(LF_TESTPROJECT, "SomeLanguage");
 		$result = $project->databaseName();
-		$this->assertEqual('lf_some_project', $result);
+		$this->assertEqual('lf_SomeLanguage-test_project-dictionary', $result);
 	}
 	
 	function testHasRight_Ok() {
 		$userId = MongoTestEnvironment::mockId();
-		$project = new ProjectModel();
+		$e = new MongoTestEnvironment();
+		$project = $e->createProject(LF_TESTPROJECT);
 		$project->addUser($userId, Roles::PROJECT_ADMIN);
 		$result = $project->hasRight($userId, Domain::QUESTIONS + Operation::CREATE);
 		$this->assertTrue($result);
@@ -199,7 +197,8 @@ class TestProjectModel extends UnitTestCase {
 	
 	function testGetRightsArray_Ok() {
 		$userId = MongoTestEnvironment::mockId();
-		$project = new ProjectModel();
+		$e = new MongoTestEnvironment();
+		$project = $e->createProject(LF_TESTPROJECT);
 		$project->addUser($userId, Roles::PROJECT_ADMIN);
 		$result = $project->getRightsArray($userId);
 		$this->assertIsA($result, 'array');

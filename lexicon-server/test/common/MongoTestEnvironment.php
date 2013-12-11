@@ -67,9 +67,12 @@ class MongoTestEnvironment
 		return $projectModel;
 	}
 	
-	public function createProjectSettings($name) {
+	public function createProjectSettings($projectName, $languageCode = 'qaa', $projectType = ProjectModel::PROJECT_LIFT) {
 		$projectModel = new models\ProjectSettingsModel();
-		$projectModel->projectName = $name;
+		$projectModel->projectName = $projectName;
+		$projectModel->languageCode = $languageCode;
+		$projectModel->projectType = $projectType;
+		$projectModel->projectSlug = ProjectModel::makeProjectSlug($languageCode, $projectName, $projectType);
 		$this->cleanProjectEnvironment($projectModel);
 		$projectModel->write();
 		return $projectModel;
