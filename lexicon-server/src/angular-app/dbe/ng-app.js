@@ -75,6 +75,10 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 		return entry;
 	};
 	
+	$scope.entryLoaded = function() {
+		return $scope.entry.hasOwnProperty('id');
+	}
+	
 	$scope.addEntry = function() {
 		var newId = $scope.getNewId();
 		/*

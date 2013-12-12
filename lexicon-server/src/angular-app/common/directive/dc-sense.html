@@ -1,29 +1,29 @@
-<div ng-repeat="field in config.fields">
-    <ng-switch on="config.definitions[field].type">
-        <div ng-switch-when="optionlist">
-            <dc-optionlist definition="config.definitions[field]" model="model[field]"></dc-optionlist>
-        </div>
-        <div ng-switch-when="multitext">
-            <dc-multitext definition="config.definitions[field]" model="model[field]"></multitext>
-        </div>
-        <div ng-switch-when="fields">
-            <ng-switch on="field">
-                <div ng-switch-when="examples">
-                    <div ng-repeat="example in model.examples" class="row">
-                        <div class="span1"><button class="btn btn-small" ng-click="deleteExample($index)" title="Delete Example Sentence"><i class="icon-remove"></i></button></div>
-                        <div class="span5">
-                            <dc-example config="config.definitions[examples]" model="examples"></dc-example>
+<div class="dc-sense">
+    <div ng-repeat="field in config.fields">
+        <ng-switch on="config.definitions[field].type">
+            <div ng-switch-when="optionlist">
+                <dc-optionlist definition="config.definitions[field]" model="model[field]"></dc-optionlist>
+            </div>
+            <div ng-switch-when="multitext">
+                <dc-multitext definition="config.definitions[field]" model="model[field]"></multitext>
+            </div>
+            <div ng-switch-when="fields">
+                <ng-switch on="field">
+                    <div ng-switch-when="examples">
+                        <div ng-repeat="example in model.examples">
+                                <div style="float:right"><i ng-click="deleteExample($index)" title="Delete Example Sentence" class="icon-remove"></i></div>
+                                <dc-example config="config.definitions.examples" model="examples"></dc-example>
                         </div>
+                        <button style="float:right" class="btn btn-small" ng-click="addExample()"><i class="icon-plus"></i> Add Example</button>
                     </div>
-                    <button class="btn btn-small" ng-click="addExample()"><i class="icon-plus"></i> Add Example</button>
-                </div>
-                <div ng-switch-default>
-                    unsupported config field: {{field}}
-                </div>
-            </ng-switch>
-        </div>
-        <div ng-switch-default>
-            unsupported type {{config.definitions[field].type}} for field {{field}}
-        </div>
-    </ng-switch>
+                    <div ng-switch-default>
+                        unsupported config field: {{field}}
+                    </div>
+                </ng-switch>
+            </div>
+            <div ng-switch-default>
+                unsupported type {{config.definitions[field].type}} for field {{field}}
+            </div>
+        </ng-switch>
+    </div>
 </div>

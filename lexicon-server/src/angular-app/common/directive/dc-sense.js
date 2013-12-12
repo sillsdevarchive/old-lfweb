@@ -8,10 +8,13 @@ angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.multitext', 'palaso.ui.dc.op
 				config : "=",
 				model : "=",
 			},
-			controller: ['$scope', function($scope) {
+			controller: ['$scope', '$window', function($scope, $window) {
 				$scope.makeValidModel = function() {
 					if (!$scope.model) {
 						$scope.model = {};
+					}
+					if (!$scope.model.examples) {
+						$scope.model.examples = [{}];
 					}
 				};
 

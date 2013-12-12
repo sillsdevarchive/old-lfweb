@@ -124,19 +124,37 @@ ul#strength {
     bottom:5px;
 }
 
-form.multitext .control-group {
+form.dc-multitext .control-group {
 	margin-bottom: 10px;
 }
 
-form.multitext label {
+form.dc-multitext label {
 	font-weight:bold;
 }
 
-form.multitext .wsid {
+form.dc-multitext .wsid {
 	margin-left:5px;
 	font-style:italic;
 }
 
-#entrylist .selected {
+#entryList .selected {
 	background-color: #CCFFDB;
+}
+
+#entryItemView i.icon-remove {
+	cursor: pointer; 
+	color:#CCC;
+}
+
+#entryItemView i.icon-remove:hover {
+	color:red;
+}
+
+.dc-sense {
+	margin-left:80px;
+	margin-top: 50px;
+}
+
+.dc-example {
+	margin-left:80px;
 }
