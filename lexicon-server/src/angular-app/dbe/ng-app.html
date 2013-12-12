@@ -15,13 +15,15 @@
                     <i class="icon-remove" style="color:black"></i>
                 </span>
             </div>
-            <table id="entryList" class="table table-condensed table-hover">
-                <tbody>
-                    <tr ng-class="{selected: e.id == entry.id}" ng-repeat="e in entries | filter:searchText">
-                        <td ng-click="editEntry(e.id)">{{entryTitle(e)}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="entryList">
+                <table class="table table-condensed ">
+                    <tbody>
+                        <tr ng-class="{selected: e.id == entry.id}" ng-repeat="e in entries | filter:searchText">
+                            <td ng-click="editEntry(e.id)">{{entryTitle(e)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div id="entryItemView" class="span8" ng-show="entryLoaded()">
