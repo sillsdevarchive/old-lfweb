@@ -66,21 +66,10 @@ class LexEntryCommands {
 			throw new UserActionDeniedException('Access Denied For Delete');
 		}
 		
-		// TODO Add. class to include passing in mecurial SHA during delete. IJH 2013-12	
 		$entryIds = new LexEntryIds();
-// 		$entryIds = new ArrayOf(
-// 			function($data) {
-// 				return new LexEntryId();
-// 			}
-// 		);
 		JsonDecoder::decode($entryIds, $jsonIds);
-
-		echo "<pre>";
-		var_dump($entryIds);
-		echo "</pre>";
-		
 		$count = 0;
-		foreach ($entryIds as $entryId) {
+		foreach ($entryIds->ids as $entryId) {
  			CodeGuard::checkTypeAndThrow($entryId->id, 'string');
  			ActivityCommands::deleteEntry($project, $userId, $entryId->id);
 			LexEntryModel::remove($project, $entryId->id);

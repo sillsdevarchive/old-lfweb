@@ -4,21 +4,21 @@ use models\ActivityModel;
 use models\ActivityListModel;
 use models\commands\LexEntryCommands;
 use models\lex\LexEntryModel;
+use models\lex\LexEntryIds;
+use models\lex\LexEntryId;
 use models\lex\LexEntryListModel;
 use models\lex\MultiText;
-use models\mapper\JsonDecoder;
+use models\mapper\JsonEncoder;
 use models\mapper\Id;
 use models\ProjectModel;
 use models\rights\Roles;
 use models\UserModel;
-use models\lex\LexEntryIds;
-use models\lex\LexEntryId;
-use models\mapper\JsonEncoder;
 
 require_once(dirname(__FILE__) . '/../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
 require_once(TEST_PATH . 'common/MongoTestEnvironment.php');
 require_once(SourcePath . "models/lex/LexEntryModel.php");
+require_once(SourcePath . "models/lex/LexEntryIds.php");
 
 class TestLexEntryCommands extends UnitTestCase {
 
@@ -104,23 +104,12 @@ class TestLexEntryCommands extends UnitTestCase {
 		$this->assertEqual(2, $activityList->count);
 		
 		// Delete entry
-		$entryIds = new LexEntryIds();
 		$entryId = new LexEntryId();
 		$entryId->id = $id;
 		$entryId->mercurialSha = '';
-		$entryIds->append($entryId);
+		$entryIds = new LexEntryIds();
+		$entryIds->ids[] = $entryId;
 		$jsonIds = JsonEncoder::encode($entryIds);
-		echo "<pre>";
-		var_dump($entryIds);
-		var_dump($jsonIds);
-		$jsonIds = array(
-			array(
-				'id' => $id,
-				'mercurialSha' => ''
-			)
-		);
-		var_dump($jsonIds);
-		echo "</pre>";
 		
 		$count = LexEntryCommands::deleteEntries($project, $userId, $jsonIds);
 		

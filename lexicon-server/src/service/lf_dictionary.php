@@ -165,27 +165,12 @@ class LfDictionary {
 	
 	/**
 	 * Delete lexical entries
-	 *
-	 * @param string $id        	
-	 * @param string $mercurialSha        	
-	 * @throws \libraries\lfdictionary\common\UserActionDeniedException
-	 * @return ResultDTO
+	 * @param LexEntryIds $jsonIds
+	 * @return int Total number of entries removed.
 	 */
-	function deleteEntry($id, $mercurialSha) {
+	function deleteEntries($jsonIds) {
 		$this->isReadyOrThrow();
-		
-		// Error Validtion for User having access to Delete the project
-		if (! $this->_projectModel->hasRight($this->_userId, Domain::LEX_ENTRY + Operation::DELETE_OTHER)) {
-			throw new UserActionDeniedException('Access Denied For Delete');
-		}
-		ActivityCommands::deleteEntry($this->_projectModel, $this->_userId, $id);
-		LexEntryModel::remove($this->_projectModel, $id);
-/*		
-		$store = $this->getLexStore();
-		$store->deleteEntry($id, $mercurialSha);
-*/		
-		$resultDTO = new ResultDTO(true);
-		return $resultDTO->encode();
+		return LexEntryCommands::deleteEntries($this->_projectModel, $this->_userId, $jsonIds);
 	}
 	
 	/**

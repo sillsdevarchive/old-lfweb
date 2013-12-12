@@ -17,10 +17,12 @@ class LexEntryId {
 	
 }
 
-class LexEntryIds extends ArrayOf {
+class LexEntryIds {
 
+	public $ids;
+	
 	public function __construct() {
-		parent::__construct(
+		$this->ids = new ArrayOf(
 			function($data) {
 				return new LexEntryId();
 			}
