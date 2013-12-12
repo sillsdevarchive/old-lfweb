@@ -76,6 +76,7 @@ class GatherWordCommand {
 
 		if (count($this->newWordsArr)>0) {
 			$now = LiftUpdater::now();
+			// TODO The LiftUpdater should not be called directly here, rather in the course of processing the file the LexEntryCommands::addEntry(...) should be called which in turn would do this (in addition to updating activity etc). CP 2013-12
 			$filePath = LiftUpdater::updateFilePath($this->_filePath, $now);
 			$rootXml = new \SimpleXMLElement('<lift />');
 			// loop words array to add text

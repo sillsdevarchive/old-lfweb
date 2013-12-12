@@ -4,6 +4,7 @@ namespace libraries\lfdictionary\dto;
 /**
  * This class contains Project DTO
  */
+// TODO. Delete. This is not likely useful.  The Dto should be page focussed, and the ProjectModel + JsonEncoder will help a lot. CP 2013-12
 class ProjectDTO {
 	
 	/**

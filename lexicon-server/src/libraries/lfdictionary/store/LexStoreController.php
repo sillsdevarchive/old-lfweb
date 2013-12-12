@@ -14,6 +14,7 @@ class LexStoreType {
 	const STORE_MONGO = 1;
 }
 
+// TODO Delete. This just doesn't hold its weight. CP 2013-12
 class LexStoreController {
 
 	/**

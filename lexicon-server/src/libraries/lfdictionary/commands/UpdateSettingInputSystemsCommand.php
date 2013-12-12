@@ -6,7 +6,7 @@ use libraries\lfdictionary\mapper\InputSystemXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
-// TODO Refactor. Need the WritingSystemModel with encoder / decoder and mapper.
+// TODO Refactor. Need the WritingSystemModel with mongo / json encoder / decoder and mapper.
 // TODO Enhance. Need to store the model in mongo.
 // @see GeTSettingInputSystemsCommand
 class UpdateSettingInputSystemsCommand

@@ -13,6 +13,12 @@ class LiftStates {
 	const PROCESS_ALL = 2;
 }
 
+/**
+ * LiftScanner reads a lift file and returns an array representation.
+ * TODO Refactor. This would be better expressed as a decoder / mapper to populate the LexEntryModel from a lift file.  The code here would be well up for that. CP 2013-12
+ * TODO Move. models/mapper/lift CP 2013-12
+ * REVIEWED CP 2013-12: The code here seems pretty good, and would well suit refactoring to a lift mapper / decoder.  
+ */
 class LiftScanner {
 
 	/**

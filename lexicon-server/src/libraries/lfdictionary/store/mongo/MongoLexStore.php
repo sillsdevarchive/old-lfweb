@@ -14,7 +14,7 @@ use libraries\lfdictionary\dto\ListEntry;
 use models\lex\LexEntryModel;
 use models\lex\MultiText;
 
-// TODO This file can be deleted, its replaced by the new MongoMapper. CP 2013-12
+// TODO Delete. Replaced by the new MongoMapper. CP 2013-12
 class MongoLexStore implements ILexStore
 {
 
