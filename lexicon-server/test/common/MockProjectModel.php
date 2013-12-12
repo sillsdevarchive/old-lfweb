@@ -1,10 +1,11 @@
 <?php
 
+use models\ProjectModel;
+
 class MockProjectModel {
 
 	public function databaseName() {
-		$name = strtolower(LF_TESTPROJECT);
-		$name = str_replace(' ', '_', $name);
+		$name = ProjectModel::makeProjectSlug(LF_TEST_LANGUAGE, LF_TESTPROJECT, ProjectModel::PROJECT_LIFT);
 		return 'lf_' . $name;
 	}
 }

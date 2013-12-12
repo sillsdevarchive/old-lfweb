@@ -1,21 +1,16 @@
 <?php
 
 use models\AnswerModel;
-
-use models\QuestionListModel;
-
 use models\mapper\MongoStore;
 use models\ProjectModel;
 use models\QuestionModel;
+use models\QuestionListModel;
 
 require_once(dirname(__FILE__) . '/../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
-
 require_once(TEST_PATH . 'common/MongoTestEnvironment.php');
-
 require_once(SourcePath . "models/ProjectModel.php");
 require_once(SourcePath . "models/QuestionModel.php");
-
 
 class TestQuestionModel extends UnitTestCase {
 

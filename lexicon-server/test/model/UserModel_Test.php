@@ -76,10 +76,10 @@ class TestUserModel extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		
-		$p1m = $e->createProject('p1');
+		$p1m = $e->createProject(LF_TESTPROJECT);
 		$p1 = $p1m->id->asString();
 		$p1m = new ProjectModel($p1);
-		$p2m = $e->createProject('p2');
+		$p2m = $e->createProject(LF_TESTPROJECT2);
 		$p2 = $p2m->id->asString();
 		
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@smith.com');
@@ -104,11 +104,11 @@ class TestUserModel extends UnitTestCase {
 		$this->assertEqual(
 			array(
 				array(
-		          'projectName' => 'p1',
+		          'projectName' => LF_TESTPROJECT,
 		          'id' => $p1
 				),
 				array(
-		          'projectName' => 'p2',
+		          'projectName' => LF_TESTPROJECT2,
 		          'id' => $p2
 				)
 			), $result->entries

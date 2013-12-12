@@ -51,13 +51,13 @@ class TestProjectListDto extends UnitTestCase {
 		$user->role = Roles::SYSTEM_ADMIN;
 		$user->write();
 	
-		$project1Name = 'ProjectName1';
+		$project1Name = LF_TESTPROJECT;
 		$project1 = $e->createProject($project1Name);
 		$projectId1 = $project1->id->asString();
 		$project1->addUser($userId, Roles::USER);
 		$project1->write();
 		
-		$project2Name = 'ProjectName2';
+		$project2Name = LF_TESTPROJECT2;
 		$project2 = $e->createProject($project2Name);
 		$projectId2 = $project2->id->asString();
 		
@@ -80,13 +80,13 @@ class TestProjectListDto extends UnitTestCase {
 		$user->role = Roles::USER;
 		$user->write();
 	
-		$project1Name = 'ProjectName1';
+		$project1Name = LF_TESTPROJECT;
 		$project1 = $e->createProject($project1Name);
 		$projectId1 = $project1->id->asString();
 		$project1->addUser($userId, Roles::USER);
 		$project1->write();
 		
-		$project2Name = 'ProjectName2';
+		$project2Name = LF_TESTPROJECT2;
 		$project2 = $e->createProject($project2Name);
 		$projectId2 = $project2->id->asString();
 		

@@ -53,10 +53,10 @@ class TestLexEntryCommands extends UnitTestCase {
 		// setup parameters: params, action, user and project
 		$params = array(
 			'id' => '',
-			'lexeme' => array('en' => 'Some form'),
+			'lexeme' => array(LF_TEST_LANGUAGE => 'Some form'),
 		);
 		$action = ActivityModel::ADD_ENTRY;
-		$project = $e->createProject(LF_TESTPROJECT, 'en');
+		$project = $e->createProject(LF_TESTPROJECT, LF_TEST_LANGUAGE);
 		$userId = $e->createUser('somename', 'Some Name', 'somename@example.com');
 		$user = new UserModel($userId);
 		$project->addUser($userId, Roles::USER);
@@ -77,7 +77,7 @@ class TestLexEntryCommands extends UnitTestCase {
 		
 		// Read from disk, entry created, list
 		$entry = new LexEntryModel($project, $id);
-		$this->assertEqual('Some form', $entry->lexeme['en']);
+		$this->assertEqual('Some form', $entry->lexeme[LF_TEST_LANGUAGE]);
 		$entryList->read();
 		$this->assertEqual(1, $entryList->count);
 		$activityList->read();
@@ -94,7 +94,7 @@ class TestLexEntryCommands extends UnitTestCase {
 		// Read from disk, entry updated
 		$entry->read($id);
 		$this->assertEqual($params['id'], $id);
-		$this->assertEqual('Some form', $entry->lexeme['en']);
+		$this->assertEqual('Some form', $entry->lexeme[LF_TEST_LANGUAGE]);
 		$this->assertEqual('Other form', $entry->lexeme['fr']);
 		
 		// List

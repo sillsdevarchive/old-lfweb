@@ -4,8 +4,9 @@ use models\rights\Domain;
 use models\rights\Roles;
 use models\mapper\Id;
 use models\mapper\MongoStore;
-use models\UserModel;
+use models\ProjectListModel;
 use models\ProjectModel;
+use models\UserModel;
 
 require_once(dirname(__FILE__) . '/../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
@@ -26,7 +27,7 @@ class TestProjectModel extends UnitTestCase {
 	
 	function testWrite_ReadBackSame() {
 		$e = new MongoTestEnvironment();
-		$model = $e->createProject(LF_TESTPROJECT, "SomeLanguage");
+		$model = $e->createProject(LF_TESTPROJECT, LF_TEST_LANGUAGE);
 		//$model->users->refs = array('1234');
 		$id = $model->id->asString();
 		$this->assertNotNull($id);
@@ -34,7 +35,7 @@ class TestProjectModel extends UnitTestCase {
 		$this->assertEqual($id, $model->id->asString());
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
-		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
+		$this->assertEqual(LF_TEST_LANGUAGE, $otherModel->languageCode);
 		$this->assertEqual(LF_TESTPROJECT, $otherModel->projectName);
 		//$this->assertEqual(array('1234'), $otherModel->users->refs);
 		
@@ -42,7 +43,7 @@ class TestProjectModel extends UnitTestCase {
 	}
 
 	function testProjectList_HasCountAndEntries() {
-		$model = new models\ProjectListModel();
+		$model = new ProjectListModel();
 		$model->read();
 		
 		$this->assertNotEqual(0, $model->count);
@@ -55,7 +56,7 @@ class TestProjectModel extends UnitTestCase {
 		// setup user and projects
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@email.com');
 		$userModel = new UserModel($userId);
-		$projectModel = $e->createProject('new project');
+		$projectModel = $e->createProject(LF_TESTPROJECT);
 		$projectId = $projectModel->id->asString();
 		
 		// create the reference
@@ -78,7 +79,7 @@ class TestProjectModel extends UnitTestCase {
 		// setup user and projects
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@email.com');
 		$userModel = new UserModel($userId);
-		$projectModel = $e->createProject('new project');
+		$projectModel = $e->createProject(LF_TESTPROJECT);
 		$projectId = $projectModel->id->asString();
 
 		// create the reference
@@ -112,7 +113,7 @@ class TestProjectModel extends UnitTestCase {
 		// setup user and projects
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@email.com');
 		$userModel = new UserModel($userId);
-		$projectModel = $e->createProject('new project');
+		$projectModel = $e->createProject(LF_TESTPROJECT);
 		$projectId = $projectModel->id;
 		
 		$projectModel->addUser($userId, Roles::USER);
@@ -181,9 +182,9 @@ class TestProjectModel extends UnitTestCase {
 	
 	function testDatabaseName_Ok() {
 		$e = new MongoTestEnvironment();
-		$project = $e->createProject(LF_TESTPROJECT, "SomeLanguage");
+		$project = $e->createProject(LF_TESTPROJECT, LF_TEST_LANGUAGE);
 		$result = $project->databaseName();
-		$this->assertEqual('lf_SomeLanguage-test_project-dictionary', $result);
+		$this->assertEqual('lf_' + LF_TEST_LANGUAGE + '-test_project-dictionary', $result);
 	}
 	
 	function testHasRight_Ok() {
@@ -209,15 +210,12 @@ class TestProjectModel extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 	
-		$project1 = $e->createProject('Project1Name');
+		$project1 = $e->createProject(LF_TESTPROJECT);
 		$project1->projectDomain = ProjectModel::domainToProjectDomain('dev.languageforge.org');
 		$project1->write();
-		$project2 = $e->createProject('Project2Name');
+		$project2 = $e->createProject(LF_TESTPROJECT2);
 		$project2->projectDomain = ProjectModel::domainToProjectDomain('jamaicanpsalms.languageforge.org');
 		$project2->write();
-		$project3 = $e->createProject('Project3Name');
-		$project3->projectDomain = ProjectModel::domainToProjectDomain('languageforge.local');
-		$project3->write();
 		$projectDomain = 'jamaicanpsalms.local';
 	
 		$project = ProjectModel::createFromDomain($projectDomain);

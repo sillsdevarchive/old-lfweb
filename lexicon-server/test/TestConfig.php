@@ -13,6 +13,7 @@ define('DicTestPath', $rootPath . 'test/lfdictionary/');
 define('LF_DATABASE', 'languageforge_test');
 define('LF_TESTPROJECT', 'Test Project');
 define('LF_TESTPROJECT2', 'Test Project2');
+define('LF_TEST_LANGUAGE', 'qaa');
 
 // Fake some CodeIgniter path defines
 define('APPPATH', $rootPath . 'src/');

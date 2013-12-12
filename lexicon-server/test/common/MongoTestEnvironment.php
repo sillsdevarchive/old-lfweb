@@ -60,14 +60,14 @@ class MongoTestEnvironment
 	 * @param string $name
 	 * @return ProjectModel
 	 */
-	public function createProject($projectName, $languageCode = 'qaa', $projectType = ProjectModel::PROJECT_LIFT) {
+	public function createProject($projectName, $languageCode = LF_TEST_LANGUAGE, $projectType = ProjectModel::PROJECT_LIFT) {
 		$projectModel = ProjectModel::create($projectName, $languageCode, $projectType);
 		$this->cleanProjectEnvironment($projectModel);
 		$projectModel->write();
 		return $projectModel;
 	}
 	
-	public function createProjectSettings($projectName, $languageCode = 'qaa', $projectType = ProjectModel::PROJECT_LIFT) {
+	public function createProjectSettings($projectName, $languageCode = LF_TEST_LANGUAGE, $projectType = ProjectModel::PROJECT_LIFT) {
 		$projectModel = new models\ProjectSettingsModel();
 		$projectModel->projectName = $projectName;
 		$projectModel->languageCode = $languageCode;
