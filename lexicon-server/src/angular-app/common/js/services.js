@@ -227,4 +227,163 @@ angular.module('lf.services', ['jsonRpc'])
 			return this.text(projectId, textId) + "/" + questionId;
 		};	
 	})
+	.service('lexEntryService', function() {
+		var config = {
+			'writingsystems': {
+				'type': 'map',
+				'map': {
+					'th': 'Thai',
+					'en': 'English',
+					'my': 'Burmese'
+				}
+			},
+			'entry': {
+				'type': 'fields',
+				'fields': ['lexeme', 'senses'],
+				'definitions': {
+					'lexeme': {
+						'type': 'multitext',
+						'label': 'Word',
+						'writingsystems': ['th'],
+						'width': 20
+					},
+					'senses': {
+						'type': 'fields',
+						'fields': ['definition', 'partOfSpeech', 'semanticDomainValue', 'examples'],
+						'definitions': {
+							'definition': {
+								'type': 'multitext',
+								'label': 'Meaning',
+								'writingsystems': ['my', 'en'],
+								'width': 20
+							},
+							'partOfSpeech': {
+								'type': 'optionlist',
+								'label': 'Part of Speech',
+								'values': {
+									'noun': 'Noun',
+									'verb': 'Verb',
+									'adjective': 'Adjective'
+								},
+								'width': 20
+							},
+							'semanticDomainValue': {
+								'type': 'optionlist',
+								'label': 'Semantic Domain',
+								'values': {
+									'2.1': '2.1 Body',
+									'2.2': '2.2 Head and Shoulders',
+									'2.3': '2.3 Feet'
+								},
+								'width': 20
+							},
+							'examples': {
+								'type': 'fields',
+								'fields': ['example', 'translation'],
+								'definitions': {
+									'example': {
+										'type': 'multitext',
+										'label': 'example',
+										'writingsystems': ['th'],
+										'width': 20
+									},
+									'translation': {
+										'type': 'multitext',
+										'label': 'translation',
+										'writingsystems': ['en'],
+										'width': 20
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		};
+		var serverEntries = [];
+		var dirtyEntries = [];
+		
+		function getNewId() {
+			var newId = 0;
+			for (var i=0; i<serverEntries.length; i++) {
+				var e = serverEntries[i];
+				if (e.id >= newId) {
+					newId = e.id + 1;
+				}
+			}
+			return newId;
+		}
+		
+		this.needToSave = function() {
+			return dirtyEntries.length > 0;
+		};
+		
+		this.saveNow = function(projectId, callback) {
+			for (var i=0; i<dirtyEntries.length; i++) {
+				saveEntry(projectId, dirtyEntries[i]);
+			}
+			dirtyEntries = [];
+			callback({data:''});
+		};
+
+		this.read = function(projectId, id, callback) {
+			var result = {};
+			for (var i=0; i<serverEntries.length; i++) {
+				var entry = serverEntries[i];
+				if (entry.id == id) {
+					result = entry;
+					break;
+				}
+			}
+			callback({'data': result});
+			return;
+		};
+
+		function updateEntry(projectId, entry) {
+			if (entry.hasOwnProperty('id')) {
+				// update entry
+				for (var i=0; i<serverEntries.length; i++) {
+					var e = serverEntries[i];
+					if (e.id == id) {
+						serverEntries[i] = entry;
+						break;
+					}
+				}
+			} else {
+				// new entry
+				entry['id'] = getNewId();
+				serverEntries.unshift(entry);
+			}
+		};
+		
+		this.remove = function(projectId, id, callback) {
+			for (var i=0; i<serverEntries.length; i++) {
+				var entry = serverEntries[i];
+				if (entry.id == id) {
+					entries.splice(i, 1);
+					break;
+				}
+			}
+			callback({'data': {}});
+			return;
+		};
+		
+		this.getPageDto = function(projectId, callback) {
+			var list = [];
+			var ws = config.entry.definitions.lexeme.writingsystems[0];
+			for (var i=0; i<serverEntries.length; i++) {
+				var entry = serverEntries[i];
+				list.push({id: entry.id, title: entry.lexeme[ws]});
+			}
+			var result = {
+				data: {
+					entries: list,
+					config: config
+				}
+			};
+			callback({'data': result});
+			return;
+		};
+		
+	})
 	;

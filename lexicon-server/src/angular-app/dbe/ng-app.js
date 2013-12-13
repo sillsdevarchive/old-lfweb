@@ -1,6 +1,6 @@
 'use strict';
 
-function dbeCtrl($scope, userService, sessionService, $window) {
+function dbeCtrl($scope, userService, sessionService, lexService, $window) {
 	
 	// see http://alistapart.com/article/expanding-text-areas-made-elegant
 	// for an idea on expanding text areas
@@ -19,8 +19,22 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 		]
 	};
 	*/
+	var projectId = 'blah';
+	$scope.currentEntry = {};
+	$scope.entries = [];
+	$scope.config = {};
 	
-	$scope.entry = {};
+	$scope.entryIsDirty = function() {
+		
+	};
+	
+	$scope.editEntry = function(id) {
+
+		lexService.read(id, function(result) {
+			$scope.currentEntry = result.data;
+		});
+	};
+	
 	
 	$scope.entryTitle = function(entry) {
 		entry = entry || $scope.entry;
@@ -34,11 +48,6 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 		return title;
 	};
 	
-	$scope.entries = [];
-	
-	$scope.editEntry = function(id) {
-		$scope.entry = $scope.entries[$scope.getEntryIndexById(id)];
-	};
 	
 	$scope.getNewId = function() {
 		var newId = 0;
@@ -77,7 +86,7 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 	
 	$scope.entryLoaded = function() {
 		return $scope.entry.hasOwnProperty('id');
-	}
+	};
 	
 	$scope.addEntry = function() {
 		var newId = $scope.getNewId();
@@ -91,84 +100,15 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 			$scope.entry = {};
 		}
 	};
-	
-	$scope.config = {
-		'writingsystems': {
-			'type': 'map',
-			'map': {
-				'th': 'Thai',
-				'en': 'English',
-				'my': 'Burmese'
-			}
-		},
-		'entry': {
-			'type': 'fields',
-			'fields': ['lexeme', 'senses'],
-			'definitions': {
-				'lexeme': {
-					'type': 'multitext',
-					'label': 'Word',
-					'writingsystems': ['th'],
-					'width': 20
-				},
-				'senses': {
-					'type': 'fields',
-					'fields': ['definition', 'partOfSpeech', 'semanticDomainValue', 'examples'],
-					'definitions': {
-						'definition': {
-							'type': 'multitext',
-							'label': 'Meaning',
-							'writingsystems': ['my', 'en'],
-							'width': 20
-						},
-						'partOfSpeech': {
-							'type': 'optionlist',
-							'label': 'Part of Speech',
-							'values': {
-								'noun': 'Noun',
-								'verb': 'Verb',
-								'adjective': 'Adjective'
-							},
-							'width': 20
-						},
-						'semanticDomainValue': {
-							'type': 'optionlist',
-							'label': 'Semantic Domain',
-							'values': {
-								'2.1': '2.1 Body',
-								'2.2': '2.2 Head and Shoulders',
-								'2.3': '2.3 Feet'
-							},
-							'width': 20
-						},
-						'examples': {
-							'type': 'fields',
-							'fields': ['example', 'translation'],
-							'definitions': {
-								'example': {
-									'type': 'multitext',
-									'label': 'example',
-									'writingsystems': ['th'],
-									'width': 20
-								},
-								'translation': {
-									'type': 'multitext',
-									'label': 'translation',
-									'writingsystems': ['en'],
-									'width': 20
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	};
 
-	
+	// run this when the page loads
+	lexService.getPageDto(projectId, function(result) {
+		$scope.entries = result.data.entries;
+		$scope.config = result.data.config;
+	});
 }
 
 
 angular.module('dbe', ['jsonRpc', 'ui.bootstrap', 'lf.services', 'palaso.ui.dc.entry', 'ngAnimate']).
-controller('dbeCtrl', ['$scope', 'userService', 'sessionService', '$window', dbeCtrl])
+controller('dbeCtrl', ['$scope', 'userService', 'sessionService', 'lexEntryService', '$window', dbeCtrl])
 ;
