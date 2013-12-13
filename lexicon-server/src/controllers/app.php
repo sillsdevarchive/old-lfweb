@@ -34,6 +34,9 @@ class App extends Secure_base {
 		$data ['jsProjectFiles'] = array ();
 		self::addJavascriptFiles ( "angular-app/$app", $data ['jsProjectFiles'] );
 		
+		$data['cssCommonFiles'] = array();
+		self::addCssFiles("angular-app/common/css", $data['cssCommonFiles']);
+		
 		$data ['title'] = "Language Forge";
 		return $data;
 	}
@@ -41,14 +44,20 @@ class App extends Secure_base {
 		return pathinfo ( $filename, PATHINFO_EXTENSION );
 	}
 	protected static function addJavascriptFiles($dir, &$result) {
+		self::addFiles('js', $dir, $result);
+	}
+	protected static function addCssFiles($dir, &$result) {
+		self::addFiles('css', $dir, $result);
+	}
+	protected static function addFiles($ext, $dir, &$result) {
 		if (($handle = opendir ( $dir ))) {
 			while ( $file = readdir ( $handle ) ) {
 				if (is_file ( $dir . '/' . $file )) {
-					if (self::ext ( $file ) == 'js') {
+					if (self::ext ( $file ) == $ext) {
 						$result [] = $dir . '/' . $file;
 					}
 				} elseif ($file != '..' && $file != '.') {
-					self::addJavascriptFiles ( $dir . '/' . $file, $result );
+					self::addFiles ($ext, $dir . '/' . $file, $result );
 				}
 			}
 			closedir ( $handle );

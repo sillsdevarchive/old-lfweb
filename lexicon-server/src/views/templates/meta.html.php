@@ -4,7 +4,11 @@
 		
 		<link rel="stylesheet" href="/css/bootstrap.css" />
 		<link rel="stylesheet" href="/css/jquery-te-1.4.0.css" />
-		<link rel="stylesheet" href="/angular-app/common/css/palaso-ui.css" />
+		<?php if (isset($cssCommonFiles)): ?>
+		<?php foreach($cssCommonFiles as $filename): ?>
+		<link rel=stylesheet href="/<?php echo $filename; ?>" />
+		<?php endforeach; ?>
+		<?php endif; ?>
 		<link rel="stylesheet" media="screen" href="/css/superfish.css" />
 		<link rel="stylesheet" media="screen" href="/css/slides.css" />
 		<link rel="stylesheet" media="screen" href="/css/jquery.fileupload-ui.css" />
