@@ -1,15 +1,12 @@
 <div class="container" ng-app="dbe" ng-cloak ng-controller="dbeCtrl">
 	<div class="row">
-	    <div class="span10">
-        <h2>---</h2>
+	    <div class="span6 offset4">
         <h2>Dictionary Browse and Edit</h2>
-    	    <button class="btn" ng-click="addEntry()"><i class="icon-plus"></i> New Word</button>
-            <span ng-show="entryLoaded()" style="font-size:20px; font-weight:bold; margin-left:70px;">{{entryTitle()}}</span>
 	    </div>
 	</div>
 	<div class="row" style="margin-top:20px">
-        <div class="span4">
-            <div style="margin-bottom:10px" ng-show="entries.length > 0">
+        <div class="span4" ng-show="entries.length > 0">
+            <div style="margin-bottom:10px">
                 <input width="4" placeholder="search filter" type="text" class="input-medium search-query" ng-model="searchText" />
                 <span style="margin-left:10px" title="Clear Filter" ng-click="searchText = ''" ng-show="searchText && searchText != ''">
                     <i class="icon-remove" style="color:black"></i>
@@ -26,9 +23,12 @@
             </div>
         </div>
 
-        <div id="entryItemView" class="span8" ng-show="entryLoaded()">
-            <div style="float:right"><i ng-click="deleteEntry(entry)" title="Delete Word" class="icon-remove"></i></div>
-            <dc-entry config="config" model="entry"></dc-entry>
+        <div class="span8">
+    	    <button class="btn" style="float:right" ng-click="addEntry()"><i class="icon-plus"></i>New Word</button>
+            <div ng-show="entryLoaded()" style="margin-bottom:20px; font-size:20px; font-weight:bold;">{{entryTitle()}}</div>
+            <div ng-show="entryLoaded()" id="entryItemView">
+                <dc-entry config="config" model="entry"></dc-entry>
+            </div>
         </div>
 
 <!--
@@ -37,5 +37,10 @@
             <pre>{{entry|json}}</pre>
         </div>
 -->
+	</div>
+	<div class="row" ng-show="entryLoaded()">
+	    <div class="span3">
+                <button ng-click="deleteEntry(entry)" class="btn btn-small"><i class="icon-remove"></i>Delete Word</button>
+	    </div>
 	</div>
 </div>

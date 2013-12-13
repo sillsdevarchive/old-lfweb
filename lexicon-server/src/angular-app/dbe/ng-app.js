@@ -81,13 +81,7 @@ function dbeCtrl($scope, userService, sessionService, $window) {
 	
 	$scope.addEntry = function() {
 		var newId = $scope.getNewId();
-		/*
-		var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
-		var lexeme = {};
-		lexeme[lexemeWritingSystem] = '[blank]';
-		$scope.entries.push({'id': newId, 'lexeme': lexeme});
-		*/
-		$scope.entries.push({'id': newId});
+		$scope.entries.unshift({'id': newId});
 		$scope.editEntry(newId);
 	};
 	

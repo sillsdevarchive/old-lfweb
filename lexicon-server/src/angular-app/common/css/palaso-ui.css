@@ -151,9 +151,19 @@ form.dc-multitext .wsid {
 	background-color: #CCFFDB;
 }
 
+#entryList tr {
+	cursor: pointer;
+}
+
 #entryList {
 	overflow-y: scroll;
 	height: 400px;
+}
+
+#entryItemView {
+	overflow-y: scroll;
+	height: 500px;
+	padding-right:20px;
 }
 
 #entryItemView i.icon-remove {
