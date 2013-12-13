@@ -7,6 +7,8 @@ angular.module('palaso.ui.dc.example', ['palaso.ui.dc.multitext'])
 			scope : {
 				config : "=",
 				model : "=",
+				index : "=",
+				remove : "="
 			},
 			controller: ['$scope', function($scope) {
 				$scope.makeValidModel = function() {

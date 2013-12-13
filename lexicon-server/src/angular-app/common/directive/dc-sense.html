@@ -1,4 +1,5 @@
 <div class="dc-sense">
+    <div class="deleteX pull-right"><i ng-click="remove(index)" title="Delete '{{getSenseTitle(sense)}}'" class="icon-remove"></i></div>
     <div ng-repeat="field in config.fields">
         <ng-switch on="config.definitions[field].type">
             <div ng-switch-when="optionlist">
@@ -10,11 +11,10 @@
             <div ng-switch-when="fields">
                 <ng-switch on="field">
                     <div ng-switch-when="examples">
-                        <div ng-repeat="example in model.examples">
-                                <div style="float:right"><i ng-click="deleteExample($index)" title="Delete Example Sentence" class="icon-remove"></i></div>
-                                <dc-example config="config.definitions.examples" model="examples"></dc-example>
+                        <div class="animate-repeat" ng-repeat="example in model.examples"> 
+                            <dc-example remove="deleteExample" index="$index" config="config.definitions.examples" model="examples"></dc-example>
                         </div>
-                        <button style="float:right" class="btn btn-small" ng-click="addExample()"><i class="icon-plus"></i> Add Example</button>
+                        <div class="addItem"><a ng-click="addExample()">Add Example</a></div>
                     </div>
                     <div ng-switch-default>
                         unsupported config field: {{field}}

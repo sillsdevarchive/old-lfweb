@@ -1,4 +1,4 @@
-angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.multitext', 'palaso.ui.dc.optionlist', 'palaso.ui.dc.example'])
+angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.multitext', 'palaso.ui.dc.optionlist', 'palaso.ui.dc.example', 'ngAnimate'])
   // Palaso UI Dictionary Control: Sense
   .directive('dcSense', [function() {
 		return {
@@ -7,6 +7,8 @@ angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.multitext', 'palaso.ui.dc.op
 			scope : {
 				config : "=",
 				model : "=",
+				index : "=",
+				remove : "="
 			},
 			controller: ['$scope', '$window', function($scope, $window) {
 				$scope.makeValidModel = function() {

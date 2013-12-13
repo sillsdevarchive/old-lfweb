@@ -1,8 +1,7 @@
 <div class="dc-entry">
     <dc-multitext definition="config.entry.definitions.lexeme" model="model.lexeme"></dc-multitext>
-    <div ng-repeat="sense in model.senses">
-        <div style="float:right"><i ng-click="deleteSense($index)" title="Delete '{{getSenseTitle(sense)}}'" class="icon-remove"></i></div>
-        <dc-sense config="config.entry.definitions.senses" model="sense"></dc-sense>
+    <div class="addItem"><a ng-click="addSense()">Add Meaning</a></div>
+    <div class="animate-repeat" ng-repeat="sense in model.senses">
+        <dc-sense remove="deleteSense" index="$index" config="config.entry.definitions.senses" model="sense"></dc-sense>
     </div>
-    <button style="float: right; clear: right; margin-top:30px" class="btn btn-small" ng-click="addSense()"><i class="icon-plus"></i> Add Sense</button>
 </div>

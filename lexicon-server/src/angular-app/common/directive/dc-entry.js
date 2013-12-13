@@ -1,4 +1,4 @@
-angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multitext'])
+angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multitext', 'ngAnimate'])
   // Palaso UI Dictionary Control: Entry
   .directive('dcEntry', [function() {
 		return {
@@ -10,7 +10,7 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multit
 			},
 			controller: ["$scope", "$window", function($scope, $window) {
 				$scope.addSense = function() {
-					$scope.model.senses.push({});
+					$scope.model.senses.unshift({});
 				};
 				
 				$scope.makeValidModel = function() {
@@ -26,8 +26,6 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.sense', 'palaso.ui.dc.multit
 						$scope.model.senses = [{}];
 					}
 				};
-				
-
 				
 				$scope.deleteSense = function(index) {
 					if ($window.confirm("Are you sure you want to delete sense #" + (index+1) + " ?")) {

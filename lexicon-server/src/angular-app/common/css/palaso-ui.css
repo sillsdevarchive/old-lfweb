@@ -164,6 +164,7 @@ form.dc-multitext .wsid {
 	overflow-y: scroll;
 	height: 500px;
 	padding-right:20px;
+	padding-bottom: 20px;
 }
 
 #entryItemView i.icon-remove {
@@ -176,10 +177,27 @@ form.dc-multitext .wsid {
 }
 
 .dc-sense {
-	margin-left:80px;
-	margin-top: 50px;
+	border-right: 10px solid #F1F1F1;
+	border-radius: 10px;
+	margin-top: 20px;
+	padding-right:10px;
+	clear:both;
 }
 
 .dc-example {
-	margin-left:80px;
+	border-right: 10px solid #F1F1F1;
+	border-radius: 10px;
+	
+}
+
+.deleteX {
+	margin-right: 20px;
+}
+
+.addItem {
+	text-align:right;
+	font-size:12px;
+	margin-right:20px;
+	cursor: pointer;
+	
 }
