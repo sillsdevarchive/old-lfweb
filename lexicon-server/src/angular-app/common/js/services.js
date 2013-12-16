@@ -302,87 +302,145 @@ angular.module('lf.services', ['jsonRpc'])
 		};
 		var serverEntries = [];
 		var dirtyEntries = [];
+		var lastLocalId = 0;
+		var lastServerId = 0;
 		
-		function getNewId() {
-			var newId = 0;
+		// for debugging
+		this.serverEntries = function() {
+			return serverEntries;
+		};
+		
+		// for debugging
+		this.dirtyEntries = function() {
+			return dirtyEntries;
+		};
+		
+		function serverIter(func) {
 			for (var i=0; i<serverEntries.length; i++) {
-				var e = serverEntries[i];
-				if (e.id >= newId) {
-					newId = e.id + 1;
+				if (func(i, serverEntries[i])) {
+					break;
 				}
 			}
-			return newId;
 		}
+		
+		// TODO: replace instances of this function with the full for loop
+		// While this is a handy shortcut for developers, it makes the resulting code less readable
+		// and perhaps less understandable.  Probably best to just code the full for loop everywhere
+		// even though it is a few more keystrokes
+		function dirtyIter(func) {
+			for (var i=0; i<dirtyEntries.length; i++) {
+				if (func(i, dirtyEntries[i])) {
+					break;
+				}
+			}
+		}
+		
+		function getNewServerId() {
+			lastServerId++;
+			return "server " + lastLocalId;
+		}
+		
+		function getNewLocalId() {
+			lastLocalId++;
+			return "local " + lastLocalId;
+		}
+		
+		// do we need to publish this to the service?
+		this.getNewLocalId = function() {
+			return getNewLocalId();
+		};
 		
 		this.needToSave = function() {
 			return dirtyEntries.length > 0;
 		};
 		
 		this.saveNow = function(projectId, callback) {
-			for (var i=0; i<dirtyEntries.length; i++) {
-				saveEntry(projectId, dirtyEntries[i]);
-			}
+			// save each entry in the dirty list
+			dirtyIter(function(i, dirtyEntry) {
+				// do update or add on server (server figures it out)
+				var updated = false;
+				serverIter(function(j, serverEntry) {
+					if (serverEntry.id == dirtyEntry.id) {
+						serverEntries[j] = dirtyEntry;
+						updated = true;
+						return true;
+					}
+				});
+				if (!updated) {
+					dirtyEntry.id = getNewServerId();
+					serverEntries.unshift(dirtyEntry);
+				}
+			});
 			dirtyEntries = [];
 			callback({data:''});
 		};
 
 		this.read = function(projectId, id, callback) {
 			var result = {};
-			for (var i=0; i<serverEntries.length; i++) {
-				var entry = serverEntries[i];
-				if (entry.id == id) {
-					result = entry;
-					break;
+			dirtyIter(function(i,e) {
+				if (e.id == id) {
+					result = e;
+					return true;
 				}
+			});
+			if (!result) {
+				// read from server
+				serverIter(function(i,e) {
+					if (e.id == id) {
+						result = e;
+						return true;
+					}
+				});
 			}
-			callback({'data': result});
+			callback({data: result});
 			return;
 		};
-
-		function updateEntry(projectId, entry) {
-			if (entry.hasOwnProperty('id')) {
-				// update entry
-				for (var i=0; i<serverEntries.length; i++) {
-					var e = serverEntries[i];
-					if (e.id == id) {
-						serverEntries[i] = entry;
-						break;
+		
+		this.update = function(projectId, entry, callback) {
+			if (entry.hasOwnProperty('id') && entry.id != '') {
+				var foundInDirty = false;
+				dirtyIter(function(i,e) {
+					if (e.id == entry.id) {
+						dirtyEntries[i] = entry;
+						foundInDirty = true;
+						return true;
 					}
+				});
+				if (!foundInDirty) {
+					dirtyEntries.unshift(entry);
 				}
 			} else {
-				// new entry
-				entry['id'] = getNewId();
-				serverEntries.unshift(entry);
+				entry.id = getNewLocalId();
+				dirtyEntries.unshift(entry);
 			}
+			callback({data:entry});
 		};
 		
 		this.remove = function(projectId, id, callback) {
-			for (var i=0; i<serverEntries.length; i++) {
-				var entry = serverEntries[i];
-				if (entry.id == id) {
-					entries.splice(i, 1);
-					break;
+			dirtyIter(function(i,e) {
+				if (e.id == id) {
+					dirtyEntries.splice(i, 1);
+					return true;
 				}
-			}
-			callback({'data': {}});
+			});
+			// remove from server
+			serverIter(function(i,e){
+				if (e.id == id) {
+					serverEntries.splice(i, 1);
+					return true;
+				}
+			}); 
+			callback({data: {}});
 			return;
 		};
 		
 		this.getPageDto = function(projectId, callback) {
 			var list = [];
 			var ws = config.entry.definitions.lexeme.writingsystems[0];
-			for (var i=0; i<serverEntries.length; i++) {
-				var entry = serverEntries[i];
-				list.push({id: entry.id, title: entry.lexeme[ws]});
-			}
-			var result = {
-				data: {
-					entries: list,
-					config: config
-				}
-			};
-			callback({'data': result});
-			return;
+			serverIter(function(i,e) {
+				list.push({id: e.id, title: e.lexeme[ws]});
+			});
+			callback({data: { entries: list, config: config }});
 		};
 		
 	})

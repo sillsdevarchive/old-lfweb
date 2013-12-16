@@ -9,7 +9,7 @@ function dbeCtrl($scope, userService, sessionService, lexService, $window) {
  
 	
 	/* this is what an entry looks like
-	$scope.entry = {
+	$scope.currentEntry = {
 		'id': '1234',
 		'lexeme': { 'en': '', 'th': '' },
 		'senses': [
@@ -21,25 +21,67 @@ function dbeCtrl($scope, userService, sessionService, lexService, $window) {
 	*/
 	var projectId = 'blah';
 	$scope.currentEntry = {};
+	$scope.pristineEntry = {};
 	$scope.entries = [];
 	$scope.config = {};
 	
-	$scope.entryIsDirty = function() {
+	// for debugging
+	$scope.serverEntries = lexService.serverEntries;
+	$scope.dirtyEntries = lexService.dirtyEntries;
+	
+	$scope.currentEntryIsDirty = function() {
+		return !angular.equals($scope.currentEntry, $scope.pristineEntry);
+	};
+	
+	$scope.updateListWithEntry = function(entry) {
+		var isNew = true;
+		for (var i=0; i<$scope.entries.length; i++) {
+			var e = $scope.entries[i];
+			if (e.id == entry.id) {
+				$scope.entries[i].title = $scope.entryTitle(entry);
+				isNew = false;
+				break;
+			}
+		}
+		if (isNew) {
+			$scope.entries.unshift({id:entry.id, title:$scope.entryTitle(entry)});
+		}
+		
 		
 	};
 	
-	$scope.editEntry = function(id) {
-
-		lexService.read(id, function(result) {
-			$scope.currentEntry = result.data;
-		});
+	$scope.setCurrentEntry = function(entry) {
+		$scope.currentEntry = entry;
+		$scope.pristineEntry = entry;
 	};
 	
+	$scope.editEntry = function(id) {
+		if ($scope.entryLoaded()) {
+			// first, save current entry
+			lexService.update(projectId, $scope.currentEntry, function(result) {
+				$scope.updateListWithEntry(result.data);
+			});
+		}
+
+		if (arguments.length == 0) {
+			// create new entry
+			$scope.setCurrentEntry({'id':''});
+		} else {
+			// load existing entry
+			lexService.read(id, function(result) {
+				$scope.setCurrentEntry(result.data);
+			});
+		}
+	};
+
+	$scope.newEntry = function() {
+		$scope.editEntry();
+	};
 	
 	$scope.entryTitle = function(entry) {
-		entry = entry || $scope.entry;
+		entry = entry || $scope.currentEntry;
 		var title = "[new word]";
-		if (entry.lexeme) {
+		if (entry.lexeme && $scope.config && $scope.config.entry) {
 			var lexemeWritingSystem = $scope.config.entry.definitions.lexeme.writingsystems[0];
 			if (entry.lexeme[lexemeWritingSystem]) {
 				title = entry.lexeme[lexemeWritingSystem];
@@ -47,17 +89,17 @@ function dbeCtrl($scope, userService, sessionService, lexService, $window) {
 		}
 		return title;
 	};
+
+	$scope.entryLoaded = function() {
+		return $scope.currentEntry.hasOwnProperty('id');
+	};
 	
-	
-	$scope.getNewId = function() {
-		var newId = 0;
-		for (var i=0; i<$scope.entries.length; i++) {
-			var e = $scope.entries[i];
-			if (e.id >= newId) {
-				newId = e.id + 1;
-			}
+	$scope.deleteEntry = function(entry) {
+		if ($window.confirm("Are you sure you want to delete '" + $scope.entryTitle(entry) + "'?")) {
+			$scope.entries.splice($scope.getEntryIndexById(entry.id), 1);
+			lexService.remove(projectId, entry.id, function(){});
+			$scope.setCurrentEntry({});
 		}
-		return newId;
 	};
 	
 	$scope.getEntryIndexById = function(id) {
@@ -72,35 +114,6 @@ function dbeCtrl($scope, userService, sessionService, lexService, $window) {
 		return index;
 	};
 	
-	$scope.getEntryById = function(id) {
-		var entry = undefined;
-		for (var i=0; i<$scope.entries.length; i++) {
-			var e = $scope.entries[i];
-			if (e.id == id) {
-				entry = e;
-				break;
-			}
-		}
-		return entry;
-	};
-	
-	$scope.entryLoaded = function() {
-		return $scope.entry.hasOwnProperty('id');
-	};
-	
-	$scope.addEntry = function() {
-		var newId = $scope.getNewId();
-		$scope.entries.unshift({'id': newId});
-		$scope.editEntry(newId);
-	};
-	
-	$scope.deleteEntry = function(entry) {
-		if ($window.confirm("Are you sure you want to delete " + $scope.entryTitle(entry) + " (id " + entry.id + ") ?")) {
-			$scope.entries.splice($scope.getEntryIndexById(entry.id), 1);
-			$scope.entry = {};
-		}
-	};
-
 	// run this when the page loads
 	lexService.getPageDto(projectId, function(result) {
 		$scope.entries = result.data.entries;
