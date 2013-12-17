@@ -28,8 +28,11 @@
                 <div class="span3">
                     <div ng-show="entryLoaded()" style="margin-bottom:20px; font-size:20px; font-weight:bold;">{{entryTitle()}}</div>
                 </div>
-                <div class="offset3 span2">
+                <div class="span2">
             	    <button class="btn" ng-click="newEntry()"><i class="icon-plus"></i>New Word</button>
+                </div>
+                <div class="span3">
+            	    <button class="btn" ng-disabled="!canSave()" ng-show="entries.length > 0" ng-click="saveNow()"><i class="icon-save"></i>{{saveButtonTitle()}}</button>
                 </div>
             </div>
             <div class="animate-show" ng-show="entryLoaded()" id="entryItemView">
@@ -37,6 +40,7 @@
             </div>
         </div>
 
+<!--
         <div class="span5">
             <pre>serverEntries
                 {{serverEntries()|json}}</pre>
@@ -44,9 +48,12 @@
                 {{dirtyEntries()|json}}</pre>
             <pre>currentEntry
                 {{currentEntry|json}}</pre>
+            <pre>pristineEntry
+                {{pristineEntry|json}}</pre>
                 <pre>entries list
                     {{entries|json}}</pre>
         </div>
+        -->
 	</div>
 	<div class="row" ng-show="entryLoaded()">
 	    <div class="span3">

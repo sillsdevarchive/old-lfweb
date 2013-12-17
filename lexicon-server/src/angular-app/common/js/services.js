@@ -304,6 +304,7 @@ angular.module('lf.services', ['jsonRpc'])
 		var dirtyEntries = [];
 		var lastLocalId = 0;
 		var lastServerId = 0;
+		var localIdMap = {};
 		
 		// for debugging
 		this.serverEntries = function() {
@@ -337,20 +338,15 @@ angular.module('lf.services', ['jsonRpc'])
 		
 		function getNewServerId() {
 			lastServerId++;
-			return "server " + lastLocalId;
+			return "server " + lastServerId;
 		}
 		
 		function getNewLocalId() {
 			lastLocalId++;
 			return "local " + lastLocalId;
 		}
-		
-		// do we need to publish this to the service?
-		this.getNewLocalId = function() {
-			return getNewLocalId();
-		};
-		
-		this.needToSave = function() {
+
+		this.canSave = function() {
 			return dirtyEntries.length > 0;
 		};
 		
@@ -367,12 +363,14 @@ angular.module('lf.services', ['jsonRpc'])
 					}
 				});
 				if (!updated) {
-					dirtyEntry.id = getNewServerId();
+					var newServerId = getNewServerId(); 
+					localIdMap[dirtyEntry.id] = newServerId;
+					dirtyEntry.id = newServerId;
 					serverEntries.unshift(dirtyEntry);
 				}
 			});
 			dirtyEntries = [];
-			callback({data:''});
+			(callback || angular.noop)({data:''});
 		};
 
 		this.read = function(projectId, id, callback) {
@@ -383,7 +381,11 @@ angular.module('lf.services', ['jsonRpc'])
 					return true;
 				}
 			});
-			if (!result) {
+			if (!result.hasOwnProperty('id')) {
+				if (id.indexOf("local") != -1) {
+					// this is a local id, get the corresponding server id
+					id = localIdMap[id];
+				}
 				// read from server
 				serverIter(function(i,e) {
 					if (e.id == id) {
@@ -392,8 +394,7 @@ angular.module('lf.services', ['jsonRpc'])
 					}
 				});
 			}
-			callback({data: result});
-			return;
+			(callback || angular.noop)({data: result});
 		};
 		
 		this.update = function(projectId, entry, callback) {
@@ -413,7 +414,7 @@ angular.module('lf.services', ['jsonRpc'])
 				entry.id = getNewLocalId();
 				dirtyEntries.unshift(entry);
 			}
-			callback({data:entry});
+			(callback || angular.noop)({data:entry});
 		};
 		
 		this.remove = function(projectId, id, callback) {
@@ -430,7 +431,7 @@ angular.module('lf.services', ['jsonRpc'])
 					return true;
 				}
 			}); 
-			callback({data: {}});
+			(callback || angular.noop)({data: {}});
 			return;
 		};
 		
@@ -438,9 +439,13 @@ angular.module('lf.services', ['jsonRpc'])
 			var list = [];
 			var ws = config.entry.definitions.lexeme.writingsystems[0];
 			serverIter(function(i,e) {
-				list.push({id: e.id, title: e.lexeme[ws]});
+				var title = e.lexeme[ws];
+				if (!title) {
+					title = '[new word]';
+				}
+				list.push({id: e.id, title: title});
 			});
-			callback({data: { entries: list, config: config }});
+			(callback || angular.noop)({data: { entries: list, config: config }});
 		};
 		
 	})
