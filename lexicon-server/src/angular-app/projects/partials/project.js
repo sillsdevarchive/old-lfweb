@@ -250,7 +250,7 @@ angular.module(
 				// This also covers the case where newMode is undefined
 				$scope.calculateAddMode();
 			}
-		}
+		};
 		$scope.calculateAddMode = function() {
 			// TODO This isn't adequate.  Need to watch the 'typeahead.userName' and 'selection' also. CP 2013-07
 			if ($scope.users.length == 0) {

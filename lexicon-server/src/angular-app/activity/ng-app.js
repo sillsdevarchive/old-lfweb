@@ -26,7 +26,7 @@ angular.module('activity',
 				if ('questionRef' in items[i]) {
 					items[i].questionHref = linkService.question(items[i].projectRef, items[i].textRef, items[i].questionRef);				}
 			}
-		}
+		};
 		
 		/*
 		$scope.activities = [

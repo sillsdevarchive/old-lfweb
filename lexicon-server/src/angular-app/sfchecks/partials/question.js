@@ -74,10 +74,10 @@ angular.module(
 		
 		$scope.rightsCloseQuestion = function(userId) {
 			return ss.hasRight($scope.rights, ss.domain.QUESTIONS, ss.operation.EDIT_OTHER);
-		}
+		};
 		$scope.rightsEditQuestion = function(userId) {
 			return ss.hasRight($scope.rights, ss.domain.QUESTIONS, ss.operation.EDIT_OTHER);
-		}
+		};
 		
 		$scope.workflowStates = [
 			{
@@ -98,7 +98,7 @@ angular.module(
 			if ($scope.question) {
 				return ($scope.question.workflowState == 'closed');
 			}
-		}
+		};
 		
 		$scope.editQuestionCollapsed = true;
 		$scope.showQuestionEditor = function() {
@@ -128,7 +128,7 @@ angular.module(
 		$scope.updateQuestion = function(newQuestion) {
 			questionService.update(projectId, newQuestion, function(result) {
 				if (result.ok) {
-					notice.push(notice.SUCCESS, "The question was updated successfully")
+					notice.push(notice.SUCCESS, "The question was updated successfully");
 					questionService.read(projectId, entryId, questionRefKey, function(result) {
 						if (result.ok) {
 							$scope.question = result.data.question;

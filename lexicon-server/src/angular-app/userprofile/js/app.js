@@ -38,7 +38,7 @@ angular.module('userProfile', ['jsonRpc', 'ui.bootstrap', 'lf.services'])
 				console.log("error updating user profile.");
 			}
 		});
-	}
+	};
 	
 	loadUser(); // load the user data right away
 }])

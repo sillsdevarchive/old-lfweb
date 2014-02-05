@@ -213,7 +213,7 @@ angular.module(
 		$scope.entryId = entryId;
 		$scope.editedText = {
 			id: entryId,
-		}
+		};
 
 		// Breadcrumb
 		breadcrumbService.set('top',
@@ -252,6 +252,6 @@ angular.module(
 					$scope.textTitle = newText.title;
 				}
 			});
-		}
+		};
 	}])
 	;

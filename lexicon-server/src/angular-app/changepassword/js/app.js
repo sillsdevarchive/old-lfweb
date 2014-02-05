@@ -13,7 +13,7 @@ function changePasswordCtrl($scope, userService, sessionService) {
 				}
 			});
 		}
-	}
+	};
 }
 
 angular.module('changePassword', ['jsonRpc', 'ui.bootstrap', 'lf.services', 'ui.validate']).
