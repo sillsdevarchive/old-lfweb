@@ -52,7 +52,7 @@
 							</ul>
 							<ul class="sf-menu">
 							<li>
-							<a href="#"><img src="<?php echo $small_avatar_url; ?>" style="width:30px; height:30px; float:left; position:relative; top:-6px; border:1px solid white; margin-right:10px" />Hi, <?php echo $user_name; ?></a>
+							<a href="#"><img src="<?php echo $small_avatar_url; ?>" style="width:30px; height:30px; float:left; border:1px solid white; margin-top:-6px; margin-right:10px" />Hi, <?php echo $user_name; ?></a>
 								<ul>
 									<?php if ($is_admin):?>
 									<li><a href="/app/lfadmin">Site Administration</a></li>
