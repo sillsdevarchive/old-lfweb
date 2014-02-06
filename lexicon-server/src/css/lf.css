@@ -629,7 +629,7 @@ i.icon-remove {
 
 /* Top navigation */
 div.hdrnav {
-	overflow: auto;
+	overflow: visible;
 	padding-left: 130px;
 	width: 100%;
 }
@@ -658,6 +658,23 @@ div.hdrnav img {
   font-size: 0.9em;
   text-decoration: none;
   color: #3f7ca4;
+}
+
+.hdrnav .submenu {
+	position: relative;
+	z-index: 99;
+}
+
+.hdrnav .submenu ul {
+	position: absolute;
+	padding-left: 0px;
+	left: 0em;
+	top: 2.2em;
+	line-height: 1.2em;
+}
+
+.hdrnav .submenu ul li {
+	display: block;
 }
 
 ul.topNav > li {
