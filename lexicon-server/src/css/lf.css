@@ -630,15 +630,34 @@ i.icon-remove {
 /* Top navigation */
 div.hdrnav {
 	overflow: auto;
-	margin-left: 122px;
+	padding-left: 130px;
+	width: 100%;
 }
 
-/*
+
 div.hdrnav ul {
+	margin-left: 0px;
+	margin-top: 15px;
 }
-*/
+
 div.hdrnav img {
 	margin-right: 12px;
+}
+
+.hdrnav li {
+  display: inline;
+  padding: 0.5em;
+  margin-right: 5px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.hdrnav a {
+  font-family: Helvetica Arial sans-serif;
+  font-size: 0.9em;
+  text-decoration: none;
+  color: #3f7ca4;
 }
 
 ul.topNav > li {

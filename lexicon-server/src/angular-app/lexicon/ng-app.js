@@ -7,14 +7,40 @@ angular.module('lexicon',
 		 'dbe',
 		])
 	.config(['$routeProvider', function($routeProvider) {
-	    $routeProvider.when(
-    		'/dbe', 
-    		{
-    			templateUrl: '/angular-app/lexicon/views/dbe.html',
-    			controller: 'dbeCtrl'
-    		}
-	    );
-	    // $routeProvider.otherwise({redirectTo: 'where?'});
+		$routeProvider.when(
+				'/view',
+				{
+					templateUrl: '/angular-app/lexicon/views/not-implemented.html',
+					// controller: 'dbeCtrl'
+				}
+			);
+		$routeProvider.when(
+				'/dashboard',
+				{
+					templateUrl: '/angular-app/lexicon/views/not-implemented.html',
+					// controller: 'dashboardCtrl'
+				}
+			);
+		$routeProvider.when(
+				'/gather-words',
+				{
+					templateUrl: '/angular-app/lexicon/views/not-implemented.html',
+				}
+			);
+		$routeProvider.when(
+				'/dbe',
+				{
+					templateUrl: '/angular-app/lexicon/views/dbe.html',
+					controller: 'dbeCtrl'
+				}
+			);
+		$routeProvider.when(
+				'/settings',
+				{
+					templateUrl: '/angular-app/lexicon/views/not-implemented.html',
+				}
+			);
+		$routeProvider.otherwise({redirectTo: '/dashboard'});
 	}])
 	.controller('MainCtrl', ['$scope', '$route', '$routeParams', '$location', function($scope, $route, $routeParams, $location) {
 		$scope.route = $route;

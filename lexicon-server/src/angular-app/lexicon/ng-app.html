@@ -1,9 +1,20 @@
-<div class="container" data-ng-app="lexicon" data-ng-cloak style="margin-top:10px; width:100%">
-	<div id="lexicon-hmenu" class="hdrnav">
-		<ul id="top" class="topCrumbs" data-breadcrumbs></ul>
-	</div>
-	<div data-ng-controller="MainCtrl">
-	<div data-sil-notices></div>
-	<div data-ng-view></div>
+<div class="sfcontainer">
+	<div class="container" data-ng-app="lexicon" data-ng-cloak style="margin-top:10px; width:100%">
+		<div id="lexicon-hmenu" class="hdrnav">
+			<!-- Don't need breadcrumbs <ul id="top" class="topCrumbs" data-breadcrumbs></ul> -->
+			<ul>
+				<li><a href="#/view"><i class="icon-eye-open"></i> View</a></li>
+				<li><a href="#/dashboard"><i class="icon-bookmark"></i> Dashboard</a></li>
+				<li><a href="#/gather-words"><i class="icon-th"></i> Gather Words <i class="icon-chevron-down"></i></a></li>
+				<!-- TODO: Turn above into a real menu -->
+				<li><a href="#/dbe"><i class="icon-plus"></i> Add Information <i class="icon-chevron-down"></i></a></li>
+				<!-- TODO: Turn above into a real menu -->
+				<li><a href="#/settings"><i class="icon-cog"></i> Settings</a></li>
+			</ul>
+		</div>
+		<div data-ng-controller="MainCtrl">
+		<div data-sil-notices></div>
+		<div data-ng-view></div>
+		</div>
 	</div>
 </div>
