@@ -234,7 +234,7 @@ angular.module('lf.services', ['jsonRpc'])
 				'map': {
 					'th': 'Thai',
 					'en': 'English',
-					'my': 'Burmese'
+					'thipa': 'Thai IPA'
 				}
 			},
 			'entry': {
@@ -244,7 +244,7 @@ angular.module('lf.services', ['jsonRpc'])
 					'lexeme': {
 						'type': 'multitext',
 						'label': 'Word',
-						'writingsystems': ['th'],
+						'writingsystems': ['thipa'],
 						'width': 20
 					},
 					'senses': {
@@ -254,7 +254,7 @@ angular.module('lf.services', ['jsonRpc'])
 							'definition': {
 								'type': 'multitext',
 								'label': 'Meaning',
-								'writingsystems': ['my', 'en'],
+								'writingsystems': ['th', 'en'],
 								'width': 20
 							},
 							'partOfSpeech': {
@@ -300,6 +300,118 @@ angular.module('lf.services', ['jsonRpc'])
 				}
 			}
 		};
+
+		var sampleData = [
+				{
+					"lexeme": {"thipa": "khâaw kài thɔ̂ɔt"},
+					"senses": [{
+						"meaning": {
+							"th": "ข้าวไก่ทอด",
+							"en": "pieces of fried chicken served over rice, usually with a sweet and spicy sauce on the side",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "krapâw mǔu"},
+					"senses": [{
+						"meaning": {
+							"th": "กระเพาหมู",
+							"en": "stir fried basil and hot peppers with ground pork over rice",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "phàt siiʔ ǐw mǔu"},
+					"senses": [{
+						"meaning": {
+					"th": "ผัดชีอิ้วหมู",
+					"en": "Noodles fried in soy sauce with pork",
+					}}],
+				},
+
+				{
+					"lexeme": {"thipa": "kài phàt métmàmùaŋ"},
+					"senses": [{
+						"meaning": {
+							"th": "ไก่ผัดเม็ดมะม่วง",
+							"en": "Stir fried chicken with cashews",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "cèt khǔnsʉ̀k phàt phrìk phǎw"},
+					"senses": [{
+						"meaning": {
+							"th": "เจ็ดขุนศึกผัดผริกเผา",
+							"en": "seven kinds of meat fried and seared with peppers",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "phàt prîaw wǎan kài"},
+					"senses": [{
+						"meaning": {
+							"th": "ผัดเปรี้ยวหวานหมู",
+							"en": "Sweet and sour chicken",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "phàt thai kûŋ"},
+					"senses": [{"meaning": {
+						"th": "ผักไทกุ้ง",
+						"en": "Fried noodles mixed or wrapped with egg and bamboo shoots topped with shrimp",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "khâaw khài ciaw mǔu yɔ̂ɔ"},
+					"senses": [{
+						"meaning": {
+							"th": "ข้าวไข่เจียหมูยอ",
+							"en": "fried omelette with pork over rice",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "khâaw phàt mǔu"},
+					"senses": [{
+						"meaning": {
+							"th": "ข้าวผัดหมู",
+							"en": "Fried rice with minced pork",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "nɔ̀máay fàràŋ phàt kûŋ"},
+					"senses": [{
+						"meaning": {
+							"th": "หน่อไม้ฝรั่งผัดกุ้ง",
+							"en": "Sauteed asparagus with shrimp over rice",
+						}
+					}],
+				},
+
+				{
+					"lexeme": {"thipa": "kài sòt kràthiam"},
+					"senses": [{
+						"meaning": {
+							"th": "ไก่สกกระเกียม",
+							"en": "stir fried garlic chicken over rice",
+						}
+					}],
+				},
+
+			];
+
 		var serverEntries = [];
 		var dirtyEntries = [];
 		var lastLocalId = 0;
