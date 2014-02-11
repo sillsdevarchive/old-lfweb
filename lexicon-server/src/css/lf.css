@@ -669,12 +669,13 @@ div.hdrnav img {
 	position: absolute;
 	padding-left: 0px;
 	left: 0em;
-	top: 2.2em;
+	top: 1.1em;
 	line-height: 1.2em;
 }
 
 .hdrnav .submenu ul li {
 	display: block;
+	border-radius: 0px;
 }
 
 ul.topNav > li {

@@ -6,7 +6,7 @@
 				<li><a href="#/view"><i class="icon-eye-open"></i> View</a></li>
 				<li><a href="#/dashboard"><i class="icon-bookmark"></i> Dashboard</a></li>
 				<li class="submenu">
-					<ul ng-show="showGatherSubmenu">
+					<ul collapse="!showGatherSubmenu">
 						<li><a href="#/review">Review</a></li>
 						<li><a href="#/gather-texts">From texts</a></li>
 						<li><a href="#/semdom">From Semantic Domains</a></li>
@@ -15,7 +15,7 @@
 					</ul>
 				<a ng-click="showGatherSubmenu = !showGatherSubmenu;"><i class="icon-th"></i> Gather Words <i class="icon-chevron-down"></i></a></li>
 				<li class="submenu">
-					<ul ng-show="showAddSubmenu">
+					<ul collapse="!showAddSubmenu">
 						<li><a href="#/add-meanings">Add meanings</a></li>
 						<li><a href="#/add-grammar-usage">Add grammatical usage</a></li>
 						<li><a href="#/add-examples">Add examples</a></li>
