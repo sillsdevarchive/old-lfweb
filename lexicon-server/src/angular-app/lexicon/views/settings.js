@@ -7,5 +7,11 @@ angular.module(
 	.controller('SettingsCtrl', ['$scope', 'userService', 'sessionService', 'lexEntryService', '$window', '$timeout', 
 	                                 function($scope, userService, ss, lexService, $window, $timeout) {
 
+		$scope.querySettings = function() {
+			$scope.config = lexService.projectSettings();
+		};
+		
+		$scope.querySettings();
+		
 	}])
 	;

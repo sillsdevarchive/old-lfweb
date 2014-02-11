@@ -1,6 +1,26 @@
 <h2 style="font-weight:normal">Settings</h2>
 <tabset>
 	<tab heading="Fields">
+		<div class="row">
+		<div class="span4">
+			<fieldset>
+			<legend>Show the following fields:</legend>
+			<ul class="unstyled">
+  				<li data-ng-click="selectList(listId)" data-ng-repeat="(listId, list) in config.entry"><div class="checkbox"><input data-ng-model="currentListsEnabled[listId]" type="checkbox"/>{{list.name}}</div></li>
+			</ul>
+			</fieldset>
+		</div>
+		
+		<div class="span8">
+			<tabset>
+				<tab heading="Writing System">
+				</tab>
+				<tab heading="Setup">
+				</tab>
+			</tabset>
+			<pre>{{config|json}}</pre>
+		</div>
+		</div>
 	</tab>
 	<tab heading="Tasks">
 	</tab>

@@ -300,6 +300,9 @@ angular.module('lf.services', ['jsonRpc'])
 				}
 			}
 		};
+		this.projectSettings = function() {
+			return config;
+		};
 
 		var sampleData = [
 				{
