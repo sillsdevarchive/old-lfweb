@@ -56,4 +56,40 @@ angular.module('lexicon',
 			$scope.breadcrumbs = breadcrumbService.read();
 		}, true);
 	}])
+	.controller('LexiconMenuCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+		console.log('Running lexicon menu controller');
+		$scope.noSubmenuId = 0;
+		$scope.gatherSubmenuId = 1;
+		$scope.addSubmenuId = 2;
+		$scope.visibleSubmenu = $scope.noSubmenuId;
+
+		$scope.showSubmenu = function(submenuId) {
+			$scope.visibleSubmenu = submenuId;
+		};
+		$scope.isSubmenuVisible = function(submenuId) {
+			return ($scope.visibleSubmenu == submenuId);
+		};
+		$scope.hideAllSubmenus = function(delay) {
+			// If no delay specified, undefined will work quite well since
+			// the default delay in $timeout is 0 milliseconds.
+			$scope.hidePromise = $timeout(function() {
+				$scope.visibleSubmenu = $scope.noSubmenuId;
+				delete $scope.hidePromise;
+			}, delay);
+		};
+		$scope.cancelHiding = function() {
+			if ($scope.hidePromise) {
+				$timeout.cancel($scope.hidePromise);
+			}
+		}
+		$scope.iconName = function(submenuId) {
+			var name = 'icon-chevron-';
+			if ($scope.isSubmenuVisible(submenuId)) {
+				name += 'up';
+			} else {
+				name += 'down';
+			};
+			return name;
+		}
+	}])
 	;

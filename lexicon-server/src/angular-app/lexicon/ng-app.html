@@ -1,26 +1,26 @@
 <div class="sfcontainer">
 	<div class="container" data-ng-app="lexicon" data-ng-cloak style="margin-top:10px; width:100%">
-		<div id="lexicon-hmenu" class="hdrnav">
+		<div id="lexicon-hmenu" class="hdrnav" data-ng-controller="LexiconMenuCtrl">
 			<!-- Don't need breadcrumbs <ul id="top" class="topCrumbs" data-breadcrumbs></ul> -->
 			<ul>
 				<li><a href="#/view"><i class="icon-eye-open"></i> View</a></li>
 				<li><a href="#/dashboard"><i class="icon-bookmark"></i> Dashboard</a></li>
 				<li class="submenu">
-					<ul collapse="!showGatherSubmenu">
+					<ul collapse="!isSubmenuVisible(gatherSubmenuId)" ng-mouseleave="hideAllSubmenus(300)" ng-mouseenter="cancelHiding()">
 						<li><a href="#/review">Review</a></li>
 						<li><a href="#/gather-texts">From texts</a></li>
 						<li><a href="#/semdom">From Semantic Domains</a></li>
 						<li><a href="#/wordlist">From a Word List</a></li>
 						<li><a href="#/dbe">Browse and edit</a></li>
 					</ul>
-				<a ng-click="showGatherSubmenu = !showGatherSubmenu;"><i class="icon-th"></i> Gather Words <i class="icon-chevron-down"></i></a></li>
+				<a class="pointer" ng-click="showSubmenu(gatherSubmenuId)"><i class="icon-th"></i> Gather Words <i ng-class="iconName(gatherSubmenuId)"></i></a></li>
 				<li class="submenu">
-					<ul collapse="!showAddSubmenu">
+					<ul collapse="!isSubmenuVisible(addSubmenuId)" ng-mouseleave="hideAllSubmenus(300)" ng-mouseenter="cancelHiding()">
 						<li><a href="#/add-meanings">Add meanings</a></li>
 						<li><a href="#/add-grammar-usage">Add grammatical usage</a></li>
 						<li><a href="#/add-examples">Add examples</a></li>
 					</ul>
-				<a ng-click="showAddSubmenu = !showAddSubmenu"><i class="icon-plus"></i> Add Information <i class="icon-chevron-down"></i></a></li>
+				<a class="pointer" ng-click="showSubmenu(addSubmenuId)"><i class="icon-plus"></i> Add Information <i ng-class="iconName(addSubmenuId)"></i></a></li>
 				<!-- TODO: Turn above into a real menu -->
 				<li><a href="#/settings"><i class="icon-cog"></i> Settings</a></li>
 			</ul>
