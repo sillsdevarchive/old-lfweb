@@ -5,6 +5,7 @@ angular.module('lexicon',
 		[
 		 'ngRoute',
 		 'dbe',
+		 'settings'
 		])
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider.when(
@@ -37,7 +38,8 @@ angular.module('lexicon',
 		$routeProvider.when(
 				'/settings',
 				{
-					templateUrl: '/angular-app/lexicon/views/not-implemented.html',
+					templateUrl: '/angular-app/lexicon/views/settings.html',
+					controller: 'SettingsCtrl'
 				}
 			);
 		$routeProvider.otherwise({redirectTo: '/dashboard'});

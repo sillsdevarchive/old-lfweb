@@ -6,21 +6,21 @@
 				<li><a href="#/view"><i class="icon-eye-open"></i> View</a></li>
 				<li><a href="#/dashboard"><i class="icon-bookmark"></i> Dashboard</a></li>
 				<li class="submenu">
-					<ul collapse="!isSubmenuVisible(gatherSubmenuId)" ng-mouseleave="hideAllSubmenus(300)" ng-mouseenter="cancelHiding()">
-						<li><a href="#/review" ng-click="hideAllSubmenus()">Review</a></li>
-						<li><a href="#/gather-texts" ng-click="hideAllSubmenus()">From texts</a></li>
-						<li><a href="#/semdom" ng-click="hideAllSubmenus()">From Semantic Domains</a></li>
-						<li><a href="#/wordlist" ng-click="hideAllSubmenus()">From a Word List</a></li>
-						<li><a href="#/dbe" ng-click="hideAllSubmenus()">Browse and edit</a></li>
+					<ul data-collapse="!isSubmenuVisible(gatherSubmenuId)" data-ng-mouseleave="hideAllSubmenus(300)" data-ng-mouseenter="cancelHiding()">
+						<li><a href="#/review" data-ng-click="hideAllSubmenus()">Review</a></li>
+						<li><a href="#/gather-texts" data-ng-click="hideAllSubmenus()">From texts</a></li>
+						<li><a href="#/semdom" data-ng-click="hideAllSubmenus()">From Semantic Domains</a></li>
+						<li><a href="#/wordlist" data-ng-click="hideAllSubmenus()">From a Word List</a></li>
+						<li><a href="#/dbe" data-ng-click="hideAllSubmenus()">Browse and edit</a></li>
 					</ul>
-				<a class="pointer" ng-click="showSubmenu(gatherSubmenuId)"><i class="icon-th"></i> Gather Words <i ng-class="iconName(gatherSubmenuId)"></i></a></li>
+				<a class="pointer" data-ng-click="showSubmenu(gatherSubmenuId)"><i class="icon-th"></i> Gather Words <i data-ng-class="iconName(gatherSubmenuId)"></i></a></li>
 				<li class="submenu">
-					<ul collapse="!isSubmenuVisible(addSubmenuId)" ng-mouseleave="hideAllSubmenus(300)" ng-mouseenter="cancelHiding()">
-						<li><a href="#/add-meanings" ng-click="hideAllSubmenus()">Add meanings</a></li>
-						<li><a href="#/add-grammar-usage" ng-click="hideAllSubmenus()">Add grammatical usage</a></li>
-						<li><a href="#/add-examples" ng-click="hideAllSubmenus()">Add examples</a></li>
+					<ul data-collapse="!isSubmenuVisible(addSubmenuId)" data-ng-mouseleave="hideAllSubmenus(300)" data-ng-mouseenter="cancelHiding()">
+						<li><a href="#/add-meanings" data-ng-click="hideAllSubmenus()">Add meanings</a></li>
+						<li><a href="#/add-grammar-usage" data-ng-click="hideAllSubmenus()">Add grammatical usage</a></li>
+						<li><a href="#/add-examples" data-ng-click="hideAllSubmenus()">Add examples</a></li>
 					</ul>
-				<a class="pointer" ng-click="showSubmenu(addSubmenuId)"><i class="icon-plus"></i> Add Information <i ng-class="iconName(addSubmenuId)"></i></a></li>
+				<a class="pointer" data-ng-click="showSubmenu(addSubmenuId)"><i class="icon-plus"></i> Add Information <i data-ng-class="iconName(addSubmenuId)"></i></a></li>
 				<!-- TODO: Turn above into a real menu -->
 				<li><a href="#/settings"><i class="icon-cog"></i> Settings</a></li>
 			</ul>
