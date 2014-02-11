@@ -665,6 +665,14 @@ div.hdrnav img {
 	z-index: 99;
 }
 
+.hdrnav .submenu a {
+	cursor: pointer;
+}
+
+.hdrnav .submenu > a:hover {
+	text-decoration: none;
+}
+
 .hdrnav .submenu ul {
 	position: absolute;
 	padding-left: 0px;
