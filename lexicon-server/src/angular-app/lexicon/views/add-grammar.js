@@ -14,7 +14,7 @@ function grammarCtrl($scope, userService, sessionService, lexService, $window, $
 			console.log('getPageDto() returned:', result);
 			$scope.items = result.data.entries;  // Items is a list of {id: 3, title: "foo", entry: (full entry)} objects
 			// $scope.config = result.data.config; // Can't just do this because we need to modify our local copy
-			$scope.config = JSON.parse(JSON.stringify(result.data.config)); // Fast deep copy, see http://stackoverflow.com/a/5344074/6524
+			$scope.config = angular.copy(result.data.config);
 			// We just want to see the definition and part of speech, but leave rest of config alone
 			$scope.config.entry.fields.senses.fieldNames = ['definition', 'partOfSpeech'];
 			// Definition should be read-only
