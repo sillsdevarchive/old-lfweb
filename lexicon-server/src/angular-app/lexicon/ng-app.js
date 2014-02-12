@@ -5,6 +5,7 @@ angular.module('lexicon',
 		[
 		 'ngRoute',
 		 'dbe',
+		 'meaning',
 		 'settings'
 		])
 	.config(['$routeProvider', function($routeProvider) {
@@ -33,6 +34,13 @@ angular.module('lexicon',
 				{
 					templateUrl: '/angular-app/lexicon/views/dbe.html',
 					controller: 'dbeCtrl'
+				}
+			);
+		$routeProvider.when(
+				'/add-grammar',
+				{
+					templateUrl: '/angular-app/lexicon/views/add-grammar.html',
+					controller: 'grammarCtrl',
 				}
 			);
 		$routeProvider.when(
@@ -83,7 +91,7 @@ angular.module('lexicon',
 			if ($scope.hidePromise) {
 				$timeout.cancel($scope.hidePromise);
 			}
-		}
+		};
 		$scope.iconName = function(submenuId) {
 			var name = 'icon-chevron-';
 			if ($scope.isSubmenuVisible(submenuId)) {
@@ -92,6 +100,6 @@ angular.module('lexicon',
 				name += 'down';
 			};
 			return name;
-		}
+		};
 	}])
 	;

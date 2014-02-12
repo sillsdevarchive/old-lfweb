@@ -126,8 +126,6 @@ ul#strength {
 
 
 
-
-
 /* dictionary control */
 form.dc-multitext .control-group {
 	margin-bottom: 10px;
@@ -174,6 +172,14 @@ form.dc-multitext .wsid {
 
 #entryItemView i.icon-remove:hover {
 	color:red;
+}
+
+.wordlist .even {
+	background-color: #eee;
+}
+
+.wordlist .odd {
+	background-color: #ddd;
 }
 
 .dc-sense {
