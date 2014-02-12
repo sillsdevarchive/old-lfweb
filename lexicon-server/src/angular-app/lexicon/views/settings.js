@@ -13,5 +13,15 @@ angular.module(
 		
 		$scope.querySettings();
 		
+		$scope.editWritingSystemsCollapsed = true;
+		
+		$scope.editWritingSystemsCollapsed = function() {
+			$scope.editWritingSystemsCollapsed = false;
+		};
+		
+		$scope.saveWritingSystems = function() {
+			$scope.editWritingSystemsCollapsed = true;
+		};
+		
 	}])
 	;
