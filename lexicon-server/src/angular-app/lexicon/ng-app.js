@@ -6,6 +6,7 @@ angular.module('lexicon',
 		 'ngRoute',
 		 'dbe',
 		 'meaning',
+		 'examples',
 		 'settings'
 		])
 	.config(['$routeProvider', function($routeProvider) {
@@ -41,6 +42,13 @@ angular.module('lexicon',
 				{
 					templateUrl: '/angular-app/lexicon/views/add-grammar.html',
 					controller: 'grammarCtrl',
+				}
+			);
+		$routeProvider.when(
+				'/add-examples',
+				{
+					templateUrl: '/angular-app/lexicon/views/add-examples.html',
+					controller: 'examplesCtrl',
 				}
 			);
 		$routeProvider.when(
