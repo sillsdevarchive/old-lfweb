@@ -239,8 +239,8 @@ angular.module('lf.services', ['jsonRpc'])
 			},
 			'entry': {
 				'type': 'fields',
-				'fields': ['lexeme', 'senses'],
-				'definitions': {
+				'fieldNames': ['lexeme', 'senses'],
+				'fields': {
 					'lexeme': {
 						'type': 'multitext',
 						'label': 'Word',
@@ -249,8 +249,8 @@ angular.module('lf.services', ['jsonRpc'])
 					},
 					'senses': {
 						'type': 'fields',
-						'fields': ['definition', 'partOfSpeech', 'semanticDomainValue', 'examples'],
-						'definitions': {
+						'fieldNames': ['definition', 'partOfSpeech', 'semanticDomainValue', 'examples'],
+						'fields': {
 							'definition': {
 								'type': 'multitext',
 								'label': 'Meaning',
@@ -279,8 +279,8 @@ angular.module('lf.services', ['jsonRpc'])
 							},
 							'examples': {
 								'type': 'fields',
-								'fields': ['example', 'translation'],
-								'definitions': {
+								'fieldNames': ['example', 'translation'],
+								'fields': {
 									'example': {
 										'type': 'multitext',
 										'label': 'example',
@@ -553,7 +553,7 @@ angular.module('lf.services', ['jsonRpc'])
 		
 		this.getPageDto = function(projectId, callback) {
 			var list = [];
-			var ws = config.entry.definitions.lexeme.writingsystems[0];
+			var ws = config.entry.fields.lexeme.writingsystems[0];
 			serverIter(function(i,e) {
 				var title = e.lexeme[ws];
 				if (!title) {

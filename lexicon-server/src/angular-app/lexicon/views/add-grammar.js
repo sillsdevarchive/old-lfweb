@@ -16,9 +16,9 @@ function grammarCtrl($scope, userService, sessionService, lexEntryService, $wind
 			// $scope.config = result.data.config; // Can't just do this because we need to modify our local copy
 			$scope.config = JSON.parse(JSON.stringify(result.data.config)); // Fast deep copy, see http://stackoverflow.com/a/5344074/6524
 			// We just want to see the definition and part of speech, but leave rest of config alone
-			$scope.config.entry.definitions.senses.fields = ['definition', 'partOfSpeech'];
+			$scope.config.entry.fields.senses.fieldNames = ['definition', 'partOfSpeech'];
 			// Definition should be read-only
-			$scope.config.entry.definitions.senses.definitions.definition.readonly = true; // Not yet implemented, but soon
+			$scope.config.entry.fields.senses.fields.definition.readonly = true; // Not yet implemented, but soon
 			(callback || angular.noop)();
 		});
 	};
