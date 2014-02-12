@@ -59,14 +59,16 @@
 					</span>
 				</div>
 			</div>
-			<div class="wordlist">
+			<div id="entryList">
 				<div listview search="getPageDto()" items="items" visible-items="visibleItems" select="">
-					Listview goes below
-					<ul style="margin-left: 0px">
-						<li ng-repeat="item in visibleItems | filter:searchText" ng-class="{even: $even, odd: $odd}">
-							<a ng-click="selectEntry(item)" style="cursor: pointer">{{getEntryName(item)}}</a>
-						</li>
-					</ul>
+					<table class="table table-condensed ">
+						<tbody>
+							<tr ng-class="{selected: itemIsSelected(item), even: $even, odd: $odd}"
+							    class="animate-repeat" ng-repeat="item in visibleItems | filter:searchText">
+								<td ng-click="selectItem(item)">{{getEntryName(item)}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 
@@ -78,10 +80,10 @@
 		that specifies read-only, default to writable if not present. (Because undefined is falsey, this will be easy.) -->
 			<div class="row" style="margin-left: 0px"> <!-- Override Bootstrap's margin-left: -30px on div.row -->
 				<div class="control-group">
-					<button class="left btn btn-primary">Save</button>
-					<button class="right btn"
+					<button class="left btn btn-primary" ng-click="saveEntry()">Save</button>
+					<button class="right btn" ng-click="saveEntry(); selectItem(nextItem())"
 					        style="margin-left: 10px; padding-right: 5px"><i class="icon-arrow-right"></i></button>
-					<button class="right btn"
+					<button class="right btn" ng-click="saveEntry(); selectItem(prevItem())"
 					        style="padding-right: 5px"><i class="icon-arrow-left"></i></button>
 				</div>
 			</div>

@@ -142,7 +142,7 @@ form.dc-multitext .wsid {
 }
 
 #entryList .selected {
-	background-color: #CCFFDB;
+	background-color: #CCFFDB !important;
 }
 
 #entryList tr:active td {
@@ -174,11 +174,11 @@ form.dc-multitext .wsid {
 	color:red;
 }
 
-.wordlist .even {
+#entryList .even {
 	background-color: #eee;
 }
 
-.wordlist .odd {
+#entryList .odd {
 	background-color: #ddd;
 }
 
