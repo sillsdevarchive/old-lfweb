@@ -8,7 +8,7 @@
             <div ng-switch-when="multitext">
                 <dc-multitext definition="config.fields[field]" model="model[field]"></multitext>
             </div>
-            <div ng-switch-when="fieldNames">
+            <div ng-switch-when="fields">
                 <ng-switch on="field">
                     <div ng-switch-when="examples">
                         <div class="animate-repeat" ng-repeat="example in model.examples"> 
