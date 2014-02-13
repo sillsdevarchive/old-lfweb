@@ -12,7 +12,7 @@
                 <ng-switch on="field">
                     <div ng-switch-when="examples">
                         <div class="animate-repeat" ng-repeat="example in model.examples"> 
-                            <dc-example remove="deleteExample" index="$index" config="config.fields.examples" model="examples"></dc-example>
+                            <dc-example remove="deleteExample" index="$index" config="config.fields.examples" model="example"></dc-example>
                         </div>
                         <div class="addItem"><a ng-click="addExample()">Add Example</a></div>
                     </div>
