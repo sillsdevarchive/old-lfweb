@@ -1,0 +1,35 @@
+<form class="form-horizontal">
+	<legend>Edit Writing Systems</legend>
+	<div class="control-group">
+		<button class="btn" data-ng-click="newUserCollapsed = !newUserCollapsed"><i class="icon-plus"></i>New</button>
+		<div class="btn-group">
+			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">More <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a tabindex="-1" href="#"><i class="icon-plus"></i> Add IPA for ws</a></li>
+				<li><a tabindex="-1" href="#"><i class="icon-plus"></i> Add Voice for ws</a></li>
+				<li><a tabindex="-1" href="#"><i class="icon-plus"></i> Add a variant of ws</a></li>
+				<li class="divider"></li>
+				<li><a tabindex="-1" href="#"><i class="icon-remove"></i> Remove ws</a></li>
+			</ul>
+		</div>
+	</div>
+	<br />
+	<div class="span2 control-group">
+		<ul class="unstyled">
+ 			<li data-ng-click="selectList(writingSystemId)" data-ng-repeat="(writingSystemId, writingSystem) in config.writingsystems.map">{{writingSystem}}</li>
+		</ul>
+	</div>
+	<div class="span4 well control-group">
+		<div class="controls"></div>
+			<label class="control-label" for="inputEmail">Email</label>
+		    <div class="controls">
+		      <input type="text" id="inputEmail" placeholder="Email">
+		    </div>
+			<label>Abbreviation <input type="text" data-ng-model="unknown"/></label>
+			<label>Special <select class="form-control" data-ng-model="special"><option></option></select></label>
+			<label>Purpose <select class="form-control" data-ng-model="purpose"><option></option></select></label>
+		</div>
+	</div>
+	<button class="btn" data-ng-click="saveWritingSystems()"><i class="icon-ok"></i>Save</button>
+</form>
+	
