@@ -43,6 +43,10 @@ class LexProjectMockObject {
 		return $this->getLanguageForgeSetting().$userName.self::SETTINGS_EXTENSION;
 	}
 	
+	public function getUserOrDefaultProjectSettingsFilePath($userName) {
+		return $this->getLanguageForgeSetting().$userName.self::SETTINGS_EXTENSION;
+	}
+	
 	public function getLanguageForgeSetting() {
 		return TEST_PATH.self::TEMPLATE_DIR.self::SETTINGS_DIR;
 	}

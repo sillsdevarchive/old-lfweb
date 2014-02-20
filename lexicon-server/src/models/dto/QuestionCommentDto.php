@@ -2,69 +2,62 @@
 
 namespace models\dto;
 
+use models\UnreadActivityModel;
+
+use models\UnreadAnswerModel;
+use models\UnreadCommentModel;
+
 use models\UserVoteModel;
 
 use models\ProjectModel;
 use models\QuestionModel;
+use models\TextModel;
 use models\UserModel;
 use models\mapper\JsonEncoder;
-use models\mapper\Id;
+
 class QuestionCommentDto
 {
 	/**
 	 * Encodes a QuestionModel and related data for $questionId
 	 * @param string $projectId
-	 * @param string $questionKey
+	 * @param string $questionId
 	 * @param string $userId
 	 * @return array - The DTO.
 	 */
-	public static function encode($projectId, $entryId, $questionKey, $userId) {
-		// Question Key format: {partGuid}+{parttype}+{partlanguage}
-		
-		$keyParts = explode ('+', $questionKey);
-		$partLanguage = "";
-		$partGuid = $keyParts[0];
-		$partType = $keyParts[1];
-		if (count($keyParts)==3)
-		{
-			$partLanguage = $keyParts[2];
-		}
-		
+	public static function encode($projectId, $questionId, $userId) {
 		$userModel = new UserModel($userId);
 		$projectModel = new ProjectModel($projectId);
 		
-		$entryDto = new EntryDto();
-		$entry =  $entryDto->encode($projectId, $entryId);
-		$entryHelper = new EntryHelper($entry);
-		$questionModel = new QuestionModel($projectModel);
-		$questionModel->findOneByQuery(array("entryId" =>$entryId , "entryRef" => $questionKey));
-		
-		if (Id::isEmpty($questionModel->id))
-		{
-			// new Question.
-			$questionModel->entryRef = $questionKey;
-			$questionModel->entryId = $entryId;
-			$questionModel->entry = json_encode(EntryDto::encode($projectId, $entryId));
-			$questionModel->title = strtolower($partType) . " / " .
-					$partLanguage . ": " . $entryHelper->getPartData($partType, $partGuid, $partLanguage);
-			$questionModel->write();
-		}
+		$questionModel = new QuestionModel($projectModel, $questionId);
 		$question = QuestionCommentDtoEncoder::encode($questionModel);
-
 		
-		$votes = new UserVoteModel($userId, $projectId,  $questionModel->id->asString());
+		$votes = new UserVoteModel($userId, $projectId, $questionId);
 		$votesDto = array();
-		foreach ($votes->votes->data as $vote) {
+		foreach ($votes->votes as $vote) {
 			$votesDto[$vote->answerRef->id] = true;
 		}
+		
+		$unreadAnswerModel = new UnreadAnswerModel($userId, $projectModel->id->asString(), $questionId);
+		$unreadAnswers = $unreadAnswerModel->unreadItems();
+		$unreadAnswerModel->markAllRead();
+		$unreadAnswerModel->write();
+		
+		$unreadCommentModel = new UnreadCommentModel($userId, $projectModel->id->asString(), $questionId);
+		$unreadComments = $unreadCommentModel->unreadItems();
+		$unreadCommentModel->markAllRead();
+		$unreadCommentModel->write();
+		
+		$unreadActivityModel = new UnreadActivityModel($userId);
+		$unreadActivity = $unreadActivityModel->unreadItems();
 		
 		$dto = array();
 		$dto['question'] = $question;
 		$dto['votes'] = $votesDto;
-		$dto['entry'] = $entry;
-		$dto['text']['title'] = $projectModel->languageCode . ": " . $entry["entry"][$projectModel->languageCode];
 		$dto['project'] = JsonEncoder::encode($projectModel);
 		$dto['rights'] = RightsHelper::encode($userModel, $projectModel);
+		$dto['unreadAnswers'] = $unreadAnswers;
+		$dto['unreadComments'] = $unreadComments;
+		$dto['unreadActivityCount'] = count($unreadActivity);
 
 		return $dto;
 	}

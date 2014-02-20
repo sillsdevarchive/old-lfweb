@@ -1,6 +1,7 @@
 <?php
-use \libraries\lfdictionary\dto\MultiText;
-use \libraries\lfdictionary\dto\ListEntry;
+
+use libraries\lfdictionary\dto\ListEntry;
+use models\lex\MultiText;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');

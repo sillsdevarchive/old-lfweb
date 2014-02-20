@@ -2,24 +2,21 @@
 
 namespace models\commands;
 
-use models\mapper\IdReference;
-
-use models\ActivityModel;
-
-use models\CommentModel;
-
-use models\ProjectModel;
-use models\QuestionModel;
-use models\UserModel;
+use libraries\lfdictionary\environment\LexProject;
 use libraries\lfdictionary\store\LexStoreType;
 use libraries\lfdictionary\store\LexStoreController;
-
-use models\QuestionAnswersListModel;
-
-
 use libraries\lfdictionary\store\LexStore;
-use libraries\lfdictionary\environment\LexProject;
+use models\ActivityModel;
+use models\CommentModel;
+use models\lex\LexEntryModel;
+use models\mapper\IdReference;
+use models\ProjectModel;
 use models\ProjectModelFixer;
+use models\QuestionModel;
+use models\QuestionAnswersListModel;
+use models\UserModel;
+use models\UnreadActivityModel;
+use models\UnreadAnswerModel;
 
 class ActivityCommands
 {
@@ -73,14 +70,16 @@ class ActivityCommands
 		$activity->addContent(ActivityModel::QUESTION, $question->title);
 		$activity->addContent(ActivityModel::ANSWER, $answerModel->content);
 		$activity->addContent(ActivityModel::USER, $user->username);
-		return $activity->write();
+//		return $activity->write();
+		$activityId = $activity->write();
+		UnreadActivityModel::markUnreadForProjectMembers($activityId, $projectModel);
+		UnreadAnswerModel::markUnreadForProjectMembers($answerModel->id->asString(), $projectModel, $questionId, $answerModel->userRef->asString());
+		return $activityId;
 	}
 	
 	public static function addAnswer($projectModel, $questionId, $answerModel) {
 		return ActivityCommands::updateAnswer($projectModel, $questionId, $answerModel, 'add');
 	}
-	
-
 		
 	/**
 	 * @param ProjectModel $projectModel
@@ -125,7 +124,7 @@ class ActivityCommands
 	public static function updateScore($projectModel, $questionId, $answerId, $userId, $mode = 'increase') {
 		$activity = new ActivityModel($projectModel);
 		$question = new QuestionModel($projectModel, $questionId);
-		$answer = $question->answers->data[$answerId];
+		$answer = $question->answers[$answerId];
 		$user = new UserModel($userId);
 		$user2 = new UserModel($answer->userRef->asString());
 		$activity = new ActivityModel($projectModel);
@@ -140,15 +139,13 @@ class ActivityCommands
 	}
 	
 	/**
-	 * 
 	 * @param ProjectModel $projectModel
-	 * @param Entry $entry
+	 * @param string $userId
+	 * @param LexEntryModel $entry
 	 * @param Action $action
 	 * @return string activity id
 	 */
-	public static function writeEntry($projectModel, $userId, $entryDto, $action) {
-	
-		
+	public static function writeEntry($projectModel, $userId, $entry, $action) {
 		$activity = new ActivityModel($projectModel);
 		$activity->userRef->id = $userId;
 		if($action == 'update'){
@@ -156,55 +153,40 @@ class ActivityCommands
 		} else {
 			$activity->action = ActivityModel::ADD_ENTRY;
 		}
-		$entry = $entryDto->getEntry()->encode();
 		
 		$activity->addContent(ActivityModel::ENTRY, $entry);
 		return $activity->write();
 	}
 	
 	/**
-	 *
 	 * @param ProjectModel $projectModel
-	 * @param Guid $guid
+	 * @param string $userId
+	 * @param string entry id
 	 * @return string activity id
 	 */
-	public static function deleteEntry($projectModel, $userId, $guid) {
-	
-		
+	public static function deleteEntry($projectModel, $userId, $id) {
 		$activity = new ActivityModel($projectModel);
 		$activity->userRef->id = $userId;
 		$activity->action = ActivityModel::DELETE_ENTRY;
 	
-		$entryModel = self::getEntry($projectModel->id->asString(), $guid);	
-		$activity->addContent(ActivityModel::ENTRY, $entryModel['entry'][$projectModel->languageCode]);
+		$entry = self::getEntry($projectModel->id->asString(), $id);
+		$activity->addContent(ActivityModel::ENTRY, $entry->lexeme[$projectModel->languageCode]);
 		return $activity->write();
 	}
 	
-	public static function getEntry($projectId, $entryGuid) {
-		//throw new \Exception ('projectId ' .$projectId ." entryGuid ".$entryGuid);
-		$projectModel = new ProjectModel ( $projectId );
-		ProjectModelFixer::ensureVLatest ( $projectModel );
-	
-		$lexProject = new LexProject ( $projectModel );
-	
-		$store = new LexStoreController ( LexStoreType::STORE_MONGO, $projectModel->databaseName (), $lexProject );
-		$result = $store->readEntry ( $entryGuid );
-	
-		// Sense Level
-		foreach ( $result->_senses as $sense ) {
-	
-			if (! (isset ( $sense->_id ) && strlen ( trim ( $sense->_id ) ) > 0)) {
-				$sense->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
-			}
-			// Example Level
-			foreach ( $sense->_examples as $example ) {
-				if (! (isset ( $example->_id ) && strlen ( trim ( $example->_id ) ) > 0)) {
-					$example->_id = \libraries\lfdictionary\common\UUIDGenerate::uuid_generate_php ();
-				}
-			}
-		}
-		return $result->encode ();
+	/**
+	 * @param string $projectId
+	 * @param string entry id
+	 * @return LexEntryModel
+	 */
+	public static function getEntry($projectId, $id) {
+		$project = new ProjectModel($projectId);
+		ProjectModelFixer::ensureVLatest($project);
+		
+		$entry = new LexEntryModel($project, $id);
+		return $entry;
 	}
+	
 }
 
 ?>

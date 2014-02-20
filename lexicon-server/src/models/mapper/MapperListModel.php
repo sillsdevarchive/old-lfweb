@@ -2,7 +2,7 @@
 
 namespace models\mapper;
 
-class MapperListModel /*extends CI_Model*/
+class MapperListModel
 {
 	/**
 	 * @var int
@@ -34,24 +34,22 @@ class MapperListModel /*extends CI_Model*/
 	 * @param array $query
 	 * @param array $fields
 	 */
-	protected function __construct($mapper, $query, $fields = array())
-	{
+	protected function __construct($mapper, $query = array(), $fields = array()) {
 		$this->_mapper = $mapper;
 		$this->_query = $query;
 		$this->_fields = $fields;
 	}
 
-	function read()
-	{
+	function read() {
 		return $this->_mapper->readList($this, $this->_query, $this->_fields);
 	}
 	
 	function readAsModels() {
 		return $this->_mapper->readListAsModels($this, $this->_query, $this->_fields);
 	}
-	
-	function readByQuery($query, $fields = array(), $sortFields = array(), $limit = 0)
-	{
+
+	// TODO Would be nice to deprecate this or at least have it protected not public. Derived models can run their own specific query. CP 2013-11
+	function readByQuery($query, $fields = array(), $sortFields = array(), $limit = 0) {
 		return $this->_mapper->readList($this,$query, $fields, $sortFields ,$limit);
 	}
 	

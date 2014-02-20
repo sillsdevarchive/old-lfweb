@@ -1,7 +1,13 @@
 <?php
 namespace libraries\lfdictionary\commands;
-require_once(dirname(__FILE__) . '/../Config.php');
+
 use libraries\lfdictionary\common\LoggerFactory;
+
+require_once(dirname(__FILE__) . '/../Config.php');
+
+/*
+ * TODO Deprecate. This is superceded by the SF Q/A code. However, this does provide useful code for interfacing with the current chorus notes. Keep in repo for later. CP 2013-12
+ */
 class SaveCommentsCommand {
 
 	//if need to change follow definations, please change client side too.

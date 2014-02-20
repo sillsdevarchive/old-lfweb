@@ -2,65 +2,27 @@
 
 namespace models;
 
-use models\rights\Roles;
-
-use models\mapper\IdReference;
-
-use models\mapper\MongoMapper;
-
+use models\UserModelMongoMapper;
 use models\mapper\Id;
+use models\mapper\IdReference;
+use models\mapper\MongoMapper;
 use models\mapper\ReferenceList;
+use models\rights\Realm;
+use models\rights\Roles;
 
 require_once(APPPATH . '/models/ProjectModel.php');
 
-class UserModelMongoMapper extends \models\mapper\MongoMapper
+class UserModel extends \models\UserModelBase
 {
-	public static function instance() {
-		static $instance = null;
-		if (null === $instance) {
-			$instance = new UserModelMongoMapper(LF_DATABASE, 'users');
-		}
-		return $instance;
-	}
 	
-}
-
-class UserModel extends \models\mapper\MapperModel
-{
+	/**
+	 * @param string $id
+	 */
 	public function __construct($id = '') {
-		$this->id = new Id();
 		$this->projects = new ReferenceList();
-		parent::__construct(UserModelMongoMapper::instance(), $id);
+		parent::__construct($id);
 	}
 	
-	/**
-	 *	Removes a user from the collection
-	 *  Project references to this user are also removed
-	 */
-	public function remove() {
-		UserModelMongoMapper::instance()->remove($this->id->asString());
-	}
-
-	public function read($id) {
-		parent::read($id);
-		if (!$this->avatar_ref) {
-			$default_avatar = "/images/avatar/anonymoose.png";
-			$this->avatar_ref = $default_avatar;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param string $username
-	 */
-	public static function usernameExists($username) {
-		$user = new UserModel();
-		$user->findOneByQuery(array("username" => $username));
-		if ($user->id->asString() != '') {
-			return true;
-		}
-		return false;
-	}
 	
 	/**
 	 *	Adds the user as a member of $projectId
@@ -85,104 +47,16 @@ class UserModel extends \models\mapper\MapperModel
 	}
 	
 	public function listProjects() {
-		$projectList = new ProjectList_UserModel($this->id->asString());
-		$projectList->read();
+		$projectList = new ProjectList_UserModel();
+		$projectList->readUserProjects($this->id->asString());
 		return $projectList;
 	}
-	
-	/**
-	 * @var IdReference
-	 */
-	public $id;
-	
-	/**
-	 * @var string
-	 */
-	public $name;
-	
-	/**
-	 * @var string
-	 */
-	public $username;
-	
-	/**
-	 * @var string
-	 */
-	public $email;
-	
-	/**
-	 * @var string
-	 * @see Roles
-	 */
-	public $role;
-	
-	//public $groups;
-	
-	/**
-	 * @var string
-	 */
-	public $avatar_shape;
-	
-	/**
-	 * @var string
-	 */
-	public $avatar_color;
-	
-	public $avatar_ref;
-
-	/**
-	 * @var bool
-	 */
-	public $active;
-	
-	/**
-	 * @var int
-	 */
-	public $created_on;	
-	
-	public $last_login; // read only field
 	
 	/**
 	 * @var ReferenceList
 	 */
 	public $projects;
 	
-	/**
-	 * @var string
-	 */
-	public $mobile_phone;
-	/**
-	 * @var string - possible values are "email", "sms" or "both"
-	 */
-	public $communicate_via;
-	/**
-	 * @var string
-	 */
-	public $age;
-	/**
-	 * @var string
-	 */
-	public $gender;
-	/**
-	 * @var string
-	 */
-	public $city;
-	/**
-	 * @var string
-	 */
-	public $preferred_bible_version;
-	/**
-	 * @var string
-	 */
-	public $religious_affiliation;
-	/**
-	 * @var string
-	 */
-	public $study_group;
-	/**
-	 * @var string
-	 */
-	public $feedback_group;
 }
 
 class UserListModel extends \models\mapper\MapperListModel
@@ -212,19 +86,6 @@ class UserTypeaheadModel extends \models\mapper\MapperListModel
 	
 }
 
-class UserList_ProjectModel extends \models\mapper\MapperListModel
-{
-
-	public function __construct($projectId)
-	{
-		parent::__construct(
-				UserModelMongoMapper::instance(),
-				array('projects' => array('$in' => array(MongoMapper::mongoID($projectId)))),
-				array('username', 'email', 'name')
-		);
-	}
-
-}
 
 
 

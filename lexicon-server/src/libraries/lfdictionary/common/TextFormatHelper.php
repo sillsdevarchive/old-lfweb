@@ -1,5 +1,10 @@
 <?php
 namespace libraries\lfdictionary\common;
+
+/**
+ * TextFormatHelper attempts to convert strings from some input encoding to utf-8.
+ * REVIEWED CP 2013-12: This class is useful, but should perhaps be moved closer to the GatherWordsFromTextCommand (if such a class exists).
+ */
 class TextFormatHelper {
 	/**
 	 * @return UTF8 string

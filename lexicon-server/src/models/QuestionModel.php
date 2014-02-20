@@ -9,8 +9,8 @@ use models\mapper\IdReference;
 use models\mapper\Id;
 use models\mapper\MapOf;
 
-class QuestionModelMongoMapper extends \models\mapper\MongoMapper
-{
+class QuestionModelMongoMapper extends \models\mapper\MongoMapper {
+
 	/**
 	 * @var QuestionModelMongoMapper[]
 	 */
@@ -29,14 +29,14 @@ class QuestionModelMongoMapper extends \models\mapper\MongoMapper
 	
 }
 
-class QuestionModel extends \models\mapper\MapperModel
-{
+class QuestionModel extends \models\mapper\MapperModel {
+
 	public function __construct($projectModel, $id = '') {
 		$this->id = new Id();
 		$this->workflowState = "open"; // default workflow state
 		$this->dateCreated = new \DateTime();
 		$this->dateEdited = new \DateTime();
-		$this->entryRef = "";
+		$this->entryRef = new IdReference();
 		$this->answers = new MapOf(
 			function() {
 				return new AnswerModel();
@@ -69,7 +69,7 @@ class QuestionModel extends \models\mapper\MapperModel
 			$id = $answer->id->id = QuestionModelMongoMapper::makeId();
 			$answerToWrite = $answer;
 		} else {
-			$answerToWrite = $this->answers->data[$id];
+			$answerToWrite = $this->answers[$id];
 			$properties = get_object_vars($answer);
 			$exclude = array('comments');
 			foreach ($properties as $key => $value) {
@@ -95,7 +95,7 @@ class QuestionModel extends \models\mapper\MapperModel
 	 * 
 	 */
 	public function readAnswer($answerId) {
-		return $this->answers->data[$answerId];
+		return $this->answers[$answerId];
 	}
 	
 	/**
@@ -105,8 +105,8 @@ class QuestionModel extends \models\mapper\MapperModel
 	 * @return CommentModel
 	 */
 	public function readComment($answerId, $commentId) {
-		$answer = $this->answers->data[$answerId];
-		return $answer->comments->data[$commentId];
+		$answer = $this->answers[$answerId];
+		return $answer->comments[$commentId];
 	}
 	
 	/**
@@ -186,17 +186,7 @@ class QuestionModel extends \models\mapper\MapperModel
 	public $dateEdited;
 
 	/**
-	 * @var EntryDto - a copy of entry
-	 */
-	public $entry;
-	
-	/**
-	 * @var String - Id of the referring entry
-	 */
-	public $entryId;
-	
-	/**
-	 * @var String - Id of the referring text
+	 * @var IdReference - Id of the referring entry
 	 */
 	public $entryRef;
 	
@@ -211,40 +201,36 @@ class QuestionModel extends \models\mapper\MapperModel
 	 */
 	public $workflowState;
 	
-	
 }
 
-class QuestionListModel extends \models\mapper\MapperListModel
-{
+class QuestionListModel extends \models\mapper\MapperListModel {
 
-	public function __construct($projectModel, $entryRef)
-	{
+	public function __construct($projectModel, $entryRef) {
+	
 		parent::__construct(
 			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'entryRef' => $entryRef),
+			array('title' => array('$regex' => ''), 'entryRef' => MongoMapper::mongoID($entryRef)),
 			array('title')
 		);
 	}
 	
 }
 
-class QuestionAnswersListModel extends \models\mapper\MapperListModel
-{
+class QuestionAnswersListModel extends \models\mapper\MapperListModel {
 
-	public function __construct($projectModel, $entryId)
-	{
+	public function __construct($projectModel, $entryId) {
+	
 		$selectedFiled = array('title', 'description', 'answers', 'entryRef', 'entryId');
-		if ($entryId!='')
-		{
-		parent::__construct(
-			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => ''), 'entryId' => $entryId), $selectedFiled
-		);
-		}else {
-		parent::__construct(
-			QuestionModelMongoMapper::connect($projectModel->databaseName()),
-			array('title' => array('$regex' => '')), $selectedFiled
-		);
+		if ($entryId!='') {
+			parent::__construct(
+				QuestionModelMongoMapper::connect($projectModel->databaseName()),
+				array('title' => array('$regex' => ''), 'entryId' => MongoMapper::mongoID($entryRef)), $selectedFiled
+			);
+		} else {
+			parent::__construct(
+				QuestionModelMongoMapper::connect($projectModel->databaseName()),
+				array('title' => array('$regex' => '')), $selectedFiled
+			);
 		}
 	}
 

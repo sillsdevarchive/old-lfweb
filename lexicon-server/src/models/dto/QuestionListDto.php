@@ -32,7 +32,7 @@ class QuestionListDto
 		$data['projectlanguagecode'] = $projectModel->languageCode;
 		$data['entries'] = array();
 		$data['project'] = array(
-				'name' => $projectModel->projectname,
+				'name' => $projectModel->projectName,
 				'id' => $projectId);
 		if ($entryGuid!='')
 		{
@@ -49,6 +49,12 @@ class QuestionListDto
 		foreach ($questionList->entries as $questionData) {
 			// Just want answer count, not whole list
 			$questionData['answerCount'] = count($questionData['answers']);
+			$responseCount = 0; // "Reponses" = answers + comments
+			foreach ($questionData['answers'] as $a) {
+				$commentCount = count($a['comments']);
+				$responseCount += $commentCount+1; // +1 for this answer
+			}
+			$questionData['responseCount'] = $responseCount;
 			unset($questionData['answers']);
 
 			$data['entries'][] = $questionData;

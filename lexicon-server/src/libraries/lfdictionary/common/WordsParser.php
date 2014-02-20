@@ -1,5 +1,11 @@
 <?php
 namespace libraries\lfdictionary\common;
+
+/**
+ * WordsParser breaks text into 'words'. This is used by the gatherWordsFromText (or File) commands.
+ * TODO Move. Somewhere closer to the GatherWordsFromTextCommand would be better. CP 2013-12
+ * REVIEWED CP 2013-12: Ok.
+ */
 class WordsParser {
 
 	//http://en.wikipedia.org/wiki/Punctuation

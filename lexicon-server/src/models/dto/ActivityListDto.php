@@ -2,22 +2,16 @@
 
 namespace models\dto;
 
+use models\ActivityListModel;
 use models\QuestionModel;
-
+use models\UnreadActivityModel;
+use models\ProjectList_UserModel;
+use models\ProjectListModel;
+use models\ProjectModel;
+use models\UserModel;
 use models\mapper\JsonEncoder;
 
-require_once(APPPATH . 'models/ActivityModel.php');
-
-
-use models\ProjectList_UserModel;
-
-use models\ActivityListModel;
-
-use models\ProjectListModel;
-
-use models\UserModel;
-
-use models\ProjectModel;
+require_once(APPPATH . 'models/ActivityModel.php'); // TODO This shouldn't need to be 'required' rather use would be better CP 2013-11
 
 class ActivityListDtoEncoder extends JsonEncoder {
 	private $_project;
@@ -89,14 +83,22 @@ class ActivityListDto
 	 * @return array - the DTO array
 	*/
 	public static function getActivityForUser($userId) {
-		$projectList = new ProjectList_UserModel($userId);
-		$projectList->read();
-		$dto = array();
+		$projectList = new ProjectList_UserModel();
+		$projectList->readUserProjects($userId);
+		$activity = array();
 		foreach ($projectList->entries as $project) {
 			$projectModel = new ProjectModel($project['id']);
-			$dto = array_merge($dto, self::getActivityForProject($projectModel));
+			$activity = array_merge($activity, self::getActivityForProject($projectModel));
 		}
-		uasort($dto, array('self', 'sortActivity'));
+		uasort($activity, array('self', 'sortActivity'));
+		$unreadActivity = new UnreadActivityModel($userId);
+		$unreadItems = $unreadActivity->unreadItems();
+		$unreadActivity->markAllRead();
+		$unreadActivity->write();
+		$dto = array(
+				'activity' => $activity,
+				'unread' => $unreadItems
+		);
 		return $dto;
 	}
 	

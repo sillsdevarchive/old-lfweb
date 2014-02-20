@@ -1,10 +1,10 @@
 <?php
 
 use \libraries\lfdictionary\dto\EntryListDTO;
-use \libraries\lfdictionary\dto\MultiText;
-use \libraries\lfdictionary\dto\EntryDTO;
-use \libraries\lfdictionary\dto\Sense;
-use \libraries\lfdictionary\dto\Example;
+use models\lex\LexEntryModel;
+use models\lex\Example;
+use models\lex\MultiText;
+use models\lex\Sense;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
@@ -15,7 +15,7 @@ class TestOfEntryListDTO extends UnitTestCase {
 	function testEntryListDTO_Encode_EntryAndSense_JsonCorrect() {
 		$entry = new EntryListDTO();
 		
-		$entry1 = EntryDTO::create("guid0");
+		$entry1 = LexEntryModel::create("guid0");
 		$entry1->setEntry(MultiText::create('fr', 'form1'));
 		
 		$sense1 = new Sense();
@@ -28,7 +28,7 @@ class TestOfEntryListDTO extends UnitTestCase {
 		));
 		$entry1->addSense($sense1);
 		
-		$entry2 = EntryDTO::create("guid1");
+		$entry2 = LexEntryModel::create("guid1");
 		$entry2->setEntry(MultiText::create('th', 'form2'));
 		
 		$sense2 = new Sense();

@@ -3,6 +3,8 @@
 namespace libraries\lfdictionary\common;
 use libraries\lfdictionary\common\Logger;
 
+// TODO Delete. See ErrorHandler
+
 /**
  * Logger stack. Logs message for each inserted logger
  *

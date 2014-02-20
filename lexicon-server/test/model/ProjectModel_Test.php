@@ -4,8 +4,9 @@ use models\rights\Domain;
 use models\rights\Roles;
 use models\mapper\Id;
 use models\mapper\MongoStore;
-use models\UserModel;
+use models\ProjectListModel;
 use models\ProjectModel;
+use models\UserModel;
 
 require_once(dirname(__FILE__) . '/../TestConfig.php');
 require_once(SimpleTestPath . 'autorun.php');
@@ -25,26 +26,24 @@ class TestProjectModel extends UnitTestCase {
 	}
 	
 	function testWrite_ReadBackSame() {
-		$model = new ProjectModel();
-		$model->languageCode = "SomeLanguage";
-		$model->projectname = "SomeProject";
+		$e = new MongoTestEnvironment();
+		$model = $e->createProject(LF_TESTPROJECT, LF_TEST_LANGUAGE);
 		//$model->users->refs = array('1234');
-		$id = $model->write();
+		$id = $model->id->asString();
 		$this->assertNotNull($id);
 		$this->assertIsA($id, 'string');
 		$this->assertEqual($id, $model->id->asString());
 		$otherModel = new ProjectModel($id);
 		$this->assertEqual($id, $otherModel->id->asString());
-		$this->assertEqual('SomeLanguage', $otherModel->languageCode);
-		$this->assertEqual('SomeProject', $otherModel->projectname);
+		$this->assertEqual(LF_TEST_LANGUAGE, $otherModel->languageCode);
+		$this->assertEqual(LF_TESTPROJECT, $otherModel->projectName);
 		//$this->assertEqual(array('1234'), $otherModel->users->refs);
 		
 		$this->_someProjectId = $id;
 	}
 
-	function testProjectList_HasCountAndEntries()
-	{
-		$model = new models\ProjectListModel();
+	function testProjectList_HasCountAndEntries() {
+		$model = new ProjectListModel();
 		$model->read();
 		
 		$this->assertNotEqual(0, $model->count);
@@ -57,7 +56,7 @@ class TestProjectModel extends UnitTestCase {
 		// setup user and projects
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@email.com');
 		$userModel = new UserModel($userId);
-		$projectModel = $e->createProject('new project');
+		$projectModel = $e->createProject(LF_TESTPROJECT);
 		$projectId = $projectModel->id->asString();
 		
 		// create the reference
@@ -66,9 +65,9 @@ class TestProjectModel extends UnitTestCase {
 		$projectModel->write();
 		$userModel->write();
 		
-		$this->assertTrue(array_key_exists($userId, $projectModel->users->data), "'$userId' not found in project.");
+		$this->assertTrue($projectModel->users->offsetExists($userId), "'$userId' not found in project.");
 		$otherProject = new ProjectModel($projectId);
-		$this->assertTrue(array_key_exists($userId, $otherProject->users->data), "'$userId' not found in other project.");
+		$this->assertTrue($otherProject->users->offsetExists($userId), "'$userId' not found in other project.");
 	}
 	
 	
@@ -80,7 +79,7 @@ class TestProjectModel extends UnitTestCase {
 		// setup user and projects
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@email.com');
 		$userModel = new UserModel($userId);
-		$projectModel = $e->createProject('new project');
+		$projectModel = $e->createProject(LF_TESTPROJECT);
 		$projectId = $projectModel->id->asString();
 
 		// create the reference
@@ -90,9 +89,9 @@ class TestProjectModel extends UnitTestCase {
 		$userModel->write();
 		
 		// assert the reference is there		
-		$this->assertTrue(array_key_exists($userId, $projectModel->users->data), "'$userId' not found in project.");
+		$this->assertTrue($projectModel->users->offsetExists($userId), "'$userId' not found in project.");
 		$otherProject = new ProjectModel($projectId);
-		$this->assertTrue(array_key_exists($userId, $otherProject->users->data), "'$userId' not found in other project.");
+		$this->assertTrue($otherProject->users->offsetExists($userId), "'$userId' not found in other project.");
 		
 		// remove the reference
 		$projectModel->removeUser($userId);
@@ -101,9 +100,9 @@ class TestProjectModel extends UnitTestCase {
 		$userModel->write();
 		
 		// testing
-		$this->assertFalse(array_key_exists($userId, $projectModel->users->data), "'$userId' not found in project.");
+		$this->assertFalse($projectModel->users->offsetExists($userId), "'$userId' not found in project.");
 		$otherProject = new ProjectModel($this->_someProjectId);
-		$this->assertFalse(array_key_exists($userId, $otherProject->users->data), "'$userId' not found in other project.");
+		$this->assertFalse($otherProject->users->offsetExists($userId), "'$userId' not found in other project.");
 		$project = new ProjectModel($this->_someProjectId);
 	}
 	
@@ -114,13 +113,13 @@ class TestProjectModel extends UnitTestCase {
 		// setup user and projects
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@email.com');
 		$userModel = new UserModel($userId);
-		$projectModel = $e->createProject('new project');
+		$projectModel = $e->createProject(LF_TESTPROJECT);
 		$projectId = $projectModel->id;
 		
 		$projectModel->addUser($userId, Roles::USER);
-		$this->assertEqual(1, count($projectModel->users));
+		$this->assertEqual(1, $projectModel->users->count());
 		$projectModel->addUser($userId, Roles::USER);
-		$this->assertEqual(1, count($projectModel->users));
+		$this->assertEqual(1, $projectModel->users->count());
 	}
 	
 	function testProjectListUsers_TwoUsers_ListHasDetails() {
@@ -172,7 +171,6 @@ class TestProjectModel extends UnitTestCase {
 	}
 	
 	function testRemove_RemovesProject() {
-		$e = new MongoTestEnvironment();
 		$project = new ProjectModel($this->_someProjectId);
 		
 		$this->assertTrue($project->exists($this->_someProjectId));
@@ -183,15 +181,16 @@ class TestProjectModel extends UnitTestCase {
 	}
 	
 	function testDatabaseName_Ok() {
-		$project = new ProjectModel();
-		$project->projectname = 'Some Project';
+		$e = new MongoTestEnvironment();
+		$project = $e->createProject(LF_TESTPROJECT, LF_TEST_LANGUAGE);
 		$result = $project->databaseName();
-		$this->assertEqual('lf_some_project', $result);
+		$this->assertEqual('lf_' + LF_TEST_LANGUAGE + '-test_project-dictionary', $result);
 	}
 	
 	function testHasRight_Ok() {
 		$userId = MongoTestEnvironment::mockId();
-		$project = new ProjectModel();
+		$e = new MongoTestEnvironment();
+		$project = $e->createProject(LF_TESTPROJECT);
 		$project->addUser($userId, Roles::PROJECT_ADMIN);
 		$result = $project->hasRight($userId, Domain::QUESTIONS + Operation::CREATE);
 		$this->assertTrue($result);
@@ -199,13 +198,31 @@ class TestProjectModel extends UnitTestCase {
 	
 	function testGetRightsArray_Ok() {
 		$userId = MongoTestEnvironment::mockId();
-		$project = new ProjectModel();
+		$e = new MongoTestEnvironment();
+		$project = $e->createProject(LF_TESTPROJECT);
 		$project->addUser($userId, Roles::PROJECT_ADMIN);
 		$result = $project->getRightsArray($userId);
 		$this->assertIsA($result, 'array');
 		$this->assertTrue(in_array(Domain::QUESTIONS + Operation::CREATE, $result));
 	}
-		
+
+	function testCreateFromDomain_3Projects_MatchingProjectDomainSelected() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
+	
+		$project1 = $e->createProject(LF_TESTPROJECT);
+		$project1->projectDomain = ProjectModel::domainToProjectDomain('dev.languageforge.org');
+		$project1->write();
+		$project2 = $e->createProject(LF_TESTPROJECT2);
+		$project2->projectDomain = ProjectModel::domainToProjectDomain('jamaicanpsalms.languageforge.org');
+		$project2->write();
+		$projectDomain = 'jamaicanpsalms.local';
+	
+		$project = ProjectModel::createFromDomain($projectDomain);
+	
+		$this->assertEqual($project->projectDomain, ProjectModel::domainToProjectDomain($projectDomain));
+	}
+	
 }
 
 ?>

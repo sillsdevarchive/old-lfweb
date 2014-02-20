@@ -1,12 +1,11 @@
 <?php
 
-use \libraries\lfdictionary\dto\MultiText;
-use \libraries\lfdictionary\dto\Example;
-use \libraries\lfdictionary\dto\Sense;
-use \libraries\lfdictionary\dto\EntryDTO;
-
-use \libraries\lfdictionary\mapper\LiftUpdater;
-use \libraries\lfdictionary\common\UUIDGenerate;
+use models\lex\LexEntryModel;
+use models\lex\Example;
+use models\lex\MultiText;
+use models\lex\Sense;
+use libraries\lfdictionary\mapper\LiftUpdater;
+use libraries\lfdictionary\common\UUIDGenerate;
 
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
@@ -286,7 +285,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'updated form'));
 		$sense = Sense::create();
 		$sense->setDefinition(MultiText::create('en', 'updated definition'));
@@ -326,7 +325,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'updated form'));
 		$sense = Sense::create();
 		$sense->setDefinition(MultiText::create('en', 'updated definition'));
@@ -362,7 +361,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'updated form'));
 		
 		LiftUpdater::mergeEntry($srcXml, $entry);
@@ -386,7 +385,7 @@ XML;
 XML;
 		$srcXml = simplexml_load_string($src);
 		$guid = UUIDGenerate::uuid_generate_php();
-		$entry = EntryDTO::create($guid);
+		$entry = LexEntryModel::create($guid);
 		$entry->setEntry(MultiText::create('th', 'new form'));
 		
 		LiftUpdater::mergeEntry($srcXml, $entry);

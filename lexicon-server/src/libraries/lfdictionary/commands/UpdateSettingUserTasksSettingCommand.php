@@ -11,6 +11,8 @@ use \libraries\lfdictionary\environment\LexClientEnvironment;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
+// TODO Refactor. Need the WritingSystemModel with encoder / decoder and mapper.
+// TODO Enhance. Need to store the model in mongo.
 class UpdateSettingUserTasksSettingCommand
 {
 	/**

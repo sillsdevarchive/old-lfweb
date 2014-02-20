@@ -13,6 +13,7 @@ use models\ProjectModelFixer;
 
 require_once (APPPATH . 'libraries/lfdictionary/Config.php');
 
+// TODO This is most likely the DictionaryBrowseEditDto CP 2013-11.  This actually looks quite naf. Would be surprised if this does anything useful at all really.
 class EntryDto
 {
 	/**

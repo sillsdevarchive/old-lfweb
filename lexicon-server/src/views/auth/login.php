@@ -1,10 +1,9 @@
-<div class="container cf">
-	<div style="margin: 40px 0 0 140px">
+<div class="content container cf">
 <h1><?php echo lang('login_heading');?></h1>
 <p><?php echo lang('login_subheading');?></p>
 
 <?php if ($message):?>
-<div class="notification informationMessage"><?php echo $message;?></div>
+<div class="alert alert-info"><?php echo $message;?></div>
 <?php endif;?>
 
 <?php echo form_open("auth/login");?>
@@ -30,5 +29,4 @@
 <?php echo form_close();?>
 
 <p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p>
-	</div>
 </div>

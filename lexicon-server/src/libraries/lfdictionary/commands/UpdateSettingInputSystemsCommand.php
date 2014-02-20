@@ -1,10 +1,14 @@
 <?php
 namespace libraries\lfdictionary\commands;
+
 use libraries\lfdictionary\environment\LexProject;
+use libraries\lfdictionary\mapper\InputSystemXmlJsonMapper;
 
 require_once(dirname(__FILE__) . '/../Config.php');
 
-use libraries\lfdictionary\mapper\InputSystemXmlJsonMapper;
+// TODO Refactor. Need the WritingSystemModel with mongo / json encoder / decoder and mapper.
+// TODO Enhance. Need to store the model in mongo.
+// @see GeTSettingInputSystemsCommand
 class UpdateSettingInputSystemsCommand
 {
 

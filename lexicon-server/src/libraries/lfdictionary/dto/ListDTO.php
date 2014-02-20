@@ -9,13 +9,13 @@ class ListDTO {
 	public $entryCount;
 	
 	/**
-	* @var int
-	*/
+	 * @var int
+	 */
 	public $entryBeginIndex;
 	
 	/**
-	* @var int
-	*/
+	 * @var int
+	 */
 	public $entryEndIndex;
 	
 	/**
@@ -56,6 +56,5 @@ class ListDTO {
 	}
 	
 }
-
 
 ?>

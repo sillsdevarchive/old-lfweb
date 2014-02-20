@@ -1,12 +1,9 @@
 <?php
+
 require_once(dirname(__FILE__) . '/../../TestConfig.php');
 require_once(SIMPLETEST_PATH . 'autorun.php');
-require_once(LF_BASE_PATH . "Loader.php");
-
 //require_once(SOURCE_PATH . 'environment/CommunityModel.php');
-require_once(TEST_PATH . 'EnvironmentTest/DrupalTestEnvironment.php');
-DrupalTestEnvironment::setDrupalTestDataConnection();
-\libraries\lfdictionary\common\LFDrupal::loadDrupal();
+require_once(TEST_PATH . 'lfdictionary/EnvironmentTest/DrupalTestEnvironment.php');
 
 class TestOfCommunityModule extends UnitTestCase {
 	

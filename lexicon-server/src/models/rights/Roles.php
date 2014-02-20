@@ -1,6 +1,7 @@
 <?php
 namespace models\rights;
 
+use libraries\palaso\CodeGuard;
 class Roles {
 	
 	const SYSTEM_ADMIN  = 'system_admin';
@@ -29,6 +30,9 @@ class Roles {
 		// User
 		$rights = array();
 		$rights[] = Domain::USERS + Operation::EDIT_OWN;
+		// Should users be able to delete their own user accounts? Probably,
+		// but not via the listview -- so we should NOT grant DELETE_OWN here.
+		//$rights[] = Domain::USERS + Operation::DELETE_OWN;
 		self::$_rights[Realm::SITE][Roles::USER] = $rights;
 		
 		// ----------------------------------------------------------
@@ -38,8 +42,10 @@ class Roles {
 		$rights = array();
 		$rights[] = Domain::ANSWERS + Operation::CREATE;
 		$rights[] = Domain::ANSWERS + Operation::EDIT_OWN;
+		$rights[] = Domain::ANSWERS + Operation::DELETE_OWN;
 		$rights[] = Domain::COMMENTS + Operation::CREATE;
 		$rights[] = Domain::COMMENTS + Operation::EDIT_OWN;
+		$rights[] = Domain::COMMENTS + Operation::DELETE_OWN;
 		$rights[] = Domain::LEX_ENTRY + Operation::EDIT_OTHER;
 		$rights[] = Domain::LEX_ENTRY + Operation::CREATE;
 		$rights[] = Domain::LEX_ENTRY + Operation::DELETE_OTHER;
@@ -50,8 +56,17 @@ class Roles {
 		$rights = self::$_rights[Realm::PROJECT][Roles::USER];
 		$rights[] = Domain::PROJECTS + Operation::EDIT_OWN;
 		$rights[] = Domain::PROJECTS + Operation::EDIT_OTHER; // TODO This can be removed when gwt app actually checks for ownership. CP 2013-08
+		$rights[] = Domain::PROJECTS + Operation::DELETE_OWN;
 		$rights[] = Domain::QUESTIONS + Operation::CREATE;
 		$rights[] = Domain::QUESTIONS + Operation::EDIT_OTHER;
+		$rights[] = Domain::QUESTIONS + Operation::DELETE_OTHER;
+		$rights[] = Domain::ANSWERS + Operation::EDIT_OTHER;
+		$rights[] = Domain::ANSWERS + Operation::DELETE_OTHER;
+		$rights[] = Domain::COMMENTS + Operation::CREATE;
+		$rights[] = Domain::COMMENTS + Operation::EDIT_OTHER;
+		$rights[] = Domain::COMMENTS + Operation::DELETE_OTHER;
+		$rights[] = Domain::TAGS + Operation::CREATE;
+		$rights[] = Domain::TAGS + Operation::DELETE_OTHER;
 		$rights[] = Domain::USERS + Operation::CREATE;
 		$rights[] = Domain::USERS + Operation::EDIT_OTHER;
 		$rights[] = Domain::USERS + Operation::DELETE_OTHER;
@@ -67,7 +82,8 @@ class Roles {
 		self::grantAllOnDomain($rights, Domain::ANSWERS);
 		self::grantAllOnDomain($rights, Domain::COMMENTS);
 		self::grantAllOnDomain($rights, Domain::TEMPLATES);
-
+		self::grantAllOnDomain($rights, Domain::TAGS);
+		
 		self::$_rights[Realm::PROJECT][Roles::SYSTEM_ADMIN] = $rights;
 		
 // 		var_dump(self::$_rights);
@@ -91,6 +107,14 @@ class Roles {
 	 * @return bool
 	 */
 	public static function hasRight($realm, $role, $right) {
+		CodeGuard::checkNotFalseAndThrow($realm, 'realm');
+		CodeGuard::checkNotFalseAndThrow($role, 'role');
+		if (!array_key_exists($realm, self::$_rights)) {
+			throw new \Exception("Realm '$realm' does not exist.");
+		}
+		if (!array_key_exists($role, self::$_rights[$realm])) {
+			throw new \Exception("Role '$role' does not exist in the '$realm' realm.");
+		}
 		$result = in_array($right, self::$_rights[$realm][$role]);
 		return $result;
 	}
@@ -102,6 +126,14 @@ class Roles {
 	 * @return array
 	 */
 	public static function getRightsArray($realm, $role) {
+		CodeGuard::checkNotFalseAndThrow($realm, 'realm');
+		CodeGuard::checkNotFalseAndThrow($role, 'role');
+		if (!array_key_exists($realm, self::$_rights)) {
+			throw new \Exception("Realm '$realm' does not exist.");
+		}
+		if (!array_key_exists($role, self::$_rights[$realm])) {
+			throw new \Exception("Role '$role' does not exist in the '$realm' realm.");
+		}
 		return self::$_rights[$realm][$role];
 	}
 	

@@ -26,13 +26,13 @@ class TestCommentModel extends UnitTestCase {
 
 	function testAnswerCRUD_Works() {
 		$e = new MongoTestEnvironment();
-		$textRef = MongoTestEnvironment::mockId();
+		$entryRef = MongoTestEnvironment::mockId();
 		$projectModel = new MockProjectModel();
 
 		// Create Question
 		$question = new QuestionModel($projectModel);
 		$question->title = "Some Question";
-		$question->textRef->id = $textRef;
+		$question->entryRef->id = $entryRef;
 		$questionId = $question->write();
 
 		// Create Answer
@@ -42,8 +42,7 @@ class TestCommentModel extends UnitTestCase {
 		
 		// List
 		$question->read($questionId);
-		$count = count($question->answers->data[$answerId]->comments->data);
-		$this->assertEqual(0, $count);
+		$this->assertEqual(0, $question->answers[$answerId]->comments->count());
 		
 		// Create
 		$comment = new CommentModel();
@@ -56,7 +55,7 @@ class TestCommentModel extends UnitTestCase {
 		
 		// Read back
 		$otherQuestion = new QuestionModel($projectModel, $questionId);
-		$otherComment = $otherQuestion->answers->data[$answerId]->comments->data[$id];
+		$otherComment = $otherQuestion->answers[$answerId]->comments[$id];
 		$this->assertEqual($id, $otherComment->id->asString());
 		$this->assertEqual('Some comment', $otherComment->content);
 // 		var_dump($id);
@@ -69,22 +68,19 @@ class TestCommentModel extends UnitTestCase {
 		
 		// Read back
 		$otherQuestion = new QuestionModel($projectModel, $questionId);
-		$otherComment = $otherQuestion->answers->data[$answerId]->comments->data[$id];
+		$otherComment = $otherQuestion->answers[$answerId]->comments[$id];
 		$this->assertEqual($id, $otherComment->id->asString());
 		$this->assertEqual('Other comment', $otherComment->content);
 				
 		// List
-		$count = count($otherQuestion->answers->data[$answerId]->comments->data);
-		$this->assertEqual(1, $count);
-
+		$this->assertEqual(1, $otherQuestion->answers[$answerId]->comments->count());
+		
 		// Delete
 		QuestionModel::removeComment($projectModel->databaseName(), $questionId, $answerId, $id);
 		
 		// List
 		$otherQuestion->read($questionId);
-		$count = count($otherQuestion->answers->data[$answerId]->comments->data);
-		$this->assertEqual(0, $count);
-				
+		$this->assertEqual(0, $otherQuestion->answers[$answerId]->comments->count());
 	}
 
 }

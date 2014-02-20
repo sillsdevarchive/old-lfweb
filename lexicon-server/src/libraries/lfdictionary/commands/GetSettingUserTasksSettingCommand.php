@@ -8,6 +8,11 @@ require_once(dirname(__FILE__) . '/../Config.php');
 
 use \libraries\lfdictionary\environment\LexProjectUserSettings;
 
+/* REVIEWED CP 2013-12: This 'command' uses the TaskSettingXmlJsonMapper to go straight to Dto without an intervening model.
+ * TODO Enhance. Add a model to go with the mapper.  Then the dto can be generated using JsonEncoder. CP 2013-12
+ * TODO Enhance. Persist the model to mongo via mongomapper CP 2013-12
+ * @see TaskSettingXmlJsonMapper
+ */
 class GetSettingUserTasksSettingCommand
 {
 

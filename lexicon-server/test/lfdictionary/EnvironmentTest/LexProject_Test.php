@@ -16,9 +16,9 @@ class TestOfLexProject extends UnitTestCase {
 	function testConstructor_NormalizedProjectPath() {
 		$e = new LexProjectTestEnvironment();
 		$model = new ProjectModel();
-		$model->projectname = "SomeProject";
-		$model->projectCode = ProjectModel::makeProjectCode("qaa", "SomeProject", "dictionary");
-		$e->cleanup($model->projectCode);
+		$model->projectName = "SomeProject";
+		$model->projectSlug = ProjectModel::makeProjectSlug("qaa", "SomeProject", "dictionary");
+		$e->cleanup($model->projectSlug);
 		$project = new LexProject($model, '/tmp');
 		$this->assertEqual('/tmp/qaa-someproject-dictionary/', $project->projectPath);
 	}
@@ -26,12 +26,12 @@ class TestOfLexProject extends UnitTestCase {
 	function testConstructor_StateFileMissing_StateReady() {
 		$e = new LexProjectTestEnvironment();
 		$model = new ProjectModel();
-		$model->projectname = "SomeProject";
-		$model->projectCode = ProjectModel::makeProjectCode("qaa", "SomeProject", "dictionary");
-		$e->cleanup($model->projectCode);
+		$model->projectName = "SomeProject";
+		$model->projectSlug = ProjectModel::makeProjectSlug("qaa", "SomeProject", "dictionary");
+		$e->cleanup($model->projectSlug);
 		$project = new LexProject($model, '/tmp');
-		$project->createNewProject();
-		unlink(LexProject::stateFolderPath() . $model->projectCode . '.state'); // remove state file
+		$project->create();
+		unlink(LexProject::stateFolderPath() . $model->projectSlug . '.state'); // remove state file
 		$project2 = new LexProject($model, '/tmp');
 		$this->assertEqual($project2->projectState->getState(), ProjectStates::Ready);
 	}
@@ -39,11 +39,11 @@ class TestOfLexProject extends UnitTestCase {
 	function testConstructor_ExistingProject_ProjectStateReadOk() {
 		$e = new LexProjectTestEnvironment();
 		$model = new ProjectModel();
-		$model->projectname = "SomeProject";
-		$model->projectCode = ProjectModel::makeProjectCode("qaa", "SomeProject", "dictionary");
-		$e->cleanup($model->projectCode);
+		$model->projectName = "SomeProject";
+		$model->projectSlug = ProjectModel::makeProjectSlug("qaa", "SomeProject", "dictionary");
+		$e->cleanup($model->projectSlug);
 		$project = new LexProject($model, '/tmp');
-		$project->createNewProject();
+		$project->create();
 		$project->projectState->setState(ProjectStates::Locked);
 		$project2 = new LexProject($model, '/tmp');
 		$this->assertEqual($project2->projectState->getState(), ProjectStates::Locked);
@@ -51,46 +51,46 @@ class TestOfLexProject extends UnitTestCase {
 	
 	function testCreateNewProject_ExistingProject_Throws() {
 		$e = new LexProjectTestEnvironment();
-		$e->lexProject->createNewProject();
+		$e->lexProject->create();
 		$this->expectException('Exception');
-		$e->lexProject->createNewProject();
+		$e->lexProject->create();
 	}
 	
 	function testCreateNewProject_NewProject_Created() {
 		$e = new LexProjectTestEnvironment();
-		$e->lexProject->createNewProject();
-		$this->assertFileExists($e->lexProject->projectPath . $e->projectCode . ".lift");
+		$e->lexProject->create();
+		$this->assertFileExists($e->lexProject->projectPath . $e->projectSlug . ".lift");
 	}
 	
 	function tetGetLiftFilePath_NoLiftFile_NewDefaultCreated() {
 		$e = new LexProjectTestEnvironment();
 		$expected = $e->projectName . '.lift';
-		$project = new LexProject($e->projectCode, $e->projectWorkPath);
+		$project = new LexProject($e->projectSlug, $e->projectWorkPath);
 		$result = $project->getLiftFilePath();
 		$this->assertEqual($e->getProjectPath() . $expected, $result);
 	}
 	
 	function testGetLiftFilePath_LiftFileWithProjectName_ReturnsPath() {
 		$e = new LexProjectTestEnvironment('lifttest');
-		$liftFilePath = $e->getProjectPath() . $e->projectCode . '.lift';
-		$e->lexProject->createNewProject();
+		$liftFilePath = $e->getProjectPath() . $e->projectSlug . '.lift';
+		$e->lexProject->create();
 		$this->assertEqual($liftFilePath, $e->lexProject->getLiftFilePath());
 	}
 	
 	function testGetLiftFilePath_TwoLiftfiles_ReturnsProjectLiftFile() {
 		$e = new LexProjectTestEnvironment('lifttest');
-		$liftFilePath = $e->getProjectPath() . $e->projectCode . '.lift';
+		$liftFilePath = $e->getProjectPath() . $e->projectSlug . '.lift';
 		$randomLiftFilePath = $e->getProjectPath() . "randomLift.lift";
-		$e->lexProject->createNewProject();
+		$e->lexProject->create();
 		file_put_contents($randomLiftFilePath, "<lift />");
 		$this->assertEqual($liftFilePath, $e->lexProject->getLiftFilePath());
 	}
 	
 	function testGetLiftFilePath_LiftFileWithRandomName_ReturnsPath() {
 		$e = new LexProjectTestEnvironment('lifttest');
-		$liftFilePath = $e->getProjectPath() . $e->projectCode . '.lift';
+		$liftFilePath = $e->getProjectPath() . $e->projectSlug . '.lift';
 		$randomLiftFilePath = $e->getProjectPath() . "randomLift.lift";
-		$e->lexProject->createNewProject();
+		$e->lexProject->create();
 		file_put_contents($randomLiftFilePath, "<lift />");
 		unlink($liftFilePath);
 		$this->assertEqual($randomLiftFilePath, $e->lexProject->getLiftFilePath());
@@ -98,7 +98,7 @@ class TestOfLexProject extends UnitTestCase {
 	
 	function testGetCurrentHash_SomeRepo_ReturnsHash() {
 		$e = new LexProjectTestEnvironment();
-		$e->lexProject->createNewProject();
+		$e->lexProject->create();
 		$e->addFile("File1.txt", "Contents");
 		$result = $e->lexProject->getCurrentHash();
 		$this->assertEqual(12, strlen($result));

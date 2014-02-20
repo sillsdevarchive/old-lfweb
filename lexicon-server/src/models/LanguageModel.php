@@ -25,7 +25,7 @@ class LanguageModel extends \models\mapper\MapperModel
 {
 	public function __construct($id = '') {
 		$this->id = new Id();
-		$this->description = new ArrayOf(ArrayOf::VALUE);
+		$this->description = new ArrayOf();
 		parent::__construct(LanguageModelMongoMapper::instance(), $id);
 	}
 

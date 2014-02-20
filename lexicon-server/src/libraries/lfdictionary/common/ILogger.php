@@ -2,6 +2,7 @@
 
 namespace libraries\lfdictionary\common;
 
+// TODO Delete. See ErrorHandler
 /**
  * Basic interface for logging
  *

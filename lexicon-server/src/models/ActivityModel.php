@@ -74,7 +74,7 @@ class ActivityModel extends \models\mapper\MapperModel
 		$this->action = $this::UNKNOWN;
 		$this->date = new \DateTime(); // set the timestamp to now
 		$this->actionContent = new MapOf(); // strings
-		$this->addContent($this::PROJECT, $projectModel->projectname);
+		$this->addContent($this::PROJECT, $projectModel->projectName);
 		$databaseName = $projectModel->databaseName();
 		parent::__construct(ActivityModelMongoMapper::connect($databaseName), $id);
 	}	
@@ -85,7 +85,7 @@ class ActivityModel extends \models\mapper\MapperModel
 	 * @param string $content
 	 */
 	public function addContent($type, $content) {
-		$this->actionContent->data[$type] = $content;
+		$this->actionContent[$type] = $content;
 	}
 	
 	// TODO add a userFilter ArrayOf type that we can use to query Mongo for activities that only apply to specific users

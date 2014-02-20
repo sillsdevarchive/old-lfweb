@@ -88,7 +88,7 @@ class LexProjectFixer extends LexProject
 		if ($this->locateLiftFilePath() == null) {
 			$templatePath = self::templatePath();
 			$sourceFile = $templatePath . "default.lift";
-			$liftFile = $this->projectPath . $this->projectModel->projectCode . ".lift";
+			$liftFile = $this->projectPath . $this->projectModel->projectSlug . ".lift";
 			copy($sourceFile, $liftFile);
 			if ($this->_shouldLog) {
 				LoggerFactory::getLogger()->logInfoMessage(sprintf("lift file does not exist.  fixed %s",$liftFile));

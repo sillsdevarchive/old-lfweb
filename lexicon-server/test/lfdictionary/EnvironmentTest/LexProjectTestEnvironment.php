@@ -14,7 +14,7 @@ class LexProjectTestEnvironment {
 	 * 
 	 * @var string
 	 */
-	public $projectCode;
+	public $projectSlug;
 	
 	/**
 	 * @var HgWrapper
@@ -30,7 +30,7 @@ class LexProjectTestEnvironment {
 	const PROJECT_NAME = 'LexProject_Test';
 	
 	function __construct($projectName = self::PROJECT_NAME, $projectWorkPath = null, $doInit = false) {
-		$this->projectCode = ProjectModel::makeProjectCode('qaa', $projectName, "dictionary");
+		$this->projectSlug = ProjectModel::makeProjectSlug('qaa', $projectName, "dictionary");
 		if ($projectWorkPath == null) {
 			$this->projectWorkPath = self::normalizePath(sys_get_temp_dir());
 		}
@@ -44,7 +44,7 @@ class LexProjectTestEnvironment {
 		}
 		$model= new ProjectModel();
 		$model->projectName = $projectName;
-		$model->projectCode = $this->projectCode;
+		$model->projectSlug = $this->projectSlug;
 		$this->lexProject = new LexProject($model, '/tmp/');
 	}
 	
@@ -52,19 +52,19 @@ class LexProjectTestEnvironment {
 		$this->cleanup();
 	}
 
-	public function getProjectPath($projectCode = null) {
-		if ($projectCode == null) {
-			$projectCode = $this->projectCode;
+	public function getProjectPath($projectSlug = null) {
+		if ($projectSlug == null) {
+			$projectSlug = $this->projectSlug;
 		}
-		return self::normalizePath($this->projectWorkPath . $projectCode);
+		return self::normalizePath($this->projectWorkPath . $projectSlug);
 	}
 	
-	public function cleanup($projectCode = null) {
- 		self::recursiveDelete($this->getProjectPath($projectCode));
-		if ($projectCode == null) {
-			$projectCode = $this->projectCode;
+	public function cleanup($projectSlug = null) {
+ 		self::recursiveDelete($this->getProjectPath($projectSlug));
+		if ($projectSlug == null) {
+			$projectSlug = $this->projectSlug;
 		}
-		$stateFile = LexProject::stateFolderPath() . $projectCode . '.state';
+		$stateFile = LexProject::stateFolderPath() . $projectSlug . '.state';
 		if (file_exists($stateFile)) {
 			unlink($stateFile);
 		}

@@ -49,8 +49,8 @@ class TestUserModel extends UnitTestCase {
 	function testUserTypeahead_HasSomeEntries() {
 		$model = new models\UserTypeaheadModel('');
 		$model->read();
-
-		$this->assertTrue($model->count >= 1);
+		
+		$this->assertEqual(1, $model->count);
 		$this->assertNotNull($model->entries);
 		$this->assertEqual('Some User', $model->entries[0]['name']);
 	}
@@ -59,7 +59,7 @@ class TestUserModel extends UnitTestCase {
 		$model = new models\UserTypeaheadModel('ome');
 		$model->read();
 		
-		$this->assertTrue($model->count >= 1);
+		$this->assertEqual(1, $model->count);
 		$this->assertNotNull($model->entries);
 		$this->assertEqual('Some User', $model->entries[0]['name']);
 	}
@@ -76,10 +76,10 @@ class TestUserModel extends UnitTestCase {
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		
-		$p1m = $e->createProject('p1');
+		$p1m = $e->createProject(LF_TESTPROJECT);
 		$p1 = $p1m->id->asString();
 		$p1m = new ProjectModel($p1);
-		$p2m = $e->createProject('p2');
+		$p2m = $e->createProject(LF_TESTPROJECT2);
 		$p2 = $p2m->id->asString();
 		
 		$userId = $e->createUser('jsmith', 'joe smith', 'joe@smith.com');
@@ -91,25 +91,106 @@ class TestUserModel extends UnitTestCase {
 		$this->assertEqual(array(), $result->entries);
 				
 		// Add our two projects
-		LinkCommands::LinkUserAndProject($p1m, $userModel, Roles::USER);
-		LinkCommands::LinkUserAndProject($p2m, $userModel, Roles::USER);
+		$p1m->addUser($userModel->id->asString(), Roles::USER);
+		$userModel->addProject($p1m->id->asString());
+		$p2m->addUser($userModel->id->asString(), Roles::USER);
+		$userModel->addProject($p2m->id->asString());
+		$p1m->write();
+		$p2m->write();
+		$userModel->write();
 		
 		$result = $userModel->listProjects();
 		$this->assertEqual(2, $result->count);
 		$this->assertEqual(
 			array(
 				array(
-		          'projectname' => 'p1',
+		          'projectName' => LF_TESTPROJECT,
 		          'id' => $p1
 				),
 				array(
-		          'projectname' => 'p2',
+		          'projectName' => LF_TESTPROJECT2,
 		          'id' => $p2
 				)
 			), $result->entries
 		);
 	}
-
+	
+	function testReadByUserName_userFound_UserModelPopulated() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
+		
+		$emailAddress = 'joe@smith.com';
+		$e->createUser('jsmith', 'joe smith', $emailAddress);
+		
+		$user = new UserModel();
+		$result = $user->readByUserName('jsmith');
+		$this->assertTrue($result);
+		$this->assertEqual($user->email, $emailAddress);
+	}
+	
+	function testReadByUserName_userNotFound_EmptyModel() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
+		
+		$e->createUser('jsmith', 'joe smith','joe@smith.com');
+		
+		$user = new UserModel();
+		$result = $user->readByUserName('adam');
+		$this->assertFalse($result);
+		$this->assertEqual($user->email, '');
+	}
+	
+	function testUserNameExists_userExists_true() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
+		
+		$e->createUser('jsmith', 'joe smith','joe@smith.com');
+		$result = UserModel::userNameExists('jsmith');
+		$this->assertTrue($result);
+		
+	}
+	function testUserNameExists_doesNotExist_false() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
+		
+		$result = UserModel::userNameExists('jsmith');
+		$this->assertFalse($result);
+	}
+/*
+	function testWriteRemove_ListCorrect() {
+		$e = new MongoTestEnvironment();
+		$e->clean();
+	
+		$list = new UserListModel();
+		$list->read();
+		$this->assertEqual(0, $list->count);
+		$this->assertEqual(null, $list->entries);
+	
+		$user = new UserModel();
+		$user->name = "Some Name";
+		$id = $user->write();
+	
+		$list = new UserListModel();
+		$list->read();
+		$this->assertEqual(1, $list->count);
+		$this->assertEqual(
+			array(array(
+				'avatar_ref' => null,
+				'email' => null,
+				'name' => 'Some Name',
+				'username' => null,
+				'id' => $id
+			)),
+			$list->entries
+		);
+		$user->remove();
+	
+		$list = new UserListModel();
+		$list->read();
+		$this->assertEqual(0, $list->count);
+		$this->assertEqual(null, $list->entries);
+	}
+	*/
 }
 
 ?>

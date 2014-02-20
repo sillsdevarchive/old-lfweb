@@ -3,8 +3,8 @@ namespace libraries\lfdictionary\dto;
 
 /**
  * This class contains User DTO
- * @author Arivusudar
  */
+// TODO Delete. CP 2013-12
 class CommunityDTO {
 	
 	/**	 

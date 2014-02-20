@@ -1,5 +1,7 @@
 <?php
 
+use models\ProjectModel;
+
 require_once(TEST_PATH . 'common/MockProjectModel.php');
 
 class MongoTestEnvironment
@@ -10,8 +12,7 @@ class MongoTestEnvironment
 	 */
 	private $_db;
 	
-	public function __construct()
-	{
+	public function __construct() {
 		$this->_db = \models\mapper\MongoStore::connect(LF_DATABASE);
 	}
 
@@ -19,15 +20,11 @@ class MongoTestEnvironment
 	 * Removes all the collections from the mongo database.
 	 * Hopefully this is only ever called on the scriptureforge_test database.
 	 */
-	public function clean()
-	{
+	public function clean() {
 		foreach ($this->_db->listCollections() as $collection)
 		{
 			$collection->drop();
 		}
-		$projectModel = new MockProjectModel();
-		$projectDb = \models\mapper\MongoStore::connect($projectModel->databaseName());
-		$projectDb->drop();
 	}
 
 	/**
@@ -63,11 +60,30 @@ class MongoTestEnvironment
 	 * @param string $name
 	 * @return ProjectModel
 	 */
-	public function createProject($name) {
-		$projectModel = new models\ProjectModel();
-		$projectModel->projectname = $name;
+	public function createProject($projectName, $languageCode = LF_TEST_LANGUAGE, $projectType = ProjectModel::PROJECT_LIFT) {
+		$projectModel = ProjectModel::create($projectName, $languageCode, $projectType);
+		$this->cleanProjectEnvironment($projectModel);
 		$projectModel->write();
 		return $projectModel;
+	}
+	
+	public function createProjectSettings($projectName, $languageCode = LF_TEST_LANGUAGE, $projectType = ProjectModel::PROJECT_LIFT) {
+		$projectModel = new models\ProjectSettingsModel();
+		$projectModel->projectName = $projectName;
+		$projectModel->languageCode = $languageCode;
+		$projectModel->projectType = $projectType;
+		$projectModel->projectSlug = ProjectModel::makeProjectSlug($languageCode, $projectName, $projectType);
+		$this->cleanProjectEnvironment($projectModel);
+		$projectModel->write();
+		return $projectModel;
+	}
+	
+	private function cleanProjectEnvironment($projectModel) {
+		// clean out old db if it is present
+		$projectDb = \models\mapper\MongoStore::connect($projectModel->databaseName());
+		foreach ($projectDb->listCollections() as $collection) {
+			$collection->drop();
+		}
 	}
 	
 	/**
@@ -89,3 +105,5 @@ class MongoTestEnvironment
 	}
 		
 }
+
+?>

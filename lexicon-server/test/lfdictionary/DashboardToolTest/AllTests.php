@@ -6,8 +6,17 @@ class AllDashboardToolTests extends TestSuite {
 	
     function __construct() {
         parent::__construct();
- 		$this->addFile(TEST_PATH . 'DashboardToolTest/DashboardCounterExtracter_Test.php');
- 		$this->addFile(TEST_PATH . 'DashboardToolTest/DashboardToolDbAccess_Test.php');
+        
+        // originally included tests, these pass IJH 2013-11
+        
+        // originally included tests, these fail IJH 2013-11
+ 		$this->addFile(TEST_PATH . 'lfdictionary/DashboardToolTest/DashboardCounterExtracter_Test.php');
+ 		$this->addFile(TEST_PATH . 'lfdictionary/DashboardToolTest/DashboardToolDbAccess_Test.php');
+ 			
+        // added other tests in same folder, these pass IJH 2013-11
+        
+        // added other tests in same folder, these fail IJH 2013-11
+        
     }
 }
 ?>
